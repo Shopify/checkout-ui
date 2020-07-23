@@ -1,4 +1,41 @@
 .Layout {
   display: flex;
-  justify-content: space-between;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.blockAlignmentTrailing {
+  align-items: flex-end;
+}
+
+.blockAlignmentCenter {
+  align-items: center;
+}
+
+.inlineAlignmentLeading {
+  justify-content: flex-start;
+}
+
+.inlineAlignmentTrailing {
+  justify-content: flex-end;
+}
+
+.LayoutInner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+
+  & > * {
+    flex: 0 1 auto;
+  }
+}
+
+.LayoutInner-inlineAlignmentLeading {
+  justify-content: flex-start;
+}
+
+.LayoutInner-inlineAlignmentTrailing {
+  justify-content: flex-end;
 }
