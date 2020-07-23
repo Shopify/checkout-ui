@@ -15,6 +15,8 @@ export default createPackage((pkg) => {
   );
   pkg.runtime(Runtime.Browser);
   pkg.entry({root: './src/index'});
+  pkg.entry({name: 'argo', root: './src/argo/index'});
+  pkg.entry({name: 'webpack', root: './src/webpack-config'});
 });
 
 const jestRoot = path.resolve(__dirname, './config/jest');

@@ -63,7 +63,13 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['node_modules', 'build', '/index.*'],
+  ignorePatterns: [
+    'node_modules',
+    'build',
+    '/index.*',
+    '/argo.*',
+    '/webpack.*',
+  ],
   env: {
     node: true,
   },
