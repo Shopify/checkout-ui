@@ -1,4 +1,4 @@
-# `@shopify/checkout-ui`
+# `@shopify/checkout-ui-react`
 
 This library provides reference implementations of the UI components available in Checkout. These components are copied from a private Shopify repo periodically to serve primarily as a reference implementation.
 
@@ -10,12 +10,12 @@ More components are available in this package than are provided by Argo. The set
 
 This library is authored with [React](https://reactjs.org). However, the Argo host that Shopify provides aliases all React APIs to [Preact](https://preactjs.com), a lightweight alternative to React. If you are using these components directly, we recommend you do the same (see the [webpack section below](#webpack) for details).
 
-The UI components in this library require a few pieces of [React context](https://reactjs.org/docs/context.html), and some [global styles](https://github.com/Shopify/checkout-ui/blob/main/src/style.css). To make this easier for you, we’ve included a single `Context` component you can wrap around your React application that will provide all of these global requirements. You can import this component from `@shopify/checkout-ui/argo`:
+The UI components in this library require a few pieces of [React context](https://reactjs.org/docs/context.html), and some [global styles](https://github.com/Shopify/checkout-ui/blob/main/src/style.css). To make this easier for you, we’ve included a single `Context` component you can wrap around your React application that will provide all of these global requirements. You can import this component from `@shopify/checkout-ui-react/argo`:
 
 ```tsx
 import React from 'react';
-import {Context} from '@shopify/checkout-ui/argo';
-import {Text} from '@shopify/checkout-ui';
+import {Context} from '@shopify/checkout-ui-react/argo';
+import {Text} from '@shopify/checkout-ui-react';
 
 export default function App() {
   return (
@@ -37,7 +37,7 @@ Shopify uses [webpack](https://webpack.js.org) to bundle code for running in the
 ```js
 // in webpack.config.js
 
-const {addWebpackConfig} = require('@shopify/checkout-ui/webpack');
+const {addWebpackConfig} = require('@shopify/checkout-ui-react/webpack');
 
 module.exports = addWebpackConfig({
   // Your own webpack config goes here
