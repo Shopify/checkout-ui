@@ -42,6 +42,15 @@ const {addWebpackConfig} = require('@shopify/checkout-ui/webpack');
 module.exports = addWebpackConfig({
   // Your own webpack config goes here
 });
+
+// Or, if you want to disable the automatic `preact` aliasing:
+
+module.exports = addWebpackConfig(
+  {
+    // Your own webpack config goes here
+  },
+  {preact: false},
+);
 ```
 
 If you are not using webpack to bundle your application, you will need to replicate the [handling of various file types](https://github.com/Shopify/checkout-ui/blob/main/src/webpack-config.ts) in the build tool you are using. Additionally, unlike with Shopify’s Polaris component library, this library does not offer plain HTML/ CSS assets.
