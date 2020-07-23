@@ -6,7 +6,7 @@ import type {Configuration} from 'webpack';
 
 const SVG_ICONS_PATH_REGEX = /icons\/.*\.svg$/;
 const IMAGE_PATH_REGEX = /\.(jpe?g|png|gif|svg)$/;
-const LIBRARY_REGEX = /node_modules\/@shopify\/checkout-ui/;
+const LIBRARY_REGEX = /node_modules\/@shopify\/checkout-ui-react/;
 
 export function addWebpackConfig(
   config: Configuration,
@@ -95,7 +95,7 @@ export function addWebpackConfig(
             {
               loader: 'postcss-loader',
               options: {
-                ident: 'postcss',
+                ident: 'postcss-checkout-ui',
                 plugins: () => [
                   // @see https://github.com/csstools/postcss-preset-env
                   postcssPresetEnv({
@@ -103,7 +103,9 @@ export function addWebpackConfig(
                     autoprefixer: {grid: true},
                     importFrom: [
                       path.join(
-                        path.dirname(require.resolve('@shopify/checkout-ui')),
+                        path.dirname(
+                          require.resolve('@shopify/checkout-ui-react'),
+                        ),
                         'src/style.css',
                       ),
                     ],
