@@ -1,10 +1,10 @@
 {
   "name": "@shopify/checkout-ui-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Checkout UI library",
   "publishConfig": {
     "access": "public",
-    "@quilted:registry": "https://registry.npmjs.org"
+    "@shopify:registry": "https://registry.npmjs.org"
   },
   "repository": "https://github.com/Shopify/checkout-ui",
   "bugs": {
