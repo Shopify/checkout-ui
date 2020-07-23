@@ -1,5 +1,8 @@
 import React, {ReactNode} from 'react';
-import {classNames} from '@shopify/css-utilities';
+import {classNames, variationName} from '@shopify/css-utilities';
+
+import {pixelOrPercent} from '../../utilities/units';
+import {createIdCreator} from '../../utilities/id';
 
 import styles from './Layout.css';
 
@@ -15,22 +18,8 @@ import styles from './Layout.css';
  * - `0.5` represents `50%`
  * - `1` represents `100%`
  */
-type BasicSize = 'auto' | 'fill' | number;
+type Size = 'auto' | 'fill' | number;
 
-interface DetailedSize {
-  /**
-   * Specifies the size of the section.
-   */
-  size: BasicSize;
-  /**
-   * Allow the section to grow and fill the space to reach the edge
-   * of the container. The section’s content will keep the size specified in `size`.
-   */
-  toBlockEdge?: boolean;
-  toInlineEdge?: boolean;
-}
-
-type Size = BasicSize | DetailedSize;
 type ViewportSize = 'small' | 'medium' | 'large';
 
 interface Media {
@@ -57,6 +46,16 @@ interface Media {
    */
   sizes?: Size[];
 }
+
+interface MediaWithDefault extends Omit<Media, 'viewportSize'> {
+  viewportSize: ViewportSize | 'default';
+}
+
+const MEDIAQUERY_MAP: Map<ViewportSize, string> = new Map([
+  ['small', '@media all and (max-width: 749px)'],
+  ['medium', '@media all and (min-width: 750px) and (max-width: 1199px)'],
+  ['large', '@media all and (min-width: 1200px)'],
+]);
 
 export interface Props {
   children?: ReactNode;
@@ -93,6 +92,92 @@ export interface Props {
   media?: Media[];
 }
 
-export function Layout({children}: Props) {
-  return <div className={classNames(styles.Layout)}>{children}</div>;
+const createId = createIdCreator('Layout');
+
+export function Layout({
+  inlineAlignment,
+  blockAlignment,
+  maxInlineSize,
+  sizes,
+  media,
+  children,
+}: Props) {
+  const uniqueClassName = createId();
+  const CSSSelector = `.${uniqueClassName} > .${styles.LayoutInner}`;
+
+  const layoutClassName = classNames(
+    styles.Layout,
+    uniqueClassName,
+    blockAlignment && styles[variationName('blockAlignment', blockAlignment)],
+    inlineAlignment &&
+      styles[variationName('inlineAlignment', inlineAlignment)],
+  );
+
+  const layoutInnerClassName = classNames(
+    styles.LayoutInner,
+    inlineAlignment &&
+      styles[variationName('LayoutInner-inlineAlignment', inlineAlignment)],
+  );
+
+  const defaults: MediaWithDefault = {
+    viewportSize: 'default',
+    sizes,
+    maxInlineSize,
+  };
+
+  const layoutStyles = media
+    ? generateMediaStyles(CSSSelector, [defaults, ...media])
+    : generateMediaStyles(CSSSelector, [defaults]);
+
+  return (
+    <>
+      <style>{layoutStyles}</style>
+      <div className={layoutClassName}>
+        <div className={layoutInnerClassName}>{children}</div>
+      </div>
+    </>
+  );
+}
+
+function generateSizesStyles(selector: string, sizes: Size[]) {
+  return sizes.reduce((acc, basicSize, index) => {
+    const canGrow = basicSize === 'fill';
+    const canShrink = typeof basicSize !== 'number';
+
+    const size =
+      typeof basicSize === 'number' ? pixelOrPercent(basicSize) : 'auto';
+
+    const inlineStyles = `
+        ${selector} > :nth-child(${index + 1}) {
+          flex: ${canGrow ? '1' : '0'} ${canShrink ? '1' : '0'} ${size};
+          max-width: ${size};
+        }
+      `;
+
+    return [acc, inlineStyles].join(' ');
+  }, '');
+}
+
+function generateMediaStyles(selector: string, media: MediaWithDefault[]) {
+  return media.reduce((acc, {viewportSize, maxInlineSize, sizes}) => {
+    const sizesStyles = sizes && generateSizesStyles(selector, sizes);
+
+    const wrappingStyles = sizes?.includes(1)
+      ? `${selector} { flex-wrap: wrap; }`
+      : '';
+
+    const maxInlineSizeStyles = maxInlineSize
+      ? `${selector} { max-width: ${pixelOrPercent(maxInlineSize)}; }`
+      : '';
+
+    const mediaStyles = [sizesStyles, wrappingStyles, maxInlineSizeStyles];
+
+    const inlineStyles =
+      viewportSize === 'default' ||
+      typeof MEDIAQUERY_MAP.get(viewportSize) === 'undefined'
+        ? mediaStyles
+        : [MEDIAQUERY_MAP.get(viewportSize), '{', ...mediaStyles, '}'];
+
+    return [acc, ...inlineStyles].join(' ');
+  }, '');
 }
