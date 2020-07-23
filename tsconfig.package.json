@@ -1,0 +1,34 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "rootDir": "src",
+    "outDir": "build/ts",
+    "types": [
+      "jest",
+      "@quilted/react-testing/matchers",
+      "@quilted/react-testing/dom-matchers"
+    ],
+    "composite": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2018",
+      "esnext.asynciterable",
+      "scripthost"
+    ],
+    "module": "commonjs",
+    "target": "es2017",
+    "pretty": true
+  },
+  "include": ["src", "./config/typescript/**.d.ts"]
+}

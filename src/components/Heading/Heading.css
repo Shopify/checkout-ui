@@ -1,0 +1,39 @@
+.Heading {
+  --this-font-family: var(--x-typography-secondary-fonts);
+  --this-line-height: var(--x-global-typography-line-size);
+  color: inherit;
+  margin: 0;
+  font-family: var(--this-font-family);
+  line-height: var(--this-line-height);
+  text-transform: var(--x-global-typography-letter-case);
+  letter-spacing: var(--x-global-typography-kerning);
+}
+
+.h1 {
+  --this-font-size: var(--x-typography-size-xxlarge);
+  --this-font-weight: var(--x-typography-secondary-weight-base);
+  font-size: var(--this-font-size);
+  font-weight: var(--this-font-weight);
+}
+
+.h2 {
+  --this-font-size: var(--x-typography-size-large);
+  --this-font-weight: var(--x-typography-secondary-weight-base);
+  font-size: var(--this-font-size);
+  font-weight: var(--this-font-weight);
+  color: var(
+    --x-default-color-text-emphasized,
+    var(--x-default-color-text, inherit)
+  );
+}
+
+.h3 {
+  --this-font-size: var(--x-typography-size-default);
+  --this-font-weight: var(--x-typography-secondary-weight-bold);
+  font-size: var(--this-font-size);
+  font-weight: var(--this-font-weight);
+  color: var(
+    --x-default-color-text-emphasized,
+    var(--x-default-color-text, inherit)
+  );
+}

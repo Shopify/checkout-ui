@@ -1,0 +1,326 @@
+:root {
+  /* TODO: Tech debt, semantic colors for Banners, inlineError and Icons */
+  --color-text--warning: hsl(45, 98%, 42%);
+  --color-text--informative: hsl(204, 77%, 42%);
+  --color-text--critical: hsl(0, 77%, 53%);
+  --color-text--success: hsl(131, 86%, 34%);
+
+  /* TODO: Tech debt, change these for Surface and onSurface palettes  */
+  --color--light-grey: hsl(0, 0%, 73%);
+  --color--lighter-grey: hsl(0, 0%, 85%);
+  --color--lightest-grey: hsl(0, 0%, 90%);
+  --color--white: hsl(0, 0%, 100%);
+
+  /* Animation and transition */
+  --duration--none: 0;
+  --duration--fast: 100ms;
+  --duration--base: 200ms;
+  --duration--slow: 300ms;
+  --duration--slower: 400ms;
+  --duration--slowest: 500ms;
+  --duration-always--fast: 100ms;
+  --duration-always--base: 200ms;
+  --duration-always--slow: 300ms;
+  --duration-always--slower: 400ms;
+  --duration-always--slowest: 500ms;
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    --duration--fast: 0.001ms;
+    --duration--base: 0.001ms;
+    --duration--slow: 0.001ms;
+    --duration--slower: 0.001ms;
+    --duration--slowest: 0.001ms;
+  }
+
+  --timing--base: ease-in-out;
+  --timing--linear: linear;
+  --timing--spring: cubic-bezier(0.3, 0, 0, 1);
+
+  /* TODO: Tech debt, Fields */
+  --field--border-color--error: hsl(0, 77%, 53%);
+
+  /* Design system */
+
+  /* For now, using --x- prefix for these "design primitive" variables */
+
+  /* color background */
+  --x-color-canvas: hsl(0, 0%, 100%);
+  --x-color-canvas-text: hsl(0, 0%, 33%);
+  --x-color-canvas-text-subdued: hsl(0, 0%, 45%);
+  --x-color-canvas-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-canvas-border: hsl(0, 0%, 85%);
+  --x-color-canvas-border-emphasized: hsl(0, 0%, 58%);
+
+  /* color surface 1 */
+  --x-color-surface-primary: hsl(0, 0%, 100%);
+  --x-color-surface-primary-text: hsl(0, 0%, 33%);
+  --x-color-surface-primary-text-subdued: hsl(0, 0%, 45%);
+  --x-color-surface-primary-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-surface-primary-border: hsl(0, 0%, 85%);
+  --x-color-surface-primary-border-emphasized: hsl(0, 0%, 58%);
+  --x-color-surface-primary-disabled: hsl(0, 0%, 97.3%);
+
+  /* color surface 2 */
+  --x-color-surface-secondary: hsl(0, 0%, 98%);
+  --x-color-surface-secondary-text: hsl(0, 0%, 33%);
+  --x-color-surface-secondary-text-subdued: hsl(0, 0%, 45%);
+  --x-color-surface-secondary-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-surface-secondary-border: hsl(0, 0%, 85%);
+  --x-color-surface-secondary-border-emphasized: hsl(0, 0%, 58%);
+  --x-color-surface-secondary-disabled: hsl(0, 0%, 95.3%);
+
+  /* color surface 3 */
+  --x-color-surface-tertiary: hsl(0, 0%, 100%);
+  --x-color-surface-tertiary-subdued: hsl(0, 0%, 98%);
+  --x-color-surface-tertiary-text: hsl(0, 0%, 33%);
+  --x-color-surface-tertiary-text-subdued: hsl(0, 0%, 45%);
+  --x-color-surface-tertiary-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-surface-tertiary-border: hsl(0, 0%, 85%);
+  --x-color-surface-tertiary-border-emphasized: hsl(0, 0%, 58%);
+  --x-color-surface-tertiary-disabled: hsl(0, 0%, 97.3%);
+
+  /* color primary */
+  --x-color-primary: hsl(204, 77%, 42%);
+  --x-color-primary-hovered: hsl(204, 77%, 32%);
+  --x-color-primary-pressed: hsl(204, 77%, 32%);
+  --x-color-primary-text: hsl(0, 0%, 100%);
+  --x-color-primary-text-hovered: hsl(0, 0%, 100%);
+  --x-color-primary-text-pressed: hsl(0, 0%, 100%);
+
+  /* color secondary */
+  --x-color-secondary: hsl(204, 0%, 42%);
+  --x-color-secondary-hovered: hsl(204, 0%, 32%);
+  --x-color-secondary-pressed: hsl(204, 0%, 32%);
+  --x-color-secondary-text: hsl(0, 0%, 100%);
+  --x-color-secondary-text-hovered: hsl(0, 0%, 100%);
+  --x-color-secondary-text-pressed: hsl(0, 0%, 100%);
+
+  /* color interactive */
+  --x-color-interactive: transparent;
+  --x-color-interactive-hovered: transparent;
+  --x-color-interactive-pressed: transparent;
+  --x-color-interactive-text: hsl(204, 77%, 42%);
+  --x-color-interactive-text-hovered: hsl(204, 77%, 36%);
+  --x-color-interactive-text-pressed: hsl(204, 77%, 36%);
+  --x-color-interactive-icon: hsl(0, 0%, 100%);
+
+  /* typography - font stacks */
+  --x-typography-primary-fonts: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+  --x-typography-secondary-fonts: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+
+  /* typography - font weights */
+  --x-typography-primary-weight-base: 400;
+  --x-typography-primary-weight-bold: 500;
+  --x-typography-secondary-weight-base: 400;
+  --x-typography-secondary-weight-bold: 500;
+
+  /* typography - ratio of 1:1.285 */
+  --x-typography-size-xsmall: rem(9px);
+  --x-typography-size-small: rem(12px);
+  --x-typography-size-default: rem(14px);
+  --x-typography-size-medium: rem(16px);
+  --x-typography-size-large: rem(18px);
+  --x-typography-size-xlarge: rem(24px);
+  --x-typography-size-xxlarge: rem(28px);
+
+  /* spacing - ratio of 1:1.225 */
+  --x-spacing-tight4x: rem(5px);
+  --x-spacing-tight3x: rem(6px);
+  --x-spacing-tight2x: rem(7px);
+  --x-spacing-tight1x: rem(9px);
+  --x-spacing-tight: rem(11px);
+  --x-spacing-base: rem(14px);
+  --x-spacing-loose: rem(17px);
+  --x-spacing-loose1x: rem(21px);
+  --x-spacing-loose2x: rem(26px);
+  --x-spacing-loose3x: rem(32px);
+  --x-spacing-loose4x: rem(38px);
+
+  /* border */
+  --x-border-full: 1px;
+  --x-border-block-end: 0 0 1px;
+  --x-border-none: 0;
+
+  /* border radii */
+  --x-border-radius-none: 0;
+  --x-border-radius-base: rem(5px);
+  --x-border-radius-fully-rounded: rem(23px);
+
+  /* defaults */
+  --x-default-color-border: hsl(0, 0%, 85%);
+  --x-default-color-border-emphasized: hsl(0, 0%, 58%);
+
+  /* component groups */
+  --x-global-typography-letter-case: none;
+  --x-global-typography-line-size: 1.3;
+  --x-global-typography-kerning: normal;
+  --x-global-border-radius: var(--x-border-radius-base);
+  --x-control-border-radius: var(--x-border-radius-base);
+  --x-textfield-border-radius: var(--x-border-radius-base);
+  --x-checkbox-border-radius: var(--x-border-radius-base);
+  --x-option-list-border-radius: var(--x-border-radius-base);
+  --x-select-border-radius: var(--x-border-radius-base);
+  --x-review-block-border-radius: var(--x-border-radius-base);
+
+  /* option lists */
+  --x-option-list-block-gap: 0;
+
+  /* buyer journey */
+  --x-buyer-journey-inline-gap: var(--x-spacing-tight1x);
+}
+
+/* Global
+   ----------------------------------------------------------------------------- */
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  font-size: 62.5%; /* calc(10 / 16 * 100%); 16px being the default browser size */
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  overflow-wrap: break-word;
+}
+
+/* Typography
+   ----------------------------------------------------------------------------- */
+
+p {
+  margin: 0;
+}
+
+em,
+i {
+  font-style: inherit;
+}
+
+b,
+strong {
+  font-weight: inherit;
+}
+
+small {
+  font-size: var(--x-typography-size-small);
+}
+
+address {
+  font-style: normal;
+}
+
+/* Tables
+   ----------------------------------------------------------------------------- */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+  font-weight: 400;
+}
+
+/* Media
+   ----------------------------------------------------------------------------- */
+
+img {
+  border-style: none;
+}
+
+figure {
+  margin: 0;
+}
+
+/* Forms
+   ----------------------------------------------------------------------------- */
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  border: 0;
+  padding: 0;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: inherit;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  appearance: button;
+  cursor: pointer;
+
+  /* Bring back when we design focus states
+  &::-moz-focus-inner {
+    border: none;
+    padding: 0;
+  }
+  */
+}
+
+[type='checkbox'],
+[type='radio'] {
+  padding: 0;
+}
+
+/* Misc
+   ----------------------------------------------------------------------------- */
+
+[hidden],
+template {
+  display: none;
+}
+
+iframe {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}

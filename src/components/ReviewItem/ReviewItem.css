@@ -1,0 +1,103 @@
+.ReviewBlock-backgroundTransparent {
+  --review-block-inner-border-color: var(--x-default-color-border);
+  --review-block-background-color: transparent;
+}
+
+.ReviewBlock-backgroundSurfacePrimary {
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  --review-block-inner-border-color: var(--x-color-surface-primary-border);
+  --review-block-background-color: var(--x-color-surface-primary);
+}
+
+.ReviewBlock-backgroundSurfaceSecondary {
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  --review-block-inner-border-color: var(--x-color-surface-secondary-border);
+  --review-block-background-color: var(--x-color-surface-secondary);
+}
+
+.ReviewBlock-backgroundSurfaceTertiary {
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  --review-block-inner-border-color: var(--x-color-surface-tertiary-border);
+  --review-block-background-color: var(--x-color-surface-tertiary);
+}
+
+.ReviewItem {
+  display: flex;
+  align-items: baseline;
+
+  &:first-child {
+    padding-block-end: var(--x-spacing-tight);
+  }
+
+  &:not(:first-child) {
+    border-block-start: 1px var(--x-default-color-border) solid;
+    border-width: var(--x-review-block-border, var(--x-border-full));
+    padding-block-start: var(--x-spacing-tight);
+    padding-block-end: var(--x-spacing-tight);
+    margin-block-start: var(--x-review-block-block-gap);
+  }
+
+  &:last-child {
+    padding-block-end: 0;
+  }
+
+  &.isContainer {
+    padding: var(--x-spacing-tight) var(--x-spacing-loose);
+  }
+}
+
+.isContainer {
+  background-color: var(--review-block-background-color);
+  border: 1px var(--x-default-color-border) solid;
+  border-width: var(--x-review-block-border, var(--x-border-full));
+  border-radius: var(
+    --x-review-block-border-radius,
+    var(--x-global-border-radius)
+  );
+  padding: var(--x-spacing-tight) var(--x-spacing-loose);
+
+  & > * {
+    --x-default-color-border: var(--review-block-inner-border-color);
+  }
+}
+
+.Label {
+  min-width: 7em;
+  padding-inline-end: var(--x-spacing-base);
+
+  @media all and (max-width: 749px) {
+    padding-block-end: var(--x-spacing-tight4x);
+  }
+}
+
+.Content {
+  flex-grow: 1;
+  padding-inline-end: var(--x-spacing-base);
+  width: 100%;
+  word-break: break-word;
+}
+
+.Wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+
+  @media all and (max-width: 749px) {
+    flex-wrap: wrap;
+  }
+}

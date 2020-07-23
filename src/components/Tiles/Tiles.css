@@ -1,0 +1,106 @@
+.Tiles {
+  display: flex;
+  flex-wrap: wrap;
+  margin-block-start: calc(var(--x-spacing-base) * -1);
+  margin-inline-start: calc(var(--x-spacing-base) * -1);
+
+  & > * {
+    min-width: var(--tile-width, 0);
+    max-width: 100%;
+    padding-block-start: var(--x-spacing-base);
+    padding-inline-start: var(--x-spacing-base);
+    flex: 0 0
+      calc((var(--tiles-breakpoint, 0) + var(--x-spacing-base) - 100%) * 999);
+  }
+}
+
+.spacingNone {
+  margin-block-start: 0;
+  margin-inline-start: 0;
+
+  & > * {
+    padding-block-start: 0;
+    padding-inline-start: 0;
+    flex-basis: calc((var(--tiles-breakpoint, 0) - 100%) * 999);
+  }
+}
+
+.spacingXtight {
+  margin-block-start: calc(var(--x-spacing-tight4x) * -1);
+  margin-inline-start: calc(var(--x-spacing-tight4x) * -1);
+
+  & > * {
+    padding-block-start: var(--x-spacing-tight4x);
+    padding-inline-start: var(--x-spacing-tight4x);
+    flex-basis: calc(
+      (var(--tiles-breakpoint, 0) + var(--x-spacing-tight4x) - 100%) * 999
+    );
+  }
+}
+
+.spacingTight {
+  margin-block-start: calc(var(--x-spacing-tight1x) * -1);
+  margin-inline-start: calc(var(--x-spacing-tight1x) * -1);
+
+  & > * {
+    padding-block-start: var(--x-spacing-tight1x);
+    padding-inline-start: var(--x-spacing-tight1x);
+    flex-basis: calc(
+      (var(--tiles-breakpoint, 0) + var(--x-spacing-tight1x) - 100%) * 999
+    );
+  }
+}
+
+.spacingLoose {
+  margin-block-start: calc(var(--x-spacing-loose1x) * -1);
+  margin-inline-start: calc(var(--x-spacing-loose1x) * -1);
+
+  & > * {
+    padding-block-start: var(--x-spacing-loose1x);
+    padding-inline-start: var(--x-spacing-loose1x);
+    flex-basis: calc(
+      (var(--tiles-breakpoint, 0) + var(--x-spacing-loose1x) - 100%) * 999
+    );
+  }
+}
+
+.spacingXloose {
+  margin-block-start: calc(var(--x-spacing-loose4x) * -1);
+  margin-inline-start: calc(var(--x-spacing-loose4x) * -1);
+
+  & > * {
+    padding-block-start: var(--x-spacing-loose4x);
+    padding-inline-start: var(--x-spacing-loose4x);
+    flex-basis: calc(
+      (var(--tiles-breakpoint, 0) + var(--x-spacing-loose4x) - 100%) * 999
+    );
+  }
+}
+
+.alignmentLeading {
+  align-items: flex-start;
+}
+
+.alignmentCenter {
+  align-items: center;
+}
+
+.alignmentTrailing {
+  align-items: flex-end;
+}
+
+.alignmentBaseline {
+  align-items: baseline;
+}
+
+.doesNotWrap {
+  & > * {
+    flex-grow: 1;
+  }
+}
+
+.doesNotBreak {
+  & > * {
+    flex-basis: 0;
+  }
+}

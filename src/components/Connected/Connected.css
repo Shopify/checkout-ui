@@ -1,0 +1,36 @@
+.Connected {
+  display: flex;
+
+  & > * {
+    flex-grow: 1;
+    margin-inline-start: var(--x-spacing-base);
+
+    &:first-child {
+      margin-inline-start: 0;
+    }
+  }
+}
+
+.spacingXtight {
+  margin-inline-start: var(--x-spacing-tight4x);
+}
+
+.spacingTight {
+  margin-inline-start: var(--x-spacing-tight1x);
+}
+
+.spacingLoose {
+  margin-inline-start: var(--x-spacing-loose1x);
+}
+
+.spacingXloose {
+  margin-inline-start: var(--x-spacing-loose4x);
+}
+
+.trailingAuto > *:last-child {
+  flex-grow: 0;
+}
+
+.leadingAuto > *:first-child {
+  flex-grow: 0;
+}

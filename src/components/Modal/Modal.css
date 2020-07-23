@@ -1,0 +1,73 @@
+.Wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+}
+
+.Backdrop {
+  width: 100%;
+  height: 100%;
+  background-color: hsla(211, 24.1%, 17.1%, 0.4);
+}
+
+.Content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-height: 90%;
+  max-width: 840px;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  background-color: var(--color--white);
+  border-radius: var(--x-border-radius-base);
+  box-shadow: 0 5px 30px hsla(0, 0%, 0%, 0.2);
+}
+
+.Backdrop,
+.Content {
+  opacity: 0;
+  transition: opacity var(--duration--slow) var(--timing--base);
+
+  &.transitionEntered {
+    opacity: 1;
+  }
+}
+
+.IFrame {
+  display: block;
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--x-spacing-base);
+  border-block-end: 1px solid var(--x-default-color-border);
+
+  @media screen and (min-width: 750px) {
+    padding: var(--x-spacing-base) var(--x-spacing-loose2x);
+  }
+}
+
+.Body {
+  padding: var(--x-spacing-base);
+
+  @media screen and (min-width: 750px) {
+    padding: var(--x-spacing-loose2x);
+  }
+}
+
+.Button {
+  display: block;
+  padding: var(--x-spacing-tight1x);
+
+  /* Negative value */
+  margin: calc(var(--x-spacing-tight1x) * -1);
+}

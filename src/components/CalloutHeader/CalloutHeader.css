@@ -1,0 +1,16 @@
+.CalloutHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.CalloutHeaderStatus {
+  margin-right: var(--x-spacing-base);
+
+  @media all and (min-width: 1300px) {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

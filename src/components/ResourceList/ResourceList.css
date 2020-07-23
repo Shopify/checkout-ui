@@ -1,0 +1,68 @@
+.ResourceList {
+  display: flex;
+  flex-direction: column;
+
+  & > * + * {
+    margin-block-start: var(--x-spacing-base);
+  }
+}
+
+.ResourceListHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ResourceListHeaderContent {
+  & + .ResourceListHeaderContent {
+    padding-inline-start: var(--x-spacing-base);
+  }
+}
+
+.ResourceListHeaderContent-isPrimary {
+  flex-grow: 1;
+}
+
+.borderBlockEnd {
+  padding-block-end: var(--x-spacing-base);
+  border-block-end: 1px solid var(--x-default-color-border, transparent);
+}
+
+.borderBetweenItems,
+.borderFull {
+  grid-row-gap: 0;
+
+  & > *:not(:first-child) {
+    padding-block-start: var(--x-spacing-base);
+    border-block-start: 1px solid var(--x-default-color-border, transparent);
+  }
+
+  & > *:not(:last-child) {
+    padding-block-end: var(--x-spacing-base);
+  }
+}
+
+.borderBetweenItems {
+  & > * + * {
+    padding-block-start: var(--x-spacing-base);
+    border-block-start: 1px solid var(--x-default-color-border, transparent);
+  }
+}
+
+.borderFull {
+  border: 1px solid var(--x-default-color-border, transparent);
+  border-radius: var(--x-global-border-radius);
+
+  & > * {
+    padding-inline-start: var(--x-spacing-base);
+    padding-inline-end: var(--x-spacing-base);
+
+    &:first-child {
+      padding-block-start: var(--x-spacing-base);
+    }
+
+    &:last-child {
+      padding-block-end: var(--x-spacing-base);
+    }
+  }
+}

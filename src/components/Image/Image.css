@@ -1,0 +1,29 @@
+.Image {
+  max-width: 100%;
+}
+
+.bordered {
+  border: 1px solid var(--x-default-color-border);
+}
+
+.aspectRatio {
+  position: relative;
+
+  & .Image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@supports (object-fit: cover) {
+  .fitContain {
+    object-fit: contain;
+  }
+
+  .fitCover {
+    object-fit: cover;
+  }
+}

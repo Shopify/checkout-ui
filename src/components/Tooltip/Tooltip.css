@@ -1,0 +1,53 @@
+.Wrapper {
+  position: relative;
+}
+
+.Button {
+  display: block;
+  padding: em(13px) em(13px);
+  margin: em(-13px) em(-13px);
+}
+
+.Tooltip {
+  position: relative;
+  top: em(6px);
+  transform: rotateX(20deg) scale(0.8);
+  transform-origin: center 120%;
+  display: inline-block;
+
+  /* TODO: Replace with color system */
+  background-color: hsla(0, 0%, 20%, 0.9);
+  border-radius: var(--x-global-border-radius);
+  color: var(--color--white);
+  width: em(210px);
+  text-align: center;
+  font-size: var(--x-typography-size-small);
+  padding: var(--x-spacing-tight);
+  opacity: 0;
+  transition: all var(--duration--slow) var(--timing--spring);
+
+  &.transitionEntered {
+    transform: rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.Arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  right: 50%;
+  width: 0;
+  border: em(6px) solid transparent;
+
+  /* TODO: Replace with color system */
+  border-top-color: hsla(0, 0%, 20%, 0.9);
+
+  &:dir(rtl) {
+    transform: translate(50%);
+  }
+
+  &:dir(ltr) {
+    transform: translate(-50%);
+  }
+}

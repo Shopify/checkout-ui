@@ -1,0 +1,91 @@
+.InlineStack {
+  display: flex;
+
+  & > * + * {
+    margin-inline-start: var(--x-spacing-base);
+  }
+
+  @supports (display: grid) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: auto;
+    grid-column-gap: var(--x-spacing-base);
+    justify-content: start;
+
+    & > * + * {
+      margin-inline-start: 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+  }
+}
+
+.spacingXtight {
+  & > * + * {
+    margin-inline-start: var(--x-spacing-tight4x);
+  }
+
+  @supports (display: grid) {
+    grid-column-gap: var(--x-spacing-tight4x);
+  }
+}
+
+.spacingTight {
+  & > * + * {
+    margin-inline-start: var(--x-spacing-tight1x);
+  }
+
+  @supports (display: grid) {
+    grid-column-gap: var(--x-spacing-tight1x);
+  }
+}
+
+.spacingLoose {
+  & > * + * {
+    margin-inline-start: var(--x-spacing-loose1x);
+  }
+
+  @supports (display: grid) {
+    grid-column-gap: var(--x-spacing-loose1x);
+  }
+}
+
+.spacingXloose {
+  & > * + * {
+    margin-inline-start: var(--x-spacing-loose4x);
+  }
+
+  @supports (display: grid) {
+    grid-column-gap: var(--x-spacing-loose4x);
+  }
+}
+
+.alignmentLeading {
+  align-items: flex-start;
+
+  @supports (display: grid) {
+    align-items: start;
+  }
+}
+
+.alignmentCenter {
+  align-items: center;
+
+  @supports (display: grid) {
+    align-items: center;
+  }
+}
+
+.alignmentTrailing {
+  align-items: flex-end;
+
+  @supports (display: grid) {
+    align-items: end;
+  }
+}
+
+.alignmentBaseline {
+  align-items: baseline;
+
+  @supports (display: grid) {
+    align-items: baseline;
+  }
+}

@@ -1,0 +1,45 @@
+.Banner {
+  --banner-background-color: hsl(206, 100%, 97%);
+  --banner-border-color: hsl(205, 63%, 89%);
+  --banner-icon-color: hsl(204, 77%, 42%);
+  background-color: var(--banner-background-color);
+  position: relative;
+  border-radius: var(--x-global-border-radius);
+  border: 1px solid var(--banner-border-color);
+  padding: var(--x-spacing-loose);
+}
+
+.Icon {
+  color: var(--banner-icon-color);
+  margin: em(-3.5px) 0;
+  width: em(24px);
+  height: em(24px);
+}
+
+.statusSuccess {
+  --banner-background-color: hsl(132, 52%, 94%);
+  --banner-border-color: hsl(127, 42%, 87%);
+  --banner-icon-color: hsl(131, 86%, 34%);
+}
+
+.statusWarning {
+  --banner-background-color: hsl(47, 100%, 94%);
+  --banner-border-color: hsl(46, 63%, 84%);
+  --banner-icon-color: hsl(44, 100%, 36%);
+}
+
+.statusCritical {
+  --banner-background-color: hsl(0, 100%, 96%);
+  --banner-border-color: hsl(0, 77%, 92%);
+  --banner-icon-color: hsl(0, 77%, 53%);
+}
+
+.collapsibleButton {
+  position: absolute;
+  top: var(--x-spacing-tight4x);
+  right: 0;
+}
+
+.isCollapsible {
+  padding-right: var(--x-spacing-loose3x);
+}

@@ -1,0 +1,13 @@
+.MoneyLine {
+  display: flex;
+  justify-content: space-between;
+  &:not(:first-child) {
+    padding-top: var(--x-spacing-tight);
+  }
+}
+
+.MoneyLineSeparator {
+  margin: var(--x-spacing-loose) 0;
+  border: none;
+  border-block-start: 1px solid var(--x-default-color-border, transparent);
+}

@@ -1,0 +1,15 @@
+.Canvas {
+  --x-default-color-text: var(--x-color-canvas-text);
+  --x-default-color-text-subdued: var(--x-color-canvas-text-subdued);
+  --x-default-color-text-emphasized: var(--x-color-canvas-text-emphasized);
+  --x-default-color-border: var(--x-color-canvas-border);
+  --x-default-color-border-emphasized: var(--x-color-canvas-border-emphasized);
+  background: var(--x-color-canvas);
+  color: var(--x-default-color-text);
+  font-size: var(--x-typography-size-default);
+  font-family: var(--x-typography-primary-fonts);
+  font-weight: var(--x-typography-primary-weight-base);
+  line-height: var(--x-global-typography-line-size);
+  text-transform: var(--x-global-typography-letter-case);
+  touch-action: manipulation;
+}

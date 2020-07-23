@@ -1,0 +1,15 @@
+.PaymentIcon {
+  transition: all var(--duration--base) var(--timing--base);
+  width: auto;
+  height: em(24px);
+}
+
+.disabled {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.active {
+  transform: scale(1.1);
+  box-shadow: 0 6px 19px 0 rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,81 @@
+.Wrapper {
+  display: grid;
+  justify-content: start;
+
+  /*
+    We’d naturally use `gap: var(--x-spacing-tight1x)`, but Autoprefixer
+    has an issue where it won’t transform both the grid and custom property
+    syntax. This leaves custom properties in the fallback grid declaration,
+    which causes it to be ignored. Once this issue is fixed:
+    https://github.com/csstools/postcss-preset-env/issues/180
+    we will be able to use the gap property as expected.
+  */
+  grid-template: 'radio gap label' auto / auto var(--x-spacing-tight1x) auto;
+}
+
+.Radio {
+  position: relative;
+  margin-top: -1px;
+  grid-area: radio;
+}
+
+.Input {
+  --input-border-color: var(--x-default-color-border);
+  background-clip: padding-box;
+  border: 1px transparent solid;
+  border-radius: 50%;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: block;
+  width: em(18px);
+  height: em(18px);
+  box-shadow: 0 0 0 1px var(--input-border-color) inset;
+  transition: box-shadow var(--duration--base) var(--timing--base);
+
+  &:focus {
+    box-shadow: 0 0 0 em(2px) var(--x-color-interactive-text) inset;
+  }
+
+  &:disabled,
+  &:checked:disabled {
+    /* TODO: use derived disabled color */
+    --x-color-interactive-text: var(--color--lightest-grey);
+    background-color: var(--color--lightest-grey);
+    border-color: var(--color--lightest-grey);
+    cursor: default;
+  }
+
+  &:checked {
+    box-shadow: 0 0 0 em(7px) var(--x-color-interactive-text) inset;
+
+    &:disabled {
+      background-color: var(--color--lightest-grey);
+    }
+  }
+}
+
+.Input-backgroundTransparent {
+  background-color: transparent;
+}
+
+.Input-backgroundSurfacePrimary {
+  background-color: var(--x-color-surface-primary);
+}
+
+.Input-backgroundSurfaceSecondary {
+  background-color: var(--x-color-surface-secondary);
+}
+
+.Input-backgroundSurfaceTertiary {
+  background-color: var(--x-color-surface-tertiary);
+}
+
+.Input-borderColorEmphasized {
+  --input-border-color: var(--x-default-color-border-emphasized);
+}
+
+.Label {
+  display: block;
+  grid-area: label;
+  cursor: pointer;
+}

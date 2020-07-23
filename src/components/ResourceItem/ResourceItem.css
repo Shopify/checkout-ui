@@ -1,0 +1,15 @@
+.ResourceItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ResourceItemContent {
+  & + .ResourceItemContent {
+    padding-inline-start: var(--x-spacing-base);
+  }
+}
+
+.ResourceItemContent-isPrimary {
+  flex-grow: 1;
+}

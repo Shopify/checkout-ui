@@ -1,0 +1,41 @@
+.TextBlock {
+  font-size: var(--x-typography-size-default);
+  line-height: var(--x-global-typography-line-size);
+  text-transform: var(--x-global-typography-letter-case);
+  letter-spacing: var(--x-global-typography-kerning);
+}
+
+.isSubdued {
+  color: var(
+    --x-default-color-text-subdued,
+    var(--x-default-color-text, inherit)
+  );
+}
+
+.isEmphasized {
+  font-weight: var(--x-typography-primary-weight-bold);
+  color: var(
+    --x-default-color-text-emphasized,
+    var(--x-default-color-text, inherit)
+  );
+}
+
+.sizeSmall {
+  --this-font-size: var(--x-typography-size-small);
+  font-size: var(--this-font-size);
+}
+
+.sizeMedium {
+  --this-font-size: var(--x-typography-size-medium);
+  font-size: var(--this-font-size);
+}
+
+.sizeLarge {
+  --this-font-size: var(--x-typography-size-large);
+  font-size: var(--this-font-size);
+}
+
+.sizeXlarge {
+  --this-font-size: var(--x-typography-size-xlarge);
+  font-size: var(--this-font-size);
+}

@@ -1,0 +1,295 @@
+.Wrapper {
+  --selector-width: em(35px);
+  position: relative;
+}
+
+.Label {
+  transition: top var(--duration--base) var(--timing--base);
+}
+
+.Label-positionInside {
+  position: absolute;
+  pointer-events: none;
+  inset-block-start: em(5.6px);
+  inset-inline-start: calc(em(12px) + 1px);
+  user-select: none;
+  max-width: calc(100% - em(26px) - var(--selector-width, em(35px)));
+
+  &.Label-onBackgroundSurfacePrimary {
+    --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  }
+
+  &.Label-onBackgroundSurfaceSecondary {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+  }
+
+  &.Label-onBackgroundSurfaceTertiary {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-tertiary-text-subdued
+    );
+  }
+}
+
+.Label-positionOutside {
+  display: block;
+  margin-block-end: var(--x-spacing-tight4x);
+}
+
+.Label-isPlaceholder {
+  inset-block-start: em(15px);
+}
+
+.Select {
+  -webkit-tap-highlight-color: transparent;
+  border: 0 transparent solid;
+  border-radius: var(
+    --x-select-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  font-size: var(--x-typography-size-default);
+  line-height: inherit;
+  outline: none;
+  padding-block: em(21px) em(6px);
+  padding-inline: em(12px) calc(var(--selector-width, em(35px)) + em(12px));
+  min-height: em(47px);
+  transition: box-shadow var(--duration--base) var(--timing--base),
+    border var(--duration--base) var(--timing--base);
+  text-transform: var(--x-global-typography-letter-case);
+  letter-spacing: var(--x-global-typography-kerning);
+  width: 100%;
+  white-space: nowrap;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 var(--moz-focusring-color);
+  }
+
+  /* Browser hack to remove extra spacing around text in Firefox. Sorry!
+   * This hack targets all the Firefox version we support: 24+
+   * Source: http://browserhacks.com/#hack-8e9b5504d9fda44ec75169381b3c3157
+   */
+  @supports (-moz-appearance: meterbar) {
+    text-indent: -2px;
+  }
+}
+
+.Select-hasOutsideLabel {
+  padding-block-start: em(14px);
+  padding-block-end: em(13px);
+}
+
+.Select-backgroundTransparent {
+  --moz-focusring-color: var(--x-default-color-text-emphasized);
+  background-color: transparent;
+}
+
+.Select-backgroundSurfacePrimary {
+  --moz-focusring-color: var(--x-color-surface-primary-text-emphasized);
+  color: var(--x-color-surface-primary-text-emphasized);
+  background-color: var(--x-color-surface-primary);
+
+  & + .Selector {
+    border-color: var(--x-color-surface-primary-border);
+    color: var(--x-color-surface-primary-text-subdued);
+  }
+
+  /* stylelint-disable-next-line selector-max-class */
+  & + .Selector.Selector-borderColorEmphasized {
+    border-color: var(--x-color-surface-primary-border-emphasized);
+  }
+}
+
+.Select-backgroundSurfaceSecondary {
+  --moz-focusring-color: var(--x-color-surface-secondary-text-emphasized);
+  color: var(--x-color-surface-secondary-text-emphasized);
+  background-color: var(--x-color-surface-secondary);
+
+  & + .Selector {
+    border-color: var(--x-color-surface-secondary-border);
+    color: var(--x-color-surface-secondary-text-subdued);
+  }
+
+  /* stylelint-disable-next-line selector-max-class */
+  & + .Selector.Selector-borderColorEmphasized {
+    border-color: var(--x-color-surface-secondary-border-emphasized);
+  }
+}
+
+.Select-backgroundSurfaceTertiary {
+  --moz-focusring-color: var(--x-color-surface-tertiary-text-emphasized);
+  color: var(--x-color-surface-tertiary-text-emphasized);
+  background-color: var(--x-color-surface-tertiary);
+
+  & + .Selector {
+    border-color: var(--x-color-surface-tertiary-border);
+    color: var(--x-color-surface-tertiary-text-subdued);
+  }
+
+  /* stylelint-disable-next-line selector-max-class */
+  & + .Selector.Selector-borderColorEmphasized {
+    border-color: var(--x-color-surface-tertiary-border-emphasized);
+  }
+}
+
+.Select-borderNone {
+  &.Select-focusBorderFull {
+    &:focus {
+      box-shadow: 0 0 0 2px var(--x-color-interactive-text);
+    }
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &.hasError {
+      &,
+      &:focus {
+        box-shadow: 0 0 0 2px var(--field--border-color--error);
+      }
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
+  }
+
+  &.Select-focusBorderBlockEnd {
+    &:focus {
+      box-shadow: 0 2px 0 0 var(--x-color-interactive-text);
+    }
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &.hasError {
+      &,
+      &:focus {
+        box-shadow: 0 2px 0 0 var(--field--border-color--error);
+      }
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
+  }
+}
+
+.Select-borderFull {
+  border-width: 1px;
+  border-color: var(--x-default-color-border);
+
+  &.Select-focusBorderFull {
+    &:focus {
+      border-color: var(--x-color-interactive-text);
+      box-shadow: 0 0 0 1px var(--x-color-interactive-text);
+    }
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &.hasError {
+      &,
+      &:focus {
+        border-color: var(--field--border-color--error);
+        box-shadow: 0 0 0 1px var(--field--border-color--error);
+      }
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
+  }
+
+  &.Select-focusBorderBlockEnd {
+    &:focus {
+      border-bottom-color: var(--x-color-interactive-text);
+      box-shadow: 0 1px 0 0 var(--x-color-interactive-text);
+    }
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &.hasError {
+      &,
+      &:focus {
+        border-bottom-color: var(--field--border-color--error);
+        box-shadow: 0 1px 0 0 var(--field--border-color--error);
+      }
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
+  }
+}
+
+.Select-borderBlockEnd {
+  border-width: 0 0 1px;
+  border-color: var(--x-default-color-border);
+
+  &.Select-focusBorderFull {
+    &:focus {
+      border-color: var(--x-color-interactive-text);
+      box-shadow: 1px 0 0 1px var(--x-color-interactive-text),
+        -1px 0 0 1px var(--x-color-interactive-text),
+        1px -1px 0 1px var(--x-color-interactive-text),
+        -1px -1px 0 1px var(--x-color-interactive-text);
+    }
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &.hasError {
+      &,
+      &:focus {
+        border-color: var(--field--border-color--error);
+        box-shadow: 1px 0 0 1px var(--field--border-color--error),
+          -1px 0 0 1px var(--field--border-color--error),
+          1px -1px 0 1px var(--field--border-color--error),
+          -1px -1px 0 1px var(--field--border-color--error);
+      }
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
+  }
+
+  &.Select-focusBorderBlockEnd {
+    &:focus {
+      border-color: var(--x-color-interactive-text);
+      box-shadow: 0 1px 0 0 var(--x-color-interactive-text);
+    }
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &.hasError {
+      &,
+      &:focus {
+        border-color: var(--field--border-color--error);
+        box-shadow: 0 1px 0 0 var(--field--border-color--error);
+      }
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
+  }
+}
+
+.Select-borderColorEmphasized {
+  border-color: var(--x-default-color-border-emphasized);
+}
+
+.Select-isDisabled {
+  opacity: 0.7;
+
+  & + .Selector {
+    opacity: 0.7;
+  }
+
+  &.Select-backgroundSurfacePrimary {
+    background-color: var(--x-color-surface-primary-disabled);
+  }
+
+  &.Select-backgroundSurfaceSecondary {
+    background-color: var(--x-color-surface-secondary-disabled);
+  }
+
+  &.Select-backgroundSurfaceTertiary {
+    background-color: var(--x-color-surface-tertiary-disabled);
+  }
+}
+
+.Selector {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  width: var(--selector-width, em(35px));
+  height: 43%;
+  transform: translateY(-50%);
+}
+
+.Selector-separated {
+  border-inline-start: rem(1px) var(--x-default-color-border) solid;
+}

@@ -1,0 +1,54 @@
+.Autocomplete {
+  margin: var(--x-spacing-tight2x) 0 0;
+  border: 1px var(--color--lighter-grey) solid;
+  border-radius: var(
+    --x-textfield-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  background-color: var(--color--white);
+  box-shadow: 0 6px 19px 0 var(--color--light-grey);
+}
+
+.Header {
+  padding: var(--x-spacing-tight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Title {
+  margin: 0;
+
+  /* TODO: change color */
+  color: hsl(0, 0%, 0%, 0.55);
+  font-size: var(--x-typography-size-small);
+  font-family: var(--x-typography-secondary-fonts);
+  font-weight: var(--x-typography-secondary-weight-base);
+  text-transform: uppercase;
+}
+
+.Close {
+  padding: var(--x-spacing-tight);
+  margin: calc(-1 * var(--x-spacing-tight));
+}
+
+.Options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Option {
+  cursor: pointer;
+  padding: var(--x-spacing-tight);
+
+  &.selected {
+    background-color: var(--color--lightest-grey);
+  }
+}
+
+.Footer {
+  background-color: hsla(0, 0%, 0%, 0.02);
+  position: relative;
+  padding: var(--x-spacing-tight);
+}

@@ -1,0 +1,215 @@
+[class].style1 {
+  font-size: var(--x-style1-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style1-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style1-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style1-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style1-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style1-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style2 {
+  font-size: var(--x-style2-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style2-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style2-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style2-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style2-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style2-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style3 {
+  font-size: var(--x-style3-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style3-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style3-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style3-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style3-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style3-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style4 {
+  font-size: var(--x-style4-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style4-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style4-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style4-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style4-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style4-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style5 {
+  font-size: var(--x-style5-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style5-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style5-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style5-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style5-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style5-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style6 {
+  font-size: var(--x-style6-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style6-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style6-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style6-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style6-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style6-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style7 {
+  font-size: var(--x-style7-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style7-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style7-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style7-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style7-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style7-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style8 {
+  font-size: var(--x-style8-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style8-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style8-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style8-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style8-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style8-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}
+
+[class].style9 {
+  font-size: var(--x-style9-typography-size, var(--this-font-size, inherit));
+  text-transform: var(
+    --x-style9-typography-case,
+    var(--this-text-transform, inherit)
+  );
+  font-family: var(
+    --x-style9-typography-fonts,
+    var(--this-font-family, inherit)
+  );
+  font-weight: var(
+    --x-style9-typography-weight,
+    var(--this-font-weight, inherit)
+  );
+  line-height: var(
+    --x-style9-typography-line-size,
+    var(--this-line-height, inherit)
+  );
+  letter-spacing: var(
+    --x-style9-typography-kerning,
+    var(--this-letter-spacing, inherit)
+  );
+}

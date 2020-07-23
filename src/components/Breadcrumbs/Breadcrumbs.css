@@ -1,0 +1,23 @@
+.Breadcrumbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Item {
+  display: flex;
+  align-items: center;
+  text-transform: var(--x-buyer-journey-typography-case, inherit);
+}
+
+.Marker {
+  margin-right: var(--x-spacing-tight4x);
+}
+
+.Separator {
+  display: block;
+  margin-left: var(--x-buyer-journey-inline-gap);
+  margin-right: var(--x-buyer-journey-inline-gap);
+}

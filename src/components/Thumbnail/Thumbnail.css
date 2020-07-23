@@ -1,0 +1,47 @@
+.Thumbnail {
+  position: relative;
+  width: em(64px);
+  height: 100%;
+
+  & > .Image {
+    display: block;
+    object-fit: contain;
+    width: em(64px);
+    height: em(64px);
+    background-color: var(--color--white);
+    border-radius: calc(var(--x-global-border-radius) * 2);
+  }
+}
+
+.borderFull {
+  & > .Image {
+    border: 1px solid var(--x-default-color-border);
+  }
+}
+
+.Badge {
+  --size: em(24px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(25%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--size);
+  height: var(--size);
+  padding: 0 var(--x-spacing-tight3x);
+  border-radius: calc(var(--size) / 2);
+  font-size: var(--x-typography-size-small);
+  font-weight: var(--x-typography-primary-weight-bold);
+}
+
+.Badge-backgroundSubdued {
+  background-color: hsla(0, 0%, 45%, 90%);
+  color: var(--color--white);
+}
+
+.Badge-backgroundPrimary {
+  background-color: var(--x-color-primary);
+  color: var(--x-color-primary-text);
+}

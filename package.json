@@ -1,0 +1,69 @@
+{
+  "name": "@shopify/checkout-ui-react",
+  "version": "0.0.0",
+  "description": "Checkout UI library",
+  "publishConfig": {
+    "access": "public",
+    "@quilted:registry": "https://registry.npmjs.org"
+  },
+  "repository": "https://github.com/Shopify/checkout-ui",
+  "bugs": {
+    "url": "https://github.com/Shopify/checkout-ui/issues"
+  },
+  "author": "Shopify <dev@shopify.com>",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "index.js",
+  "module": "index.mjs",
+  "esnext": "index.esnext",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "esnext": "./index.esnext"
+    },
+    "./": "./"
+  },
+  "scripts": {
+    "test": "sk test",
+    "lint": "sk lint",
+    "type-check": "sk type-check",
+    "build": "sk build",
+    "storybook": "start-storybook"
+  },
+  "devDependencies": {
+    "@quilted/react-testing": "^0.1.4",
+    "@quilted/sewing-kit-plugins": "^0.1.26",
+    "@sewing-kit/cli": "^0.1.6",
+    "@shopify/eslint-plugin": "^37.0.1",
+    "@shopify/jest-dom-mocks": "^2.9.1",
+    "@storybook/addon-knobs": "5.3.18",
+    "@storybook/preact": "5.3.8",
+    "@svgr/webpack": "^5.1.0",
+    "@types/faker": "^4.1.12",
+    "@types/react": "^16.9.20",
+    "@types/react-dom": "^16.9.8",
+    "babel-preset-shopify": "^21.0.0",
+    "faker": "^4.1.0",
+    "postcss-functions": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "preact": "^10.4.1",
+    "prettier": "^2.0.5",
+    "stylelint-config-shopify": "^7.4.0",
+    "stylelint-use-nesting": "^2.0.0"
+  },
+  "peerDependencies": {
+    "preact": "^10.4.1"
+  },
+  "dependencies": {
+    "@quilted/react-auto-headings": "^0.1.0",
+    "@shopify/argo-checkout": "^0.3.4",
+    "@shopify/css-utilities": "^1.0.6"
+  },
+  "resolutions": {
+    "postcss-functions/postcss": "^7.0.0"
+  }
+}

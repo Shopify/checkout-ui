@@ -1,0 +1,21 @@
+.Group {
+  display: flex;
+
+  @media all and (min-width: 750px) {
+    & > * {
+      flex: 1 1 0;
+
+      & + * {
+        margin-inline-start: var(--x-spacing-base);
+      }
+    }
+  }
+
+  @media all and (max-width: 749px) {
+    flex-direction: column;
+
+    & > * + * {
+      margin-block-start: var(--x-spacing-base);
+    }
+  }
+}

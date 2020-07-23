@@ -1,0 +1,13 @@
+.Separator {
+  border: 0 solid var(--x-default-color-border);
+}
+
+.directionHorizontal {
+  height: 0;
+  width: 100%;
+}
+
+.directionVertical {
+  height: 100%;
+  width: 0;
+}

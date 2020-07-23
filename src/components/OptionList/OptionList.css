@@ -1,0 +1,114 @@
+.Title {
+  margin-bottom: var(--x-spacing-tight1x);
+}
+
+.OptionList {
+  color: var(--x-default-color-text);
+}
+
+.OptionList-backgroundTransparent {
+  --option-list-inner-border-color: var(--x-default-color-border);
+  --option-list-background-color: transparent;
+}
+
+.OptionList-backgroundSurfacePrimary {
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  --option-list-inner-border-color: var(--x-color-surface-primary-border);
+  --option-list-background-color: var(--x-color-surface-primary);
+}
+
+.OptionList-backgroundSurfaceSecondary {
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  --option-list-inner-border-color: var(--x-color-surface-secondary-border);
+  --option-list-background-color: var(--x-color-surface-secondary);
+}
+
+.OptionList-backgroundSurfaceTertiary {
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  --option-list-inner-border-color: var(--x-color-surface-tertiary-border);
+  --option-list-background-color: var(--x-color-surface-tertiary);
+}
+
+.isContainer {
+  border: 1px var(--x-default-color-border) solid;
+  border-width: var(--x-option-list-border, var(--x-border-full));
+  border-radius: var(
+    --x-option-list-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+
+  & > * {
+    --x-default-color-border: var(--option-list-inner-border-color);
+  }
+}
+
+.Option {
+  -webkit-tap-highlight-color: transparent;
+  background-color: var(--option-list-background-color);
+
+  &:not(:first-child) {
+    border-top: 1px var(--x-default-color-border) solid;
+    border-width: var(--x-option-list-border, var(--x-border-full));
+    margin-top: var(--x-option-list-block-gap);
+  }
+
+  &:first-child {
+    border-top-left-radius: var(
+      --x-option-list-border-radius,
+      var(--x-control-border-radius, var(--x-global-border-radius))
+    );
+    border-top-right-radius: var(
+      --x-option-list-border-radius,
+      var(--x-control-border-radius, var(--x-global-border-radius))
+    );
+  }
+
+  &:last-child {
+    border-bottom-left-radius: var(
+      --x-option-list-border-radius,
+      var(--x-control-border-radius, var(--x-global-border-radius))
+    );
+    border-bottom-right-radius: var(
+      --x-option-list-border-radius,
+      var(--x-control-border-radius, var(--x-global-border-radius))
+    );
+  }
+}
+
+.OptionLabel {
+  display: block;
+  cursor: pointer;
+  padding: var(--x-spacing-loose);
+}
+
+.Details {
+  background-color: var(--x-default-color-subdued);
+  border-top: 1px var(--x-default-color-border) solid;
+  padding: var(--x-spacing-loose);
+
+  &:last-child {
+    border-bottom-left-radius: var(
+      --x-option-list-border-radius,
+      var(--x-control-border-radius, var(--x-global-border-radius))
+    );
+    border-bottom-right-radius: var(
+      --x-option-list-border-radius,
+      var(--x-control-border-radius, var(--x-global-border-radius))
+    );
+  }
+}

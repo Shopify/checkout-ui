@@ -1,0 +1,26 @@
+.CalloutBanner {
+  padding: var(--x-spacing-loose);
+}
+
+.borderBlock {
+  border-block-start: 1px solid var(--x-default-color-border);
+  border-block-end: 1px solid var(--x-default-color-border);
+}
+
+.backgroundSecondary {
+  --x-default-color-border: var(--x-color-surface-secondary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-secondary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  background-color: var(--x-color-surface-secondary);
+  color: var(--x-default-color-text, inherit);
+}
+
+.backgroundTransparent {
+  background-color: transparent;
+}

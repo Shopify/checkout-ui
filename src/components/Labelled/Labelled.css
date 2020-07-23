@@ -1,0 +1,42 @@
+.Wrapper {
+  position: relative;
+}
+
+.Label-positionInside {
+  position: absolute;
+  pointer-events: none;
+  inset-block-start: em(5.6px);
+  inset-inline-start: calc(em(12px) + 1px);
+  transition: all var(--duration--base) var(--timing--base);
+  user-select: none;
+  opacity: 0;
+  z-index: 1;
+  max-width: calc(100% - em(26px));
+
+  &.Label-onBackgroundSurfacePrimary {
+    --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  }
+
+  &.Label-onBackgroundSurfaceSecondary {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+  }
+
+  &.Label-onBackgroundSurfaceTertiary {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-tertiary-text-subdued
+    );
+  }
+}
+
+.Label-positionOutside {
+  display: block;
+  margin-block-end: var(--x-spacing-tight4x);
+}
+
+.isFloating {
+  & .Label {
+    opacity: 1;
+  }
+}

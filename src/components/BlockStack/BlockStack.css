@@ -1,0 +1,85 @@
+.BlockStack {
+  display: flex;
+  flex-direction: column;
+
+  & > * + * {
+    margin-block-start: var(--x-spacing-base);
+  }
+
+  & .BlockStack {
+    min-width: 0;
+  }
+
+  @supports (display: grid) {
+    display: grid;
+    grid-row-gap: var(--x-spacing-base);
+
+    & > * + * {
+      margin-block-start: 0 !important; /* stylelint-disable-line declaration-no-important */
+    }
+  }
+}
+
+.spacingXtight {
+  & > * + * {
+    margin-block-start: var(--x-spacing-tight4x);
+  }
+
+  @supports (display: grid) {
+    grid-row-gap: var(--x-spacing-tight4x);
+  }
+}
+
+.spacingTight {
+  & > * + * {
+    margin-block-start: var(--x-spacing-tight1x);
+  }
+
+  @supports (display: grid) {
+    grid-row-gap: var(--x-spacing-tight1x);
+  }
+}
+
+.spacingLoose {
+  & > * + * {
+    margin-block-start: var(--x-spacing-loose1x);
+  }
+
+  @supports (display: grid) {
+    grid-row-gap: var(--x-spacing-loose1x);
+  }
+}
+
+.spacingXloose {
+  & > * + * {
+    margin-block-start: var(--x-spacing-loose4x);
+  }
+
+  @supports (display: grid) {
+    grid-row-gap: var(--x-spacing-loose4x);
+  }
+}
+
+.alignmentLeading {
+  align-items: flex-start;
+
+  @supports (display: grid) {
+    justify-items: start;
+  }
+}
+
+.alignmentCenter {
+  align-items: center;
+
+  @supports (display: grid) {
+    justify-items: center;
+  }
+}
+
+.alignmentTrailing {
+  align-items: flex-end;
+
+  @supports (display: grid) {
+    justify-items: end;
+  }
+}

@@ -1,0 +1,52 @@
+.Bookend {
+  display: flex;
+
+  & > * {
+    flex-grow: 1;
+    margin-inline-start: var(--x-spacing-base);
+
+    &:first-child {
+      margin-inline-start: 0;
+    }
+  }
+}
+
+.alignmentLeading {
+  align-items: flex-start;
+}
+
+.alignmentCenter {
+  align-items: center;
+}
+
+.alignmentTrailing {
+  align-items: flex-end;
+}
+
+.alignmentBaseline {
+  align-items: baseline;
+}
+
+.spacingXtight {
+  margin-inline-start: var(--x-spacing-tight4x);
+}
+
+.spacingTight {
+  margin-inline-start: var(--x-spacing-tight1x);
+}
+
+.spacingLoose {
+  margin-inline-start: var(--x-spacing-loose1x);
+}
+
+.spacingXloose {
+  margin-inline-start: var(--x-spacing-loose4x);
+}
+
+.trailing > *:last-child {
+  flex-grow: 0;
+}
+
+.leading > *:first-child {
+  flex-grow: 0;
+}

@@ -1,0 +1,12 @@
+.Wrapper {
+  padding: var(--x-spacing-loose) var(--x-spacing-loose4x);
+  border: 1px var(--x-default-color-border) solid;
+  border-radius: var(--x-global-border-radius);
+}
+
+.Icon {
+  display: grid;
+  align-items: center;
+  width: em(64px);
+  height: em(64px);
+}

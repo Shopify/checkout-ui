@@ -1,0 +1,11 @@
+.Stepper {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  /* TODO: Update with media query variable */
+  @media all and (min-width: 750px) {
+    display: flex;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,516 @@
+.Shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-areas: 'header' 'disclosure' 'subheader' 'main' 'footer';
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+
+  @media all and (min-width: 1000px) {
+    grid-template-areas:
+      'header header'
+      'disclosure disclosure'
+      'subheader subheader'
+      'main secondary'
+      'footer footer';
+
+    grid-template-columns: 58% 42%;
+  }
+
+  /*
+  Current checkout has a max-width of 1100px, but that excludes 5% padding on
+  the outsides of the container. 1100px / 0.9 = ~1222px. After this point, the
+  sections need to stop growing. You will see this breakpoint also used for some
+  changes to the section padding below.
+
+  We also need to adjust the columns, because current checkout has the sections
+  centered within the viewport after this breakpoint. To reproduce that behavior
+  while allowing the sections span to the viewport edge, we set the larger column
+  to be 50%, plus how much it "overhangs" the center of checkout.
+  */
+  @media all and (min-width: 1223px) {
+    grid-template-columns: calc(50% + 88px) 1fr;
+  }
+}
+
+.headerPositionStart {
+  & .HeaderInner {
+    @media all and (min-width: 1000px) {
+      padding-inline-start: 5vw;
+      padding-inline-end: 5vw;
+    }
+  }
+}
+
+.headerPositionInline {
+  & .Header {
+    @media all and (min-width: 1000px) {
+      --Header-padding-block-start: 0;
+      --Header-padding-block-end: 0;
+    }
+  }
+
+  & .SectionInner {
+    @media all and (min-width: 1000px) {
+      padding-block-start: 4em;
+    }
+  }
+
+  & .Subheader {
+    margin-block-start: var(--x-spacing-loose);
+    margin-block-end: var(--x-spacing-loose2x);
+  }
+}
+
+.headerPositionInlineSecondary {
+  & .Header {
+    @media all and (min-width: 1000px) {
+      --Header-padding-block-start: 0;
+      --Header-padding-block-end: 0;
+    }
+  }
+
+  & .SectionInner {
+    @media all and (min-width: 1000px) {
+      padding-block-start: 4em;
+    }
+  }
+}
+
+.footerPositionInline {
+  & .Footer {
+    @media all and (min-width: 1000px) {
+      --Footer-margin-block-start: 4em;
+    }
+  }
+}
+
+.footerPositionEnd {
+  & .SectionInner {
+    @media all and (min-width: 1000px) {
+      padding-block-end: 4em;
+    }
+  }
+
+  & .Footer {
+    --Footer-margin-block-start: 0;
+    --Footer-padding-block-end: 1.5em;
+  }
+
+  &.FooterInner {
+    @media all and (min-width: 1000px) {
+      padding-inline-start: 5vw;
+      padding-inline-end: 5vw;
+    }
+  }
+}
+
+.Header {
+  --Header-padding-block-start: 1.5em;
+  --Header-padding-block-end: 1.5em;
+  --Header-justify-content: flex-start;
+  grid-area: header;
+  background-position: 50% 50%;
+  background-size: cover;
+  padding: var(--Header-padding-block-start, 0) 0
+    var(--Header-padding-block-end, 0);
+
+  @media all and (min-width: 1000px) {
+    --Header-padding-block-start: 3em;
+    --Header-padding-block-end: 3em;
+  }
+}
+
+.Header-blockPaddingWeightedStart {
+  @media all and (min-width: 1000px) {
+    --Header-padding-block-start: 6em;
+    --Header-padding-block-end: 2em;
+  }
+}
+
+.Header-alignmentStart {
+  --Header-justify-content: flex-start;
+}
+
+.Header-alignmentCenter {
+  --Header-justify-content: center;
+}
+
+.Header-alignmentEnd {
+  --Header-justify-content: flex-end;
+}
+
+.HeaderInner {
+  display: flex;
+  justify-content: var(--Header-justify-content);
+  max-width: rem(588px);
+  padding: 0 rem(14px);
+  margin: 0 auto;
+
+  @media all and (min-width: 1000px) {
+    max-width: calc(1100px + 10vw);
+    padding: 0;
+  }
+}
+
+.Subheader {
+  --Subheader-block-margin-end: 2em;
+  --Subheader-justify-content: flex-start;
+  grid-area: subheader;
+  margin-block-end: var(--Subheader-block-margin-end);
+}
+
+.Subheader-connectedBlockStart {
+  --Subheader-block-margin-start: 0;
+}
+
+.Subheader-alignmentStart {
+  --Subheader-justify-content: flex-start;
+}
+
+.Subheader-alignmentCenter {
+  --Subheader-justify-content: center;
+}
+
+.Subheader-alignmentEnd {
+  --Subheader-justify-content: flex-end;
+}
+
+.SubheaderInner {
+  display: flex;
+  justify-content: var(--Subheader-justify-content);
+  max-width: rem(588px);
+  padding: 0 rem(14px);
+  margin: 0 auto;
+
+  @media all and (min-width: 1000px) {
+    max-width: calc(1100px + 10vw);
+    padding: 0;
+  }
+}
+
+.Footer {
+  --Footer-margin-block-start: 1.5em;
+  --Footer-padding-block-start: 1.5em;
+  --Footer-padding-block-end: 0;
+  border-block-start: 1px var(--x-default-color-border) solid;
+  grid-area: footer;
+  padding: var(--Footer-padding-block-start, 0) 0
+    var(--Footer-padding-block-end, 0);
+  margin-block-start: var(--Footer-margin-block-start);
+}
+
+.FooterInner {
+  max-width: rem(588px);
+  padding: 0 rem(14px);
+  margin: 0 auto;
+
+  @media all and (min-width: 1000px) {
+    max-width: calc(1100px + 10vw);
+    padding: 0;
+  }
+}
+
+.Section {
+  display: flex;
+  justify-content: flex-end;
+  grid-area: main;
+  background: transparent;
+  color: var(--x-default-color-text);
+  margin-inline-start: var(--Section-margin-inline-start);
+  margin-inline-end: var(--Section-margin-inline-end);
+}
+
+.Section-secondary {
+  display: none;
+  grid-area: secondary;
+
+  @media all and (min-width: 1000px) {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  & .SectionInner {
+    @media all and (min-width: 1000px) {
+      padding-inline-start: 3.6vw; /* 4% padding, 90% of viewport */
+      padding-inline-end: 5vw;
+      max-width: calc(462px + 5vw);
+    }
+
+    @media all and (min-width: 1223px) {
+      padding-inline-start: 44px;
+    }
+  }
+
+  &.Section-bordered {
+    border-inline-start-width: 1px;
+  }
+
+  &.Section-inlineSizeContentSize {
+    /* stylelint-disable selector-max-class */
+    & .SectionInner {
+      @media all and (min-width: 1000px) {
+        margin-inline-start: 0;
+        margin-inline-end: 5vw;
+        max-width: 462px;
+      }
+    }
+    /* stylelint-enable selector-max-class */
+  }
+}
+
+.Section-blockSizeContentSize {
+  align-self: start;
+}
+
+.Section-inlineSizeContentSize {
+  background: transparent !important; /* stylelint-disable-line declaration-no-important */
+
+  & .SectionInner {
+    @media all and (min-width: 1223px) {
+      padding-inline-start: 44px;
+      padding-inline-end: 44px;
+    }
+
+    @media all and (min-width: 1000px) {
+      margin-inline-start: 5vw;
+      padding-inline-start: 3.6vw;
+      padding-inline-end: 3.6vw;
+      max-width: 638px;
+    }
+  }
+}
+
+.Section-bordered {
+  border-color: var(--x-default-color-border);
+  border-style: solid;
+  border-inline-start-width: 0;
+  border-inline-end-width: 0;
+  border-block-start-width: 0;
+  border-block-end-width: 0;
+}
+
+.Section-backgroundSurfacePrimary {
+  --x-default-color-border: var(--x-color-surface-primary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-primary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  background-color: var(--x-color-surface-primary);
+
+  & .SectionInner {
+    background-color: var(--x-color-surface-primary);
+  }
+}
+
+.Section-backgroundSurfaceSecondary {
+  --x-default-color-border: var(--x-color-surface-secondary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-secondary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  background-color: var(--x-color-surface-secondary);
+
+  & .SectionInner {
+    background-color: var(--x-color-surface-secondary);
+  }
+}
+
+.Section-backgroundSurfaceTertiary {
+  --x-default-color-border: var(--x-color-surface-tertiary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-tertiary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  background-color: var(--x-color-surface-tertiary);
+
+  & .SectionInner {
+    background-color: var(--x-color-surface-tertiary);
+  }
+}
+
+.Section-backgroundTransparent {
+  background-color: transparent;
+
+  & .SectionInner {
+    background-color: transparent;
+  }
+}
+
+.SectionInner {
+  display: grid;
+  justify-content: stretch;
+  grid-template-areas: 'header' 'disclosure' 'subheader' 'content' 'footer';
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  padding-block-start: 2em;
+  padding-block-end: 1.5em;
+  width: 100%;
+  background: transparent;
+
+  @media all and (min-width: 1000px) {
+    padding-inline-start: 5vw;
+    padding-inline-end: 5.4vw; /* 5% padding, 90% of viewport */
+    max-width: calc(638px + 5vw);
+  }
+
+  @media all and (min-width: 1223px) {
+    padding-inline-end: 66px;
+  }
+}
+
+.SectionContent {
+  grid-area: content;
+
+  @nest .Shell.subheaderHidden .Section:not(.Section-secondary) & {
+    margin-block-start: var(--x-spacing-loose2x);
+  }
+}
+
+.SectionContentInner {
+  max-width: rem(588px);
+  padding: 0 rem(14px);
+  margin: 0 auto;
+
+  @media all and (min-width: 1000px) {
+    max-width: calc(1100px + 10vw);
+    padding: 0;
+  }
+}
+
+.Heading {
+  color: inherit;
+  text-decoration: none;
+  font-size: var(
+    --x-heading-level1-typography-size,
+    var(--x-typography-size-xxlarge)
+  );
+  font-weight: var(
+    --x-heading-level1-typography-weight,
+    var(
+      --x-heading-typography-weight,
+      var(--x-typography-secondary-weight-base)
+    )
+  );
+  font-family: var(
+    --x-heading-level1-typography-fonts,
+    var(--x-heading-typography-fonts, var(--x-typography-secondary-fonts))
+  );
+  line-height: var(--x-global-typography-line-size);
+}
+
+.Logo {
+  display: inline-block;
+  max-width: 100%;
+  max-height: var(--Logo-height, em(40px));
+}
+
+.Disclosure {
+  grid-area: disclosure;
+
+  @media all and (min-width: 1000px) {
+    display: none;
+  }
+}
+
+.Disclosure-bordered {
+  & .DisclosureButton {
+    border-block-start: 1px solid var(--x-default-color-border);
+    border-block-end: 1px solid var(--x-default-color-border);
+  }
+
+  & .DisclosureContent {
+    border-block-end: 1px solid var(--x-default-color-border);
+  }
+}
+
+.Disclosure-backgroundSurfacePrimary {
+  --x-default-color-border: var(--x-color-surface-primary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-primary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text--emphasized
+  );
+  background-color: var(--x-color-surface-primary);
+}
+
+.Disclosure-backgroundSurfaceSecondary {
+  --x-default-color-border: var(--x-color-surface-secondary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-secondary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  background-color: var(--x-color-surface-secondary);
+}
+
+.Disclosure-backgroundSurfaceTertiary {
+  --x-default-color-border: var(--x-color-surface-tertiary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-tertiary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  background-color: var(--x-color-surface-tertiary);
+}
+
+.DisclosureButton {
+  display: block;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--x-color-interactive-text);
+}
+
+.DisclosureLayout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  max-width: rem(588px);
+  padding: var(--x-spacing-loose) rem(14px);
+  margin: 0 auto;
+  column-gap: var(--x-spacing-loose);
+
+  @media all and (min-width: 1000px) {
+    max-width: calc(1100px + 10vw);
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+}
+
+.DisclosureContent {
+  overflow: hidden;
+  transition: height var(--duration--slow) var(--timing--spring);
+}
+
+.DisclosureContentInner {
+  max-width: rem(588px);
+  padding: var(--x-spacing-loose) rem(14px);
+  margin: 0 auto;
+
+  @media all and (min-width: 1000px) {
+    max-width: calc(1100px + 10vw);
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+  }
+}

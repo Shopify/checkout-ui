@@ -1,0 +1,15 @@
+.Link {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  text-decoration: none;
+  color: var(--x-color-interactive-text);
+  transition: color var(--duration--base) var(--timing--base);
+
+  &:hover {
+    color: var(--x-color-interactive-text-hovered);
+  }
+
+  &:active {
+    color: var(--x-color-interactive-text-pressed);
+  }
+}
