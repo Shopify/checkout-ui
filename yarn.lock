@@ -1876,6 +1876,11 @@
     promise "^8.0.3"
     tslib "^1.9.3"
 
+"@shopify/webpack-ignore-typescript-export-warnings-plugin@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@shopify/webpack-ignore-typescript-export-warnings-plugin/-/webpack-ignore-typescript-export-warnings-plugin-1.0.4.tgz#372aa8ed900533df84bb1013b7a243855113bfad"
+  integrity sha512-72vM0Ak3SzoralzoWD5opzzJd8zS767K7ihgymnYW/b9jUELXjPdixJgvcL3OrKwDWnuhpMtuIp3wvSxx52Ltg==
+
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"

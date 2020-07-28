@@ -59,6 +59,7 @@
     "@sewing-kit/cli": "^0.1.6",
     "@shopify/eslint-plugin": "^37.0.1",
     "@shopify/jest-dom-mocks": "^2.9.1",
+    "@shopify/webpack-ignore-typescript-export-warnings-plugin": "^1.0.4",
     "@storybook/addon-knobs": "5.3.18",
     "@storybook/preact": "5.3.8",
     "@types/faker": "^4.1.12",
