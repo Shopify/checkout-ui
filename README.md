@@ -6,6 +6,16 @@ This library is intended to be used to help produce WYSIWYG editors for Shopify 
 
 More components are available in this package than are provided by Argo. The set of components we provide with Argo will grow over time (and if you see anything in this library you would love to have in Argo, please [raise an issue in the argo-checkout repo](https://github.com/Shopify/argo-checkout/issues/new)), but this library includes all of the UI components we use throughout checkout as a convenience for us at Shopify in generating this package. Any components, properties, or other functionality that you see in this package that does not match the [component APIs provided by Argo](https://github.com/Shopify/argo-checkout/blob/main/packages/argo-checkout/documentation/components.md) is considered unstable, and may be removed or changed at any time without notice. Additionally, components in this library have no documentation; refer to the Argo component documentation for details on the usage of the many components and props provided by this library.
 
+## Installation
+
+`@shopify/checkout-ui-react` is provided as npm package.
+
+```sh
+yarn add @shopify/checkout-ui-react
+#or
+npm install @shopify/checkout-ui-react
+```
+
 ## Technical details
 
 This library is authored with [React](https://reactjs.org). However, the Argo host that Shopify provides aliases all React APIs to [Preact](https://preactjs.com), a lightweight alternative to React. If you are using these components directly, we recommend you do the same (see the [webpack section below](#webpack) for details).
