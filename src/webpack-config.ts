@@ -8,16 +8,19 @@ const SVG_ICONS_PATH_REGEX = /icons\/.*\.svg$/;
 const IMAGE_PATH_REGEX = /\.(jpe?g|png|gif|svg)$/;
 const LIBRARY_REGEX = /node_modules\/@shopify\/checkout-ui-react/;
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {
+  IgnoreTypeScriptExportWarnings,
+} = require('@shopify/webpack-ignore-typescript-export-warnings-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
+const postcssFunctions = require('postcss-functions');
+const postcssLogical = require('postcss-logical');
+const postcssDirPseudoClass = require('postcss-dir-pseudo-class');
+
 export function addWebpackConfig(
   config: Configuration,
   {preact = true, development = process.env.NODE_ENV === 'development'} = {},
 ): Configuration {
-  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-  const postcssPresetEnv = require('postcss-preset-env');
-  const postcssFunctions = require('postcss-functions');
-  const postcssLogical = require('postcss-logical');
-  const postcssDirPseudoClass = require('postcss-dir-pseudo-class');
-
   return {
     ...config,
     resolve: {
@@ -173,5 +176,19 @@ export function addWebpackConfig(
         },
       ],
     },
+    plugins: [
+      ...(config.plugins ?? []),
+      new IgnoreTypeScriptExportWarnings(),
+      !hasMiniCssExtractPlugin(config) && new MiniCssExtractPlugin(),
+    ].filter(Boolean),
   };
+}
+
+function hasMiniCssExtractPlugin(config: Configuration) {
+  if (!config.plugins) {
+    return false;
+  }
+  return config.plugins.some((plugin) => {
+    return plugin instanceof MiniCssExtractPlugin;
+  });
 }
