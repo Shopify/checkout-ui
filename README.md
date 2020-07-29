@@ -43,13 +43,17 @@ module.exports = addWebpackConfig({
   // Your own webpack config goes here
 });
 
-// Or, if you want to disable the automatic `preact` aliasing:
-
+// `addWebpackConfig` accepts some options to customize the build
 module.exports = addWebpackConfig(
   {
     // Your own webpack config goes here
   },
-  {preact: false},
+  {
+    // disable the automatic `preact` aliasing:
+    preact: false,
+    // whether build is for development or production. Defaults to `NODE_ENV === "development"`
+    development: true,
+  },
 );
 ```
 
