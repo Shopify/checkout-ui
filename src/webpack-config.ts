@@ -54,7 +54,7 @@ export function addWebpackConfig(
           test: /\.esnext$/,
           include: LIBRARY_REGEX,
           use: {
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
               configFile: false,
               sourceType: 'unambiguous',
@@ -76,13 +76,13 @@ export function addWebpackConfig(
           include: LIBRARY_REGEX,
           use: [
             development
-              ? {loader: 'style-loader'}
+              ? {loader: require.resolve('style-loader')}
               : {
                   loader: MiniCssExtractPlugin.loader,
                   options: {esModule: true},
                 },
             {
-              loader: 'css-loader',
+              loader: require.resolve('css-loader'),
               options: {
                 esModule: true,
                 modules: {
@@ -96,7 +96,7 @@ export function addWebpackConfig(
               },
             },
             {
-              loader: 'postcss-loader',
+              loader: require.resolve('postcss-loader'),
               options: {
                 ident: 'postcss-checkout-ui',
                 plugins: () => [
@@ -154,7 +154,7 @@ export function addWebpackConfig(
           test(resource: string) {
             return SVG_ICONS_PATH_REGEX.test(resource);
           },
-          use: ['@svgr/webpack'],
+          use: [require.resolve('@svgr/webpack')],
         },
         {
           include: LIBRARY_REGEX,
@@ -166,12 +166,12 @@ export function addWebpackConfig(
           },
           use: [
             {
-              loader: 'file-loader',
+              loader: require.resolve('file-loader'),
               options: {
                 emitFile: true,
               },
             },
-            !development && {loader: 'image-webpack-loader'},
+            !development && {loader: require.resolve('image-webpack-loader')},
           ].filter(Boolean) as import('webpack').RuleSetLoader[],
         },
       ],
