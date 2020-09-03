@@ -1,13 +1,77 @@
 .MoneyLine {
-  display: flex;
-  justify-content: space-between;
-  &:not(:first-child) {
-    padding-top: var(--x-spacing-tight);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: var(--x-spacing-loose);
+  grid-template-areas: 'label value';
+  padding: var(--x-money-lines-block-padding)
+    var(--x-money-lines-inline-padding);
+}
+
+.Label {
+  grid-area: label;
+}
+
+.Value {
+  grid-area: value;
+}
+
+.inlineAlignmentEnd {
+  grid-template-columns: 1fr 1fr;
+  justify-items: end;
+}
+
+.inlineAlignmentStart {
+  grid-template-columns: 1fr 1fr;
+  justify-items: start;
+}
+
+.inlineAlignmentToAxis {
+  grid-template-columns: 1fr 1fr;
+
+  & .Label {
+    justify-self: end;
+  }
+
+  & .Value {
+    justify-self: start;
   }
 }
 
+.backgroundSurfacePrimary {
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  background-color: var(--x-color-surface-primary);
+  color: var(--x-default-color-text);
+}
+
+.backgroundSurfaceSecondary {
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  background-color: var(--x-color-surface-secondary);
+  color: var(--x-default-color-text);
+}
+
+.backgroundSurfaceTertiary {
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  background-color: var(--x-color-surface-tertiary);
+  color: var(--x-default-color-text);
+}
+
 .MoneyLineSeparator {
-  margin: var(--x-spacing-loose) 0;
+  margin: var(--x-money-lines-separator-block-gap) 0 !important; /* stylelint-disable-line declaration-no-important */
   border: none;
   border-block-start: 1px solid var(--x-default-color-border, transparent);
 }

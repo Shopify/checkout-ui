@@ -1,10 +1,14 @@
 import React from 'react';
+import {withKnobs} from '@storybook/addon-knobs';
+
+import {themeWithKnobs} from '../../storybook-utilities';
 
 import {Link, Props} from './Link';
 
 const meta = {
   component: Link,
   title: 'Link',
+  decorators: [withKnobs, themeWithKnobs('primaryButton')],
 };
 
 export default meta;
@@ -26,5 +30,17 @@ export const externalLink = () => (
 );
 
 export const linkWithoutUrl = () => (
-  <Link to={undefined}>Link without Url</Link>
+  <Link underline to={undefined}>
+    Link without Url
+  </Link>
+);
+
+export const underline = () => (
+  <>
+    <Link {...defaultProps} underline>
+      Just a link
+    </Link>
+    <br />
+    <Link underline>Link without Url (rendered as a Button)</Link>
+  </>
 );

@@ -20,18 +20,11 @@ const meta = {
 
 export default meta;
 
-const placeholder =
-  '//cdn.shopify.com/s/assets/checkout/product-blank-98d4187c2152136e9fb0587a99dfcce6f6873f3a9f21ea9135ed7f495296090f.png';
-
 function Item() {
   return (
     <ResourceItem>
       <ResourceItemContent>
-        <Thumbnail
-          source={placeholder}
-          description="some media source"
-          badge={1}
-        />
+        <Thumbnail description="some media source" badge={1} />
       </ResourceItemContent>
       <ResourceItemContent primary>
         <Text emphasized>T-shirt</Text>
@@ -74,8 +67,8 @@ export const borderFull = () => (
   </ResourceList>
 );
 
-export const borderBetweenItems = () => (
-  <ResourceList border="betweenItems">
+export const borderAroundItems = () => (
+  <ResourceList border="aroundItems">
     <Item />
     <Item />
     <Item />
@@ -102,16 +95,13 @@ export const withHeader = () => (
 );
 
 export const withHiddenHeaderContent = () => (
-  <ResourceList>
+  <ResourceList titleHidden title="title">
     <ResourceListHeader>
-      <ResourceListHeaderContent hidden>
-        <Text>Image</Text>
+      <ResourceListHeaderContent primary>
+        <Text emphasized>test</Text>
       </ResourceListHeaderContent>
-      <ResourceListHeaderContent primary hidden>
-        <Text>Description</Text>
-      </ResourceListHeaderContent>
-      <ResourceListHeaderContent hidden>
-        <Text>Price</Text>
+      <ResourceListHeaderContent>
+        <Text emphasized>test</Text>
       </ResourceListHeaderContent>
     </ResourceListHeader>
     <Item />

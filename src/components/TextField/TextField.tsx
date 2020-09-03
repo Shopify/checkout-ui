@@ -32,6 +32,21 @@ export interface Props extends TextFieldProps {
   accessibilityDescription?: string;
   /* Automatically focus on this element on first render. */
   autofocus?: boolean;
+  /**
+   * In rare cases, like the PhoneField component, we completely control state.
+   * In those cases, there is never a difference between the `value` prop of the field
+   * and the current value in the field, and so this component never considers the
+   * field to have changed. Use the `controlledValue` prop to provide the value that
+   * should be shown to the buyer in those circumstances, but where the `value` prop
+   * will continue to be used as the comparison value to determine whether the field
+   * has changed (this will usually be set to the last committed, unformatted value
+   * for the controlled input).
+   */
+  controlledValue?: string;
+  /* Whether the field can be modified */
+  disabled?: boolean;
+  /* Whether the field is read-only */
+  readonly?: boolean;
 }
 
 /**
@@ -39,7 +54,12 @@ export interface Props extends TextFieldProps {
  */
 export const TextField = forwardRef((props: Props, ref) => {
   const {
-    textFields: {labelPosition, background = 'surfaceTertiary'},
+    textFields: {
+      labelPosition,
+      background = 'surfaceTertiary',
+      errorIndentation,
+      errorTypographyStyle,
+    },
   } = useThemeConfiguration();
 
   const {
@@ -62,7 +82,15 @@ export const TextField = forwardRef((props: Props, ref) => {
   ) : null;
 
   const errorMarkup = error && (
-    <InlineError controlID={id}>{error}</InlineError>
+    <span
+      className={classNames(
+        errorIndentation &&
+          styles[variationName('Error-errorIndentation', errorIndentation)],
+        errorTypographyStyle && typographyStyles[errorTypographyStyle],
+      )}
+    >
+      <InlineError controlID={id}>{error}</InlineError>
+    </span>
   );
 
   const tooltipMarkup = tooltip ? (
@@ -82,6 +110,7 @@ export const TextField = forwardRef((props: Props, ref) => {
         isEmpty={isEmptyString(explicitValue)}
         position={labelPosition}
         background={background}
+        subdued={props.readonly}
       >
         <div className={styles.Wrapper}>
           {description}
@@ -94,7 +123,7 @@ export const TextField = forwardRef((props: Props, ref) => {
   );
 });
 
-interface FieldProps extends Omit<TextFieldProps, 'id'> {
+interface FieldProps extends Omit<Props, 'id'> {
   id: string;
   ariaActiveDescendant?: string;
   ariaAutocomplete?: string;
@@ -113,6 +142,7 @@ export const Field = forwardRef(
       name,
       label,
       value: explicitValue,
+      controlledValue,
       type = 'text',
       role,
       required,
@@ -121,6 +151,8 @@ export const Field = forwardRef(
       autocomplete,
       autofocus,
       multiline,
+      disabled,
+      readonly,
       ariaActiveDescendant,
       ariaAutocomplete,
       ariaControls,
@@ -167,7 +199,7 @@ export const Field = forwardRef(
     const labelled = useLabelled();
 
     const [localValue, setLocalValue] = usePartiallyControlledState(
-      explicitValue,
+      controlledValue ?? explicitValue,
     );
 
     const className = classNames(
@@ -177,7 +209,8 @@ export const Field = forwardRef(
       labelled.isFloating &&
         labelPosition !== 'outside' &&
         styles['Field-isFloating'],
-
+      disabled && styles['Field-isDisabled'],
+      readonly && styles['Field-isReadOnly'],
       styles[variationName('Field-background', background)],
       styles[variationName('Field-border', border)],
       styles[variationName('Field-borderColor', borderColor)],
@@ -197,6 +230,8 @@ export const Field = forwardRef(
       className,
       required,
       type: normalizeType(multiline ? undefined : type),
+      disabled,
+      readOnly: readonly,
       'aria-activedescendant': ariaActiveDescendant,
       'aria-autocomplete': ariaAutocomplete,
       'aria-controls': ariaControls,
@@ -204,17 +239,21 @@ export const Field = forwardRef(
       'aria-expanded': ariaExpanded,
       'aria-invalid': Boolean(error),
       'aria-required': required,
-      onBlur: ({currentTarget: {value}}) => {
-        const currentValue = explicitValue ?? '';
-        if (value !== currentValue) onChange?.(value);
-
+      onBlur: () => {
         onBlur?.();
         labelled.onBlur();
       },
-      onChange({currentTarget: {value}}) {
+      onInput({currentTarget: {value}}) {
         setLocalValue(value);
         onInput?.(value);
         labelled.onChange(isEmptyString(value));
+      },
+      // In Preact, when used in addition to onInput, the onChange follows the standard DOM change event
+      // and gets fired only when an element's value is committed by the user.
+      // @see https://preactjs.com/guide/v10/differences-to-react/#use-oninput-instead-of-onchange
+      onChange({currentTarget: {value}}) {
+        const currentValue = explicitValue ?? '';
+        if (value !== currentValue) onChange?.(value);
       },
       onFocus: () => {
         onFocus?.();

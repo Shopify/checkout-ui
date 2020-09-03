@@ -9,6 +9,7 @@ import {InlineError} from '../InlineError';
 import {useThemeConfiguration} from '../Theme';
 import {useId, createIdCreator} from '../../utilities/id';
 import {errorId} from '../../utilities/errors';
+import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './Checkbox.css';
 
@@ -25,9 +26,17 @@ export function Checkbox({
   ...rest
 }: Props) {
   const id = useId(explicitId, createId);
+  const {
+    checkbox: {errorIndentation, errorTypographyStyle},
+  } = useThemeConfiguration();
 
   const errorMarkup = error ? (
-    <div className={styles.Error}>
+    <div
+      className={classNames(
+        styles.Error,
+        errorTypographyStyle && typographyStyles[errorTypographyStyle],
+      )}
+    >
       <InlineError controlID={id}>{error}</InlineError>
     </div>
   ) : null;
@@ -37,9 +46,17 @@ export function Checkbox({
     disabled && styles['Label-isDisabled'],
   );
 
+  const hasError = Boolean(error);
+
   return (
     <div
-      className={classNames(styles.Wrapper, Boolean(error) && styles.hasError)}
+      className={classNames(
+        styles.Wrapper,
+        hasError && styles.hasError,
+        hasError &&
+          errorIndentation &&
+          styles[variationName('errorIndentation', errorIndentation)],
+      )}
     >
       <CheckboxControl
         id={id}

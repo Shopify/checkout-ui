@@ -1,6 +1,6 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {SelectProps} from '@shopify/argo-checkout';
+import {SelectProps as SelectPropsArgo} from '@shopify/argo-checkout';
 
 import {View} from '../View';
 import {InlineError} from '../InlineError';
@@ -20,6 +20,11 @@ export const PLACEHOLDER_VALUE = '';
 
 const createId = createIdCreator('Select');
 
+export interface SelectProps extends SelectPropsArgo {
+  /* Whether the field is read only */
+  readonly?: boolean;
+}
+
 export function Select({
   id: explicitId,
   name,
@@ -27,6 +32,7 @@ export function Select({
   options,
   value = PLACEHOLDER_VALUE,
   disabled,
+  readonly,
   required,
   error,
   autocomplete,
@@ -43,6 +49,8 @@ export function Select({
       disclosureIcon = 'caretDown',
       disclosureIconSeparator,
       typographyStyle,
+      errorIndentation,
+      errorTypographyStyle,
     },
     label: {typographyStyle: labelTypographyStyle},
   } = useThemeConfiguration();
@@ -50,13 +58,22 @@ export function Select({
   const id = useId(explicitId, createId);
 
   const errorMarkup = error && (
-    <InlineError controlID={id}>{error}</InlineError>
+    <span
+      className={
+        (errorIndentation &&
+          styles[variationName('Error-errorIndentation', errorIndentation)],
+        errorTypographyStyle && typographyStyles[errorTypographyStyle])
+      }
+    >
+      <InlineError controlID={id}>{error}</InlineError>
+    </span>
   );
 
   const className = classNames(
     styles.Select,
     Boolean(error) && styles.hasError,
     disabled && styles['Select-isDisabled'],
+    readonly && styles['Select-isReadOnly'],
     labelPosition === 'outside' && styles['Select-hasOutsideLabel'],
     styles[variationName('Select-background', background)],
     styles[variationName('Select-border', border)],
@@ -125,7 +142,7 @@ export function Select({
               <option
                 key={option.value}
                 value={option.value}
-                disabled={option.disabled}
+                disabled={option.disabled || readonly}
               >
                 {option.label}
               </option>

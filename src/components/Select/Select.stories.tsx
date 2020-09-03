@@ -37,6 +37,8 @@ export const preselectedValue = () => <Select {...defaultProps} value="UK" />;
 
 export const disabled = () => <Select {...defaultProps} disabled />;
 
+export const readonly = () => <Select {...defaultProps} readonly />;
+
 export const withError = () => (
   <Select {...defaultProps} error="Select a country" />
 );

@@ -91,6 +91,20 @@ function toCss(customProperties: UiTheme['customProperties']) {
     [`.${legacyStyles.colorSurfaceTertiary} .${legacyStyles.utilityDefaultTextColorEmphasized}`]: {
       color: customProperties.colorSurfaceTertiaryTextEmphasized,
     },
+    [`.${legacyStyles.colorSurfaceQuaternary}`]: {
+      color: customProperties.colorSurfaceQuaternaryText,
+      'border-color': customProperties.colorSurfaceQuaternaryBorder,
+      'background-color': customProperties.colorSurfaceQuaternary,
+    },
+    [`.${legacyStyles.colorSurfaceQuaternary} .${legacyStyles.utilityDefaultBorderColor}`]: {
+      'border-color': customProperties.colorSurfaceQuaternaryBorder,
+    },
+    [`.${legacyStyles.colorSurfaceQuaternary} .${legacyStyles.utilityDefaultTextColorSubdued}`]: {
+      color: customProperties.colorSurfaceQuaternaryTextSubdued,
+    },
+    [`.${legacyStyles.colorSurfaceQuaternary} .${legacyStyles.utilityDefaultTextColorEmphasized}`]: {
+      color: customProperties.colorSurfaceQuaternaryTextEmphasized,
+    },
   });
 }
 

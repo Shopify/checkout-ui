@@ -66,6 +66,20 @@ describe('<TextField />', () => {
     expect(textField).not.toContainReactComponent('input');
   });
 
+  it('renders a disabled input element when the disabled prop is true', () => {
+    const textField = mountWithContext(
+      <TextField {...defaultProps} disabled />,
+    );
+    expect(textField).toContainReactComponent('input', {disabled: true});
+  });
+
+  it('renders a readonly input element when the readonly prop is true', () => {
+    const textField = mountWithContext(
+      <TextField {...defaultProps} readonly />,
+    );
+    expect(textField).toContainReactComponent('input', {readOnly: true});
+  });
+
   it('calls an onFocus callback when the input gains focus', () => {
     const onFocus = jest.fn();
     const textField = mountWithContext(
@@ -95,7 +109,7 @@ describe('<TextField />', () => {
     );
 
     const value = faker.random.alphaNumeric();
-    triggerChange(textField, value);
+    textField.find('input')!.trigger('onInput', {currentTarget: {value}});
 
     expect(onInput).toHaveBeenCalledWith(value);
   });
@@ -125,8 +139,7 @@ describe('<TextField />', () => {
       );
 
       const value = faker.random.alphaNumeric();
-
-      triggerChange(textField, value);
+      textField.find('input')!.trigger('onInput', {currentTarget: {value}});
 
       expect(onChange).not.toHaveBeenCalled();
       expect(textField).toContainReactComponent('input', {value});
@@ -139,8 +152,8 @@ describe('<TextField />', () => {
         <TextField {...defaultProps} value={value} onChange={onChange} />,
       );
 
-      triggerChange(textField, '');
-      triggerChange(textField, value);
+      textField.find('input')!.trigger('onInput', {currentTarget: {value: ''}});
+      textField.find('input')!.trigger('onInput', {currentTarget: {value}});
 
       textField.find('input')!.trigger('onBlur', {currentTarget: {value}});
 
@@ -154,9 +167,8 @@ describe('<TextField />', () => {
       );
 
       const value = faker.random.alphaNumeric();
-      triggerChange(textField, value);
-
-      textField.find('input')!.trigger('onBlur', {currentTarget: {value}});
+      textField.find('input')!.trigger('onInput', {currentTarget: {value}});
+      textField.find('input')!.trigger('onChange', {currentTarget: {value}});
 
       expect(onChange).toHaveBeenCalledWith(value);
     });
@@ -179,7 +191,9 @@ describe('<TextField />', () => {
         <TextField {...defaultProps} label={label} />,
       );
 
-      triggerChange(textField, faker.random.alphaNumeric());
+      textField.find('input')!.trigger('onInput', {
+        currentTarget: {value: faker.random.alphaNumeric()},
+      });
 
       expect(textField).not.toContainReactComponent('input', {
         placeholder: label,
@@ -192,8 +206,12 @@ describe('<TextField />', () => {
         <TextField {...defaultProps} label={label} />,
       );
 
-      triggerChange(textField, 'snowdevil@shopify.com');
-      triggerChange(textField, '');
+      textField.find('input')!.trigger('onInput', {
+        currentTarget: {value: 'snowdevil@shopify.com'},
+      });
+      textField.find('input')!.trigger('onInput', {
+        currentTarget: {value: ''},
+      });
 
       expect(textField).not.toContainReactComponent('input', {
         placeholder: label,
@@ -244,6 +262,25 @@ describe('<TextField />', () => {
       mountWithContext(<TextField {...defaultProps} autofocus />);
 
       expect(focusSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('controlledValue', () => {
+    it('is preferred as the value when provided', () => {
+      const value = faker.random.words();
+      const controlledValue = faker.random.words();
+
+      const textField = mountWithContext(
+        <TextField
+          {...defaultProps}
+          value={value}
+          controlledValue={controlledValue}
+        />,
+      );
+
+      expect(textField).toContainReactComponent('input', {
+        value: controlledValue,
+      });
     });
   });
 
@@ -339,14 +376,3 @@ describe('<TextField />', () => {
     });
   });
 });
-
-function triggerChange(
-  textField: ReturnType<typeof mountWithContext>,
-  value?: string,
-) {
-  // For some reason, the testing library seems to pick up some sort of internal
-  // Preact logic. This should be triggering the `onChange` callback, which is definitely
-  // defined, but before the test library wraps it all up, Preact has normalized
-  // `onChange` to `oninput`.
-  (textField.find('input') as any).trigger('oninput', {currentTarget: {value}});
-}

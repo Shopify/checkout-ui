@@ -4,16 +4,24 @@
   --banner-icon-color: hsl(204, 77%, 42%);
   background-color: var(--banner-background-color);
   position: relative;
-  border-radius: var(--x-global-border-radius);
+  border-radius: var(--x-banner-border-radius, var(--x-global-border-radius));
   border: 1px solid var(--banner-border-color);
+  border-width: var(--x-banner-border, var(--x-border-full));
   padding: var(--x-spacing-loose);
+
+  /* temporary until we get proper color palettes for banners */
+  --x-default-color-border: hsl(0, 0%, 85%);
+  --x-default-color-border-emphasized: hsl(0, 0%, 58%);
+  --x-default-color-text: hsl(0, 0%, 33%);
+  --x-default-color-text-subdued: hsl(0, 0%, 45%);
+  --x-default-color-text-emphasized: hsl(0, 0%, 20%);
 }
 
 .Icon {
   color: var(--banner-icon-color);
   margin: em(-3.5px) 0;
-  width: em(24px);
-  height: em(24px);
+  max-width: em(24px);
+  max-height: em(24px);
 }
 
 .statusSuccess {
@@ -29,9 +37,21 @@
 }
 
 .statusCritical {
-  --banner-background-color: hsl(0, 100%, 96%);
-  --banner-border-color: hsl(0, 77%, 92%);
-  --banner-icon-color: hsl(0, 77%, 53%);
+  --x-default-color-border: var(--x-color-surface-quaternary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-quaternary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-quaternary-text);
+  --x-default-color-text-subdued: var(
+    --x-color-surface-quaternary-text-subdued
+  );
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-quaternary-text-emphasized
+  );
+  --banner-background-color: var(--x-color-surface-quaternary);
+  --banner-border-color: var(--x-default-color-border);
+  --banner-icon-color: var(--x-color-critical-text);
+  color: var(--x-color-surface-quaternary-text);
 }
 
 .collapsibleButton {

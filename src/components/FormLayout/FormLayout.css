@@ -1,4 +1,5 @@
 .Group {
+  --form-layout-group-spacing: var(--x-spacing-base);
   display: flex;
 
   @media all and (min-width: 750px) {
@@ -6,7 +7,7 @@
       flex: 1 1 0;
 
       & + * {
-        margin-inline-start: var(--x-spacing-base);
+        margin-inline-start: var(--form-layout-group-spacing);
       }
     }
   }
@@ -15,7 +16,11 @@
     flex-direction: column;
 
     & > * + * {
-      margin-block-start: var(--x-spacing-base);
+      margin-block-start: var(--form-layout-group-spacing);
     }
   }
+}
+
+.spacingTight {
+  --form-layout-group-spacing: var(--x-spacing-tight1x);
 }

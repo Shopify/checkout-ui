@@ -19,7 +19,7 @@ describe('<Popper />', () => {
 
   it('wraps children with PopperContext', () => {
     const content = 'content';
-    const placement = 'bottom';
+    const placement = 'blockEnd';
 
     const popper = mount(
       <Popper placement={placement} {...defaultProps}>
@@ -32,7 +32,8 @@ describe('<Popper />', () => {
         x: 0,
         y: 0,
       },
-      clipping: {},
+      clipping: {left: 0, right: 0},
+      spacing: 0,
       placement,
       popperRect: {
         bottom: 0,
@@ -48,7 +49,7 @@ describe('<Popper />', () => {
 
   describe('computeOffsets', () => {
     it('computes default offsets when reference and popper rect are null', () => {
-      const {offsets} = computeOffsets('top', null, null);
+      const {offsets} = computeOffsets('blockStart', null, null);
 
       expect(offsets).toStrictEqual({x: 0, y: 0});
     });
@@ -76,7 +77,7 @@ describe('<Popper />', () => {
       };
 
       const {offsets} = computeOffsets(
-        'top',
+        'blockStart',
         popperRect as DOMRectReadOnly,
         referenceRect as DOMRectReadOnly,
       );
@@ -109,7 +110,7 @@ describe('<Popper />', () => {
       };
 
       const {offsets} = computeOffsets(
-        'bottom',
+        'blockEnd',
         popperRect as DOMRectReadOnly,
         referenceRect as DOMRectReadOnly,
       );
@@ -142,7 +143,7 @@ describe('<Popper />', () => {
       };
 
       const {offsets} = computeOffsets(
-        'top',
+        'blockStart',
         popperRect as DOMRectReadOnly,
         referenceRect as DOMRectReadOnly,
       );
@@ -175,7 +176,7 @@ describe('<Popper />', () => {
       };
 
       const {offsets} = computeOffsets(
-        'bottom',
+        'blockEnd',
         popperRect as DOMRectReadOnly,
         referenceRect as DOMRectReadOnly,
       );
@@ -185,7 +186,7 @@ describe('<Popper />', () => {
       expect(offsets.y).toBeGreaterThan(referenceRect.top);
     });
 
-    it('computes offsets with reference larger than popper and sameWidth option', () => {
+    it('computes offsets with reference larger than popper and sameInlineSize option', () => {
       const referenceWidth = 100;
       const referenceHeight = 40;
       const popperWidth = 40;
@@ -208,11 +209,11 @@ describe('<Popper />', () => {
       };
 
       const {offsets} = computeOffsets(
-        'top',
+        'blockStart',
         popperRect as DOMRectReadOnly,
         referenceRect as DOMRectReadOnly,
         {
-          sameWidth: true,
+          sameInlineSize: true,
         },
       );
 

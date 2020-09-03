@@ -1,1 +1,1 @@
-export {Layout, Props} from './Layout';
+export {Layout} from './Layout';

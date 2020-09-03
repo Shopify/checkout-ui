@@ -20,32 +20,63 @@
     'row-gap row-gap row-gap' var(--x-spacing-tight1x)
     'error error error' auto /
     auto var(--x-spacing-tight1x) auto;
+
+  &.errorIndentationToText {
+    grid-template:
+      'checkbox gap label' auto
+      'row-gap row-gap row-gap' var(--x-spacing-tight1x)
+      'error-gap error-gap error' auto /
+      auto var(--x-spacing-tight1x) auto;
+  }
 }
 
 .Checkbox {
   position: relative;
   margin-top: -1px;
   grid-area: checkbox;
+  width: var(--x-checkbox-size);
+  height: var(--x-checkbox-size);
 }
 
 .Input {
   --input-border-color: var(--x-default-color-border);
-  background-clip: padding-box;
-  border: 1px transparent solid;
-  border-radius: var(
+  --input-border-radius: var(
     --x-checkbox-border-radius,
     var(--x-control-border-radius, var(--x-global-border-radius))
   );
+  background-clip: padding-box;
+  border: 1px transparent solid;
+  border-radius: var(--input-border-radius);
   box-sizing: content-box;
   cursor: pointer;
   display: block;
-  width: em(18px);
-  height: em(18px);
+  width: 100%;
+  height: 100%;
   box-shadow: 0 0 0 1px var(--input-border-color) inset;
-  transition: box-shadow var(--duration--base) var(--timing--base);
+  transition: box-shadow var(--duration--base) var(--timing--ease-out);
+  outline: none;
 
-  &:focus {
-    box-shadow: 0 0 0 2px var(--x-color-interactive-text) inset;
+  &::before {
+    content: '';
+    display: block;
+    border-radius: calc(var(--input-border-radius) / 2);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    box-shadow: 0 0 0 0 var(--x-color-interactive-text) inset,
+      0 0 0 0 var(--x-color-interactive-text);
+    opacity: 0.3;
+    transition: box-shadow var(--duration--base) var(--timing--ease-out);
+  }
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 1px var(--x-color-interactive-text) inset;
+
+    &::before {
+      box-shadow: 0 0 0 em(1px) var(--x-color-interactive-text) inset,
+        0 0 0 em(3px) var(--x-color-interactive-text);
+    }
   }
 
   &:checked {
@@ -53,12 +84,19 @@
 
     & + .Icon {
       opacity: 1;
-      transform: translate(-50%, -50%);
     }
   }
 
   &.Input-hasError:not(:checked) {
-    box-shadow: 0 0 0 em(2px) var(--field--border-color--error) inset;
+    box-shadow: 0 0 0 em(2px) var(--x-color-critical-border-emphasized) inset;
+
+    /* stylelint-disable selector-max-class, selector-max-specificity */
+    &:focus::before,
+    &:active::before {
+      box-shadow: 0 0 0 em(1px) var(--x-color-critical-border-emphasized) inset,
+        0 0 0 em(3px) var(--x-color-critical-border-emphasized);
+    }
+    /* stylelint-enable selector-max-class, selector-max-specificity */
   }
 }
 
@@ -85,6 +123,10 @@
 .Input-isDisabled {
   opacity: 0.7;
   cursor: default;
+
+  &::before {
+    display: none;
+  }
 
   &.Input-backgroundSurfacePrimary {
     background-color: var(--x-color-surface-primary-disabled);
@@ -121,7 +163,7 @@
   transform-origin: center;
   transform: translate(-50%, -50%);
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: calc(50% + 1px);
+  left: calc(50% + 1px);
   transition: all var(--duration--base) var(--timing--base) 100ms;
 }

@@ -11,19 +11,19 @@
   }
 }
 
-.spacingXtight {
+.spacingXtight > * {
   margin-inline-start: var(--x-spacing-tight4x);
 }
 
-.spacingTight {
+.spacingTight > * {
   margin-inline-start: var(--x-spacing-tight1x);
 }
 
-.spacingLoose {
+.spacingLoose > * {
   margin-inline-start: var(--x-spacing-loose1x);
 }
 
-.spacingXloose {
+.spacingXloose > * {
   margin-inline-start: var(--x-spacing-loose4x);
 }
 

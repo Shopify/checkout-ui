@@ -96,6 +96,14 @@ describe('<Select />', () => {
     });
   });
 
+  it('renders a disabled option when the readonly prop is true', () => {
+    const select = mountWithContext(<Select {...defaultProps} readonly />);
+
+    expect(select).toContainReactComponent('option', {
+      disabled: true,
+    });
+  });
+
   it('renders a hidden and disabled option when the placeholder is provided, selected and similar to the label', () => {
     const select = mountWithContext(
       <Select {...defaultProps} placeholder={defaultProps.label} />,

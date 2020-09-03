@@ -11,9 +11,10 @@ import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './Text.css';
 
-interface Props extends PropsWithChildren<TextProps> {
+interface Props extends PropsWithChildren<Omit<TextProps, 'size'>> {
   /** Visually change the text based on the Theme styles */
   style?: ThemeTypographyStyle;
+  size?: 'xsmall' | TextProps['size'];
 }
 
 export function Text({

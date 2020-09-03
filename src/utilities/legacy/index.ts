@@ -33,8 +33,8 @@ export const colorSurfacePrimary = styles['Surface-colorSurfacePrimary'];
 // Usages in core not implemented yet:
 // .order-summary__scroll-indicator
 export const colorSurfaceSecondary = styles['Surface-colorSurfaceSecondary'];
-
 export const colorSurfaceTertiary = styles['Surface-colorSurfaceTertiary'];
+export const colorSurfaceQuaternary = styles['Surface-colorSurfaceQuaternary'];
 
 export const utilityDefaultBorderColor = styles['Utility-defaultBorderColor'];
 export const utilityDefaultTextColorSubdued =

@@ -57,12 +57,19 @@ export function OptionList({
     ));
 
   const {
-    optionList: {background = 'surfaceTertiary', gap = 'none'},
+    optionList: {
+      background = 'surfaceTertiary',
+      gap = 'none',
+      border = 'full',
+      borderStyle = 'base',
+    },
   } = useThemeConfiguration();
 
   const className = classNames(
     styles.OptionList,
-    background && styles[variationName('OptionList-background', background)],
+    styles[variationName('OptionList-background', background)],
+    styles[variationName('OptionList-border', border)],
+    styles[variationName('OptionList-borderStyle', borderStyle)],
     gap === 'none' && styles.isContainer,
   );
 

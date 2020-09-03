@@ -6,7 +6,7 @@
   position: absolute;
   pointer-events: none;
   inset-block-start: em(5.6px);
-  inset-inline-start: calc(em(12px) + 1px);
+  inset-inline-start: em(12px);
   transition: all var(--duration--base) var(--timing--base);
   user-select: none;
   opacity: 0;
@@ -28,6 +28,10 @@
       --x-color-surface-tertiary-text-subdued
     );
   }
+}
+
+.Label-isSubdued {
+  z-index: inherit;
 }
 
 .Label-positionOutside {

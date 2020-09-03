@@ -1,12 +1,68 @@
 .Autocomplete {
-  margin: var(--x-spacing-tight2x) 0 0;
-  border: 1px var(--color--lighter-grey) solid;
+  background-color: var(--autocomplete-background);
+  border: 1px var(--autocomplete-border-color) solid;
   border-radius: var(
-    --x-textfield-border-radius,
+    --x-text-field-border-radius,
     var(--x-control-border-radius, var(--x-global-border-radius))
   );
-  background-color: var(--color--white);
-  box-shadow: 0 6px 19px 0 var(--color--light-grey);
+  box-shadow: 0 6px 19px 0 var(--autocomplete-border-color);
+}
+
+.backgroundSurfacePrimary {
+  --x-default-color-border: var(--x-color-surface-primary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-primary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  --autocomplete-border-color: var(--x-default-color-border);
+  --autocomplete-border-color-emphasized: var(
+    --x-default-color-border-emphasized
+  );
+  --autocomplete-background: var(--x-color-surface-primary);
+  --autocomplete-background-selected: var(--x-color-surface-primary-subdued);
+  --autocomplete-background-subdued: var(--x-color-surface-primary-subdued);
+}
+
+.backgroundSurfaceSecondary {
+  --x-default-color-border: var(--x-color-surface-secondary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-secondary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  --autocomplete-border-color: var(--x-default-color-border);
+  --autocomplete-border-color-emphasized: var(
+    --x-default-color-border-emphasized
+  );
+  --autocomplete-background: var(--x-color-surface-secondary);
+  --autocomplete-background-selected: var(--x-color-surface-secondary-subdued);
+  --autocomplete-background-subdued: var(--x-color-surface-secondary-subdued);
+}
+
+.backgroundSurfaceTertiary {
+  --x-default-color-border: var(--x-color-surface-tertiary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-tertiary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  --autocomplete-border-color: var(--x-default-color-border);
+  --autocomplete-border-color-emphasized: var(
+    --x-default-color-border-emphasized
+  );
+  --autocomplete-background: var(--x-color-surface-tertiary);
+  --autocomplete-background-selected: var(--x-color-surface-tertiary-subdued);
+  --autocomplete-background-subdued: var(--x-color-surface-tertiary-subdued);
 }
 
 .Header {
@@ -18,9 +74,7 @@
 
 .Title {
   margin: 0;
-
-  /* TODO: change color */
-  color: hsl(0, 0%, 0%, 0.55);
+  color: var(--x-default-color-text-subdued);
   font-size: var(--x-typography-size-small);
   font-family: var(--x-typography-secondary-fonts);
   font-weight: var(--x-typography-secondary-weight-base);
@@ -43,12 +97,24 @@
   padding: var(--x-spacing-tight);
 
   &.selected {
-    background-color: var(--color--lightest-grey);
+    background-color: var(--autocomplete-background-selected);
   }
 }
 
 .Footer {
-  background-color: hsla(0, 0%, 0%, 0.02);
+  background-color: var(--autocomplete-background-subdued);
   position: relative;
   padding: var(--x-spacing-tight);
+  border-bottom-left-radius: var(
+    --x-text-field-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  border-bottom-right-radius: var(
+    --x-text-field-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+}
+
+.Error-errorIndentationToText {
+  padding: 0 em(12px);
 }

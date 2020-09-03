@@ -1,1 +1,1 @@
-export {View, Props} from './View';
+export {View} from './View';

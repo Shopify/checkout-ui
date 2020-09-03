@@ -18,7 +18,7 @@
   padding-inline-end: var(--x-spacing-loose1x);
 }
 
-.inlinePaddingXloose {
+.inlinePaddingExtraLoose {
   padding-inline-start: var(--x-spacing-loose4x);
   padding-inline-end: var(--x-spacing-loose4x);
 }
@@ -43,7 +43,7 @@
   padding-block-end: var(--x-spacing-loose1x);
 }
 
-.blockPaddingXloose {
+.blockPaddingExtraLoose {
   padding-block-start: var(--x-spacing-loose4x);
   padding-block-end: var(--x-spacing-loose4x);
 }

@@ -20,6 +20,16 @@
   }
 }
 
+.spacingNone {
+  & > * + * {
+    margin-block-start: 0;
+  }
+
+  @supports (display: grid) {
+    grid-row-gap: 0;
+  }
+}
+
 .spacingXtight {
   & > * + * {
     margin-block-start: var(--x-spacing-tight4x);

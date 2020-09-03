@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 import {ImageProps} from '@shopify/argo-checkout';
 
@@ -11,17 +11,15 @@ interface SourceProps {
   srcSet: string;
 }
 
-export enum Media {
-  Small = '(max-width: 600px)',
-  Medium = '(max-width: 1200px)',
-  Large = '(min-width: 1201px)',
-}
+type ViewportSize = Required<
+  Required<ImageProps>['sources'][0]
+>['viewportSize'];
 
-const MEDIA_MAP = {
-  small: Media.Small,
-  medium: Media.Medium,
-  large: Media.Large,
-};
+export const MEDIA_MAP: Map<ViewportSize, string> = new Map([
+  ['small', '(max-width: 600px)'],
+  ['medium', '(max-width: 1200px)'],
+  ['large', '(min-width: 1201px)'],
+]);
 
 export function Image({
   source,
@@ -39,7 +37,7 @@ export function Image({
     sources &&
     sources
       .reduce((sourcesProps, {source, viewportSize, resolution}) => {
-        const media = viewportSize && MEDIA_MAP[viewportSize];
+        const media = viewportSize && MEDIA_MAP.get(viewportSize);
         const maybeSourceProps = sourcesProps.find(
           ({media: mediaValue}) => media === mediaValue,
         );
@@ -84,11 +82,13 @@ export function Image({
 }
 
 interface MaybeProps {
-  children: ReactNode;
   condition: boolean;
 }
 
-function MaybeHiddenForA11y({children, condition}: MaybeProps) {
+function MaybeHiddenForA11y({
+  children,
+  condition,
+}: PropsWithChildren<MaybeProps>) {
   return condition ? (
     <HiddenForAccessibility>{children}</HiddenForAccessibility>
   ) : (
@@ -104,7 +104,7 @@ function MaybeAspectRatio({
   children,
   condition,
   aspectRatio,
-}: MaybeAspectRatioProps) {
+}: PropsWithChildren<MaybeAspectRatioProps>) {
   return condition ? (
     <div
       className={styles.aspectRatio}
@@ -117,6 +117,6 @@ function MaybeAspectRatio({
   );
 }
 
-function MaybePicture({children, condition}: MaybeProps) {
+function MaybePicture({children, condition}: PropsWithChildren<MaybeProps>) {
   return condition ? <picture>{children}</picture> : <>{children}</>;
 }

@@ -51,3 +51,7 @@ export const withTooltip = () => (
     }}
   />
 );
+
+export const disabled = () => <TextField {...defaultProps} disabled />;
+
+export const readonly = () => <TextField {...defaultProps} readonly />;

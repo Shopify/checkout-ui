@@ -6,12 +6,12 @@
   -webkit-tap-highlight-color: transparent;
   border: 0 transparent solid;
   border-radius: var(
-    --x-textfield-border-radius,
+    --x-text-field-border-radius,
     var(--x-control-border-radius, var(--x-global-border-radius))
   );
   font-size: var(--x-typography-size-default);
   outline: none;
-  padding: 0 em(12px);
+  padding-inline: em(12px);
   min-height: em(47px);
   transition: box-shadow var(--duration--base) var(--timing--base),
     border var(--duration--base) var(--timing--base);
@@ -43,20 +43,39 @@
 
 .Field-backgroundSurfacePrimary {
   --placeholder-color: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
   color: var(--x-color-surface-primary-text-emphasized);
   background-color: var(--x-color-surface-primary);
+
+  & + .Tooltip {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+  }
 }
 
 .Field-backgroundSurfaceSecondary {
   --placeholder-color: var(--x-color-surface-secondary-text-subdued);
   color: var(--x-color-surface-secondary-text-emphasized);
   background-color: var(--x-color-surface-secondary);
+
+  & + .Tooltip {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+  }
 }
 
 .Field-backgroundSurfaceTertiary {
   --placeholder-color: var(--x-color-surface-tertiary-text-subdued);
   color: var(--x-color-surface-tertiary-text-emphasized);
   background-color: var(--x-color-surface-tertiary);
+
+  & + .Tooltip {
+    --x-default-color-text-subdued: var(
+      --x-color-surface-tertiary-text-subdued
+    );
+  }
 }
 
 .Field-borderNone {
@@ -69,7 +88,7 @@
     &.hasError {
       &,
       &:focus {
-        box-shadow: 0 0 0 2px var(--field--border-color--error);
+        box-shadow: 0 0 0 2px var(--x-color-critical-border-emphasized);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -84,7 +103,7 @@
     &.hasError {
       &,
       &:focus {
-        box-shadow: 0 2px 0 0 var(--field--border-color--error);
+        box-shadow: 0 2px 0 0 var(--x-color-critical-border-emphasized);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -94,6 +113,7 @@
 .Field-borderFull {
   border-width: 1px;
   border-color: var(--x-default-color-border);
+  padding-inline-start: em(11px);
 
   &.Field-focusBorderFull {
     &:focus {
@@ -105,8 +125,8 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--field--border-color--error);
-        box-shadow: 0 0 0 1px var(--field--border-color--error);
+        border-color: var(--x-color-critical-border-emphasized);
+        box-shadow: 0 0 0 1px var(--x-color-critical-border-emphasized);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -122,8 +142,8 @@
     &.hasError {
       &,
       &:focus {
-        border-bottom-color: var(--field--border-color--error);
-        box-shadow: 0 1px 0 0 var(--field--border-color--error);
+        border-bottom-color: var(--x-color-critical-border-emphasized);
+        box-shadow: 0 1px 0 0 var(--x-color-critical-border-emphasized);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -147,11 +167,11 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--field--border-color--error);
-        box-shadow: 1px 0 0 1px var(--field--border-color--error),
-          -1px 0 0 1px var(--field--border-color--error),
-          1px -1px 0 1px var(--field--border-color--error),
-          -1px -1px 0 1px var(--field--border-color--error);
+        border-color: var(--x-color-critical-border-emphasized);
+        box-shadow: 1px 0 0 1px var(--x-color-critical-border-emphasized),
+          -1px 0 0 1px var(--x-color-critical-border-emphasized),
+          1px -1px 0 1px var(--x-color-critical-border-emphasized),
+          -1px -1px 0 1px var(--x-color-critical-border-emphasized);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -167,8 +187,8 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--field--border-color--error);
-        box-shadow: 0 1px 0 0 var(--field--border-color--error);
+        border-color: var(--x-color-critical-border-emphasized);
+        box-shadow: 0 1px 0 0 var(--x-color-critical-border-emphasized);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -185,4 +205,40 @@
   inset-inline-end: var(--x-spacing-base);
   transform: translateY(-50%);
   z-index: 1;
+}
+
+.Error-errorIndentationToText {
+  padding: 0 em(12px);
+}
+
+.Field-isDisabled {
+  opacity: 0.7;
+
+  &.Field-backgroundSurfacePrimary {
+    background-color: var(--x-color-surface-primary-disabled);
+  }
+
+  &.Field-backgroundSurfaceSecondary {
+    background-color: var(--x-color-surface-secondary-disabled);
+  }
+
+  &.Field-backgroundSurfaceTertiary {
+    background-color: var(--x-color-surface-tertiary-disabled);
+  }
+}
+
+.Field-isReadOnly {
+  opacity: 0.7;
+
+  &.Field-backgroundSurfacePrimary {
+    background-color: var(--x-color-surface-primary-disabled);
+  }
+
+  &.Field-backgroundSurfaceSecondary {
+    background-color: var(--x-color-surface-secondary-disabled);
+  }
+
+  &.Field-backgroundSurfaceTertiary {
+    background-color: var(--x-color-surface-tertiary-disabled);
+  }
 }

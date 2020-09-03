@@ -44,7 +44,7 @@ const WithPlacement = () => {
     referenceElement,
     setReferenceElement,
   ] = useState<HTMLButtonElement | null>(null);
-  const [placement, setPlacement] = useState<Placement | null>('top');
+  const [placement, setPlacement] = useState<Placement | null>('blockStart');
 
   const handleClick = (placement: Placement) => (
     event: MouseEvent<HTMLButtonElement>,
@@ -61,14 +61,14 @@ const WithPlacement = () => {
         </Popper>
       )}
       <InlineStack>
-        <button onClick={handleClick('top')}>Top</button>
-        <button onClick={handleClick('bottom')}>Bottom</button>
+        <button onClick={handleClick('blockStart')}>blockStart</button>
+        <button onClick={handleClick('blockEnd')}>blockEnd</button>
       </InlineStack>
     </>
   );
 };
 
-const WithSameWidth = () => {
+const WithSameInlineSize = () => {
   const [
     referenceElement,
     setReferenceElement,
@@ -81,12 +81,42 @@ const WithSameWidth = () => {
   return (
     <>
       {referenceElement && placement && (
-        <Popper activator={referenceElement} placement="top" sameWidth>
+        <Popper
+          activator={referenceElement}
+          placement="blockStart"
+          sameInlineSize
+        >
+          <Content>Popper</Content>
+        </Popper>
+      )}
+      <button onClick={handleClick}>Popper with the same inline size</button>
+    </>
+  );
+};
+
+const WithMinimumInlineSize = () => {
+  const [
+    referenceElement,
+    setReferenceElement,
+  ] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setReferenceElement(event.currentTarget);
+  };
+
+  return (
+    <>
+      {referenceElement && placement && (
+        <Popper
+          activator={referenceElement}
+          placement="blockStart"
+          minInlineSize={480}
+        >
           <Content>Popper</Content>
         </Popper>
       )}
       <button onClick={handleClick}>
-        Popper with the same wiiiiiiiiiiiidth
+        Popper with a minimum inline size (480px)
       </button>
     </>
   );
@@ -112,7 +142,11 @@ const WithOverflowPrevention = () => {
       }}
     >
       {referenceElement && placement && (
-        <Popper activator={referenceElement} placement="top" preventOverflow>
+        <Popper
+          activator={referenceElement}
+          placement="blockStart"
+          preventOverflow
+        >
           <Content>Very loooooooooooooooooooooooong Popper</Content>
         </Popper>
       )}
@@ -122,7 +156,6 @@ const WithOverflowPrevention = () => {
 };
 
 export const placement = () => <WithPlacement />;
-
-export const sameWidth = () => <WithSameWidth />;
-
+export const sameInlineSize = () => <WithSameInlineSize />;
+export const minimumInlineSize = () => <WithMinimumInlineSize />;
 export const preventOverflow = () => <WithOverflowPrevention />;

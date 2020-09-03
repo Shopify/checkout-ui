@@ -4,6 +4,69 @@
   width: 100%;
 }
 
+.backgroundSurfacePrimary {
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  background-color: var(--x-color-surface-primary);
+  color: var(--x-default-color-text);
+}
+
+.backgroundSurfaceSecondary {
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  background-color: var(--x-color-surface-secondary);
+  color: var(--x-default-color-text);
+}
+
+.backgroundSurfaceTertiary {
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  background-color: var(--x-color-surface-tertiary);
+  color: var(--x-default-color-text);
+}
+
+.inlinePaddingTight {
+  padding-inline-start: var(--x-spacing-tight1x);
+  padding-inline-end: var(--x-spacing-tight1x);
+}
+
+.inlinePaddingBase {
+  padding-inline-start: var(--x-spacing-base);
+  padding-inline-end: var(--x-spacing-base);
+}
+
+.inlinePaddingLoose {
+  padding-inline-start: var(--x-spacing-loose1x);
+  padding-inline-end: var(--x-spacing-loose1x);
+}
+
+.blockPaddingTight {
+  padding-block-start: var(--x-spacing-tight1x);
+  padding-block-end: var(--x-spacing-tight1x);
+}
+
+.blockPaddingBase {
+  padding-block-start: var(--x-spacing-base);
+  padding-block-end: var(--x-spacing-base);
+}
+
+.blockPaddingLoose {
+  padding-block-start: var(--x-spacing-loose1x);
+  padding-block-end: var(--x-spacing-loose1x);
+}
+
 .ResourceItemContent {
   & + .ResourceItemContent {
     padding-inline-start: var(--x-spacing-base);
@@ -12,4 +75,18 @@
 
 .ResourceItemContent-isPrimary {
   flex-grow: 1;
+}
+
+.ResourceItemSeparator {
+  border: none;
+  border-block-start: 1px var(--border-style, solid)
+    var(--border-color, var(--x-default-color-border, transparent));
+}
+
+.ResourceItemSeparator-borderStyleDotted {
+  --border-style: dotted;
+}
+
+.ResourceItemSeparator-borderColorEmphasized {
+  --border-color: var(--x-default-color-border-emphasized);
 }

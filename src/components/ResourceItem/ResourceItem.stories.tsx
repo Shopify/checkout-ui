@@ -17,9 +17,6 @@ const meta = {
   ],
 };
 
-const placeholder =
-  '//cdn.shopify.com/s/assets/checkout/product-blank-98d4187c2152136e9fb0587a99dfcce6f6873f3a9f21ea9135ed7f495296090f.png';
-
 export default meta;
 
 export const defaultState = () => {
@@ -52,11 +49,7 @@ export const multipleContent = () => {
   return (
     <ResourceItem>
       <ResourceItemContent>
-        <Thumbnail
-          source={placeholder}
-          description="some media source"
-          badge={1}
-        />
+        <Thumbnail description="some media source" badge={1} />
       </ResourceItemContent>
       <ResourceItemContent primary>
         <TextBlock emphasized>T-shirt</TextBlock>

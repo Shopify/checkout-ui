@@ -27,7 +27,7 @@ export function Option({id, label, details, children}: Props) {
   const Control = allowMultiple ? CheckboxControl : RadioControl;
   const checked = selectedItems.includes(id);
   const {
-    optionList: {gap = 'none'},
+    optionList: {gap = 'none', typographyStyle},
   } = useThemeConfiguration();
 
   const className = classNames(
@@ -66,7 +66,9 @@ export function Option({id, label, details, children}: Props) {
               </div>
             </>
           ) : (
-            <Text emphasized>{label}</Text>
+            <Text emphasized={typographyStyle == null} style={typographyStyle}>
+              {label}
+            </Text>
           )}
         </Bookend>
       </label>

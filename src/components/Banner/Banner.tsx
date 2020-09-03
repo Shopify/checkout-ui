@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, PropsWithChildren} from 'react';
+import {BannerProps} from '@shopify/argo-checkout';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {Heading} from '../Heading';
@@ -11,15 +12,7 @@ import {Button} from '../Button';
 
 import styles from './Banner.css';
 
-type Status = 'info' | 'success' | 'warning' | 'critical';
-
-export interface Props {
-  title?: string;
-  status?: Status;
-  children?: React.ReactNode;
-  collapsible?: boolean;
-  iconHidden?: boolean;
-}
+export interface Props extends PropsWithChildren<BannerProps> {}
 
 export function Banner({
   title,
@@ -36,7 +29,7 @@ export function Banner({
   );
 
   const titleMarkup = title && (
-    <Heading>
+    <Heading level={3}>
       <span className={collapsible && styles.isCollapsible}>{title}</span>
     </Heading>
   );
@@ -60,7 +53,6 @@ export function Banner({
           </Button>
         </div>
       )}
-
       <Bookend leading>
         {!iconHidden && (
           <div className={styles.Icon}>
