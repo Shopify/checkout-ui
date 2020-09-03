@@ -8,3 +8,18 @@ export function VisuallyHidden({
 }: PropsWithChildren<VisuallyHiddenProps>) {
   return <span className={styles.VisuallyHidden}>{children}</span>;
 }
+
+export interface MaybeProps {
+  condition: boolean;
+}
+
+export function MaybeVisuallyHidden({
+  children,
+  condition,
+}: PropsWithChildren<MaybeProps>) {
+  return condition ? (
+    <VisuallyHidden>{children}</VisuallyHidden>
+  ) : (
+    <>{children}</>
+  );
+}

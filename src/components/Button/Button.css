@@ -4,12 +4,12 @@
   position: relative;
   cursor: pointer;
   background-color: var(--x-color-primary);
-  border: 1px transparent solid;
   border-radius: var(--x-control-border-radius, var(--x-global-border-radius));
   color: var(--x-color-primary-text);
   display: inline-block;
   font-weight: var(--x-typography-primary-weight-bold);
-  padding: em(20px) em(24px);
+  padding: var(--x-primary-button-block-padding)
+    var(--x-primary-button-inline-padding);
   text-align: center;
   text-decoration: none;
   text-transform: var(--x-global-typography-letter-case);
@@ -24,10 +24,16 @@
     background-color: var(--x-color-primary-pressed);
     outline: none;
   }
+
+  @media (-ms-high-contrast: active) {
+    border: 1px solid transparent;
+  }
 }
 
 .Content {
+  --this-line-height: 1.5rem;
   display: block;
+  line-height: var(--this-line-height);
 }
 
 .Content,
@@ -79,6 +85,10 @@
   }
 }
 
+.isUnderline {
+  text-decoration: underline;
+}
+
 .isFill {
   display: flex;
   justify-content: center;
@@ -86,11 +96,12 @@
 
   &.isPlain {
     margin: 0;
+    padding: 0;
   }
 }
 
 .isSubdued {
-  border-color: var(--x-default-color-border);
+  box-shadow: inset 0 0 0 1px var(--x-default-color-border);
 }
 
 .isDisabled,
@@ -132,15 +143,11 @@
   }
 }
 
-.isConnected {
-  padding-block-end: 0;
-  padding-block-start: 0;
-  height: em(47px);
-}
-
 .isSecondary {
   background-color: var(--x-color-secondary);
   color: var(--x-color-secondary-text);
+  padding: var(--x-secondary-button-block-padding)
+    var(--x-secondary-button-inline-padding);
 
   &:hover {
     background-color: var(--x-color-secondary-hovered);
@@ -149,5 +156,140 @@
   &:active {
     background-color: var(--x-color-secondary-pressed);
     outline: none;
+  }
+}
+
+.isConnected {
+  padding-block-end: 0;
+  padding-block-start: 0;
+  height: em(47px);
+}
+
+.progressBar {
+  pointer-events: none;
+  cursor: default;
+  background-color: var(--x-color-primary-pressed);
+  position: relative;
+  overflow: hidden;
+
+  & .Content {
+    position: relative;
+    z-index: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: var(--x-color-primary);
+    z-index: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation-name: progressbar;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    animation-delay: var(--duration--base);
+  }
+
+  &.isSecondary {
+    background-color: var(--x-color-secondary-pressed);
+
+    &::before {
+      background-color: var(--x-color-secondary);
+    }
+  }
+
+  &.isDisabled {
+    background-color: hsl(0, 0%, 85%);
+
+    &::before {
+      background-color: hsl(0, 0%, 75%);
+    }
+  }
+
+  &.isSubdued,
+  &.isPlain {
+    background-color: transparent;
+
+    &::before {
+      background-color: var(--x-color-primary);
+      top: calc(100% - rem(2px));
+    }
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+@keyframes progressbar {
+  0% {
+    transform: scaleX(0);
+  }
+  5% {
+    transform: scaleX(0.2);
+  }
+  10% {
+    transform: scaleX(0.25);
+  }
+  15% {
+    transform: scaleX(0.3);
+  }
+  20% {
+    transform: scaleX(0.35);
+  }
+  25% {
+    transform: scaleX(0.45);
+  }
+  30% {
+    transform: scaleX(0.5);
+  }
+  35% {
+    transform: scaleX(0.55);
+  }
+  40% {
+    transform: scaleX(0.6);
+  }
+  45% {
+    transform: scaleX(0.7);
+  }
+  50% {
+    transform: scaleX(0.8);
+  }
+  55% {
+    transform: scaleX(0.82);
+  }
+  60% {
+    transform: scaleX(0.84);
+  }
+  65% {
+    transform: scaleX(0.86);
+  }
+  70% {
+    transform: scaleX(0.88);
+  }
+  75% {
+    transform: scaleX(0.9);
+  }
+  80% {
+    transform: scaleX(0.92);
+  }
+  85% {
+    transform: scaleX(0.94);
+  }
+  90% {
+    transform: scaleX(0.96);
+  }
+  95% {
+    transform: scaleX(0.98);
+  }
+  100% {
+    transform: scaleX(1);
   }
 }

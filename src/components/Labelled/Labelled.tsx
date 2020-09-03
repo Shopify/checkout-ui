@@ -5,6 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
+import {useMountedRef} from '@shopify/react-hooks';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {Text} from '../Text';
@@ -25,6 +26,7 @@ export interface Props {
   isEmpty?: boolean;
   position?: ThemeLabelPosition;
   background?: ThemeBackground;
+  subdued?: boolean;
 }
 
 export function Labelled({
@@ -34,9 +36,14 @@ export function Labelled({
   isEmpty = true,
   position = 'inside',
   background = 'surfaceTertiary',
+  subdued,
 }: Props) {
+  const mounted = useMountedRef();
+
   const [state, dispatch] = useReducer(
     (state: State, action: Action): State => {
+      if (!mounted.current) return state;
+
       switch (action.type) {
         case 'focus': {
           return {...state, isFocused: true};
@@ -112,6 +119,7 @@ export function Labelled({
             className={classNames(
               styles.Label,
               styles[variationName('Label-position', position)],
+              subdued && styles['Label-isSubdued'],
               background &&
                 styles[variationName('Label-onBackground', background)],
             )}

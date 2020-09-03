@@ -36,11 +36,15 @@
 }
 
 .colorCritical {
-  color: var(--color-text--critical);
+  color: var(--x-color-critical-text);
 }
 
 .colorWarning {
   color: var(--color-text--warning);
+}
+
+.colorSuccess {
+  color: var(--color-text--success);
 }
 
 .Svg,

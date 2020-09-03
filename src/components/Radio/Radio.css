@@ -15,7 +15,7 @@
 
 .Radio {
   position: relative;
-  margin-top: -1px;
+  margin-block: -1px;
   grid-area: radio;
 }
 
@@ -27,30 +27,56 @@
   box-sizing: content-box;
   cursor: pointer;
   display: block;
-  width: em(18px);
-  height: em(18px);
+  width: var(--x-radio-size);
+  height: var(--x-radio-size);
   box-shadow: 0 0 0 1px var(--input-border-color) inset;
-  transition: box-shadow var(--duration--base) var(--timing--base);
+  outline: none;
+  transition: box-shadow var(--duration--base) var(--timing--ease-out);
 
-  &:focus {
-    box-shadow: 0 0 0 em(2px) var(--x-color-interactive-text) inset;
+  &::before {
+    content: '';
+    border-radius: 50%;
+    display: block;
+    width: var(--x-radio-size);
+    height: var(--x-radio-size);
+    pointer-events: none;
+    box-shadow: 0 0 0 0 var(--x-color-interactive-text);
+    opacity: 0.3;
+    transition: box-shadow var(--duration--base) var(--timing--ease-out);
   }
 
-  &:disabled,
-  &:checked:disabled {
-    /* TODO: use derived disabled color */
-    --x-color-interactive-text: var(--color--lightest-grey);
-    background-color: var(--color--lightest-grey);
-    border-color: var(--color--lightest-grey);
-    cursor: default;
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 1px var(--x-color-interactive-text) inset;
+
+    &::before {
+      box-shadow: 0 0 0 em(3px) var(--x-color-interactive-text);
+    }
   }
 
   &:checked {
-    box-shadow: 0 0 0 em(7px) var(--x-color-interactive-text) inset;
+    box-shadow: 0 0 0 em(6px) var(--x-color-interactive-text) inset;
+  }
+}
 
-    &:disabled {
-      background-color: var(--color--lightest-grey);
-    }
+.Input-isDisabled {
+  opacity: 0.7;
+  cursor: default;
+
+  &::before {
+    display: none;
+  }
+
+  &.Input-backgroundSurfacePrimary {
+    background-color: var(--x-color-surface-primary-disabled);
+  }
+
+  &.Input-backgroundSurfaceSecondary {
+    background-color: var(--x-color-surface-secondary-disabled);
+  }
+
+  &.Input-backgroundSurfaceTertiary {
+    background-color: var(--x-color-surface-tertiary-disabled);
   }
 }
 
@@ -78,4 +104,8 @@
   display: block;
   grid-area: label;
   cursor: pointer;
+}
+
+.Label-isDisabled {
+  cursor: default;
 }

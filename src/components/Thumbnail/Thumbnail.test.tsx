@@ -19,6 +19,26 @@ describe('Thumbnail', () => {
     });
   });
 
+  describe('sources prop', () => {
+    it('does not render srcset if sources are undefined', () => {
+      const thumbnail = mount(<Thumbnail {...defaultProps} />);
+
+      expect(thumbnail).not.toContainReactComponent('img', {
+        srcSet: expect.anything(),
+      });
+    });
+
+    it('renders a srcset when provided with sources', () => {
+      const thumbnail = mount(
+        <Thumbnail {...defaultProps} sources={['a 1x', 'b 2x', 'c 3x']} />,
+      );
+
+      expect(thumbnail).toContainReactComponent('img', {
+        srcSet: 'a 1x, b 2x, c 3x',
+      });
+    });
+  });
+
   it('renders a badge when provided as a string', () => {
     const thumbnail = mount(<Thumbnail {...defaultProps} badge="1" />);
 

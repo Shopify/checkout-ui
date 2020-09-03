@@ -4,7 +4,7 @@ import faker from 'faker';
 
 import {HiddenForAccessibility} from '../HiddenForAccessibility';
 
-import {Image, Media} from './Image';
+import {Image, MEDIA_MAP} from './Image';
 
 describe('<Image />', () => {
   const source = faker.image.imageUrl();
@@ -46,7 +46,7 @@ describe('<Image />', () => {
 
       expect(image).toContainReactComponent('source', {
         srcSet: `${source} 1x, ${source} 2x`,
-        media: Media.Small,
+        media: MEDIA_MAP.get('small'),
       });
     });
 

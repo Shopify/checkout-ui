@@ -2,10 +2,16 @@ import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import styles from './Thumbnail.css';
+import {placeholder} from './images';
 
 export interface Props {
   description: string;
-  source: string;
+  source?: string;
+  /**
+   * A list of source sizes for responsive images, used in [srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset).
+   * e.g., ["https://example.org/foo_100x100.jpg", "https://example.org/foo_200x200.jpg 2x"]
+   */
+  sources?: string[];
   border?: 'none' | 'full';
   badge?: string | number;
   badgeBackground?: 'primary' | 'subdued';
@@ -15,6 +21,7 @@ export function Thumbnail({
   description,
   border = 'full',
   source,
+  sources,
   badge,
   badgeBackground = 'subdued',
 }: Props) {
@@ -36,7 +43,12 @@ export function Thumbnail({
           {badge}
         </span>
       )}
-      <img className={styles.Image} src={source} alt={description} />
+      <img
+        className={styles.Image}
+        srcSet={sources?.join(', ')}
+        src={source ?? placeholder}
+        alt={description}
+      />
     </div>
   );
 }

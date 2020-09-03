@@ -3,32 +3,43 @@
 }
 
 .Button {
+  -webkit-tap-highlight-color: transparent;
   display: block;
   padding: em(13px) em(13px);
   margin: em(-13px) em(-13px);
 }
 
 .Tooltip {
-  position: relative;
-  top: em(6px);
-  transform: rotateX(20deg) scale(0.8);
+  transform: scale(0.8);
   transform-origin: center 120%;
   display: inline-block;
-
-  /* TODO: Replace with color system */
-  background-color: hsla(0, 0%, 20%, 0.9);
-  border-radius: var(--x-global-border-radius);
   color: var(--color--white);
-  width: em(210px);
-  text-align: center;
-  font-size: var(--x-typography-size-small);
+  max-width: em(180px);
   padding: var(--x-spacing-tight);
   opacity: 0;
-  transition: all var(--duration--slow) var(--timing--spring);
+  transition: transform var(--duration--base) var(--timing--spring),
+    opacity var(--duration--base) var(--timing--spring);
 
   &.transitionEntered {
-    transform: rotateX(0deg) scale(1);
+    transform: scale(1) perspective(1px);
     opacity: 1;
+  }
+
+  &.transitionExit,
+  &.transitionExiting {
+    pointer-events: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    background-color: hsl(0, 0%, 20%);
   }
 }
 
@@ -39,9 +50,7 @@
   right: 50%;
   width: 0;
   border: em(6px) solid transparent;
-
-  /* TODO: Replace with color system */
-  border-top-color: hsla(0, 0%, 20%, 0.9);
+  border-top-color: hsl(0, 0%, 20%);
 
   &:dir(rtl) {
     transform: translate(50%);
@@ -50,4 +59,76 @@
   &:dir(ltr) {
     transform: translate(-50%);
   }
+}
+
+.Tooltip-backgroundSurfacePrimary {
+  color: var(--x-color-surface-primary-text);
+
+  &::before {
+    background-color: var(--x-color-surface-primary);
+  }
+
+  & .Arrow {
+    border-top-color: var(--x-color-surface-primary);
+  }
+}
+
+.Tooltip-backgroundSurfaceSecondary {
+  color: var(--x-color-surface-secondary-text);
+
+  &::before {
+    background-color: var(--x-color-surface-secondary);
+  }
+
+  & .Arrow {
+    border-top-color: var(--x-color-surface-secondary);
+  }
+}
+
+.Tooltip-backgroundSurfaceTertiary {
+  color: var(--x-color-surface-tertiary-text);
+
+  &::before {
+    background-color: var(--x-color-surface-tertiary);
+  }
+
+  & .Arrow {
+    border-top-color: var(--x-color-surface-tertiary);
+  }
+}
+
+.Tooltip-opacityTranslucent {
+  &::before {
+    opacity: 0.9;
+  }
+
+  & .Arrow {
+    opacity: 0.9;
+  }
+}
+
+.Tooltip-opacityOpaque::before {
+  &::before {
+    opacity: 1;
+  }
+
+  & .Arrow {
+    opacity: 1;
+  }
+}
+
+.Tooltip-borderRadiusNone::before {
+  border-radius: var(--x-border-radius-none);
+}
+
+.Tooltip-borderRadiusTight::before {
+  border-radius: var(--x-border-radius-tight);
+}
+
+.Tooltip-borderRadiusBase::before {
+  border-radius: var(--x-border-radius-base);
+}
+
+.Tooltip-borderRadiusFullyRounded::before {
+  border-radius: var(--x-border-radius-fully-rounded);
 }

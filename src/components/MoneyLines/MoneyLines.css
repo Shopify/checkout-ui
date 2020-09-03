@@ -1,0 +1,5 @@
+.MoneyLines {
+  & > * + * {
+    margin-block-start: var(--x-money-lines-block-gap);
+  }
+}

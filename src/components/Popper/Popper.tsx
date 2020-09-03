@@ -1,52 +1,108 @@
 import React, {ReactNode, useMemo} from 'react';
 
 import {Portal} from '../Portal';
+import {rem} from '../../utilities/units';
 
 import {useEffectRect, useRect} from './hooks';
 import {PopperContext} from './context';
-import {computeOffsets, Placement} from './utilities/offsets';
+import {computeOffsets, roundOffsets, Placement} from './utilities/offsets';
 import styles from './Popper.css';
 
 export interface Props {
   children?: ReactNode;
-  placement?: Placement;
-  preventOverflow?: boolean;
+  /**
+   * The element used to activate the popper.
+   */
   activator: HTMLElement | null;
-  sameWidth?: boolean;
+  /**
+   * Position the popper relative to the activator.
+   * @default 'blockStart'
+   */
+  placement?: Placement;
+  /**
+   * Moves the popper away from the activator.
+   * If not specified, the popper will be flush with the activator.
+   *
+   * Number is in pixels.
+   *
+   * Example:
+   * - `10` represents `10px`
+   */
+  offset?: number;
+  /**
+   * Ensures the popper is always visible in the viewport.
+   */
+  preventOverflow?: boolean;
+  /**
+   * Match the inline size of the popper to the `activator` size.
+   */
+  sameInlineSize?: boolean;
+  /**
+   * Minimum inline size of the popper.
+   * This ensure the popper will not go smaller than the size specified.
+   *
+   * When used with `sameInlineSize`, the `minInlineSize` will act as a
+   * guard rail in case the activator becomes too small depending its context.
+   * This will ensure the popper content remains readable.
+   *
+   * Number is in pixels.
+   *
+   * Example:
+   * - `500` represents `500px`
+   */
+  minInlineSize?: number;
 }
 
 export function Popper({
   children,
-  placement = 'top',
+  offset,
+  placement = 'blockStart',
   preventOverflow,
   activator,
-  sameWidth,
+  sameInlineSize,
+  minInlineSize,
 }: Props) {
   const referenceRect = useEffectRect(activator);
   const [popperRect, popperRef] = useRect();
 
-  const {offsets, clipping} = useMemo(
+  const {clipping, offsets, spacing} = useMemo(
     () =>
       computeOffsets(placement, popperRect, referenceRect, {
+        offset,
         preventOverflow,
-        sameWidth,
+        sameInlineSize,
       }),
-    [placement, popperRect, preventOverflow, referenceRect, sameWidth],
+    [
+      offset,
+      placement,
+      popperRect,
+      preventOverflow,
+      referenceRect,
+      sameInlineSize,
+    ],
   );
 
   const contextValue = useMemo(
     () => ({
-      offsets,
       clipping,
+      offsets,
       placement,
       popperRect,
       referenceRect,
+      spacing,
     }),
-    [clipping, offsets, placement, popperRect, referenceRect],
+    [clipping, offsets, placement, popperRect, referenceRect, spacing],
   );
 
-  const offsetX = offsets.x + (window.scrollX || window.pageXOffset);
-  const offsetY = offsets.y + (window.scrollY || window.pageYOffset);
+  const {x, y} = roundOffsets({
+    x: offsets.x + spacing + (window.scrollX || window.pageXOffset),
+    y: offsets.y + (window.scrollY || window.pageYOffset),
+  });
+
+  const transform =
+    (window.devicePixelRatio || 1) < 2
+      ? `translate(${x}px, ${y}px)`
+      : `translate3d(${x}px, ${y}px, 0)`;
 
   return (
     <PopperContext.Provider value={contextValue}>
@@ -55,10 +111,11 @@ export function Popper({
           className={styles.Popper}
           style={{
             ...(referenceRect && {
-              transform: `translate(${offsetX}px, ${offsetY}px)`,
-              MozTransform: `translate(${offsetX}px, ${offsetY}px)`,
-              webkitTransform: `translate(${offsetX}px, ${offsetY}px)`,
-              ...(sameWidth && {width: referenceRect.width}),
+              transform,
+              MozTransform: transform,
+              webkitTransform: transform,
+              ...(sameInlineSize && {width: referenceRect.width}),
+              ...(minInlineSize && {minWidth: rem(minInlineSize)}),
             }),
           }}
           ref={popperRef}

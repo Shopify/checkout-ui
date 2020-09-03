@@ -34,6 +34,7 @@ export const ThemeContext = createContext<UiTheme | undefined>(undefined);
 export function createTheme({
   global = {},
   buyerJourney = {},
+  typographyScale = {},
   typographyPrimary = {},
   typographySecondary = {},
   headingLevel1 = {},
@@ -49,6 +50,14 @@ export function createTheme({
   reviewBlock = {},
   actions = {},
   lineItems = {},
+  moneyLines = {},
+  moneySummary = {},
+  primaryButton = {},
+  secondaryButton = {},
+  formLayout = {},
+  tag = {},
+  tooltip = {},
+  banner = {},
   typographyStyle1 = {},
   typographyStyle2 = {},
   typographyStyle3 = {},
@@ -63,6 +72,7 @@ export function createTheme({
   return new UiTheme({
     global,
     buyerJourney,
+    typographyScale,
     typographyPrimary,
     typographySecondary,
     headingLevel1,
@@ -78,6 +88,14 @@ export function createTheme({
     reviewBlock,
     actions,
     lineItems,
+    moneyLines,
+    moneySummary,
+    primaryButton,
+    secondaryButton,
+    formLayout,
+    tag,
+    tooltip,
+    banner,
     typographyStyle1,
     typographyStyle2,
     typographyStyle3,
@@ -90,6 +108,13 @@ export function createTheme({
     colors,
   });
 }
+
+/**
+ * This scaling factor represents the ratio of the height of the ratio to the base font-size of the document.
+ * E.g., a font-size of 14px means that the radio element will have width & height of 18px
+ */
+const RADIO_SCALE = 1.2857142857142858;
+const CHECKBOX_SCALE = 1.2857142857142858;
 
 export class UiTheme {
   configuration: ThemeConfiguration;
@@ -157,6 +182,12 @@ export class UiTheme {
       this.listeners[event].delete(listener as any);
     };
   }
+}
+
+export function colorSubdued(colorPair?: ColorPair) {
+  return colorPair?.background?.adjust({
+    l: (l) => (l > 50 ? l - 1.7 : Math.max(l - 5.2, 0)),
+  });
 }
 
 export function colorTextEmphasized(colorPair?: ColorPair) {
@@ -234,6 +265,13 @@ function colorsFromOverrides(overrideColors: Partial<RoleColorOverrides>) {
   }, {});
 }
 
+function colorBorder(colorPair?: ColorPair) {
+  return colorPair?.background?.adjust({
+    s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
+    l: (l) => (l > 50 ? Math.max(l - 8.8, 0) : Math.min(l + 11.3, 90)),
+  });
+}
+
 export function colorBorderEmphasized(colorPair?: ColorPair) {
   return colorPair?.background?.adjust({
     s: (s) => (s > 50 ? s : Math.min(s + 15, 100)),
@@ -265,12 +303,7 @@ const COLOR_MAP: {
   colorCanvasTextSubdued: ({canvas}) => colorTextSubdued(canvas),
   colorCanvasTextEmphasized: ({canvas}) => colorTextEmphasized(canvas),
 
-  colorCanvasBorder: ({canvas}) =>
-    canvas?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 8.8, 0) : Math.min(l + 11.3, 90)),
-    }),
-
+  colorCanvasBorder: ({canvas}) => colorBorder(canvas),
   colorCanvasBorderEmphasized: ({canvas}) => colorBorderEmphasized(canvas),
 
   /* COLOR SURFACE 1 */
@@ -280,6 +313,9 @@ const COLOR_MAP: {
     surfacePrimary?.background?.adjust({
       l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
     }),
+
+  colorSurfacePrimarySubdued: ({surfacePrimary}) =>
+    colorSubdued(surfacePrimary),
 
   colorSurfacePrimaryText: ({surfacePrimary}) =>
     surfacePrimary?.foreground ??
@@ -294,11 +330,7 @@ const COLOR_MAP: {
   colorSurfacePrimaryTextEmphasized: ({surfacePrimary}) =>
     colorTextEmphasized(surfacePrimary),
 
-  colorSurfacePrimaryBorder: ({surfacePrimary}) =>
-    surfacePrimary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 8.8, 0) : Math.min(l + 11.3, 90)),
-    }),
+  colorSurfacePrimaryBorder: ({surfacePrimary}) => colorBorder(surfacePrimary),
 
   colorSurfacePrimaryBorderEmphasized: ({surfacePrimary}) =>
     colorBorderEmphasized(surfacePrimary),
@@ -310,6 +342,9 @@ const COLOR_MAP: {
     surfaceSecondary?.background?.adjust({
       l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
     }),
+
+  colorSurfaceSecondarySubdued: ({surfaceSecondary}) =>
+    colorSubdued(surfaceSecondary),
 
   colorSurfaceSecondaryText: ({surfaceSecondary}) =>
     surfaceSecondary?.foreground ??
@@ -325,10 +360,7 @@ const COLOR_MAP: {
     colorTextEmphasized(surfaceSecondary),
 
   colorSurfaceSecondaryBorder: ({surfaceSecondary}) =>
-    surfaceSecondary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 8.8, 0) : Math.min(l + 11.3, 90)),
-    }),
+    colorBorder(surfaceSecondary),
 
   colorSurfaceSecondaryBorderEmphasized: ({surfaceSecondary}) =>
     colorBorderEmphasized(surfaceSecondary),
@@ -342,9 +374,7 @@ const COLOR_MAP: {
     }),
 
   colorSurfaceTertiarySubdued: ({surfaceTertiary}) =>
-    surfaceTertiary?.background?.adjust({
-      l: (l) => (l > 50 ? l - 1.7 : Math.max(l - 5.2, 0)),
-    }),
+    colorSubdued(surfaceTertiary),
 
   colorSurfaceTertiaryText: ({surfaceTertiary}) =>
     surfaceTertiary?.foreground ??
@@ -360,13 +390,41 @@ const COLOR_MAP: {
     colorTextEmphasized(surfaceTertiary),
 
   colorSurfaceTertiaryBorder: ({surfaceTertiary}) =>
-    surfaceTertiary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 8.8, 0) : Math.min(l + 11.3, 90)),
-    }),
+    colorBorder(surfaceTertiary),
 
   colorSurfaceTertiaryBorderEmphasized: ({surfaceTertiary}) =>
     colorBorderEmphasized(surfaceTertiary),
+
+  /* COLOR SURFACE 4 */
+  colorSurfaceQuaternary: ({surfaceQuaternary}) =>
+    surfaceQuaternary?.background,
+
+  colorSurfaceQuaternaryDisabled: ({surfaceQuaternary}) =>
+    surfaceQuaternary?.background?.adjust({
+      l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
+    }),
+
+  colorSurfaceQuaternarySubdued: ({surfaceQuaternary}) =>
+    colorSubdued(surfaceQuaternary),
+
+  colorSurfaceQuaternaryText: ({surfaceQuaternary}) =>
+    surfaceQuaternary?.foreground ??
+    surfaceQuaternary?.background?.adjust({
+      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
+      l: (l) => (l > 50 ? Math.max(l - 62.6, 0) : Math.min(l + 82, 98.3)),
+    }),
+
+  colorSurfaceQuaternaryTextSubdued: ({surfaceQuaternary}) =>
+    colorTextSubdued(surfaceQuaternary),
+
+  colorSurfaceQuaternaryTextEmphasized: ({surfaceQuaternary}) =>
+    colorTextEmphasized(surfaceQuaternary),
+
+  colorSurfaceQuaternaryBorder: ({surfaceQuaternary}) =>
+    colorBorder(surfaceQuaternary),
+
+  colorSurfaceQuaternaryBorderEmphasized: ({surfaceQuaternary}) =>
+    colorBorderEmphasized(surfaceQuaternary),
 
   /* COLOR PRIMARY */
   colorPrimary: ({primary}) => primary?.background,
@@ -383,6 +441,19 @@ const COLOR_MAP: {
   colorSecondaryText: ({secondary}) => colorText(secondary),
   colorSecondaryTextHovered: ({secondary}) => colorTextHovered(secondary),
   colorSecondaryTextPressed: ({secondary}) => colorTextPressed(secondary),
+
+  /* COLOR TERTIARY */
+  colorTertiary: ({tertiary}) => tertiary?.background,
+  colorTertiaryText: ({tertiary}) => colorText(tertiary),
+  colorTertiaryTextSubdued: ({tertiary}) =>
+    tertiary?.foreground
+      ? tertiary?.foreground?.adjust({
+          l: (l) => Math.min(l + 20, 100),
+        })
+      : tertiary?.background?.adjust({
+          s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
+          l: (l) => (l > 50 ? Math.max(l - 49.9, 10) : Math.min(l + 63.2, 90)),
+        }),
 
   /* COLOR INTERACTIVE */
   colorInteractive: ({interactive}) => interactive?.background,
@@ -402,6 +473,15 @@ const COLOR_MAP: {
     interactive?.foreground?.adjust({
       l: (l) => l + 10,
     }),
+
+  /* COLOR CRITICAL */
+  colorCritical: ({critical}) => critical?.background,
+  colorCriticalText: ({critical}) => critical?.foreground,
+  colorCriticalBorder: ({critical}) =>
+    critical?.background?.adjust({
+      l: (l) => l - 17.5,
+    }),
+  colorCriticalBorderEmphasized: ({critical}) => critical?.foreground,
 };
 
 const TYPOGRAPHY_SCALE_MAP: {
@@ -475,13 +555,13 @@ const SPACING_MAP: {
     scale: Partial<TypographyScale>,
   ) => string | undefined;
 } = {
-  spacingTight4X: ({base}) =>
+  spacingTight4x: ({base}) =>
     base ? modularScale(-5, base, SPACING_RATIO) : undefined,
-  spacingTight3X: ({base}) =>
+  spacingTight3x: ({base}) =>
     base ? modularScale(-4, base, SPACING_RATIO) : undefined,
-  spacingTight2X: ({base}) =>
+  spacingTight2x: ({base}) =>
     base ? modularScale(-3, base, SPACING_RATIO) : undefined,
-  spacingTight1X: ({base}) =>
+  spacingTight1x: ({base}) =>
     base ? modularScale(-2, base, SPACING_RATIO) : undefined,
   spacingTight: ({base}) =>
     base ? modularScale(-1, base, SPACING_RATIO) : undefined,
@@ -489,13 +569,13 @@ const SPACING_MAP: {
     base ? modularScale(0, base, SPACING_RATIO) : undefined,
   spacingLoose: ({base}) =>
     base ? modularScale(1, base, SPACING_RATIO) : undefined,
-  spacingLoose1X: ({base}) =>
+  spacingLoose1x: ({base}) =>
     base ? modularScale(2, base, SPACING_RATIO) : undefined,
-  spacingLoose2X: ({base}) =>
+  spacingLoose2x: ({base}) =>
     base ? modularScale(3, base, SPACING_RATIO) : undefined,
-  spacingLoose3X: ({base}) =>
+  spacingLoose3x: ({base}) =>
     base ? modularScale(4, base, SPACING_RATIO) : undefined,
-  spacingLoose4X: ({base}) =>
+  spacingLoose4x: ({base}) =>
     base ? modularScale(5, base, SPACING_RATIO) : undefined,
 };
 
@@ -506,6 +586,7 @@ const SIMPLE_BORDER_RADIUS_MAP = {
 
 const BORDER_RADIUS_MAP = {
   ...SIMPLE_BORDER_RADIUS_MAP,
+  tight: 'var(--x-border-radius-tight)',
   fullyRounded: 'var(--x-border-radius-fully-rounded)',
 };
 
@@ -521,6 +602,18 @@ const OPTION_LIST_GAP_MAP = {
   none: '0',
 };
 
+const MONEY_LINES_GAP_MAP = {
+  base: 'var(--x-spacing-tight)',
+  tight: 'var(--x-spacing-tight1x)',
+  none: '0',
+};
+
+const MONEY_LINES_SEPARATOR_GAP_MAP = {
+  base: 'var(--x-spacing-loose1x)',
+  tight: 'var(--x-spacing-base)',
+  none: '0',
+};
+
 const REVIEW_BLOCK_GAP_MAP = {
   base: 'var(--x-spacing-base)',
   tight: 'var(--x-spacing-tight4x)',
@@ -530,6 +623,21 @@ const REVIEW_BLOCK_GAP_MAP = {
 const BUYER_JOURNEY_GAP_MAP = {
   base: 'var(--x-spacing-tight1x)',
   loose: 'var(--x-spacing-loose2x)',
+};
+
+const SPACING_VAR_MAP = {
+  none: '0',
+  tight4x: 'var(--x-spacing-tight4x)',
+  tight3x: 'var(--x-spacing-tight3x)',
+  tight2x: 'var(--x-spacing-tight2x)',
+  tight1x: 'var(--x-spacing-tight1x)',
+  tight: 'var(--x-spacing-tight)',
+  base: 'var(--x-spacing-base)',
+  loose: 'var(--x-spacing-loose)',
+  loose1x: 'var(--x-spacing-loose1x)',
+  loose2x: 'var(--x-spacing-loose2x)',
+  loose3x: 'var(--x-spacing-loose3x)',
+  loose4x: 'var(--x-spacing-loose4x)',
 };
 
 function customPropertiesFromThemeConfiguration({
@@ -544,7 +652,13 @@ function customPropertiesFromThemeConfiguration({
   select,
   optionList,
   checkbox,
+  moneyLines,
+  moneySummary,
   reviewBlock,
+  primaryButton,
+  secondaryButton,
+  tag,
+  banner,
   typographyStyle1,
   typographyStyle2,
   typographyStyle3,
@@ -581,11 +695,10 @@ function customPropertiesFromThemeConfiguration({
   const reviewBlockBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(
     reviewBlock.borderRadius,
   );
-  const [textFieldBorder, selectBorder, checkboxBorder, optionListBorder] = [
+  const [textFieldBorder, selectBorder, checkboxBorder] = [
     textFields.border,
     select.border,
     checkbox.border,
-    optionList.border,
   ].map(maybeInMap(BORDER_MAP));
   const typographyPrimaryFonts = typographyPrimary.fonts ?? undefined;
   const typographyPrimaryWeightBase = typographyPrimary.weightBase ?? undefined;
@@ -596,6 +709,10 @@ function customPropertiesFromThemeConfiguration({
   const typographySecondaryWeightBold =
     typographySecondary.weightBold ?? undefined;
   const optionListBlockGap = maybeInMap(OPTION_LIST_GAP_MAP)(optionList.gap);
+  const moneyLinesBlockGap = maybeInMap(MONEY_LINES_GAP_MAP)(moneyLines.gap);
+  const moneyLinesSeparatorBlockGap = maybeInMap(MONEY_LINES_SEPARATOR_GAP_MAP)(
+    moneyLines.gap,
+  );
   const buyerJourneyInlineGap = maybeInMap(BUYER_JOURNEY_GAP_MAP)(
     buyerJourney.gap,
   );
@@ -682,6 +799,59 @@ function customPropertiesFromThemeConfiguration({
     ])
     .reduce((accumulator, array) => [...accumulator, ...array], []);
 
+  const primaryButtonBlockPadding = maybeInMap(SPACING_VAR_MAP)(
+    primaryButton.blockPadding,
+  );
+  const primaryButtonInlinePadding = maybeInMap(SPACING_VAR_MAP)(
+    primaryButton.inlinePadding,
+  );
+  const secondaryButtonBlockPadding = maybeInMap(SPACING_VAR_MAP)(
+    secondaryButton.blockPadding,
+  );
+  const secondaryButtonInlinePadding = maybeInMap(SPACING_VAR_MAP)(
+    secondaryButton.inlinePadding,
+  );
+
+  const moneyLinesBlockPadding = maybeInMap(SPACING_VAR_MAP)(
+    moneyLines.blockPadding,
+  );
+  const moneyLinesInlinePadding = maybeInMap(SPACING_VAR_MAP)(
+    moneyLines.inlinePadding,
+  );
+
+  const moneySummaryBlockPadding = maybeInMap(SPACING_VAR_MAP)(
+    moneySummary.blockPadding,
+  );
+  const moneySummaryInlinePadding = maybeInMap(SPACING_VAR_MAP)(
+    moneySummary.inlinePadding,
+  );
+
+  const optionListBlockPadding = maybeInMap(SPACING_VAR_MAP)(
+    optionList.blockPadding,
+  );
+  const optionListInlinePadding = maybeInMap(SPACING_VAR_MAP)(
+    optionList.inlinePadding,
+  );
+
+  const tagBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(tag.borderRadius);
+
+  /** To avoid an oval-y shape caused by sub-pixel dimensions, we need JS to floor the size of our radio buttons. */
+  const radioSize = typographyScale.base
+    ? `${Math.floor(
+        parseFloat(typographyScale.base.toString()) * RADIO_SCALE,
+      )}px`
+    : undefined;
+
+  /** To avoid an rectangular shape caused by sub-pixel dimensions, we need JS to floor the size of our checkboxes. */
+  const checkboxSize = typographyScale.base
+    ? `${Math.floor(
+        parseFloat(typographyScale.base.toString()) * CHECKBOX_SCALE,
+      )}px`
+    : undefined;
+
+  const bannerBorder = maybeInMap(BORDER_MAP)(banner.border);
+  const bannerBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(banner.borderRadius);
+
   const customProperties: Partial<CustomPropertyMap> = {
     ...customPropertiesFromRoleColors(colorsFromOverrides(colors)),
     ...customPropertiesFromTypographyScale(typographyScale),
@@ -705,10 +875,11 @@ function customPropertiesFromThemeConfiguration({
     selectBorder,
     optionListBorderRadius,
     optionListBlockGap,
-    optionListBorder,
     reviewBlockBorderRadius,
     reviewBlockBlockGap,
     reviewBlockBorder,
+    moneyLinesBlockGap,
+    moneyLinesSeparatorBlockGap,
     buyerJourneyInlineGap,
     style1TypographySize,
     style1TypographyCase,
@@ -764,6 +935,21 @@ function customPropertiesFromThemeConfiguration({
     style9TypographyWeight,
     style9TypographyLineSize,
     style9TypographyKerning,
+    primaryButtonBlockPadding,
+    primaryButtonInlinePadding,
+    secondaryButtonBlockPadding,
+    secondaryButtonInlinePadding,
+    moneyLinesBlockPadding,
+    moneyLinesInlinePadding,
+    moneySummaryBlockPadding,
+    moneySummaryInlinePadding,
+    optionListBlockPadding,
+    optionListInlinePadding,
+    tagBorderRadius,
+    radioSize,
+    checkboxSize,
+    bannerBorder,
+    bannerBorderRadius,
   };
 
   for (const key of Object.keys(

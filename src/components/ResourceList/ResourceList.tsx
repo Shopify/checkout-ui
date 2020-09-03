@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {createIdCreator, useId} from '../../utilities/id';
@@ -6,28 +6,43 @@ import {utilityDefaultBorderColor} from '../../utilities/legacy';
 import {Heading} from '../Heading';
 import {HeadingGroup} from '../HeadingGroup';
 import {VisuallyHidden} from '../VisuallyHidden';
+import {
+  ThemeGap,
+  ThemeResourceListBorder,
+  ThemeBorderStyle,
+  ThemeBorderColor,
+} from '../Theme';
 
 import styles from './ResourceList.css';
 
 const createId = createIdCreator('ResourceList');
 export interface Props {
-  children?: React.ReactNode;
-  border?: 'none' | 'full' | 'blockEnd' | 'betweenItems';
+  children?: ReactNode;
   title?: string;
   titleHidden?: boolean;
+  border?: ThemeResourceListBorder;
+  borderStyle?: ThemeBorderStyle;
+  borderColor?: ThemeBorderColor;
+  gap?: ThemeGap;
 }
 
 export function ResourceList({
   children,
-  border = 'none',
   title,
   titleHidden,
+  gap,
+  border,
+  borderStyle,
+  borderColor,
 }: Props) {
   const id = useId(undefined, createId);
   const className = classNames(
     styles.ResourceList,
     utilityDefaultBorderColor,
+    gap && styles[variationName('gap', gap)],
     border && styles[variationName('border', border)],
+    borderStyle && styles[variationName('borderStyle', borderStyle)],
+    borderColor && styles[variationName('borderColor', borderColor)],
   );
 
   const titleMarkup = title ? <Heading id={id}>{title}</Heading> : null;
@@ -48,23 +63,38 @@ export function ResourceList({
   );
 }
 
-export function ResourceListHeader({children}: {children?: React.ReactNode}) {
+export interface ResourceListHeaderProps {
+  children?: ReactNode;
+  hidden?: boolean;
+}
+
+export function ResourceListHeader({
+  children,
+  hidden,
+}: ResourceListHeaderProps) {
   return (
-    <div role="row" className={styles.ResourceListHeader}>
+    <div
+      role="row"
+      className={classNames(styles.ResourceListHeader, {
+        [styles['ResourceListHeader-isHidden']]: hidden,
+      })}
+    >
       {children}
     </div>
   );
+}
+
+export interface ResourceListHeaderContentProps {
+  children?: ReactNode;
+  hidden?: boolean;
+  primary?: boolean;
 }
 
 export function ResourceListHeaderContent({
   children,
   primary,
   hidden,
-}: {
-  children?: React.ReactNode;
-  primary?: boolean;
-  hidden?: boolean;
-}) {
+}: ResourceListHeaderContentProps) {
   return (
     <div
       role="columnheader"

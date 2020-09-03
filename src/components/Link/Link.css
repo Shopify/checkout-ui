@@ -13,3 +13,7 @@
     color: var(--x-color-interactive-text-pressed);
   }
 }
+
+.underline {
+  text-decoration: underline;
+}

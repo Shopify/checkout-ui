@@ -57,7 +57,13 @@ const BUNDLED_ICONS = {
 
 export interface Props {
   source: 'placeholder' | keyof typeof BUNDLED_ICONS;
-  color?: 'interactive' | 'subdued' | 'informative' | 'critical' | 'warning';
+  color?:
+    | 'interactive'
+    | 'subdued'
+    | 'success'
+    | 'informative'
+    | 'critical'
+    | 'warning';
   size?: 'small' | 'default' | 'large';
   accessibilityLabel?: string;
 }

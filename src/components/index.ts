@@ -17,7 +17,7 @@ export {
   AutocompleteFooterProps,
 } from './Autocomplete';
 export {Banner, Props as BannerProps} from './Banner';
-export {BlockStack} from './BlockStack';
+export {BlockStack, Props as BlockStackProps} from './BlockStack';
 export {Bookend} from './Bookend';
 export {Breadcrumbs, Props as BreadcrumbsProps} from './Breadcrumbs';
 export {Button} from './Button';
@@ -28,6 +28,7 @@ export {Checkbox} from './Checkbox';
 export {Connected, Props as ConnectedProps} from './Connected';
 export {FlagIcon, Props as FlagIconProps} from './FlagIcon';
 export {FormLayout, FormLayoutGroup} from './FormLayout';
+export {FormattedText, Props as FormattedTextProps} from './FormattedText';
 export {Heading} from './Heading';
 export {HeadingGroup} from './HeadingGroup';
 export {HiddenForAccessibility} from './HiddenForAccessibility';
@@ -37,9 +38,10 @@ export {Image} from './Image';
 export {InlineError, Props as InlineErrorProps} from './InlineError';
 export {InlineSuccess, Props as InlineSuccessProps} from './InlineSuccess';
 export {InlineStack} from './InlineStack';
-export {Layout, Props as LayoutProps} from './Layout';
+export {Layout} from './Layout';
 export {Labelled, Props as LabelledProps, useLabelled} from './Labelled';
 export {Link, Props as LinkProps} from './Link';
+export {LiveRegion} from './LiveRegion';
 export {UnstyledLink, Props as UnstyledLinkProps} from './Link';
 export {Modal} from './Modal';
 export {
@@ -47,8 +49,7 @@ export {
   MoneyLineSeparator,
   Props as MoneyLineProps,
 } from './MoneyLine';
-
-export {LiveRegion} from './LiveRegion';
+export {MoneyLines, Props as MoneyLinesProps} from './MoneyLines';
 export {MoneySummary, Props as MoneySummaryProps} from './MoneySummary';
 export {
   OptionList,
@@ -71,12 +72,15 @@ export {
   Props as ResourceItemProps,
   ResourceItemContent,
   ResourceItemContentProps,
+  ResourceItemSeparator,
 } from './ResourceItem';
 export {
   ResourceList,
   Props as ResourceListProps,
   ResourceListHeader,
+  ResourceListHeaderProps,
   ResourceListHeaderContent,
+  ResourceListHeaderContentProps,
 } from './ResourceList';
 export {ReviewItem, ReviewBlock, Props as ReviewItemProps} from './ReviewItem';
 export {Select} from './Select';
@@ -134,6 +138,7 @@ export {
   STEP_SECTION_PRIMARY_HEADER_ID,
 } from './Step';
 export {Stepper, Props as StepperProps, StepperStep} from './Stepper';
+export {Tag, Props as TagProps} from './Tag';
 export {Text} from './Text';
 export {TextBlock} from './TextBlock';
 export {TextContainer} from './TextContainer';
@@ -151,8 +156,10 @@ export {
   ThemeSimpleBorderRadius,
   ThemeBorderRadius,
   ThemeSimpleBorder,
+  ThemeResourceListBorder,
   ThemeBorder,
   ThemeBorderColor,
+  ThemeBorderStyle,
   ThemeLabelPosition,
   ThemeBackground,
   ThemeSelectDisclosureIcon,
@@ -161,22 +168,38 @@ export {
   ThemeTypographyLetterCase,
   ThemeTypographyFonts,
   ThemeTypographyWeight,
-  ThemeLineItemBadgeBackground,
+  ThemeThumbnailBadgeBackground,
   ThemeActionsDisplay,
-  ThemeOptionListGap,
+  ThemeGap,
+  ThemeMoneyLineInlineAlignment,
   ThemeBuyerJourney,
   ThemeBuyerJourneyGap,
   ThemeBuyerJourneyNumberStyle,
-  ThemeReviewBlockGap,
   ThemeTypographyStyle,
   ThemeTypographyLineSize,
   ThemeTypographyKerning,
   colorTextEmphasized,
   colorTextSubdued,
+  ThemeSpacing,
+  ThemeSimpleSpacing,
+  ThemeResourceItemSpacing,
+  ThemeTag,
+  ThemeLineItemQuantityPosition,
+  ThemeLoadingStyle,
+  ThemeErrorIndentation,
+  ThemeTooltip,
+  ThemeOpacity,
+  ThemeSurfaceBackground,
+  ThemeTextAlignment,
+  ThemeOptionListBorder,
 } from './Theme';
 export {Thumbnail, Props as ThumbnailProps} from './Thumbnail';
 export {Truncate, Props as TruncateProps} from './Truncate';
 export {Tooltip, Props as TooltipProps} from './Tooltip';
-export {VisuallyHidden} from './VisuallyHidden';
-export {View, Props as ViewProps} from './View';
+export {
+  VisuallyHidden,
+  MaybeVisuallyHidden,
+  MaybeProps as MaybeVisuallyHiddenProps,
+} from './VisuallyHidden';
+export {View} from './View';
 export {EmptyState, EmptyStateIcon, EmptyStateText} from './EmptyState';

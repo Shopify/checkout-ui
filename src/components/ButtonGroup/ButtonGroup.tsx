@@ -4,5 +4,5 @@ import {ButtonGroupProps} from '@shopify/argo-checkout';
 import {InlineStack} from '../InlineStack';
 
 export function ButtonGroup({children}: PropsWithChildren<ButtonGroupProps>) {
-  return <InlineStack>{children}</InlineStack>;
+  return <InlineStack alignment="center">{children}</InlineStack>;
 }

@@ -15,14 +15,20 @@ export function Radio({
   id: explicitId,
   accessibilityLabel,
   children,
+  disabled,
   ...rest
 }: PropsWithChildren<RadioProps>) {
   const id = useId(explicitId, createId);
 
+  const className = classNames(
+    styles.Label,
+    disabled && styles['Label-isDisabled'],
+  );
+
   return (
     <div className={styles.Wrapper}>
-      <RadioControl id={id} {...rest} />
-      <label htmlFor={id} className={styles.Label}>
+      <RadioControl id={id} disabled={disabled} {...rest} />
+      <label htmlFor={id} className={className}>
         {accessibilityLabel ? (
           <>
             <VisuallyHidden>{accessibilityLabel}</VisuallyHidden>
@@ -55,6 +61,7 @@ export const RadioControl = ({
 
   const className = classNames(
     styles.Input,
+    disabled && styles['Input-isDisabled'],
     styles[variationName('Input-background', background)],
     styles[variationName('Input-borderColor', borderColor)],
   );

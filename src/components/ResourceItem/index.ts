@@ -3,4 +3,5 @@ export {
   Props,
   ResourceItemContent,
   ResourceItemContentProps,
+  ResourceItemSeparator,
 } from './ResourceItem';

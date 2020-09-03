@@ -1,6 +1,7 @@
 import React from 'react';
-import {mount} from '@quilted/react-testing/dom';
 import faker from 'faker';
+
+import {mountWithContext} from '../../test-utilities';
 
 import {MoneySummary, Props} from './MoneySummary';
 
@@ -13,7 +14,7 @@ const defaultProps: Props = {
 describe('<MoneySummary />', () => {
   it('renders a label', () => {
     const label = faker.random.word();
-    const moneySummary = mount(
+    const moneySummary = mountWithContext(
       <MoneySummary {...defaultProps} label={label} />,
     );
 
@@ -22,7 +23,7 @@ describe('<MoneySummary />', () => {
 
   it('renders a prefix', () => {
     const prefix = faker.random.word();
-    const moneySummary = mount(
+    const moneySummary = mountWithContext(
       <MoneySummary {...defaultProps} prefix={prefix} />,
     );
 
@@ -31,7 +32,7 @@ describe('<MoneySummary />', () => {
 
   it('renders a value', () => {
     const value = faker.random.word();
-    const moneySummary = mount(
+    const moneySummary = mountWithContext(
       <MoneySummary {...defaultProps} value={value} />,
     );
 

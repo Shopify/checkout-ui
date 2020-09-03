@@ -1,1 +1,5 @@
-export {VisuallyHidden} from './VisuallyHidden';
+export {
+  VisuallyHidden,
+  MaybeVisuallyHidden,
+  MaybeProps,
+} from './VisuallyHidden';

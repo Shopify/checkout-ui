@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {mountWithContext} from '../../test-utilities';
 import {Field} from '../TextField';
@@ -68,6 +68,26 @@ describe('<Autocomplete />', () => {
       });
     });
 
+    it('renders a disabled <Field /> when the disabled prop is true', () => {
+      const autocomplete = mountWithContext(
+        <Autocomplete {...defaultProps} disabled options={[]} />,
+      );
+
+      expect(autocomplete).toContainReactComponent(Field, {
+        disabled: true,
+      });
+    });
+
+    it('renders a readonly <Field /> when the readonly prop is true', () => {
+      const autocomplete = mountWithContext(
+        <Autocomplete {...defaultProps} readonly options={[]} />,
+      );
+
+      expect(autocomplete).toContainReactComponent(Field, {
+        readonly: true,
+      });
+    });
+
     it('sets the default aria-controls and aria-expanded properties', () => {
       const autocomplete = mountWithContext(
         <Autocomplete {...defaultProps} options={[]} />,
@@ -119,6 +139,56 @@ describe('<Autocomplete />', () => {
       });
     });
 
+    it("doesn't render when no options", () => {
+      const autocomplete = mountWithContext(
+        <Autocomplete {...defaultProps} options={[]}>
+          {autocompleteOptions(defaultProps.options)}
+        </Autocomplete>,
+      );
+
+      autocomplete.find(Field)?.trigger('onFocus');
+      expect(autocomplete).not.toContainReactComponent(AutocompleteOptions);
+    });
+
+    it('renders when the options change', () => {
+      function Options() {
+        const [options, setOptions] = useState<Props['options']>([]);
+
+        const search = () => {
+          setOptions(['address 1', 'address 2']);
+        };
+
+        return (
+          <>
+            <Autocomplete {...defaultProps} options={options}>
+              {autocompleteOptions(defaultProps.options)}
+            </Autocomplete>
+            <button onClick={search} />
+          </>
+        );
+      }
+
+      const options = mountWithContext(<Options />);
+
+      expect(options).not.toContainReactComponent(AutocompleteOptions);
+
+      options.find('button')?.trigger('onClick');
+      expect(options).toContainReactComponent(AutocompleteOptions, {
+        children: expect.any(Array),
+      });
+    });
+
+    it("doesn't render when the value is empty", () => {
+      const autocomplete = mountWithContext(
+        <Autocomplete {...defaultProps}>
+          {autocompleteOptions(defaultProps.options)}
+        </Autocomplete>,
+      );
+
+      autocomplete.find(Field)?.trigger('onInput', '');
+      expect(autocomplete).not.toContainReactComponent(AutocompleteOptions);
+    });
+
     it('renders an <ul> with unique id', () => {
       const autocomplete = mountWithContext(
         <Autocomplete {...defaultProps}>
@@ -132,7 +202,7 @@ describe('<Autocomplete />', () => {
       });
     });
 
-    it('is hidden when the close button is clicked', () => {
+    it('hides when the close button is clicked', () => {
       const autocomplete = mountWithContext(
         <Autocomplete {...defaultProps}>
           {autocompleteOptions(defaultProps.options)}

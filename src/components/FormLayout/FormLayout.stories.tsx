@@ -10,7 +10,7 @@ import {FormLayout, FormLayoutGroup} from './FormLayout';
 const meta = {
   title: 'FormLayout',
   component: FormLayout,
-  decorators: [withKnobs, themeWithKnobs('textFields', 'select')],
+  decorators: [withKnobs, themeWithKnobs('formLayout', 'textFields', 'select')],
 };
 
 export default meta;

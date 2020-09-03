@@ -1,8 +1,9 @@
 import React from 'react';
+import {classNames, variationName} from '@shopify/css-utilities';
 
-import {View} from '../View';
+import {InlineStack} from '../InlineStack';
 import {Text} from '../Text';
-import {TextBlock} from '../TextBlock';
+import {useThemeConfiguration} from '../Theme';
 
 import styles from './MoneyLine.css';
 
@@ -10,22 +11,53 @@ export interface Props {
   label: string;
   value?: string;
   subdued?: boolean;
+  childPosition?: 'default' | 'end';
   children?: React.ReactNode;
 }
 
-export function MoneyLine({label, value, subdued, children}: Props) {
+export function MoneyLine({
+  label,
+  value,
+  subdued,
+  childPosition,
+  children,
+}: Props) {
+  const {
+    moneyLines: {
+      background,
+      inlineAlignment,
+      labelTypographyStyle,
+      valueTypographyStyle,
+    },
+  } = useThemeConfiguration();
+
+  const className = classNames(
+    styles.MoneyLine,
+    background && styles[variationName('background', background)],
+    inlineAlignment &&
+      styles[variationName('inlineAlignment', inlineAlignment)],
+  );
+
   return (
-    <div className={styles.MoneyLine} role="row">
-      <div role="rowheader">
-        <View>
-          <Text>{label}</Text>
-          {children}
-        </View>
+    <div className={className} role="row">
+      <div className={styles.Label} role="rowheader">
+        <InlineStack spacing="tight">
+          <Text style={labelTypographyStyle}>{label}</Text>
+          {(!childPosition || childPosition === 'default') && children}
+        </InlineStack>
       </div>
-      <div role="cell">
-        <TextBlock subdued={subdued} emphasized={!subdued}>
-          {value}
-        </TextBlock>
+      <div className={styles.Value} role="cell">
+        <InlineStack spacing="tight">
+          <Text
+            subdued={subdued}
+            emphasized={!subdued}
+            size={subdued ? 'small' : undefined}
+            style={valueTypographyStyle}
+          >
+            {value}
+          </Text>
+          {childPosition === 'end' && children}
+        </InlineStack>
       </div>
     </div>
   );

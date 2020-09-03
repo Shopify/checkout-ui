@@ -13,11 +13,17 @@
 }
 
 .isEmphasized {
-  font-weight: var(--x-typography-primary-weight-bold);
+  --this-font-weight: var(--x-typography-primary-weight-bold);
+  font-weight: var(--this-font-weight);
   color: var(
     --x-default-color-text-emphasized,
     var(--x-default-color-text, inherit)
   );
+}
+
+.sizeXsmall {
+  --this-font-size: var(--x-typography-size-xsmall);
+  font-size: var(--this-font-size);
 }
 
 .sizeSmall {

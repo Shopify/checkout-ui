@@ -8,6 +8,7 @@ export interface PopperContextOptions {
   placement: Placement;
   popperRect: DOMRectReadOnly | null;
   referenceRect: DOMRectReadOnly | null;
+  spacing: number;
 }
 
 export const PopperContext = createContext<PopperContextOptions | null>(null);

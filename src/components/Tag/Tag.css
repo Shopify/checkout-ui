@@ -1,0 +1,27 @@
+.Tag {
+  background-color: var(--x-color-tertiary);
+  border-radius: var(
+    --x-tag-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  display: inline-flex;
+  align-items: center;
+}
+
+.Label {
+  color: var(--x-color-tertiary-text);
+  padding: var(--x-spacing-tight) 0 var(--x-spacing-tight)
+    var(--x-spacing-tight);
+  max-width: rem(240px);
+}
+
+.Button {
+  display: block;
+  padding: var(--x-spacing-tight) var(--x-spacing-base);
+  color: var(--x-color-tertiary-text-subdued);
+
+  &:hover,
+  &:active {
+    color: var(--x-color-tertiary-text);
+  }
+}

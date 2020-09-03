@@ -1,8 +1,8 @@
 import React from 'react';
-import {mount} from '@quilted/react-testing/dom';
 import faker from 'faker';
 
-import {TextBlock} from '../TextBlock';
+import {mountWithContext} from '../../test-utilities';
+import {Text} from '../Text';
 
 import {MoneyLine, Props} from './MoneyLine';
 
@@ -14,25 +14,29 @@ const defaultProps: Props = {
 describe('<MoneyLine />', () => {
   it('renders a label', () => {
     const label = faker.random.word();
-    const moneyLine = mount(<MoneyLine {...defaultProps} label={label} />);
+    const moneyLine = mountWithContext(
+      <MoneyLine {...defaultProps} label={label} />,
+    );
 
     expect(moneyLine).toContainReactText(label);
   });
 
   it('renders a value', () => {
     const value = faker.random.number().toString();
-    const moneyLine = mount(<MoneyLine {...defaultProps} value={value} />);
+    const moneyLine = mountWithContext(
+      <MoneyLine {...defaultProps} value={value} />,
+    );
 
     expect(moneyLine).toContainReactText(value);
   });
 
   it('renders a subdued value if subdued', () => {
     const value = faker.random.number().toString();
-    const moneyLine = mount(
+    const moneyLine = mountWithContext(
       <MoneyLine {...defaultProps} value={value} subdued />,
     );
 
-    expect(moneyLine).toContainReactComponent(TextBlock, {
+    expect(moneyLine).toContainReactComponent(Text, {
       subdued: true,
       children: value,
     });
@@ -43,7 +47,7 @@ describe('<MoneyLine />', () => {
       return <div />;
     }
 
-    const moneyLine = mount(
+    const moneyLine = mountWithContext(
       <MoneyLine {...defaultProps}>
         <Child />
       </MoneyLine>,

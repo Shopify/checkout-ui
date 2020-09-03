@@ -1,3 +1,5 @@
+import typographyStyles from './utilities/typography-styles.css';
+
 export * from './components';
 export {AutocompleteDescriptor} from './types';
 export {useTransition} from './utilities/transition';
@@ -15,3 +17,4 @@ export {
   parseHsl,
   toRgb,
 } from './utilities/hsluv';
+export {typographyStyles};

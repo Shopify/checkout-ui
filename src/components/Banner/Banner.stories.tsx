@@ -10,7 +10,7 @@ import {Banner} from './Banner';
 const meta = {
   component: Banner,
   title: 'Banner',
-  decorators: [withKnobs, themeWithKnobs('headingLevel3')],
+  decorators: [withKnobs, themeWithKnobs('banner', 'headingLevel3')],
 };
 
 export default meta;
