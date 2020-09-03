@@ -1876,6 +1876,11 @@
     promise "^8.0.3"
     tslib "^1.9.3"
 
+"@shopify/react-hooks@1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@shopify/react-hooks/-/react-hooks-1.9.1.tgz#c64e410246b3de4b19d34fc66bb0fc77e8d2c15a"
+  integrity sha512-u4sPY9pZMq1hEmc3/A66DjvrhEUUB5zCPGYVsXur8WAq7HPiShuq9Bq8JQn1uQCKZ8xLLix2ZFDHgblCzjcfZQ==
+
 "@shopify/webpack-ignore-typescript-export-warnings-plugin@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@shopify/webpack-ignore-typescript-export-warnings-plugin/-/webpack-ignore-typescript-export-warnings-plugin-1.0.4.tgz#372aa8ed900533df84bb1013b7a243855113bfad"
@@ -7889,6 +7894,11 @@ hsla-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hsla-regex/-/hsla-regex-1.0.0.tgz#c1ce7a3168c8c6614033a4b5f7877f3b225f9c38"
   integrity sha1-wc56MWjIxmFAM6S194d/OyJfnDg=
+
+hsluv@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/hsluv/-/hsluv-0.1.0.tgz#29f40d49642bd56dd0c192122abcc723bb5c2d6c"
+  integrity sha512-ERcanKLAszD2XN3Vh5r5Szkrv9q0oSTudmP0rkiKAGM/3NMc9FLmMZBB7TSqTaXJfSDBOreYTfjezCOYbRKqlw==
 
 html-comment-regex@^1.1.0, html-comment-regex@^1.1.2:
   version "1.1.2"
