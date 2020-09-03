@@ -75,8 +75,8 @@
 }
 
 .ResourceListHeader-isHidden {
-  border: 0; /* stylelint-disable-line declaration-no-important */
-  margin-block-start: 0; /* stylelint-disable-line declaration-no-important */
+  border: 0;
+  margin-block-start: 0;
 
   & + * {
     margin-block-start: 0;

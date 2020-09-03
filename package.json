@@ -77,7 +77,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.0.0",
     "@quilted/react-auto-headings": "^0.1.0",
-    "@shopify/argo-checkout": "^0.3.4",
+    "@shopify/argo-checkout": "^0.4.0",
     "@shopify/css-utilities": "^1.0.6",
     "@shopify/webpack-ignore-typescript-export-warnings-plugin": "^1.0.4",
     "@svgr/webpack": "^5.1.0",

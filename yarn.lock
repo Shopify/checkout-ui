@@ -1801,10 +1801,10 @@
   resolved "https://registry.yarnpkg.com/@sewing-kit/webpack-plugin-hash-output/-/webpack-plugin-hash-output-0.0.2.tgz#a41ddef000619ac20e64513edbbfc6f28afe7905"
   integrity sha512-BF3gmC9YZf4VY5RLAc5qUbxft16O614jnTtGr8gPRbJF4y3Qz3AVSxSB8dJDldzk4AH9lTQvH0e1Wkbgp5tR8g==
 
-"@shopify/argo-checkout@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@shopify/argo-checkout/-/argo-checkout-0.3.4.tgz#55ba0c4aa5837f1fb72498af3184362e8d07862b"
-  integrity sha512-SXbu1GqEcjNLEN7tvANO47zRMlaK9Hka/NhY6v3MGzVYt1RTFkudM/UdomgHip8ZRi/PAOW4tRg33eAXqfTP0A==
+"@shopify/argo-checkout@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@shopify/argo-checkout/-/argo-checkout-0.4.0.tgz#6e1510c8850e467e2dac1d41fb8c3f8c9052bcaf"
+  integrity sha512-amSz2KGnQjNL+nAibk6oayHs0eICB9z237sNmmZtlvC6Ev8xXN/xzZXK8ON8C96H311E4BEY3YVEJm5JsgWd/g==
   dependencies:
     "@remote-ui/core" "^1.2.1"
 
