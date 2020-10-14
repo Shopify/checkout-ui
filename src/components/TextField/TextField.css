@@ -44,18 +44,20 @@
 .Field-backgroundSurfacePrimary {
   --placeholder-color: var(--x-color-surface-primary-text-subdued);
   --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
   color: var(--x-color-surface-primary-text-emphasized);
   background-color: var(--x-color-surface-primary);
 
   & + .Tooltip {
-    --x-default-color-text-subdued: var(
-      --x-color-surface-secondary-text-subdued
-    );
+    --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+    --x-default-color-accent: var(--x-color-surface-secondary-accent);
   }
 }
 
 .Field-backgroundSurfaceSecondary {
   --placeholder-color: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   color: var(--x-color-surface-secondary-text-emphasized);
   background-color: var(--x-color-surface-secondary);
 
@@ -63,11 +65,14 @@
     --x-default-color-text-subdued: var(
       --x-color-surface-secondary-text-subdued
     );
+    --x-default-color-accent: var(--x-color-surface-secondary-accent);
   }
 }
 
 .Field-backgroundSurfaceTertiary {
   --placeholder-color: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   color: var(--x-color-surface-tertiary-text-emphasized);
   background-color: var(--x-color-surface-tertiary);
 
@@ -75,6 +80,7 @@
     --x-default-color-text-subdued: var(
       --x-color-surface-tertiary-text-subdued
     );
+    --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   }
 }
 
@@ -88,7 +94,7 @@
     &.hasError {
       &,
       &:focus {
-        box-shadow: 0 0 0 2px var(--x-color-critical-border-emphasized);
+        box-shadow: 0 0 0 2px var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -103,7 +109,7 @@
     &.hasError {
       &,
       &:focus {
-        box-shadow: 0 2px 0 0 var(--x-color-critical-border-emphasized);
+        box-shadow: 0 2px 0 0 var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -125,8 +131,8 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 0 0 0 1px var(--x-color-critical-border-emphasized);
+        border-color: var(--x-color-critical-accent);
+        box-shadow: 0 0 0 1px var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -142,8 +148,8 @@
     &.hasError {
       &,
       &:focus {
-        border-bottom-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 0 1px 0 0 var(--x-color-critical-border-emphasized);
+        border-bottom-color: var(--x-color-critical-accent);
+        box-shadow: 0 1px 0 0 var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -167,11 +173,11 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 1px 0 0 1px var(--x-color-critical-border-emphasized),
-          -1px 0 0 1px var(--x-color-critical-border-emphasized),
-          1px -1px 0 1px var(--x-color-critical-border-emphasized),
-          -1px -1px 0 1px var(--x-color-critical-border-emphasized);
+        border-color: var(--x-color-critical-accent);
+        box-shadow: 1px 0 0 1px var(--x-color-critical-accent),
+          -1px 0 0 1px var(--x-color-critical-accent),
+          1px -1px 0 1px var(--x-color-critical-accent),
+          -1px -1px 0 1px var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -187,8 +193,8 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 0 1px 0 0 var(--x-color-critical-border-emphasized);
+        border-color: var(--x-color-critical-accent);
+        box-shadow: 0 1px 0 0 var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */

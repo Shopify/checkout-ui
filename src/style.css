@@ -1,12 +1,6 @@
 :root {
-  /* TODO: Tech debt, semantic colors for Banners, inlineError and Icons */
-  --color-text--warning: hsl(45, 98%, 42%);
-  --color-text--informative: hsl(204, 77%, 42%);
-  --color-text--success: hsl(131, 86%, 34%);
-
   /* TODO: Tech debt, change these for Surface and onSurface palettes  */
   --color--light-grey: hsl(0, 0%, 73%);
-  --color--lighter-grey: hsl(0, 0%, 85%);
   --color--lightest-grey: hsl(0, 0%, 90%);
   --color--white: hsl(0, 0%, 100%);
 
@@ -57,6 +51,7 @@
   --x-color-surface-primary-border: hsl(0, 0%, 85%);
   --x-color-surface-primary-border-emphasized: hsl(0, 0%, 58%);
   --x-color-surface-primary-disabled: hsl(0, 0%, 97.3%);
+  --x-color-surface-primary-accent: hsl(204, 77%, 42%);
 
   /* color surface 2 */
   --x-color-surface-secondary: hsl(0, 0%, 98%);
@@ -67,6 +62,7 @@
   --x-color-surface-secondary-border: hsl(0, 0%, 85%);
   --x-color-surface-secondary-border-emphasized: hsl(0, 0%, 58%);
   --x-color-surface-secondary-disabled: hsl(0, 0%, 95.3%);
+  --x-color-surface-secondary-accent: hsl(204, 77%, 42%);
 
   /* color surface 3 */
   --x-color-surface-tertiary: hsl(0, 0%, 100%);
@@ -77,37 +73,28 @@
   --x-color-surface-tertiary-border: hsl(0, 0%, 85%);
   --x-color-surface-tertiary-border-emphasized: hsl(0, 0%, 58%);
   --x-color-surface-tertiary-disabled: hsl(0, 0%, 97.3%);
-
-  /* color surface 4 */
-  --x-color-surface-quaternary: hsl(0, 100%, 96%);
-  --x-color-surface-quaternary-subdued: hsl(0, 100%, 94%);
-  --x-color-surface-quaternary-text: hsl(0, 0%, 33%);
-  --x-color-surface-quaternary-text-subdued: hsl(0, 0%, 45%);
-  --x-color-surface-quaternary-text-emphasized: hsl(0, 0%, 20%);
-  --x-color-surface-quaternary-border: hsl(0, 82%, 89%);
-  --x-color-surface-quaternary-border-emphasized: hsl(0, 100%, 18%);
-  --x-color-surface-quaternary-disabled: hsl(0, 100%, 94%);
+  --x-color-surface-tertiary-accent: hsl(204, 77%, 42%);
 
   /* color primary */
-  --x-color-primary: hsl(204, 77%, 42%);
-  --x-color-primary-hovered: hsl(204, 77%, 32%);
-  --x-color-primary-pressed: hsl(204, 77%, 32%);
-  --x-color-primary-text: hsl(0, 0%, 100%);
-  --x-color-primary-text-hovered: hsl(0, 0%, 100%);
-  --x-color-primary-text-pressed: hsl(0, 0%, 100%);
+  --x-color-primary-action: hsl(204, 77%, 42%);
+  --x-color-primary-action-hovered: hsl(204, 77%, 32%);
+  --x-color-primary-action-pressed: hsl(204, 77%, 32%);
+  --x-color-primary-action-text: hsl(0, 0%, 100%);
+  --x-color-primary-action-text-hovered: hsl(0, 0%, 100%);
+  --x-color-primary-action-text-pressed: hsl(0, 0%, 100%);
 
   /* color secondary */
-  --x-color-secondary: hsl(204, 0%, 42%);
-  --x-color-secondary-hovered: hsl(204, 0%, 32%);
-  --x-color-secondary-pressed: hsl(204, 0%, 32%);
-  --x-color-secondary-text: hsl(0, 0%, 100%);
-  --x-color-secondary-text-hovered: hsl(0, 0%, 100%);
-  --x-color-secondary-text-pressed: hsl(0, 0%, 100%);
+  --x-color-secondary-action: hsl(204, 0%, 42%);
+  --x-color-secondary-action-hovered: hsl(204, 0%, 32%);
+  --x-color-secondary-action-pressed: hsl(204, 0%, 32%);
+  --x-color-secondary-action-text: hsl(0, 0%, 100%);
+  --x-color-secondary-action-text-hovered: hsl(0, 0%, 100%);
+  --x-color-secondary-action-text-pressed: hsl(0, 0%, 100%);
 
   /* color tertiary */
-  --x-color-tertiary: hsl(0, 0%, 92%);
-  --x-color-tertiary-text: hsl(0, 0%, 20%);
-  --x-color-tertiary-text-subdued: hsl(0, 0%, 40%);
+  --x-color-tertiary-action: hsl(0, 0%, 92%);
+  --x-color-tertiary-action-text: hsl(0, 0%, 20%);
+  --x-color-tertiary-action-text-subdued: hsl(0, 0%, 40%);
 
   /* color interactive */
   --x-color-interactive: transparent;
@@ -118,11 +105,49 @@
   --x-color-interactive-text-pressed: hsl(204, 77%, 36%);
   --x-color-interactive-icon: hsl(0, 0%, 100%);
 
+  /* color info */
+  --x-color-info: hsl(206, 100%, 97%);
+  --x-color-info-disabled: hsl(199, 100%, 94%);
+  --x-color-info-subdued: hsl(201, 100%, 95%);
+  --x-color-info-text: hsl(0, 0%, 33%);
+  --x-color-info-text-subdued: hsl(0, 0%, 45%);
+  --x-color-info-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-info-border: hsl(205, 63%, 89%);
+  --x-color-info-border-emphasized: hsl(192, 100%, 13%);
+  --x-color-info-accent: hsl(204, 77%, 42%);
+
+  /* color success */
+  --x-color-success: hsl(132, 52%, 94%);
+  --x-color-success-disabled: hsl(131, 56%, 90%);
+  --x-color-success-subdued: hsl(133, 55%, 91%);
+  --x-color-success-text: hsl(0, 0%, 33%);
+  --x-color-success-text-subdued: hsl(0, 0%, 45%);
+  --x-color-success-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-success-border: hsl(127, 42%, 87%);
+  --x-color-success-border-emphasized: hsl(134, 27%, 15%);
+  --x-color-success-accent: hsl(131, 86%, 34%);
+
+  /* color warning */
+  --x-color-warning: hsl(47, 100%, 94%);
+  --x-color-warning-disabled: hsl(131, 56%, 90%);
+  --x-color-warning-subdued: hsl(133, 55%, 91%);
+  --x-color-warning-text: hsl(0, 0%, 33%);
+  --x-color-warning-text-subdued: hsl(0, 0%, 45%);
+  --x-color-warning-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-warning-border: hsl(46, 63%, 84%);
+  --x-color-warning-border-emphasized: hsl(134, 27%, 15%);
+  --x-color-warning-accent: hsl(44, 100%, 36%);
+
   /* color critical */
   --x-color-critical: hsl(0, 100%, 96%);
-  --x-color-critical-text: hsl(0, 77%, 53%);
-  --x-color-critical-border: hsl(0, 77%, 92%);
-  --x-color-critical-border-emphasized: hsl(0, 77%, 53%);
+  --x-color-critical-disabled: hsl(0, 100%, 94%);
+  --x-color-critical-subdued: hsl(0, 100%, 95%);
+  --x-color-critical-text: hsl(0, 0%, 33%);
+  --x-color-critical-text-subdued: hsl(0, 0%, 45%);
+  --x-color-critical-text-emphasized: hsl(0, 0%, 20%);
+  --x-color-critical-border: hsl(0, 82%, 89%);
+  --x-color-critical-border-emphasized: hsl(0, 100%, 18%);
+  --x-color-critical-accent: hsl(0, 77%, 53%);
 
   /* typography - font stacks */
   --x-typography-primary-fonts: -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -172,6 +197,7 @@
   --x-border-radius-fully-rounded: em(23px);
 
   /* defaults */
+  --x-default-color-accent: hsl(204, 77%, 42%);
   --x-default-color-border: hsl(0, 0%, 85%);
   --x-default-color-border-emphasized: hsl(0, 0%, 58%);
 
@@ -215,6 +241,14 @@
 
   /* checkbox */
   --x-checkbox-size: em(18px);
+
+  /* icons */
+  --x-icon-size-small: em(10px);
+  --x-icon-size-default: em(14px);
+  --x-icon-size-large: em(18px);
+
+  /* thumbnail */
+  --x-thumbnail-aspect-ratio: 1;
 }
 
 /* Global

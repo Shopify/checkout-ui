@@ -3,6 +3,8 @@ import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
 import {InlineError} from '../InlineError';
+import {InlineStack} from '../InlineStack';
+import {View} from '../View';
 
 import {Select, PLACEHOLDER_VALUE} from './Select';
 
@@ -29,6 +31,22 @@ describe('<Select />', () => {
     const select = mountWithContext(<Select {...defaultProps} />);
     expect(select).toContainReactComponent('select');
     expect(select).toContainReactComponent('label');
+  });
+
+  it('wraps the component in an InlineStack when the labelPosition prop is inline', () => {
+    const select = mountWithContext(
+      <Select {...defaultProps} labelPosition="inline" />,
+    );
+    expect(select).toContainReactComponent(InlineStack);
+    expect(select).not.toContainReactComponent(View);
+  });
+
+  it('wraps the component in a View when the labelPosition prop is not inline', () => {
+    const select = mountWithContext(
+      <Select {...defaultProps} labelPosition="inside" />,
+    );
+    expect(select).toContainReactComponent(View);
+    expect(select).not.toContainReactComponent(InlineStack);
   });
 
   it('renders a select with a pre-selected value when the value prop is provided', () => {

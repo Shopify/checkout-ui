@@ -6,6 +6,8 @@
 
 .CalloutHeaderStatus {
   margin-right: var(--x-spacing-base);
+  width: rem(50px);
+  height: rem(50px);
 
   @media all and (min-width: 1300px) {
     position: absolute;

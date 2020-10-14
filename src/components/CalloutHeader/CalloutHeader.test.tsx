@@ -1,11 +1,9 @@
 import React from 'react';
 import {mount} from '@quilted/react-testing/dom';
 
-import {
-  CalloutHeader,
-  CheckmarkCircleIcon,
-  CancelledCircleIcon,
-} from './CalloutHeader';
+import {Icon} from '../Icon';
+
+import {CalloutHeader} from './CalloutHeader';
 
 function Child() {
   return <div />;
@@ -30,7 +28,9 @@ describe('<CalloutHeader />', () => {
       </CalloutHeader>,
     );
 
-    expect(calloutHeader).toContainReactComponent(CheckmarkCircleIcon);
+    expect(calloutHeader).toContainReactComponent(Icon, {
+      source: 'checkmarkCircle',
+    });
   });
 
   it('renders a cancelled icon', () => {
@@ -40,6 +40,8 @@ describe('<CalloutHeader />', () => {
       </CalloutHeader>,
     );
 
-    expect(calloutHeader).toContainReactComponent(CancelledCircleIcon);
+    expect(calloutHeader).toContainReactComponent(Icon, {
+      source: 'cancelCircle',
+    });
   });
 });

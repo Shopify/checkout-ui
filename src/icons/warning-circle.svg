@@ -1,0 +1,5 @@
+<svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M49 25C49 38.2548 38.2548 49 25 49C11.7452 49 1 38.2548 1 25C1 11.7452 11.7452 1 25 1C38.2548 1 49 11.7452 49 25Z" style="stroke: currentColor" stroke-width="2" />
+  <path d="M25 11V30" style="stroke: currentColor" stroke-width="2" stroke-linecap="square" />
+  <path fill-rule="evenodd" clip-rule="evenodd" style="fill: currentColor" d="M25 39C25.8284 39 26.5 38.3284 26.5 37.5C26.5 36.6716 25.8284 36 25 36C24.1716 36 23.5 36.6716 23.5 37.5C23.5 38.3284 24.1716 39 25 39Z" />
+</svg>

@@ -38,4 +38,13 @@ describe('<MoneySummary />', () => {
 
     expect(moneySummary).toContainReactText(value);
   });
+
+  it('renders children', () => {
+    const children = faker.random.word();
+    const moneySummary = mountWithContext(
+      <MoneySummary {...defaultProps}>{children}</MoneySummary>,
+    );
+
+    expect(moneySummary).toContainReactText(children);
+  });
 });

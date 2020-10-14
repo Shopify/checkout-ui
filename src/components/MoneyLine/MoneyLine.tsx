@@ -11,17 +11,10 @@ export interface Props {
   label: string;
   value?: string;
   subdued?: boolean;
-  childPosition?: 'default' | 'end';
   children?: React.ReactNode;
 }
 
-export function MoneyLine({
-  label,
-  value,
-  subdued,
-  childPosition,
-  children,
-}: Props) {
+export function MoneyLine({label, value, subdued, children}: Props) {
   const {
     moneyLines: {
       background,
@@ -43,7 +36,6 @@ export function MoneyLine({
       <div className={styles.Label} role="rowheader">
         <InlineStack spacing="tight">
           <Text style={labelTypographyStyle}>{label}</Text>
-          {(!childPosition || childPosition === 'default') && children}
         </InlineStack>
       </div>
       <div className={styles.Value} role="cell">
@@ -56,7 +48,7 @@ export function MoneyLine({
           >
             {value}
           </Text>
-          {childPosition === 'end' && children}
+          {children}
         </InlineStack>
       </div>
     </div>

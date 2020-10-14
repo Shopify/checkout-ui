@@ -26,11 +26,13 @@ export function UnstyledLink({
 }: Props) {
   const LinkComponent = useLinkComponent();
 
+  const handleClick = onPress && (() => onPress());
+
   if (LinkComponent) {
     return (
       <LinkComponent
         to={to}
-        onClick={onPress}
+        onClick={handleClick}
         external={external}
         id={id}
         className={className}
@@ -46,7 +48,7 @@ export function UnstyledLink({
   return (
     <a
       href={to}
-      onClick={onPress}
+      onClick={handleClick}
       target={target}
       rel={rel}
       id={id}

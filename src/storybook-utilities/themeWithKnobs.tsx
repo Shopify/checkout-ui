@@ -31,6 +31,7 @@ enum Group {
   Style = 'Style',
   Color = 'Color',
   Typography = 'Typography',
+  Thumbnail = 'Thumbnail',
 }
 
 enum Label {
@@ -42,6 +43,7 @@ enum Label {
   BlockPadding = 'Block padding',
   InlinePadding = 'Inline padding',
   LoadingStyle = 'Loading style',
+  BadgeColor = 'Badge color',
 }
 
 enum Action {
@@ -119,6 +121,7 @@ const FONT_WEIGHT_OPTIONS = optionify([
   '800',
   '900',
 ]);
+const BADGE_COLOR_OPTIONS = optionify(['subdued', 'primary']);
 
 export function themeWithKnobs(...picks: Keys): DecoratorFunction {
   return (storyFn) => <ThemeWithKnobs pick={picks}>{storyFn()}</ThemeWithKnobs>;
@@ -177,7 +180,11 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     border: undefined,
     borderRadius: undefined,
   };
-
+  const thumbnail = {
+    aspectRatio: 1,
+    border: undefined,
+    badgeBackground: undefined,
+  };
   const optionList = {
     border: undefined,
     borderRadius: undefined,
@@ -292,6 +299,27 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       BORDER_RADIUS_OPTIONS,
       banner.borderRadius,
       Group.Banner,
+    );
+  }
+
+  if (pick.includes('thumbnail')) {
+    thumbnail.aspectRatio = number(
+      'Aspect ratio',
+      1,
+      {min: 0},
+      Group.Thumbnail,
+    );
+    thumbnail.border = select(
+      Label.Border,
+      SIMPLE_BORDER_OPTIONS,
+      thumbnail.border,
+      Group.Thumbnail,
+    );
+    thumbnail.badgeBackground = select(
+      Label.BadgeColor,
+      BADGE_COLOR_OPTIONS,
+      thumbnail.badgeBackground,
+      Group.Thumbnail,
     );
   }
 
@@ -475,6 +503,7 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     tag,
     tooltip,
     banner,
+    thumbnail,
     optionList,
     typographyStyle1: {
       size: select(`Size`, SIZE_OPTIONS, undefined, Group.Style),
@@ -532,17 +561,18 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       ),
     },
     colors: {
-      canvas: hsluvColorPair('Canvas'),
-      surfacePrimary: hsluvColorPair('Surface primary'),
-      surfaceSecondary: hsluvColorPair('Surface secondary'),
-      surfaceTertiary: hsluvColorPair('Surface tertiary'),
-      surfaceQuaternary: hsluvColorPair('Surface quaternary'),
-      primary: hsluvColorPair('Primary'),
-      secondary: hsluvColorPair('Secondary'),
-      tertiary: hsluvColorPair('Tertiary'),
-      interactive: hsluvColorPair('Interactive'),
-      success: hsluvColorPair('Success'),
-      critical: hsluvColorPair('Critical'),
+      canvas: hsluvColorGroup('Canvas'),
+      surfacePrimary: hsluvColorGroup('Surface primary'),
+      surfaceSecondary: hsluvColorGroup('Surface secondary'),
+      surfaceTertiary: hsluvColorGroup('Surface tertiary'),
+      primaryAction: hsluvColorGroup('Primary action'),
+      secondaryAction: hsluvColorGroup('Secondary action'),
+      tertiaryAction: hsluvColorGroup('Tertiary action'),
+      interactive: hsluvColorGroup('Interactive'),
+      info: hsluvColorGroup('Info'),
+      success: hsluvColorGroup('Success'),
+      warning: hsluvColorGroup('Warning'),
+      critical: hsluvColorGroup('Critical'),
     },
   });
   return <Theme theme={theme}>{children}</Theme>;
@@ -571,9 +601,10 @@ function hsluvColor(name: string) {
   return toHsluv(color(name, UNDEFINED, Group.Color));
 }
 
-function hsluvColorPair(name: string) {
+function hsluvColorGroup(name: string) {
   return {
     background: hsluvColor(`${name} background`),
     foreground: hsluvColor(`${name} foreground`),
+    accent: hsluvColor(`${name} accent`),
   };
 }

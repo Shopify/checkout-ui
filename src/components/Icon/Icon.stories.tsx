@@ -15,11 +15,13 @@ export const defaultState = () => <Icon source="questionFill" />;
 
 export const color = () => (
   <InlineStack>
-    <Icon source="questionFill" size="large" color="interactive" />
-    <Icon source="questionFill" size="large" color="subdued" />
-    <Icon source="questionFill" size="large" color="informative" />
-    <Icon source="questionFill" size="large" color="critical" />
-    <Icon source="questionFill" size="large" color="warning" />
+    <Icon source="questionFill" size="large" appearance="accent" />
+    <Icon source="questionFill" size="large" appearance="interactive" />
+    <Icon source="questionFill" size="large" appearance="subdued" />
+    <Icon source="questionFill" size="large" appearance="info" />
+    <Icon source="questionFill" size="large" appearance="success" />
+    <Icon source="questionFill" size="large" appearance="warning" />
+    <Icon source="questionFill" size="large" appearance="critical" />
   </InlineStack>
 );
 
@@ -50,6 +52,7 @@ export const allIcons = () => (
     <Icon source="errorFill" size="large" />
     <Icon source="info" size="large" />
     <Icon source="lock" size="large" />
+    <Icon source="mobile" size="large" />
     <Icon source="questionFill" size="large" />
     <Icon source="ship" size="large" />
     <Icon source="success" size="large" />

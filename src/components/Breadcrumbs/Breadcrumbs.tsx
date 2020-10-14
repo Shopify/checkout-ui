@@ -73,7 +73,11 @@ export function Breadcrumbs({active, breadcrumbs}: Props) {
               {showSeparator && (
                 <span className={styles.Separator}>
                   {chevronIconSeparator && (
-                    <Icon source="chevronRight" size="small" color="subdued" />
+                    <Icon
+                      source="chevronRight"
+                      size="small"
+                      appearance="subdued"
+                    />
                   )}
                 </span>
               )}

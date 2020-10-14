@@ -45,6 +45,7 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-primary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
   background-color: var(--x-color-surface-primary);
   color: var(--x-default-color-text);
 }
@@ -56,6 +57,7 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-secondary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   background-color: var(--x-color-surface-secondary);
   color: var(--x-default-color-text);
 }
@@ -67,6 +69,7 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-tertiary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   background-color: var(--x-color-surface-tertiary);
   color: var(--x-default-color-text);
 }

@@ -1,0 +1,111 @@
+.ProgressTrackerStep {
+  display: flex;
+
+  /* TODO: Update with media query variable */
+  @media all and (max-width: 749px) {
+    align-items: center;
+
+    &:not([aria-current='true']) {
+      display: none;
+    }
+  }
+
+  /* TODO: Update with media query variable */
+  @media all and (min-width: 750px) {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.ProgressTrackerStepIcon {
+  /* TODO: Update with media query variable */
+  @media all and (max-width: 749px) {
+    display: inline-flex;
+    margin-right: var(--x-spacing-tight1x);
+  }
+
+  /* TODO: Update with media query variable */
+  @media all and (min-width: 750px) {
+    display: flex;
+    width: 100%;
+
+    &.active {
+      &::before {
+        background-color: var(--x-color-info-accent);
+      }
+    }
+
+    &.completed {
+      &::before,
+      &::after {
+        background-color: var(--x-color-info-accent);
+      }
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: relative;
+      top: em(9px);
+      height: em(2px);
+      display: flex;
+      flex-grow: 1;
+      background-color: var(--x-default-color-border);
+    }
+
+    &::before {
+      margin-right: em(9px);
+
+      @nest .ProgressTrackerStep:first-child & {
+        background-color: transparent;
+      }
+    }
+
+    &::after {
+      margin-left: em(9px);
+
+      @nest .ProgressTrackerStep:last-child & {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.ProgressTrackerStepLabel {
+  &.completed {
+    --x-default-color-text-emphasized: var(--x-color-info-accent);
+    color: var(--x-color-info-accent);
+  }
+
+  /* TODO: Update with media query variable */
+  @media all and (min-width: 750px) {
+    text-align: center;
+    margin-top: var(--x-spacing-5xtight);
+  }
+
+  /* TODO: Update with media query variable */
+  @media all and (max-width: 749px) {
+    flex-grow: 1;
+  }
+}
+
+.ProgressTrackerStepConnector {
+  /* TODO: Update with media query variable */
+  @media all and (min-width: 750px) {
+    position: relative;
+    top: em(9px);
+    display: flex;
+    flex-grow: 1;
+    border: 1px solid var(--x-color-info-accent);
+
+    &:not(.completed) {
+      border-color: var(--x-default-color-border);
+    }
+  }
+
+  /* TODO: Update with media query variable */
+  @media all and (max-width: 749px) {
+    display: none;
+  }
+}

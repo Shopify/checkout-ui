@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {InlineStack} from '../InlineStack';
@@ -14,7 +14,12 @@ export interface Props {
   prefix: string;
 }
 
-export function MoneySummary({label, value, prefix}: Props) {
+export function MoneySummary({
+  label,
+  value,
+  prefix,
+  children,
+}: PropsWithChildren<Props>) {
   const {
     moneyLines: {inlineAlignment},
     moneySummary: {
@@ -42,6 +47,7 @@ export function MoneySummary({label, value, prefix}: Props) {
           <Text size="medium" style={labelTypographyStyle}>
             {label}
           </Text>
+          {children}
         </div>
         <div className={styles.Value} role="cell">
           <InlineStack alignment="baseline" spacing="tight">

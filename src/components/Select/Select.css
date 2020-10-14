@@ -79,9 +79,15 @@
   }
 }
 
-.Select-hasOutsideLabel {
+.Select-labelOutside {
   padding-block-start: em(14px);
   padding-block-end: em(13px);
+}
+
+.Select-labelInline {
+  min-height: auto;
+  padding-block-start: 0;
+  padding-block-end: 0;
 }
 
 .Select-backgroundTransparent {
@@ -91,6 +97,7 @@
 
 .Select-backgroundSurfacePrimary {
   --moz-focusring-color: var(--x-color-surface-primary-text-emphasized);
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
   color: var(--x-color-surface-primary-text-emphasized);
   background-color: var(--x-color-surface-primary);
 
@@ -107,6 +114,7 @@
 
 .Select-backgroundSurfaceSecondary {
   --moz-focusring-color: var(--x-color-surface-secondary-text-emphasized);
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   color: var(--x-color-surface-secondary-text-emphasized);
   background-color: var(--x-color-surface-secondary);
 
@@ -123,6 +131,7 @@
 
 .Select-backgroundSurfaceTertiary {
   --moz-focusring-color: var(--x-color-surface-tertiary-text-emphasized);
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   color: var(--x-color-surface-tertiary-text-emphasized);
   background-color: var(--x-color-surface-tertiary);
 
@@ -147,7 +156,7 @@
     &.hasError {
       &,
       &:focus {
-        box-shadow: 0 0 0 2px var(--x-color-critical-border-emphasized);
+        box-shadow: 0 0 0 2px var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -162,7 +171,7 @@
     &.hasError {
       &,
       &:focus {
-        box-shadow: 0 2px 0 0 var(--x-color-critical-border-emphasized);
+        box-shadow: 0 2px 0 0 var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -184,8 +193,8 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 0 0 0 1px var(--x-color-critical-border-emphasized);
+        border-color: var(--x-color-critical-accent);
+        box-shadow: 0 0 0 1px var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -201,8 +210,8 @@
     &.hasError {
       &,
       &:focus {
-        border-bottom-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 0 1px 0 0 var(--x-color-critical-border-emphasized);
+        border-bottom-color: var(--x-color-critical-accent);
+        box-shadow: 0 1px 0 0 var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -226,11 +235,11 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 1px 0 0 1px var(--x-color-critical-border-emphasized),
-          -1px 0 0 1px var(--x-color-critical-border-emphasized),
-          1px -1px 0 1px var(--x-color-critical-border-emphasized),
-          -1px -1px 0 1px var(--x-color-critical-border-emphasized);
+        border-color: var(--x-color-critical-accent);
+        box-shadow: 1px 0 0 1px var(--x-color-critical-accent),
+          -1px 0 0 1px var(--x-color-critical-accent),
+          1px -1px 0 1px var(--x-color-critical-accent),
+          -1px -1px 0 1px var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
@@ -246,8 +255,8 @@
     &.hasError {
       &,
       &:focus {
-        border-color: var(--x-color-critical-border-emphasized);
-        box-shadow: 0 1px 0 0 var(--x-color-critical-border-emphasized);
+        border-color: var(--x-color-critical-accent);
+        box-shadow: 0 1px 0 0 var(--x-color-critical-accent);
       }
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */

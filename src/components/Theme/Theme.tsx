@@ -3,7 +3,12 @@
 import React, {useMemo, ReactNode} from 'react';
 
 import {UiTheme, ThemeContext} from './context';
-import {Canvas, CustomProperties, CustomPropertiesFallback} from './components';
+import {
+  Canvas,
+  CustomProperties,
+  CustomPropertiesFallback,
+  MaybeWebFonts,
+} from './components';
 
 export interface Props {
   children?: ReactNode;
@@ -15,16 +20,18 @@ export function Theme({children, theme}: Props) {
 
   return (
     <ThemeContext.Provider value={theme}>
-      {supportsCustomProperties ? (
-        <CustomProperties>
-          <Canvas>{children}</Canvas>
-        </CustomProperties>
-      ) : (
-        <>
-          <CustomPropertiesFallback />
-          <Canvas>{children}</Canvas>
-        </>
-      )}
+      <MaybeWebFonts condition={process.env.NODE_ENV !== 'production'}>
+        {supportsCustomProperties ? (
+          <CustomProperties>
+            <Canvas>{children}</Canvas>
+          </CustomProperties>
+        ) : (
+          <>
+            <CustomPropertiesFallback />
+            <Canvas>{children}</Canvas>
+          </>
+        )}
+      </MaybeWebFonts>
     </ThemeContext.Provider>
   );
 }

@@ -10,6 +10,7 @@ type Lightness = number;
 export type HslColorString = string;
 export type RgbColorString = string;
 export type HslColorTuple = [number, number, number];
+export type YiqColorTuple = [number, number, number];
 
 type Coordinate = [number, number, number];
 
@@ -51,6 +52,10 @@ export class Hsl {
   toRgb() {
     return toRgb(this);
   }
+
+  getYiqPerceivedBrightness() {
+    return getYiqPerceivedBrightness(this);
+  }
 }
 
 const HSL_REGEX = /hsl\(\s*(?<h>\d+),\s*(?<s>\d+)%,\s(?<l>\d+)%\)/;
@@ -78,6 +83,30 @@ export function parseHsl(color: HslColorString) {
 
 export function toRgb({h, s, l}: Hsl): RgbColorString {
   return `rgb(${lchToRgb(...hsluvToLch(h, s, l)).join(',')})`;
+}
+
+export function getYiqPerceivedBrightness({h, s, l}: Hsl): number {
+  const [y] = hsluvToYiq(h, s, l);
+
+  return y;
+}
+
+/*
+YIQ is the suggested color mode to determine sufficient contrast
+between background and foreground colors. This is what is used
+in Checkout Core (or C0).
+- Core code: https://github.com/Shopify/shopify/blob/master/app/assets/stylesheets/checkout/helpers/_colors.scss#L88-L97
+- W3 suggestion: https://www.w3.org/TR/AERT/#color-contrast
+- RGB to YIQ: https://en.wikipedia.org/wiki/YIQ#From_RGB_to_YIQ
+*/
+function hsluvToYiq(h: Hue, s: Saturation, l: Lightness): YiqColorTuple {
+  const [r, g, b] = lchToRgb(...hsluvToLch(h, s, l));
+
+  return [
+    (r * 0.299 + g * 0.587 + b * 0.114) / 255,
+    (r * 0.596 - g * 0.275 - b * 0.321) / 255,
+    (r * 0.212 - g * 0.523 + b * 0.311) / 255,
+  ];
 }
 
 function lchToRgb(l: number, c: number, h: number): Coordinate {

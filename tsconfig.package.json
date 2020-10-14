@@ -7,7 +7,8 @@
     "types": [
       "jest",
       "@quilted/react-testing/matchers",
-      "@quilted/react-testing/dom-matchers"
+      "@quilted/react-testing/dom-matchers",
+      "@types/css-font-loading-module"
     ],
     "composite": true,
     "jsx": "preserve",

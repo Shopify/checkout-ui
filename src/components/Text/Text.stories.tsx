@@ -18,6 +18,42 @@ export const allVisualStyles = () => (
     <Text>Default</Text>
     <Text subdued>Subdued</Text>
     <Text emphasized>Emphasized</Text>
+    <Text appearance="accent">Accent</Text>
+    <Text subdued appearance="accent">
+      Subdued accent
+    </Text>
+    <Text emphasized appearance="accent">
+      Emphasized accent
+    </Text>
+    <Text appearance="critical">Critical</Text>
+    <Text subdued appearance="critical">
+      Subdued critical
+    </Text>
+    <Text emphasized appearance="critical">
+      Emphasized critical
+    </Text>
+    <Text appearance="warning">Warning</Text>
+    <Text subdued appearance="warning">
+      Subdued warning
+    </Text>
+    <Text emphasized appearance="warning">
+      Emphasized warning
+    </Text>
+    <Text appearance="success">Success</Text>
+    <Text subdued appearance="success">
+      Subdued success
+    </Text>
+    <Text emphasized appearance="success">
+      Emphasized success
+    </Text>
+  </BlockStack>
+);
+
+export const allStatus = () => (
+  <BlockStack>
+    <Text appearance="critical">Critical</Text>
+    <Text appearance="warning">Warning</Text>
+    <Text appearance="success">Success</Text>
   </BlockStack>
 );
 

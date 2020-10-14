@@ -1443,18 +1443,18 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@remote-ui/core@^1.2.1":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@remote-ui/core/-/core-1.2.4.tgz#e34fe8fc315e6102a65db5f3d6105ec97e6c773c"
-  integrity sha512-6p0mGnLg24T5As1681bCggIdursGRZeRxv0+0sonFM5BtfJhw5FggTepbyq3DZDCrKigBmd+BQG01Kjxcmh1IQ==
+"@remote-ui/core@^1.4.0":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@remote-ui/core/-/core-1.4.3.tgz#8b39aeb9cf01fa5bb1b88932efa4fa9018291ff6"
+  integrity sha512-NNx0IoKxw4fbPs4sNbI9Z20FztURzSSGSDn0Fwu5R8N5KYiIQzZUs8KiFscoXix+tavuzoiS0Ch+Wzg71XCRvg==
   dependencies:
-    "@remote-ui/rpc" "^1.0.4"
+    "@remote-ui/rpc" "^1.0.5"
     "@remote-ui/types" "^1.0.4"
 
-"@remote-ui/rpc@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@remote-ui/rpc/-/rpc-1.0.4.tgz#ad0c21f73e0b13d3d5c44d0b617e28cad69788fa"
-  integrity sha512-YttOiVM13ETOsHT+66JzIb+CUApHvviLhDQszrZv7G8wBQWK1E36s1Cn77hGhu8yMF46ohUxdVHdF4CIHW+wag==
+"@remote-ui/rpc@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@remote-ui/rpc/-/rpc-1.0.5.tgz#9417ae6dc12999a055f176b53ba6b75bf39f1800"
+  integrity sha512-qEqUx74ZN1HXe/fpPyG1mHnPVe3/O6fE2CJtNNjkklWjYe052mYjJYNz3tjFciPcum+angEAh7TKtvmOqUsBMA==
 
 "@remote-ui/types@^1.0.4":
   version "1.0.4"
@@ -1801,22 +1801,22 @@
   resolved "https://registry.yarnpkg.com/@sewing-kit/webpack-plugin-hash-output/-/webpack-plugin-hash-output-0.0.2.tgz#a41ddef000619ac20e64513edbbfc6f28afe7905"
   integrity sha512-BF3gmC9YZf4VY5RLAc5qUbxft16O614jnTtGr8gPRbJF4y3Qz3AVSxSB8dJDldzk4AH9lTQvH0e1Wkbgp5tR8g==
 
-"@shopify/argo-checkout@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@shopify/argo-checkout/-/argo-checkout-0.4.0.tgz#6e1510c8850e467e2dac1d41fb8c3f8c9052bcaf"
-  integrity sha512-amSz2KGnQjNL+nAibk6oayHs0eICB9z237sNmmZtlvC6Ev8xXN/xzZXK8ON8C96H311E4BEY3YVEJm5JsgWd/g==
+"@shopify/argo-checkout@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@shopify/argo-checkout/-/argo-checkout-0.7.0.tgz#802b00d08ec00a430105b7ba2413656c772d6a92"
+  integrity sha512-WRLM0+c1H/e5x/Ulu/p7lh0BILF2kwLGgd+qa8BqavRRhVr+1cp2bCHwIf10unpnfaYPFHJOXDUX7ObNf7b7pg==
   dependencies:
-    "@remote-ui/core" "^1.2.1"
+    "@remote-ui/core" "^1.4.0"
 
 "@shopify/async@^2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@shopify/async/-/async-2.1.5.tgz#c55abfdb40b19435f65f9a7fe61f91117af0b9af"
   integrity sha512-GfyNJvTKRL3MmcCgcpfi2QTjAv25pgqDrXkRma/UC3qH0wVUoM3cyC+QP4Sogbv513j8XRk45yerRpwAjsDGUA==
 
-"@shopify/css-utilities@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@shopify/css-utilities/-/css-utilities-1.0.6.tgz#74f01df9d37282fe1e0ad049d05346d3cc8e87fe"
-  integrity sha512-gJPa6lGHH8jm623DYvde+p23poxwDNeZXoPAk3nG4x5OreJdtxP2qX0IUYDQsYr72NWXj6iYgtKEtmAHeAIaJw==
+"@shopify/css-utilities@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@shopify/css-utilities/-/css-utilities-1.0.5.tgz#998b5e5082f846c5e6851b51a727b5c6872a82ba"
+  integrity sha512-EiV7bAyuoCf/e6Q9VtLbMH6mza60fcUrmMyiRw+Wxi4g4DCe3vp0V/5NIHq0kYIH3bEEF1/rCuOKVH//yF/WHQ==
   dependencies:
     "@types/classnames" "^2.2.7"
     classnames "^2.2.6"
@@ -2598,6 +2598,11 @@
     "@types/express" "*"
     "@types/keygrip" "*"
     "@types/node" "*"
+
+"@types/css-font-loading-module@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.4.tgz#94a835e27d1af444c65cba88523533c174463d64"
+  integrity sha512-ENdXf7MW4m9HeDojB2Ukbi7lYMIuQNBHVf98dbzaiG4EEJREBd6oleVAjrLRCrp7dm6CK1mmdmU9tcgF61acbw==
 
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"

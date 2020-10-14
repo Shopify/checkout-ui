@@ -26,14 +26,14 @@ export const CustomPropertiesFallback = memo(
 function toCss(customProperties: UiTheme['customProperties']) {
   return cssFromObject({
     [`.${legacyStyles.button}`]: {
-      color: customProperties.colorPrimaryText,
-      background: customProperties.colorPrimary,
+      color: customProperties.colorPrimaryActionText,
+      background: customProperties.colorPrimaryAction,
     },
     [`.${legacyStyles.button}:hover`]: {
-      background: customProperties.colorPrimaryHovered,
+      background: customProperties.colorPrimaryActionHovered,
     },
     [`.${legacyStyles.button}:active`]: {
-      background: customProperties.colorPrimaryPressed,
+      background: customProperties.colorPrimaryActionPressed,
     },
     [`.${legacyStyles.colorCanvas}`]: {
       color: customProperties.colorCanvasText,
@@ -63,6 +63,9 @@ function toCss(customProperties: UiTheme['customProperties']) {
     [`.${legacyStyles.colorSurfacePrimary} .${legacyStyles.utilityDefaultTextColorEmphasized}`]: {
       color: customProperties.colorSurfacePrimaryTextEmphasized,
     },
+    [`.${legacyStyles.colorSurfacePrimary} .${legacyStyles.utilityDefaultColorAccent}`]: {
+      color: customProperties.colorSurfacePrimaryAccent,
+    },
     [`.${legacyStyles.colorSurfaceSecondary}`]: {
       color: customProperties.colorSurfaceSecondaryText,
       'border-color': customProperties.colorSurfaceSecondaryBorder,
@@ -76,6 +79,9 @@ function toCss(customProperties: UiTheme['customProperties']) {
     },
     [`.${legacyStyles.colorSurfaceSecondary} .${legacyStyles.utilityDefaultTextColorEmphasized}`]: {
       color: customProperties.colorSurfaceSecondaryTextEmphasized,
+    },
+    [`.${legacyStyles.colorSurfaceSecondary} .${legacyStyles.utilityDefaultColorAccent}`]: {
+      color: customProperties.colorSurfaceSecondaryAccent,
     },
     [`.${legacyStyles.colorSurfaceTertiary}`]: {
       color: customProperties.colorSurfaceTertiaryText,
@@ -91,19 +97,8 @@ function toCss(customProperties: UiTheme['customProperties']) {
     [`.${legacyStyles.colorSurfaceTertiary} .${legacyStyles.utilityDefaultTextColorEmphasized}`]: {
       color: customProperties.colorSurfaceTertiaryTextEmphasized,
     },
-    [`.${legacyStyles.colorSurfaceQuaternary}`]: {
-      color: customProperties.colorSurfaceQuaternaryText,
-      'border-color': customProperties.colorSurfaceQuaternaryBorder,
-      'background-color': customProperties.colorSurfaceQuaternary,
-    },
-    [`.${legacyStyles.colorSurfaceQuaternary} .${legacyStyles.utilityDefaultBorderColor}`]: {
-      'border-color': customProperties.colorSurfaceQuaternaryBorder,
-    },
-    [`.${legacyStyles.colorSurfaceQuaternary} .${legacyStyles.utilityDefaultTextColorSubdued}`]: {
-      color: customProperties.colorSurfaceQuaternaryTextSubdued,
-    },
-    [`.${legacyStyles.colorSurfaceQuaternary} .${legacyStyles.utilityDefaultTextColorEmphasized}`]: {
-      color: customProperties.colorSurfaceQuaternaryTextEmphasized,
+    [`.${legacyStyles.colorSurfaceTertiary} .${legacyStyles.utilityDefaultColorAccent}`]: {
+      color: customProperties.colorSurfaceTertiaryAccent,
     },
   });
 }

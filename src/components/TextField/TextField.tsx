@@ -97,7 +97,7 @@ export const TextField = forwardRef((props: Props, ref) => {
     <div className={styles.Tooltip}>
       <Tooltip content={tooltip.content}>
         <VisuallyHidden>{tooltip.label}</VisuallyHidden>
-        <Icon source="questionFill" size="large" color="subdued" />
+        <Icon source="questionFill" size="large" appearance="subdued" />
       </Tooltip>
     </div>
   ) : null;
@@ -125,6 +125,9 @@ export const TextField = forwardRef((props: Props, ref) => {
 
 interface FieldProps extends Omit<Props, 'id'> {
   id: string;
+  min?: number;
+  max?: number;
+  step?: number;
   ariaActiveDescendant?: string;
   ariaAutocomplete?: string;
   ariaControls?: string;
@@ -139,6 +142,9 @@ export const Field = forwardRef(
   (
     {
       id,
+      min,
+      max,
+      step,
       name,
       label,
       value: explicitValue,
@@ -224,6 +230,9 @@ export const Field = forwardRef(
 
     const field = React.createElement(multiline ? 'textarea' : 'input', {
       id,
+      min,
+      max,
+      step,
       name,
       placeholder:
         labelled.isFloating || labelPosition === 'outside' ? undefined : label,

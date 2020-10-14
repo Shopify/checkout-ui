@@ -14,8 +14,8 @@ describe('<InlineError />', () => {
     );
 
     expect(inlineError).toContainReactComponent('p', {
-      id: `error-for-${id}`,
       children: message,
+      id: `error-for-${id}`,
     });
   });
 });

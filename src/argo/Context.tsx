@@ -20,6 +20,10 @@ const defaultTranslate: AppContextProps['translate'] = (key) => {
       return 'Processing';
     case 'submit':
       return 'Submit';
+    case 'close':
+      return 'Close';
+    default:
+      return '';
   }
 };
 

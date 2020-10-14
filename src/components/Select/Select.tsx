@@ -8,7 +8,13 @@ import {Text} from '../Text';
 import {Icon} from '../Icon';
 import {Truncate} from '../Truncate';
 import {BlockStack} from '../BlockStack';
-import {useThemeConfiguration} from '../Theme';
+import {InlineStack} from '../InlineStack';
+import {
+  useThemeConfiguration,
+  ThemeLabelPosition,
+  ThemeBorder,
+  ThemeBackground,
+} from '../Theme';
 import {autocompleteToHtml} from '../../utilities/autocomplete';
 import {useId, createIdCreator} from '../../utilities/id';
 import {errorId} from '../../utilities/errors';
@@ -23,12 +29,17 @@ const createId = createIdCreator('Select');
 export interface SelectProps extends SelectPropsArgo {
   /* Whether the field is read only */
   readonly?: boolean;
+  labelPosition?: ThemeLabelPosition | 'inline';
+  background?: ThemeBackground;
+  border?: ThemeBorder;
+  disclosureIconSeparator?: boolean;
 }
 
 export function Select({
   id: explicitId,
   name,
   label,
+  labelPosition,
   options,
   value = PLACEHOLDER_VALUE,
   disabled,
@@ -38,22 +49,31 @@ export function Select({
   autocomplete,
   placeholder,
   onChange,
+  border,
+  background,
+  disclosureIconSeparator,
 }: SelectProps) {
   const {
     select: {
-      labelPosition = 'inside',
-      background = 'surfaceTertiary',
-      border = 'full',
+      labelPosition: themeLabelPosition = 'inside',
+      background: themeBackground = 'surfaceTertiary',
+      border: themeBorder = 'full',
       borderColor = 'base',
       focusBorder = 'full',
       disclosureIcon = 'caretDown',
-      disclosureIconSeparator,
+      disclosureIconSeparator: themeDisclosureIconSeparator = true,
       typographyStyle,
       errorIndentation,
       errorTypographyStyle,
     },
     label: {typographyStyle: labelTypographyStyle},
   } = useThemeConfiguration();
+
+  const finalLabelPosition = labelPosition ?? themeLabelPosition;
+  const finalBorder = border ?? themeBorder;
+  const finalDisclosureIconSeparator =
+    disclosureIconSeparator ?? themeDisclosureIconSeparator;
+  const finalBackground = background ?? themeBackground;
 
   const id = useId(explicitId, createId);
 
@@ -74,9 +94,9 @@ export function Select({
     Boolean(error) && styles.hasError,
     disabled && styles['Select-isDisabled'],
     readonly && styles['Select-isReadOnly'],
-    labelPosition === 'outside' && styles['Select-hasOutsideLabel'],
-    styles[variationName('Select-background', background)],
-    styles[variationName('Select-border', border)],
+    styles[variationName('Select-label', finalLabelPosition)],
+    styles[variationName('Select-background', finalBackground)],
+    styles[variationName('Select-border', finalBorder)],
     styles[variationName('Select-borderColor', borderColor)],
     styles[variationName('Select-focusBorder', focusBorder)],
     typographyStyle && typographyStyles[typographyStyle],
@@ -86,7 +106,7 @@ export function Select({
     <label
       className={classNames(
         styles.Label,
-        styles[variationName('Label-position', labelPosition)],
+        styles[variationName('Label-position', finalLabelPosition)],
         {
           [styles['Label-isPlaceholder']]:
             value === PLACEHOLDER_VALUE && placeholder === label,
@@ -98,7 +118,7 @@ export function Select({
       <Text
         size={
           !(value === PLACEHOLDER_VALUE && placeholder === label) ||
-          labelPosition === 'outside'
+          finalLabelPosition === 'inside'
             ? 'small'
             : undefined
         }
@@ -110,56 +130,68 @@ export function Select({
     </label>
   );
 
+  const view = (
+    <>
+      {finalLabelPosition === 'outside' || finalLabelPosition === 'inline'
+        ? labelMarkup
+        : null}
+      <div className={styles.Wrapper}>
+        {finalLabelPosition === 'inside' && labelMarkup}
+        <select
+          name={name}
+          id={id}
+          disabled={disabled}
+          onChange={(event) => onChange?.(event.target.value)}
+          required={required}
+          value={value}
+          className={className}
+          aria-describedby={error ? errorId(id) : undefined}
+          aria-invalid={Boolean(error)}
+          autoComplete={autocompleteToHtml(autocomplete)}
+        >
+          {placeholder &&
+            (value === PLACEHOLDER_VALUE || placeholder !== label) && (
+              <option
+                value={PLACEHOLDER_VALUE}
+                hidden={placeholder === label}
+                disabled
+              >
+                {placeholder === label ? <>&nbsp;</> : placeholder}
+              </option>
+            )}
+          {options.map((option) => (
+            <option
+              key={option.value}
+              value={option.value}
+              disabled={option.disabled || readonly}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <div
+          className={classNames(
+            styles.Selector,
+            finalDisclosureIconSeparator && styles['Selector-separated'],
+            finalDisclosureIconSeparator &&
+              styles[variationName('Selector-borderColor', borderColor)],
+          )}
+        >
+          <Icon source={disclosureIcon} size="small" />
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <BlockStack spacing="tight">
-      <View>
-        {labelPosition === 'outside' && labelMarkup}
-        <div className={styles.Wrapper}>
-          {labelPosition === 'inside' && labelMarkup}
-          <select
-            name={name}
-            id={id}
-            disabled={disabled}
-            onChange={(event) => onChange?.(event.target.value)}
-            required={required}
-            value={value}
-            className={className}
-            aria-describedby={error ? errorId(id) : undefined}
-            aria-invalid={Boolean(error)}
-            autoComplete={autocompleteToHtml(autocomplete)}
-          >
-            {placeholder &&
-              (value === PLACEHOLDER_VALUE || placeholder !== label) && (
-                <option
-                  value={PLACEHOLDER_VALUE}
-                  hidden={placeholder === label}
-                  disabled
-                >
-                  {placeholder === label ? <>&nbsp;</> : placeholder}
-                </option>
-              )}
-            {options.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-                disabled={option.disabled || readonly}
-              >
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <div
-            className={classNames(
-              styles.Selector,
-              disclosureIconSeparator && styles['Selector-separated'],
-              disclosureIconSeparator &&
-                styles[variationName('Selector-borderColor', borderColor)],
-            )}
-          >
-            <Icon source={disclosureIcon} size="small" />
-          </div>
-        </div>
-      </View>
+      {finalLabelPosition === 'inline' ? (
+        <InlineStack spacing="xtight" alignment="center">
+          {view}
+        </InlineStack>
+      ) : (
+        <View>{view}</View>
+      )}
       {errorMarkup}
     </BlockStack>
   );

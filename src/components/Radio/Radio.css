@@ -85,14 +85,17 @@
 }
 
 .Input-backgroundSurfacePrimary {
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
   background-color: var(--x-color-surface-primary);
 }
 
 .Input-backgroundSurfaceSecondary {
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   background-color: var(--x-color-surface-secondary);
 }
 
 .Input-backgroundSurfaceTertiary {
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   background-color: var(--x-color-surface-tertiary);
 }
 

@@ -1,65 +1,82 @@
 .Banner {
-  --banner-background-color: hsl(206, 100%, 97%);
-  --banner-border-color: hsl(205, 63%, 89%);
-  --banner-icon-color: hsl(204, 77%, 42%);
-  background-color: var(--banner-background-color);
   position: relative;
   border-radius: var(--x-banner-border-radius, var(--x-global-border-radius));
-  border: 1px solid var(--banner-border-color);
   border-width: var(--x-banner-border, var(--x-border-full));
+  border-style: solid;
   padding: var(--x-spacing-loose);
-
-  /* temporary until we get proper color palettes for banners */
-  --x-default-color-border: hsl(0, 0%, 85%);
-  --x-default-color-border-emphasized: hsl(0, 0%, 58%);
-  --x-default-color-text: hsl(0, 0%, 33%);
-  --x-default-color-text-subdued: hsl(0, 0%, 45%);
-  --x-default-color-text-emphasized: hsl(0, 0%, 20%);
 }
 
 .Icon {
-  color: var(--banner-icon-color);
   margin: em(-3.5px) 0;
   max-width: em(24px);
   max-height: em(24px);
 }
 
+.statusInfo {
+  --x-default-color-border: var(--x-color-info-border);
+  --x-default-color-border-emphasized: var(--x-color-info-border-emphasized);
+  --x-default-color-text: var(--x-color-info-text);
+  --x-default-color-text-subdued: var(--x-color-info-text-subdued);
+  --x-default-color-text-emphasized: var(--x-color-info-text-emphasized);
+  color: var(--x-color-info-text);
+  background-color: var(--x-color-info);
+  border-color: var(--x-color-info-border);
+
+  & .Icon {
+    color: var(--x-color-info-accent);
+  }
+}
+
 .statusSuccess {
-  --banner-background-color: hsl(132, 52%, 94%);
-  --banner-border-color: hsl(127, 42%, 87%);
-  --banner-icon-color: hsl(131, 86%, 34%);
+  --x-default-color-border: var(--x-color-success-border);
+  --x-default-color-border-emphasized: var(--x-color-success-border-emphasized);
+  --x-default-color-text: var(--x-color-success-text);
+  --x-default-color-text-subdued: var(--x-color-success-text-subdued);
+  --x-default-color-text-emphasized: var(--x-color-success-text-emphasized);
+  color: var(--x-color-success-text);
+  background-color: var(--x-color-success);
+  border-color: var(--x-color-success-border);
+
+  & .Icon {
+    color: var(--x-color-success-accent);
+  }
 }
 
 .statusWarning {
-  --banner-background-color: hsl(47, 100%, 94%);
-  --banner-border-color: hsl(46, 63%, 84%);
-  --banner-icon-color: hsl(44, 100%, 36%);
+  --x-default-color-border: var(--x-color-warning-border);
+  --x-default-color-border-emphasized: var(--x-color-warning-border-emphasized);
+  --x-default-color-text: var(--x-color-warning-text);
+  --x-default-color-text-subdued: var(--x-color-warning-text-subdued);
+  --x-default-color-text-emphasized: var(--x-color-warning-text-emphasized);
+  color: var(--x-color-warning-text);
+  background-color: var(--x-color-warning);
+  border-color: var(--x-color-warning-border);
+
+  & .Icon {
+    color: var(--x-color-warning-accent);
+  }
 }
 
 .statusCritical {
-  --x-default-color-border: var(--x-color-surface-quaternary-border);
+  --x-default-color-border: var(--x-color-critical-border);
   --x-default-color-border-emphasized: var(
-    --x-color-surface-quaternary-border-emphasized
+    --x-color-critical-border-emphasized
   );
-  --x-default-color-text: var(--x-color-surface-quaternary-text);
-  --x-default-color-text-subdued: var(
-    --x-color-surface-quaternary-text-subdued
-  );
-  --x-default-color-text-emphasized: var(
-    --x-color-surface-quaternary-text-emphasized
-  );
-  --banner-background-color: var(--x-color-surface-quaternary);
-  --banner-border-color: var(--x-default-color-border);
-  --banner-icon-color: var(--x-color-critical-text);
-  color: var(--x-color-surface-quaternary-text);
+  --x-default-color-text: var(--x-color-critical-text);
+  --x-default-color-text-subdued: var(--x-color-critical-text-subdued);
+  --x-default-color-text-emphasized: var(--x-color-critical-text-emphasized);
+  color: var(--x-color-critical-text);
+  background-color: var(--x-color-critical);
+  border-color: var(--x-color-critical-border);
+
+  & .Icon {
+    color: var(--x-color-critical-accent);
+  }
 }
 
-.collapsibleButton {
-  position: absolute;
-  top: var(--x-spacing-tight4x);
-  right: 0;
-}
-
-.isCollapsible {
-  padding-right: var(--x-spacing-loose3x);
+.Button {
+  -webkit-tap-highlight-color: transparent;
+  padding: var(--x-spacing-tight);
+  margin: calc(-1 * var(--x-spacing-tight));
+  color: var(--banner-icon-color);
 }

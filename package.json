@@ -61,6 +61,7 @@
     "@shopify/jest-dom-mocks": "^2.9.1",
     "@storybook/addon-knobs": "5.3.18",
     "@storybook/preact": "5.3.8",
+    "@types/css-font-loading-module": "0.0.4",
     "@types/faker": "^4.1.12",
     "@types/react": "^16.9.20",
     "@types/react-dom": "^16.9.8",
@@ -77,8 +78,8 @@
   "dependencies": {
     "@babel/preset-env": "^7.0.0",
     "@quilted/react-auto-headings": "^0.1.0",
-    "@shopify/argo-checkout": "^0.4.0",
-    "@shopify/css-utilities": "^1.0.6",
+    "@shopify/argo-checkout": "^0.7.0",
+    "@shopify/css-utilities": "1.0.5",
     "@shopify/react-hooks": "1.9.1",
     "@shopify/webpack-ignore-typescript-export-warnings-plugin": "^1.0.4",
     "@svgr/webpack": "^5.1.0",

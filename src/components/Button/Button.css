@@ -3,9 +3,9 @@
   -webkit-touch-callout: none;
   position: relative;
   cursor: pointer;
-  background-color: var(--x-color-primary);
+  background-color: var(--x-color-primary-action);
   border-radius: var(--x-control-border-radius, var(--x-global-border-radius));
-  color: var(--x-color-primary-text);
+  color: var(--x-color-primary-action-text);
   display: inline-block;
   font-weight: var(--x-typography-primary-weight-bold);
   padding: var(--x-primary-button-block-padding)
@@ -17,11 +17,11 @@
     color var(--duration--base) var(--timing--base);
 
   &:hover {
-    background-color: var(--x-color-primary-hovered);
+    background-color: var(--x-color-primary-action-hovered);
   }
 
   &:active {
-    background-color: var(--x-color-primary-pressed);
+    background-color: var(--x-color-primary-action-pressed);
     outline: none;
   }
 
@@ -51,16 +51,16 @@
 .isSubdued,
 .isPlain {
   background-color: transparent;
-  color: var(--x-color-primary);
+  color: var(--x-color-primary-action);
 
   &:hover {
     background-color: transparent;
-    color: var(--x-color-primary-hovered);
+    color: var(--x-color-primary-action-hovered);
   }
 
   &:active {
     background-color: transparent;
-    color: var(--x-color-primary-pressed);
+    color: var(--x-color-primary-action-pressed);
   }
 }
 
@@ -144,17 +144,17 @@
 }
 
 .isSecondary {
-  background-color: var(--x-color-secondary);
-  color: var(--x-color-secondary-text);
+  background-color: var(--x-color-secondary-action);
+  color: var(--x-color-secondary-action-text);
   padding: var(--x-secondary-button-block-padding)
     var(--x-secondary-button-inline-padding);
 
   &:hover {
-    background-color: var(--x-color-secondary-hovered);
+    background-color: var(--x-color-secondary-action-hovered);
   }
 
   &:active {
-    background-color: var(--x-color-secondary-pressed);
+    background-color: var(--x-color-secondary-action-pressed);
     outline: none;
   }
 }
@@ -168,7 +168,7 @@
 .progressBar {
   pointer-events: none;
   cursor: default;
-  background-color: var(--x-color-primary-pressed);
+  background-color: var(--x-color-primary-action-pressed);
   position: relative;
   overflow: hidden;
 
@@ -180,7 +180,7 @@
   &::before {
     content: '';
     position: absolute;
-    background-color: var(--x-color-primary);
+    background-color: var(--x-color-primary-action);
     z-index: 0;
     left: 0;
     top: 0;
@@ -196,10 +196,10 @@
   }
 
   &.isSecondary {
-    background-color: var(--x-color-secondary-pressed);
+    background-color: var(--x-color-secondary-action-pressed);
 
     &::before {
-      background-color: var(--x-color-secondary);
+      background-color: var(--x-color-secondary-action);
     }
   }
 
@@ -216,7 +216,7 @@
     background-color: transparent;
 
     &::before {
-      background-color: var(--x-color-primary);
+      background-color: var(--x-color-primary-action);
       top: calc(100% - rem(2px));
     }
   }

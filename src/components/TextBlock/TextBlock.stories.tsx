@@ -39,6 +39,42 @@ export const allVisualStyles = () => (
     <TextBlock>Default</TextBlock>
     <TextBlock subdued>Subdued</TextBlock>
     <TextBlock emphasized>Emphasized</TextBlock>
+    <TextBlock appearance="accent">Accent</TextBlock>
+    <TextBlock subdued appearance="accent">
+      Subdued accent
+    </TextBlock>
+    <TextBlock emphasized appearance="accent">
+      Emphasized accent
+    </TextBlock>
+    <TextBlock appearance="critical">Critical</TextBlock>
+    <TextBlock subdued appearance="critical">
+      Subdued critical
+    </TextBlock>
+    <TextBlock emphasized appearance="critical">
+      Emphasized critical
+    </TextBlock>
+    <TextBlock appearance="warning">Warning</TextBlock>
+    <TextBlock subdued appearance="warning">
+      Subdued warning
+    </TextBlock>
+    <TextBlock emphasized appearance="warning">
+      Emphasized warning
+    </TextBlock>
+    <TextBlock appearance="success">Success</TextBlock>
+    <TextBlock subdued appearance="success">
+      Subdued success
+    </TextBlock>
+    <TextBlock emphasized appearance="success">
+      Emphasized success
+    </TextBlock>
+  </TextContainer>
+);
+
+export const allStatus = () => (
+  <TextContainer>
+    <TextBlock appearance="critical">Critical</TextBlock>
+    <TextBlock appearance="warning">Warning</TextBlock>
+    <TextBlock appearance="success">Success</TextBlock>
   </TextContainer>
 );
 

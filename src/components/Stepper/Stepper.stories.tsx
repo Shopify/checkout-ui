@@ -1,107 +1,46 @@
 import React from 'react';
+import {withKnobs} from '@storybook/addon-knobs';
 
-import {Stepper, StepperStep} from '.';
+import {themeWithKnobs} from '../../storybook-utilities';
+
+import {Stepper} from './Stepper';
 
 const meta = {
   component: Stepper,
   title: 'Stepper',
+  decorators: [
+    withKnobs,
+    themeWithKnobs('textFields'),
+    (story: () => JSX.Element) => (
+      <div
+        style={{
+          padding: '1em',
+        }}
+      >
+        {story()}
+      </div>
+    ),
+  ],
 };
 
 export default meta;
 
-function step(step: string, state: string, stateHidden = true) {
-  switch (step) {
-    case 'confirmed':
-      return (
-        <StepperStep
-          icon="checkmark"
-          id={step}
-          label="Confirmed"
-          description="March 16"
-          state={state}
-          stateHidden={stateHidden}
-        />
-      );
-    case 'onItsWay':
-      return (
-        <StepperStep
-          icon="ship"
-          id={step}
-          label="On its way"
-          description="March 17"
-          state={state}
-          stateHidden={stateHidden}
-        />
-      );
-    case 'outForDelivery':
-      return (
-        <StepperStep
-          icon="delivery"
-          id={step}
-          label="Out for delivery"
-          description="March 18"
-          state={state}
-          stateHidden={stateHidden}
-        />
-      );
-    case 'delivered':
-      return (
-        <StepperStep
-          icon="delivered"
-          id={step}
-          label="Delivered"
-          description="March 19"
-          state={state}
-          stateHidden={stateHidden}
-        />
-      );
-    case 'failure':
-      return (
-        <StepperStep
-          icon="errorFill"
-          iconColor="critical"
-          id={step}
-          label="Not delivered"
-          description="March 19"
-          state={state}
-          stateHidden={stateHidden}
-        />
-      );
-  }
-}
+const defaultProps = {
+  label: 'Quantity',
+};
 
-export const defaultState = () => (
-  <Stepper>
-    {step('confirmed', 'Current step')}
-    {step('onItsWay', 'Upcoming step')}
-    {step('outForDelivery', 'Upcoming step')}
-    {step('delivered', 'Upcoming step')}
-  </Stepper>
+export const defaultState = () => <Stepper {...defaultProps} />;
+
+export const min = () => <Stepper {...defaultProps} min={3} />;
+
+export const max = () => <Stepper {...defaultProps} max={5} />;
+
+export const minAndMax = () => <Stepper {...defaultProps} min={1} max={5} />;
+
+export const step = () => <Stepper {...defaultProps} step={0.5} />;
+
+export const minMaxAndStep = () => (
+  <Stepper {...defaultProps} step={2} min={0} max={5} />
 );
 
-export const withCompletedSteps = () => (
-  <Stepper activeStep="onItsWay">
-    {step('confirmed', 'Past step')}
-    {step('onItsWay', 'Current step')}
-    {step('outForDelivery', 'Upcoming step')}
-    {step('delivered', 'Upcoming step')}
-  </Stepper>
-);
-
-export const withState = () => (
-  <Stepper activeStep="outForDelivery">
-    {step('confirmed', 'Past step:', false)}
-    {step('onItsWay', 'Past step:', false)}
-    {step('outForDelivery', 'Current step:', false)}
-    {step('delivered', 'Upcoming step:', false)}
-  </Stepper>
-);
-
-export const withColor = () => (
-  <Stepper activeStep="failure">
-    {step('confirmed', 'Past step:')}
-    {step('onItsWay', 'Past step:')}
-    {step('outForDelivery', 'Past step:')}
-    {step('failure', 'Current step:')}
-  </Stepper>
-);
+export const error = () => <Stepper {...defaultProps} error="Limit reached" />;
