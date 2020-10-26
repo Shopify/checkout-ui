@@ -15,9 +15,6 @@
 .Surface-colorSurfaceTertiary {
 }
 
-.Surface-colorSurfaceQuaternary {
-}
-
 .Utility-defaultBorderColor {
 }
 
@@ -25,6 +22,9 @@
 }
 
 .Utility-defaultTextEmphasizedColor {
+}
+
+.Utility-defaultAccentColor {
 }
 
 /* stylelint-enable block-no-empty */

@@ -299,9 +299,12 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-primary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
+  --x-default-color-disabled: var(--x-color-surface-primary-disabled);
   background-color: var(--x-color-surface-primary);
 
-  & .SectionInner {
+  /* stylelint-disable-next-line selector-max-class */
+  &.Section-inlineSizeContentSize .SectionInner {
     background-color: var(--x-color-surface-primary);
   }
 }
@@ -316,9 +319,12 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-secondary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
+  --x-default-color-disabled: var(--x-color-surface-secondary-disabled);
   background-color: var(--x-color-surface-secondary);
 
-  & .SectionInner {
+  /* stylelint-disable-next-line selector-max-class */
+  &.Section-inlineSizeContentSize .SectionInner {
     background-color: var(--x-color-surface-secondary);
   }
 }
@@ -333,9 +339,12 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-tertiary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+  --x-default-color-disabled: var(--x-color-surface-tertiary-disabled);
   background-color: var(--x-color-surface-tertiary);
 
-  & .SectionInner {
+  /* stylelint-disable-next-line selector-max-class */
+  &.Section-inlineSizeContentSize .SectionInner {
     background-color: var(--x-color-surface-tertiary);
   }
 }
@@ -445,6 +454,8 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-primary-text--emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
+  --x-default-color-disabled: var(--x-color-surface-primary-disabled);
   background-color: var(--x-color-surface-primary);
 }
 
@@ -458,6 +469,8 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-secondary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
+  --x-default-color-disabled: var(--x-color-surface-secondary-disabled);
   background-color: var(--x-color-surface-secondary);
 }
 
@@ -471,6 +484,8 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-tertiary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+  --x-default-color-disabled: var(--x-color-surface-tertiary-disabled);
   background-color: var(--x-color-surface-tertiary);
 }
 

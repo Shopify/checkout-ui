@@ -5,9 +5,9 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import {useMountedRef} from '@shopify/react-hooks';
 import {classNames, variationName} from '@shopify/css-utilities';
 
+import {useMounted} from '../../utilities/mounted';
 import {Text} from '../Text';
 import {Truncate} from '../Truncate';
 import {
@@ -38,7 +38,7 @@ export function Labelled({
   background = 'surfaceTertiary',
   subdued,
 }: Props) {
-  const mounted = useMountedRef();
+  const mounted = useMounted();
 
   const [state, dispatch] = useReducer(
     (state: State, action: Action): State => {

@@ -163,11 +163,14 @@ export function Autocomplete({
         handleOpen();
         break;
       case 'Enter':
-        // Prevent form validation
-        event.preventDefault();
-        handleClose();
-        if (onSelectOption) {
-          onSelectOption(options[selected]);
+        if (open) {
+          // Prevent form validation
+          event.preventDefault();
+          handleClose();
+
+          if (onSelectOption) {
+            onSelectOption(options[selected]);
+          }
         }
         break;
       case 'Escape':
@@ -337,7 +340,7 @@ export function Autocomplete({
                 <Icon
                   size="default"
                   source="close"
-                  color="subdued"
+                  appearance="subdued"
                   accessibilityLabel={ariaLabel}
                 />
               </button>

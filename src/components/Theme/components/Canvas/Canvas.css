@@ -4,6 +4,8 @@
   --x-default-color-text-emphasized: var(--x-color-canvas-text-emphasized);
   --x-default-color-border: var(--x-color-canvas-border);
   --x-default-color-border-emphasized: var(--x-color-canvas-border-emphasized);
+  --x-default-color-accent: var(--x-color-canvas-accent);
+  --x-default-color-disabled: var(--x-color-canvas-disabled);
   background: var(--x-color-canvas);
   color: var(--x-default-color-text);
   font-size: var(--x-typography-size-default);

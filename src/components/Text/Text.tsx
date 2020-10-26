@@ -6,15 +6,19 @@ import {ThemeTypographyStyle} from '../Theme';
 import {
   utilityDefaultTextColorSubdued,
   utilityDefaultTextColorEmphasized,
+  utilityDefaultColorAccent,
 } from '../../utilities/legacy';
 import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './Text.css';
 
-interface Props extends PropsWithChildren<Omit<TextProps, 'size'>> {
-  /** Visually change the text based on the Theme styles */
+interface Props
+  extends PropsWithChildren<Omit<TextProps, 'size' | 'appearance'>> {
+  /** Changes the text based on the Theme styles */
   style?: ThemeTypographyStyle;
+  /** Changes the size */
   size?: 'xsmall' | TextProps['size'];
+  appearance?: 'accent' | TextProps['appearance'];
 }
 
 export function Text({
@@ -22,17 +26,20 @@ export function Text({
   size,
   emphasized,
   subdued,
+  appearance,
   role,
   style,
   id,
 }: Props) {
   const className = classNames(
     styles.Text,
-    emphasized && styles.isEmphasized,
+    emphasized && styles.emphasized,
     emphasized && utilityDefaultTextColorEmphasized,
-    subdued && styles.isSubdued,
+    subdued && styles.subdued,
     subdued && utilityDefaultTextColorSubdued,
     size && styles[variationName('size', size)],
+    appearance && styles[variationName('appearance', appearance)],
+    appearance && appearance === 'accent' && utilityDefaultColorAccent,
     style && typographyStyles[style],
   );
 

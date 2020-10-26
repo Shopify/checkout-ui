@@ -63,6 +63,8 @@ const WithPlacement = () => {
       <InlineStack>
         <button onClick={handleClick('blockStart')}>blockStart</button>
         <button onClick={handleClick('blockEnd')}>blockEnd</button>
+        <button onClick={handleClick('inlineStart')}>inlineStart</button>
+        <button onClick={handleClick('inlineEnd')}>inlineEnd</button>
       </InlineStack>
     </>
   );

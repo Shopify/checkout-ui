@@ -1,4 +1,4 @@
-export type Placement = 'blockStart' | 'blockEnd';
+export type Placement = 'blockStart' | 'blockEnd' | 'inlineStart' | 'inlineEnd';
 
 export interface Offsets {
   x: number;
@@ -41,6 +41,9 @@ export function computeOffsets(
     ? referenceRect.left
     : referenceRect.left + referenceRect.width / 2 - popperRect.width / 2;
 
+  const commonY =
+    referenceRect.top + referenceRect.height / 2 - popperRect.height / 2;
+
   switch (placement) {
     case 'blockStart':
       offsets = {
@@ -52,6 +55,18 @@ export function computeOffsets(
       offsets = {
         x: commonX,
         y: referenceRect.bottom + offset,
+      };
+      break;
+    case 'inlineStart':
+      offsets = {
+        x: referenceRect.left - popperRect.width - offset,
+        y: commonY,
+      };
+      break;
+    case 'inlineEnd':
+      offsets = {
+        x: referenceRect.right + offset,
+        y: commonY,
       };
       break;
   }

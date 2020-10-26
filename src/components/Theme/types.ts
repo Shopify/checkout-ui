@@ -10,8 +10,8 @@ export interface ThemeConfiguration {
   readonly buyerJourney: ThemeBuyerJourney;
   readonly colors: Partial<RoleColors>;
   readonly typographyScale: Partial<TypographyScale>;
-  readonly typographyPrimary: TypographyStack;
-  readonly typographySecondary: TypographyStack;
+  readonly typographyPrimary: ThemeTypographyFont;
+  readonly typographySecondary: ThemeTypographyFont;
   readonly headingLevel1: ThemeHeading;
   readonly headingLevel2: ThemeHeading;
   readonly headingLevel3: ThemeHeading;
@@ -33,6 +33,7 @@ export interface ThemeConfiguration {
   readonly tag: ThemeTag;
   readonly tooltip: ThemeTooltip;
   readonly banner: ThemeBanner;
+  readonly thumbnail: ThemeThumbnail;
   readonly typographyStyle1: ThemeTypographyStyleCustomizations;
   readonly typographyStyle2: ThemeTypographyStyleCustomizations;
   readonly typographyStyle3: ThemeTypographyStyleCustomizations;
@@ -42,6 +43,10 @@ export interface ThemeConfiguration {
   readonly typographyStyle7: ThemeTypographyStyleCustomizations;
   readonly typographyStyle8: ThemeTypographyStyleCustomizations;
   readonly typographyStyle9: ThemeTypographyStyleCustomizations;
+}
+
+export interface ThemeOptions {
+  readonly legacy?: boolean;
 }
 
 export type ThemeTypographyLineSize = 'base' | 'large';
@@ -112,7 +117,7 @@ export interface ThemeBuyerJourney {
   typographyStyle?: ThemeTypographyStyle;
 }
 
-export type ThemeLabelPosition = 'inside' | 'outside';
+export type ThemeLabelPosition = 'inside' | 'outside' | 'inline';
 export type ThemeGap = 'base' | 'tight' | 'none';
 
 export type ThemeMoneyLineInlineAlignment =
@@ -128,6 +133,7 @@ export type ThemeBackground =
   | 'transparent';
 
 export interface ThemeControls {
+  background?: ThemeBackground;
   borderColor?: ThemeBorderColor;
   borderRadius?: ThemeSimpleBorderRadius;
 }
@@ -212,8 +218,6 @@ export interface ThemeLineItems {
   blockPadding?: ThemeResourceItemSpacing;
   inlinePadding?: ThemeResourceItemSpacing;
   quantityPosition?: ThemeLineItemQuantityPosition;
-  thumbnailBadgeBackground?: ThemeThumbnailBadgeBackground;
-  thumbnailBorder?: ThemeSimpleBorder;
   titleTypographyStyle?: ThemeTypographyStyle;
   subtitleTypographyStyle?: ThemeTypographyStyle;
   propertiesTypographyStyle?: ThemeTypographyStyle;
@@ -283,30 +287,31 @@ export interface ThemeBanner {
   borderRadius?: ThemeBorderRadius;
 }
 
-export interface ColorPair {
+export interface ThemeThumbnail {
+  aspectRatio?: number;
+  badgeBackground?: ThemeThumbnailBadgeBackground;
+  border?: ThemeSimpleBorder;
+}
+
+export interface ColorGroup {
   background?: Hsl;
   foreground?: Hsl;
+  accent?: Hsl;
 }
 
 export interface RoleColors {
-  canvas: ColorPair;
-  surfacePrimary: ColorPair;
-  surfaceSecondary: ColorPair;
-  surfaceTertiary: ColorPair;
-  surfaceQuaternary: ColorPair;
-
-  /* For primary elements (<Button>) */
-  primary: ColorPair;
-  /* For secondary elements (<Button>) */
-  secondary: ColorPair;
-  /* For tertiary elements (<Tag>) */
-  tertiary: ColorPair;
-  /* For interative elements (<Link>, accent for <TextField>, <Radio> etc.) */
-  interactive: ColorPair;
-  /* For successful action taken by a user, a positive message (<Banner type="success">) */
-  success: ColorPair;
-  /* For destructive interactive elements, errors, and critical events that require immediate user action (<Banner type="critical">) */
-  critical: ColorPair;
+  canvas: ColorGroup;
+  surfacePrimary: ColorGroup;
+  surfaceSecondary: ColorGroup;
+  surfaceTertiary: ColorGroup;
+  primaryAction: ColorGroup;
+  secondaryAction: ColorGroup;
+  tertiaryAction: ColorGroup;
+  interactive: ColorGroup;
+  info: ColorGroup;
+  success: ColorGroup;
+  warning: ColorGroup;
+  critical: ColorGroup;
 }
 
 export interface TypographyScale {
@@ -326,16 +331,12 @@ export type CSSFontWeight =
   | '800'
   | '900';
 
-export interface TypographyStack {
+export interface ThemeTypographyFont {
   fonts?: string;
   weightBase?: CSSFontWeight;
+  sourceBase?: string;
   weightBold?: CSSFontWeight;
-}
-
-export interface Typography {
-  size?: TypographyScale;
-  primary?: TypographyStack;
-  secondary?: TypographyStack;
+  sourceBold?: string;
 }
 
 export type ThemeTypographySize =
@@ -369,6 +370,7 @@ export type RoleColorOverrides = {
   [Color in keyof RoleColors]: {
     foreground?: Hsl | HslColorString | HslColorTuple;
     background?: Hsl | HslColorString | HslColorTuple;
+    accent?: Hsl | HslColorString | HslColorTuple;
   };
 };
 
@@ -392,6 +394,7 @@ export interface CustomPropertyMap {
   colorCanvasText: RgbColorString;
   colorCanvasTextSubdued: RgbColorString;
   colorCanvasTextEmphasized: RgbColorString;
+  colorCanvasAccent: RgbColorString;
 
   colorSurfacePrimary: RgbColorString;
   colorSurfacePrimaryDisabled: RgbColorString;
@@ -401,6 +404,7 @@ export interface CustomPropertyMap {
   colorSurfacePrimaryTextEmphasized: RgbColorString;
   colorSurfacePrimaryBorder: RgbColorString;
   colorSurfacePrimaryBorderEmphasized: RgbColorString;
+  colorSurfacePrimaryAccent: RgbColorString;
 
   colorSurfaceSecondary: RgbColorString;
   colorSurfaceSecondaryDisabled: RgbColorString;
@@ -410,6 +414,7 @@ export interface CustomPropertyMap {
   colorSurfaceSecondaryTextEmphasized: RgbColorString;
   colorSurfaceSecondaryBorder: RgbColorString;
   colorSurfaceSecondaryBorderEmphasized: RgbColorString;
+  colorSurfaceSecondaryAccent: RgbColorString;
 
   colorSurfaceTertiary: RgbColorString;
   colorSurfaceTertiaryDisabled: RgbColorString;
@@ -419,33 +424,25 @@ export interface CustomPropertyMap {
   colorSurfaceTertiaryTextEmphasized: RgbColorString;
   colorSurfaceTertiaryBorder: RgbColorString;
   colorSurfaceTertiaryBorderEmphasized: RgbColorString;
+  colorSurfaceTertiaryAccent: RgbColorString;
 
-  colorSurfaceQuaternary: RgbColorString;
-  colorSurfaceQuaternaryDisabled: RgbColorString;
-  colorSurfaceQuaternarySubdued: RgbColorString;
-  colorSurfaceQuaternaryText: RgbColorString;
-  colorSurfaceQuaternaryTextSubdued: RgbColorString;
-  colorSurfaceQuaternaryTextEmphasized: RgbColorString;
-  colorSurfaceQuaternaryBorder: RgbColorString;
-  colorSurfaceQuaternaryBorderEmphasized: RgbColorString;
+  colorPrimaryAction: RgbColorString;
+  colorPrimaryActionHovered: RgbColorString;
+  colorPrimaryActionPressed: RgbColorString;
+  colorPrimaryActionText: RgbColorString;
+  colorPrimaryActionTextHovered: RgbColorString;
+  colorPrimaryActionTextPressed: RgbColorString;
 
-  colorPrimary: RgbColorString;
-  colorPrimaryHovered: RgbColorString;
-  colorPrimaryPressed: RgbColorString;
-  colorPrimaryText: RgbColorString;
-  colorPrimaryTextHovered: RgbColorString;
-  colorPrimaryTextPressed: RgbColorString;
+  colorSecondaryAction: RgbColorString;
+  colorSecondaryActionHovered: RgbColorString;
+  colorSecondaryActionPressed: RgbColorString;
+  colorSecondaryActionText: RgbColorString;
+  colorSecondaryActionTextHovered: RgbColorString;
+  colorSecondaryActionTextPressed: RgbColorString;
 
-  colorSecondary: RgbColorString;
-  colorSecondaryHovered: RgbColorString;
-  colorSecondaryPressed: RgbColorString;
-  colorSecondaryText: RgbColorString;
-  colorSecondaryTextHovered: RgbColorString;
-  colorSecondaryTextPressed: RgbColorString;
-
-  colorTertiary: RgbColorString;
-  colorTertiaryText: RgbColorString;
-  colorTertiaryTextSubdued: RgbColorString;
+  colorTertiaryAction: RgbColorString;
+  colorTertiaryActionText: RgbColorString;
+  colorTertiaryActionTextSubdued: RgbColorString;
 
   colorInteractive: RgbColorString;
   colorInteractiveHovered: RgbColorString;
@@ -454,10 +451,45 @@ export interface CustomPropertyMap {
   colorInteractiveTextHovered: RgbColorString;
   colorInteractiveTextPressed: RgbColorString;
 
+  colorInfo: RgbColorString;
+  colorInfoDisabled: RgbColorString;
+  colorInfoSubdued: RgbColorString;
+  colorInfoText: RgbColorString;
+  colorInfoTextSubdued: RgbColorString;
+  colorInfoTextEmphasized: RgbColorString;
+  colorInfoBorder: RgbColorString;
+  colorInfoBorderEmphasized: RgbColorString;
+  colorInfoAccent: RgbColorString;
+
+  colorSuccess: RgbColorString;
+  colorSuccessDisabled: RgbColorString;
+  colorSuccessSubdued: RgbColorString;
+  colorSuccessText: RgbColorString;
+  colorSuccessTextSubdued: RgbColorString;
+  colorSuccessTextEmphasized: RgbColorString;
+  colorSuccessBorder: RgbColorString;
+  colorSuccessBorderEmphasized: RgbColorString;
+  colorSuccessAccent: RgbColorString;
+
+  colorWarning: RgbColorString;
+  colorWarningDisabled: RgbColorString;
+  colorWarningSubdued: RgbColorString;
+  colorWarningText: RgbColorString;
+  colorWarningTextSubdued: RgbColorString;
+  colorWarningTextEmphasized: RgbColorString;
+  colorWarningBorder: RgbColorString;
+  colorWarningBorderEmphasized: RgbColorString;
+  colorWarningAccent: RgbColorString;
+
   colorCritical: RgbColorString;
+  colorCriticalDisabled: RgbColorString;
+  colorCriticalSubdued: RgbColorString;
   colorCriticalText: RgbColorString;
+  colorCriticalTextSubdued: RgbColorString;
+  colorCriticalTextEmphasized: RgbColorString;
   colorCriticalBorder: RgbColorString;
   colorCriticalBorderEmphasized: RgbColorString;
+  colorCriticalAccent: RgbColorString;
 
   typographySizeXSmall: string;
   typographySizeSmall: string;
@@ -470,7 +502,6 @@ export interface CustomPropertyMap {
   typographyPrimaryFonts: string;
   typographyPrimaryWeightBase: string;
   typographyPrimaryWeightBold: string;
-
   typographySecondaryFonts: string;
   typographySecondaryWeightBase: string;
   typographySecondaryWeightBold: string;
@@ -595,4 +626,10 @@ export interface CustomPropertyMap {
 
   bannerBorder?: string;
   bannerBorderRadius?: string;
+
+  iconSizeDefault?: string;
+  iconSizeSmall?: string;
+  iconSizeLarge?: string;
+
+  thumbnailAspectRatio?: string;
 }

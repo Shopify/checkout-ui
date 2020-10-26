@@ -7,30 +7,43 @@ import React, {
 } from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
+import {useTranslate} from '../AppContext';
 import {Portal} from '../Portal';
 import {Heading} from '../Heading';
 import {Icon} from '../Icon';
 import {useTransition} from '../../utilities/transition';
+import {useFocusTrap} from '../../utilities/focusTrap';
 
 import styles from './Modal.css';
 
-const IFRAME_LOADING_HEIGHT = 200;
 const DEFAULT_IFRAME_CONTENT_HEIGHT = 400;
 
 interface CommonProps {
+  /**
+   * Whether the modal is closable or not. This will prevent closing
+   * the modal by pressing `ESC` and hide the "close" button. This
+   * can be used in flows where the user feedback is mandatory.
+   */
+  blocking?: boolean;
+  /**
+   * Stretches the modal on the y-axis to make it cover 90% of
+   * the screen's height. This also cancels the automatic resizing
+   * of the iframe when it's loaded.
+   */
+  long?: boolean;
+  onClose?: () => void;
   open?: boolean;
   title?: string;
-  height?: number;
-  onClose?: () => void;
 }
 
 interface IFrameProps {
-  src: string;
   iFrameName?: string;
+  iFrameTitle?: string;
+  src?: string;
 }
 
 interface ChildrenProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 function isIFrameProps(
@@ -42,33 +55,42 @@ function isIFrameProps(
 export type Props = CommonProps & (IFrameProps | ChildrenProps);
 
 export function Modal({
+  blocking = false,
+  long = false,
+  onClose,
   open: openProp = false,
   title,
-  height,
-  onClose,
   ...props
 }: Props) {
-  const iFrameTitle = 'body markup';
-
+  const translate = useTranslate();
   const [open, setOpen] = useState(openProp);
-  const [iframeHeight, setIframeHeight] = useState(IFRAME_LOADING_HEIGHT);
+  const [iframeHeight, setIframeHeight] = useState<number>();
   const titleBarRef = useRef<HTMLElement>(null);
+  const activatorRef = useRef<Element | null>(null);
+  const modalRef = useFocusTrap();
 
   const transition = useTransition(open, {enter: 'fast'});
   const transitionClassName = styles[variationName('transition', transition)];
 
   const closeModal = useCallback(() => {
     setOpen(false);
+    if (activatorRef?.current instanceof HTMLElement)
+      activatorRef.current.focus();
     if (onClose) onClose();
   }, [onClose]);
 
   const handleKeyDown = useCallback(
-    (event) => event.key === 'Escape' && closeModal(),
-    [closeModal],
+    (event) => {
+      if ((event.key === 'Escape' || event.key === 'Esc') && !blocking) {
+        closeModal();
+      }
+    },
+    [blocking, closeModal],
   );
 
   useEffect(() => {
     if (openProp) {
+      activatorRef.current = document.activeElement;
       setOpen(true);
     } else {
       closeModal();
@@ -99,61 +121,47 @@ export function Modal({
 
   if (!open) return null;
 
-  // TODO handle focus
-
-  let contentHeight: string;
-  if (height) {
-    if (title) {
-      contentHeight = `${height - (titleBarRef.current?.clientHeight ?? 64)}px`;
-    }
-    contentHeight = `${height}px`;
-  } else if (isIFrameProps(props)) {
-    contentHeight = `${iframeHeight}px`;
-  } else {
-    contentHeight = 'auto';
-  }
-
   return (
     <Portal>
-      <div className={styles.Wrapper}>
+      <div className={styles.Modal}>
         {/* TODO: <ScrollLock />, <Scrollable /> */}
         <div className={classNames(styles.Backdrop, transitionClassName)} />
-        <div className={classNames(styles.Content, transitionClassName)}>
+        <div
+          className={classNames(styles.Content, transitionClassName, {
+            [styles['Content-isLong']]: long,
+          })}
+          role="dialog"
+          aria-labelledby="id-of-the-header-title"
+          aria-modal
+          tabIndex={-1}
+          ref={modalRef}
+        >
           {title && (
             <header className={styles.Header} ref={titleBarRef}>
               <Heading level={1}>{title}</Heading>
-              <button
-                type="button"
-                className={styles.Button}
-                onClick={() => closeModal()}
-              >
-                <Icon source="close" size="large" />
-              </button>
+              {!blocking && (
+                <button
+                  type="button"
+                  className={styles.Button}
+                  onClick={() => closeModal()}
+                  aria-label={translate('close') || 'Close'}
+                >
+                  <Icon source="close" size="large" />
+                </button>
+              )}
             </header>
           )}
           {isIFrameProps(props) ? (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <iframe
               src={props.src}
               name={props.iFrameName}
-              onLoad={handleIFrameLoad}
-              title={iFrameTitle}
+              title={props.iFrameTitle || 'body markup'}
               className={styles.IFrame}
-              style={{
-                // stylelint-disable-next-line value-keyword-case
-                height: contentHeight,
-              }}
+              {...(iframeHeight && {style: {height: `${iframeHeight}px`}})}
+              {...(!long && {onLoad: handleIFrameLoad})}
             />
           ) : (
-            <div
-              className={styles.Body}
-              style={{
-                // stylelint-disable-next-line value-keyword-case
-                height: contentHeight,
-              }}
-            >
-              {props.children}
-            </div>
+            <div className={styles.Body}>{props.children}</div>
           )}
         </div>
       </div>

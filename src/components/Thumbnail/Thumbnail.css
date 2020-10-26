@@ -2,19 +2,56 @@
   position: relative;
   width: em(64px);
   height: 100%;
+}
 
-  & > .Image {
-    display: block;
-    object-fit: contain;
-    width: em(64px);
-    height: em(64px);
-    background-color: var(--color--white);
-    border-radius: calc(var(--x-global-border-radius) * 2);
+.Thumbnail-aspectRatioLandscape {
+  width: calc(em(64px) / var(--x-thumbnail-aspect-ratio));
+
+  & > .Image,
+  & > .Placeholder {
+    width: calc(em(64px) / var(--x-thumbnail-aspect-ratio));
   }
 }
 
+.Thumbnail-aspectRatioPortrait {
+  height: calc(em(64px) * var(--x-thumbnail-aspect-ratio));
+
+  & > .Image,
+  & > .Placeholder {
+    height: calc(em(64px) * var(--x-thumbnail-aspect-ratio));
+  }
+}
+
+.Image,
+.Placeholder {
+  width: em(64px);
+  height: em(64px);
+  border-radius: calc(var(--x-global-border-radius) * 2);
+}
+
+.Image {
+  display: block;
+  object-fit: contain;
+  background-color: var(--color--white);
+}
+
+.Placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color--lightest-grey);
+  color: var(--color--light-grey);
+}
+
+.Icon {
+  display: block;
+  width: em(33px);
+  height: em(33px);
+}
+
 .borderFull {
-  & > .Image {
+  & > .Image,
+  & > .Placeholder {
     border: 1px solid var(--x-default-color-border);
   }
 }
@@ -42,6 +79,6 @@
 }
 
 .Badge-backgroundPrimary {
-  background-color: var(--x-color-primary);
-  color: var(--x-color-primary-text);
+  background-color: var(--x-color-primary-action);
+  color: var(--x-color-primary-action-text);
 }

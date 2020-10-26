@@ -52,16 +52,18 @@ describe('<Spinner />', () => {
   });
 
   describe('color', () => {
-    it('renders an Icon with "interactive" color by default', () => {
+    it('renders an Icon with "accent" color by default', () => {
       const spinner = mountWithContext(<Spinner />);
 
-      expect(spinner).toContainReactComponent(Icon, {color: 'interactive'});
+      expect(spinner).toContainReactComponent(Icon, {
+        appearance: 'accent',
+      });
     });
 
     it('renders an Icon with with no color prop if "inherit" is passed', () => {
       const spinner = mountWithContext(<Spinner color="inherit" />);
 
-      expect(spinner).toContainReactComponent(Icon, {color: undefined});
+      expect(spinner).toContainReactComponent(Icon, {appearance: undefined});
     });
   });
 });

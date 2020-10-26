@@ -1,5 +1,5 @@
 .Tag {
-  background-color: var(--x-color-tertiary);
+  background-color: var(--x-color-tertiary-action);
   border-radius: var(
     --x-tag-border-radius,
     var(--x-control-border-radius, var(--x-global-border-radius))
@@ -9,7 +9,7 @@
 }
 
 .Label {
-  color: var(--x-color-tertiary-text);
+  color: var(--x-color-tertiary-action-text);
   padding: var(--x-spacing-tight) 0 var(--x-spacing-tight)
     var(--x-spacing-tight);
   max-width: rem(240px);
@@ -18,10 +18,10 @@
 .Button {
   display: block;
   padding: var(--x-spacing-tight) var(--x-spacing-base);
-  color: var(--x-color-tertiary-text-subdued);
+  color: var(--x-color-tertiary-action-text-subdued);
 
   &:hover,
   &:active {
-    color: var(--x-color-tertiary-text);
+    color: var(--x-color-tertiary-action-text);
   }
 }

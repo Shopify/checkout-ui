@@ -6,14 +6,17 @@ import {ThemeTypographyStyle} from '../Theme';
 import {
   utilityDefaultTextColorSubdued,
   utilityDefaultTextColorEmphasized,
+  utilityDefaultColorAccent,
 } from '../../utilities/legacy';
 import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './TextBlock.css';
 
-export interface Props extends PropsWithChildren<TextBlockProps> {
-  /** Visually change the text based on the Theme styles */
+export interface Props
+  extends PropsWithChildren<Omit<TextBlockProps, 'appearance'>> {
+  /** Changes the text based on the Theme styles */
   style?: ThemeTypographyStyle;
+  appearance?: 'accent' | TextBlockProps['appearance'];
 }
 
 export function TextBlock({
@@ -21,16 +24,19 @@ export function TextBlock({
   size,
   emphasized,
   subdued,
+  appearance,
   style,
   id,
 }: Props) {
   const className = classNames(
     styles.TextBlock,
     size && styles[variationName('size', size)],
-    emphasized && styles.isEmphasized,
+    emphasized && styles.emphasized,
     emphasized && utilityDefaultTextColorEmphasized,
-    subdued && styles.isSubdued,
+    subdued && styles.subdued,
     subdued && utilityDefaultTextColorSubdued,
+    appearance && styles[variationName('appearance', appearance)],
+    appearance && appearance === 'accent' && utilityDefaultColorAccent,
     style && typographyStyles[style],
   );
 

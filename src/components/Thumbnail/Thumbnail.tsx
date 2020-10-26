@@ -1,10 +1,13 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
+import {useThemeConfiguration} from '../Theme';
+import {Icon} from '../Icon';
+
 import styles from './Thumbnail.css';
-import {placeholder} from './images';
 
 export interface Props {
+  badge?: string | number;
   description: string;
   source?: string;
   /**
@@ -12,24 +15,24 @@ export interface Props {
    * e.g., ["https://example.org/foo_100x100.jpg", "https://example.org/foo_200x200.jpg 2x"]
    */
   sources?: string[];
-  border?: 'none' | 'full';
-  badge?: string | number;
-  badgeBackground?: 'primary' | 'subdued';
 }
 
-export function Thumbnail({
-  description,
-  border = 'full',
-  source,
-  sources,
-  badge,
-  badgeBackground = 'subdued',
-}: Props) {
+export function Thumbnail({badge, description, source, sources}: Props) {
+  const {
+    thumbnail: {aspectRatio, border = 'full', badgeBackground = 'subdued'},
+  } = useThemeConfiguration();
+
   return (
     <div
       className={classNames(
         styles.Thumbnail,
         border && styles[variationName('border', border)],
+        aspectRatio &&
+          aspectRatio < 1 &&
+          styles['Thumbnail-aspectRatioLandscape'],
+        aspectRatio &&
+          aspectRatio > 1 &&
+          styles['Thumbnail-aspectRatioPortrait'],
       )}
     >
       {badge != null && (
@@ -43,12 +46,20 @@ export function Thumbnail({
           {badge}
         </span>
       )}
-      <img
-        className={styles.Image}
-        srcSet={sources?.join(', ')}
-        src={source ?? placeholder}
-        alt={description}
-      />
+      {source ? (
+        <img
+          className={styles.Image}
+          srcSet={sources?.join(', ')}
+          src={source}
+          alt={description}
+        />
+      ) : (
+        <span className={classNames(styles.Placeholder)}>
+          <span className={styles.Icon}>
+            <Icon source="camera" />
+          </span>
+        </span>
+      )}
     </div>
   );
 }

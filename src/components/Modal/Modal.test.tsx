@@ -114,4 +114,44 @@ describe('<Modal />', () => {
       expect(onCloseSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('blocking prop', () => {
+    it("doesn't render the close button", async () => {
+      const modal = await mountWithContext(
+        <Modal src={defaultIFrameSrc} title="A modal" open blocking />,
+      );
+
+      expect(modal).not.toContainReactComponent('button');
+    });
+
+    it("doesn't close the modal when the escape key is pressed", async () => {
+      const modal = await mountWithContext(
+        <Modal src={defaultIFrameSrc} open blocking />,
+      );
+      const event = new KeyboardEvent('keydown', {key: 'Escape'} as any);
+      modal.act(() => document.dispatchEvent(event));
+
+      expect(modal).toContainReactComponent(Portal);
+    });
+  });
+
+  describe('long prop', () => {
+    it("doesn't add the onLoad prop when present", async () => {
+      const modal = await mountWithContext(
+        <Modal src={defaultIFrameSrc} open long />,
+      );
+      const iframe = modal.find('iframe');
+
+      expect(iframe?.prop('onLoad')).toBeUndefined();
+    });
+
+    it('adds the onLoad prop when absent', async () => {
+      const modal = await mountWithContext(
+        <Modal src={defaultIFrameSrc} open />,
+      );
+      const iframe = modal.find('iframe');
+
+      expect(iframe?.prop('onLoad')).not.toBeUndefined();
+    });
+  });
 });

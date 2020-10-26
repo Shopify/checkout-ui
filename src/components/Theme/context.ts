@@ -12,6 +12,7 @@ import {
 
 import {
   ThemeConfiguration,
+  ThemeOptions,
   CustomPropertyMap,
   RoleColors,
   RoleColorOverrides,
@@ -20,7 +21,7 @@ import {
   TypographyScaleOverrides,
   ThemeTypographyFonts,
   ThemeTypographyWeight,
-  ColorPair,
+  ColorGroup,
 } from './types';
 import {modularScale} from './utilities/modularScale';
 
@@ -31,93 +32,97 @@ interface EventMap {
 
 export const ThemeContext = createContext<UiTheme | undefined>(undefined);
 
-export function createTheme({
-  global = {},
-  buyerJourney = {},
-  typographyScale = {},
-  typographyPrimary = {},
-  typographySecondary = {},
-  headingLevel1 = {},
-  headingLevel2 = {},
-  headingLevel3 = {},
-  controls = {},
-  label = {},
-  textFields = {},
-  select = {},
-  checkbox = {},
-  radio = {},
-  optionList = {},
-  reviewBlock = {},
-  actions = {},
-  lineItems = {},
-  moneyLines = {},
-  moneySummary = {},
-  primaryButton = {},
-  secondaryButton = {},
-  formLayout = {},
-  tag = {},
-  tooltip = {},
-  banner = {},
-  typographyStyle1 = {},
-  typographyStyle2 = {},
-  typographyStyle3 = {},
-  typographyStyle4 = {},
-  typographyStyle5 = {},
-  typographyStyle6 = {},
-  typographyStyle7 = {},
-  typographyStyle8 = {},
-  typographyStyle9 = {},
-  colors,
-}: Partial<ThemeConstructor> = {}): UiTheme {
-  return new UiTheme({
-    global,
-    buyerJourney,
-    typographyScale,
-    typographyPrimary,
-    typographySecondary,
-    headingLevel1,
-    headingLevel2,
-    headingLevel3,
-    controls,
-    label,
-    textFields,
-    select,
-    checkbox,
-    radio,
-    optionList,
-    reviewBlock,
-    actions,
-    lineItems,
-    moneyLines,
-    moneySummary,
-    primaryButton,
-    secondaryButton,
-    formLayout,
-    tag,
-    tooltip,
-    banner,
-    typographyStyle1,
-    typographyStyle2,
-    typographyStyle3,
-    typographyStyle4,
-    typographyStyle5,
-    typographyStyle6,
-    typographyStyle7,
-    typographyStyle8,
-    typographyStyle9,
+export function createTheme(
+  {
+    global = {},
+    buyerJourney = {},
+    typographyScale = {},
+    typographyPrimary = {},
+    typographySecondary = {},
+    headingLevel1 = {},
+    headingLevel2 = {},
+    headingLevel3 = {},
+    controls = {},
+    label = {},
+    textFields = {},
+    select = {},
+    checkbox = {},
+    radio = {},
+    optionList = {},
+    reviewBlock = {},
+    actions = {},
+    lineItems = {},
+    moneyLines = {},
+    moneySummary = {},
+    primaryButton = {},
+    secondaryButton = {},
+    formLayout = {},
+    tag = {},
+    tooltip = {},
+    banner = {},
+    thumbnail = {},
+    typographyStyle1 = {},
+    typographyStyle2 = {},
+    typographyStyle3 = {},
+    typographyStyle4 = {},
+    typographyStyle5 = {},
+    typographyStyle6 = {},
+    typographyStyle7 = {},
+    typographyStyle8 = {},
+    typographyStyle9 = {},
     colors,
-  });
+  }: Partial<ThemeConstructor> = {},
+  {legacy}: Partial<ThemeOptions> = {},
+): UiTheme {
+  return new UiTheme(
+    {
+      global,
+      buyerJourney,
+      typographyScale,
+      typographyPrimary,
+      typographySecondary,
+      headingLevel1,
+      headingLevel2,
+      headingLevel3,
+      controls,
+      label,
+      textFields,
+      select,
+      checkbox,
+      radio,
+      optionList,
+      reviewBlock,
+      actions,
+      lineItems,
+      moneyLines,
+      moneySummary,
+      primaryButton,
+      secondaryButton,
+      formLayout,
+      tag,
+      tooltip,
+      banner,
+      thumbnail,
+      typographyStyle1,
+      typographyStyle2,
+      typographyStyle3,
+      typographyStyle4,
+      typographyStyle5,
+      typographyStyle6,
+      typographyStyle7,
+      typographyStyle8,
+      typographyStyle9,
+      colors,
+    },
+    {
+      legacy,
+    },
+  );
 }
-
-/**
- * This scaling factor represents the ratio of the height of the ratio to the base font-size of the document.
- * E.g., a font-size of 14px means that the radio element will have width & height of 18px
- */
-const RADIO_SCALE = 1.2857142857142858;
-const CHECKBOX_SCALE = 1.2857142857142858;
 
 export class UiTheme {
   configuration: ThemeConfiguration;
+  options: ThemeOptions;
   customProperties: Partial<CustomPropertyMap>;
 
   private readonly listeners: {[K in keyof EventMap]: Set<EventMap[K]>} = {
@@ -125,7 +130,10 @@ export class UiTheme {
     preview: new Set(),
   };
 
-  constructor(configuration: ThemeConstructor) {
+  constructor(
+    configuration: ThemeConstructor,
+    options: ThemeOptions = {legacy: false},
+  ) {
     this.configuration = {
       ...configuration,
       colors: colorsFromOverrides(configuration.colors ?? {}),
@@ -133,7 +141,9 @@ export class UiTheme {
     };
     this.customProperties = customPropertiesFromThemeConfiguration(
       this.configuration,
+      options,
     );
+    this.options = options;
   }
 
   preview(
@@ -142,6 +152,7 @@ export class UiTheme {
   ) {
     const colorsCustomProperties = customPropertiesFromRoleColors(
       colorsFromOverrides(colors),
+      this.options.legacy ?? false,
     );
 
     const typographyScaleCustomProperties = customPropertiesFromTypographyScale(
@@ -168,6 +179,7 @@ export class UiTheme {
 
     const customProperties = customPropertiesFromThemeConfiguration(
       this.configuration,
+      this.options,
     );
 
     for (const listener of this.listeners.preview) {
@@ -184,63 +196,94 @@ export class UiTheme {
   }
 }
 
-export function colorSubdued(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
+export function colorSubdued(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
     l: (l) => (l > 50 ? l - 1.7 : Math.max(l - 5.2, 0)),
   });
 }
 
-export function colorTextEmphasized(colorPair?: ColorPair) {
-  return colorPair?.foreground
-    ? colorPair?.foreground?.adjust({
-        l: (l) => (l > 50 ? Math.min(l + 15, 100) : l - 10),
-      })
-    : colorPair?.background?.adjust({
-        s: (s) => (s > 50 ? s : Math.min(s + 15, 100)),
-        l: (l) => (l > 50 ? Math.max(l - 77.5, 0) : 98.3),
-      });
-}
-
-export function colorTextSubdued(colorPair?: ColorPair) {
-  return colorPair?.foreground
-    ? colorPair?.foreground?.adjust({
-        l: (l) => (l > 50 ? Math.max(l - 35, 0) : l - 15),
-      })
-    : colorPair?.background?.adjust({
-        s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-        l: (l) => (l > 50 ? Math.max(l - 49.9, 10) : Math.min(l + 63.2, 90)),
-      });
-}
-
-function colorHovered(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
-    l: (l) => l - 10,
+export function colorDisabled(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
+    l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
   });
 }
 
-function colorPressed(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
-    l: (l) => l - 10,
-  });
-}
-
-function colorText(colorPair?: ColorPair) {
+export function colorText(colorGroup?: ColorGroup, legacy?: boolean) {
   return (
-    colorPair?.foreground ??
-    colorPair?.background?.adjust({
-      l: (l) => (l > 50 ? 4 : 96),
+    colorGroup?.foreground ??
+    colorGroup?.background?.adjust({
+      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
+      l: (l) =>
+        isLight(colorGroup?.background, legacy)
+          ? Math.max(l - 62.6, 0)
+          : Math.min(l + 82, 98.3),
     })
   );
 }
 
-function colorTextHovered(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
+export function colorTextEmphasized(colorGroup?: ColorGroup, legacy?: boolean) {
+  return colorGroup?.foreground
+    ? colorGroup?.foreground?.adjust({
+        l: (l) =>
+          isLight(colorGroup?.foreground, legacy)
+            ? Math.min(l + 15, 100)
+            : l - 10,
+      })
+    : colorGroup?.background?.adjust({
+        s: (s) => (s > 50 ? s : Math.min(s + 15, 100)),
+        l: (l) =>
+          isLight(colorGroup?.background, legacy)
+            ? Math.max(l - 77.5, 0)
+            : 98.3,
+      });
+}
+
+export function colorTextSubdued(colorGroup?: ColorGroup, legacy?: boolean) {
+  return colorGroup?.foreground
+    ? colorGroup?.foreground?.adjust({
+        l: (l) =>
+          isLight(colorGroup?.foreground, legacy)
+            ? Math.max(l - 35, 0)
+            : l - 15,
+      })
+    : colorGroup?.background?.adjust({
+        s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
+        l: (l) =>
+          isLight(colorGroup?.background, legacy)
+            ? Math.max(l - 49.9, 10)
+            : Math.min(l + 63.2, 90),
+      });
+}
+
+function colorActionHovered(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
     l: (l) => l - 10,
   });
 }
 
-function colorTextPressed(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
+function colorActionPressed(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
+    l: (l) => l - 10,
+  });
+}
+
+function colorActionText(colorGroup?: ColorGroup, legacy?: boolean) {
+  return (
+    colorGroup?.foreground ??
+    colorGroup?.background?.adjust({
+      l: () => (isLight(colorGroup?.background, legacy) ? 4 : 96),
+    })
+  );
+}
+
+function colorActionTextHovered(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
+    l: (l) => l - 10,
+  });
+}
+
+function colorActionTextPressed(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
     l: (l) => l - 10,
   });
 }
@@ -249,34 +292,52 @@ function colorsFromOverrides(overrideColors: Partial<RoleColorOverrides>) {
   return (Object.keys(overrideColors) as (keyof RoleColorOverrides)[]).reduce<
     Partial<RoleColors>
   >((colors, key) => {
-    const colorOrPair = overrideColors[key];
+    const colorOrGroup = overrideColors[key];
 
-    if (colorOrPair == null) return colors;
+    if (colorOrGroup == null) return colors;
 
-    const {background, foreground} = colorOrPair;
+    const {background, foreground, accent} = colorOrGroup;
 
     return {
       ...colors,
       [key]: {
         background: background ? normalizeColor(background) : undefined,
         foreground: foreground ? normalizeColor(foreground) : undefined,
+        accent: accent ? normalizeColor(accent) : undefined,
       },
     };
   }, {});
 }
 
-function colorBorder(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
+function colorBorder(colorGroup?: ColorGroup, legacy?: boolean) {
+  return colorGroup?.background?.adjust({
     s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
-    l: (l) => (l > 50 ? Math.max(l - 8.8, 0) : Math.min(l + 11.3, 90)),
+    l: (l) =>
+      isLight(colorGroup?.background, legacy)
+        ? Math.max(l - 8.8, 0)
+        : Math.min(l + 11.3, 90),
   });
 }
 
-export function colorBorderEmphasized(colorPair?: ColorPair) {
-  return colorPair?.background?.adjust({
+export function colorBorderEmphasized(
+  colorGroup?: ColorGroup,
+  legacy?: boolean,
+) {
+  return colorGroup?.background?.adjust({
     s: (s) => (s > 50 ? s : Math.min(s + 15, 100)),
-    l: (l) => (l > 50 ? Math.max(l - 77.5, 0) : 98.3),
+    l: (l) =>
+      isLight(colorGroup?.background, legacy) ? Math.max(l - 77.5, 0) : 98.3,
   });
+}
+
+function isLight(color?: Hsl, legacy = false): boolean {
+  if (typeof color === 'undefined') return false;
+
+  if (legacy) {
+    return color.getYiqPerceivedBrightness() >= 0.65;
+  }
+
+  return color.l > 50;
 }
 
 function normalizeColor(color: HslColorString | HslColorTuple | Hsl) {
@@ -285,203 +346,212 @@ function normalizeColor(color: HslColorString | HslColorTuple | Hsl) {
   return new Hsl(...color);
 }
 
+const TYPOGRAPHY_FONT_SIZE_BASE = 14;
+
 const COLOR_MAP: {
   [CustomProperty in keyof CustomPropertyMap]?: (
     roleColors: Partial<RoleColors>,
+    legacy?: boolean,
   ) => Hsl | undefined;
 } = {
   /* COLOR CANVAS */
   colorCanvas: ({canvas}) => canvas?.background,
-
-  colorCanvasText: ({canvas}) =>
-    canvas?.foreground ??
-    canvas?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 62.6, 0) : Math.min(l + 82, 98.3)),
-    }),
-
+  colorCanvasText: ({canvas}) => colorText(canvas),
   colorCanvasTextSubdued: ({canvas}) => colorTextSubdued(canvas),
   colorCanvasTextEmphasized: ({canvas}) => colorTextEmphasized(canvas),
-
   colorCanvasBorder: ({canvas}) => colorBorder(canvas),
   colorCanvasBorderEmphasized: ({canvas}) => colorBorderEmphasized(canvas),
+  colorCanvasAccent: ({canvas}) => canvas?.accent,
 
   /* COLOR SURFACE 1 */
   colorSurfacePrimary: ({surfacePrimary}) => surfacePrimary?.background,
 
   colorSurfacePrimaryDisabled: ({surfacePrimary}) =>
-    surfacePrimary?.background?.adjust({
-      l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
-    }),
+    colorDisabled(surfacePrimary),
 
   colorSurfacePrimarySubdued: ({surfacePrimary}) =>
     colorSubdued(surfacePrimary),
 
-  colorSurfacePrimaryText: ({surfacePrimary}) =>
-    surfacePrimary?.foreground ??
-    surfacePrimary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 62.6, 0) : Math.min(l + 82, 98.3)),
-    }),
+  colorSurfacePrimaryText: ({surfacePrimary}, legacy) =>
+    colorText(surfacePrimary, legacy),
 
-  colorSurfacePrimaryTextSubdued: ({surfacePrimary}) =>
-    colorTextSubdued(surfacePrimary),
+  colorSurfacePrimaryTextSubdued: ({surfacePrimary}, legacy) =>
+    colorTextSubdued(surfacePrimary, legacy),
 
-  colorSurfacePrimaryTextEmphasized: ({surfacePrimary}) =>
-    colorTextEmphasized(surfacePrimary),
+  colorSurfacePrimaryTextEmphasized: ({surfacePrimary}, legacy) =>
+    colorTextEmphasized(surfacePrimary, legacy),
 
-  colorSurfacePrimaryBorder: ({surfacePrimary}) => colorBorder(surfacePrimary),
+  colorSurfacePrimaryBorder: ({surfacePrimary}, legacy) =>
+    colorBorder(surfacePrimary, legacy),
 
-  colorSurfacePrimaryBorderEmphasized: ({surfacePrimary}) =>
-    colorBorderEmphasized(surfacePrimary),
+  colorSurfacePrimaryBorderEmphasized: ({surfacePrimary}, legacy) =>
+    colorBorderEmphasized(surfacePrimary, legacy),
+
+  colorSurfacePrimaryAccent: ({surfacePrimary}) => surfacePrimary?.accent,
 
   /* COLOR SURFACE 2 */
   colorSurfaceSecondary: ({surfaceSecondary}) => surfaceSecondary?.background,
 
   colorSurfaceSecondaryDisabled: ({surfaceSecondary}) =>
-    surfaceSecondary?.background?.adjust({
-      l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
-    }),
+    colorDisabled(surfaceSecondary),
 
   colorSurfaceSecondarySubdued: ({surfaceSecondary}) =>
     colorSubdued(surfaceSecondary),
 
-  colorSurfaceSecondaryText: ({surfaceSecondary}) =>
-    surfaceSecondary?.foreground ??
-    surfaceSecondary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 62.6, 0) : Math.min(l + 82, 98.3)),
-    }),
+  colorSurfaceSecondaryText: ({surfaceSecondary}, legacy) =>
+    colorText(surfaceSecondary, legacy),
 
-  colorSurfaceSecondaryTextSubdued: ({surfaceSecondary}) =>
-    colorTextSubdued(surfaceSecondary),
+  colorSurfaceSecondaryTextSubdued: ({surfaceSecondary}, legacy) =>
+    colorTextSubdued(surfaceSecondary, legacy),
 
-  colorSurfaceSecondaryTextEmphasized: ({surfaceSecondary}) =>
-    colorTextEmphasized(surfaceSecondary),
+  colorSurfaceSecondaryTextEmphasized: ({surfaceSecondary}, legacy) =>
+    colorTextEmphasized(surfaceSecondary, legacy),
 
-  colorSurfaceSecondaryBorder: ({surfaceSecondary}) =>
-    colorBorder(surfaceSecondary),
+  colorSurfaceSecondaryBorder: ({surfaceSecondary}, legacy) =>
+    colorBorder(surfaceSecondary, legacy),
 
-  colorSurfaceSecondaryBorderEmphasized: ({surfaceSecondary}) =>
-    colorBorderEmphasized(surfaceSecondary),
+  colorSurfaceSecondaryBorderEmphasized: ({surfaceSecondary}, legacy) =>
+    colorBorderEmphasized(surfaceSecondary, legacy),
+
+  colorSurfaceSecondaryAccent: ({surfaceSecondary}) => surfaceSecondary?.accent,
 
   /* COLOR SURFACE 3 */
   colorSurfaceTertiary: ({surfaceTertiary}) => surfaceTertiary?.background,
 
   colorSurfaceTertiaryDisabled: ({surfaceTertiary}) =>
-    surfaceTertiary?.background?.adjust({
-      l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
-    }),
+    colorDisabled(surfaceTertiary),
 
   colorSurfaceTertiarySubdued: ({surfaceTertiary}) =>
     colorSubdued(surfaceTertiary),
 
-  colorSurfaceTertiaryText: ({surfaceTertiary}) =>
-    surfaceTertiary?.foreground ??
-    surfaceTertiary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 62.6, 0) : Math.min(l + 82, 98.3)),
-    }),
+  colorSurfaceTertiaryText: ({surfaceTertiary}, legacy) =>
+    colorText(surfaceTertiary, legacy),
 
-  colorSurfaceTertiaryTextSubdued: ({surfaceTertiary}) =>
-    colorTextSubdued(surfaceTertiary),
+  colorSurfaceTertiaryTextSubdued: ({surfaceTertiary}, legacy) =>
+    colorTextSubdued(surfaceTertiary, legacy),
 
-  colorSurfaceTertiaryTextEmphasized: ({surfaceTertiary}) =>
-    colorTextEmphasized(surfaceTertiary),
+  colorSurfaceTertiaryTextEmphasized: ({surfaceTertiary}, legacy) =>
+    colorTextEmphasized(surfaceTertiary, legacy),
 
-  colorSurfaceTertiaryBorder: ({surfaceTertiary}) =>
-    colorBorder(surfaceTertiary),
+  colorSurfaceTertiaryBorder: ({surfaceTertiary}, legacy) =>
+    colorBorder(surfaceTertiary, legacy),
 
-  colorSurfaceTertiaryBorderEmphasized: ({surfaceTertiary}) =>
-    colorBorderEmphasized(surfaceTertiary),
+  colorSurfaceTertiaryBorderEmphasized: ({surfaceTertiary}, legacy) =>
+    colorBorderEmphasized(surfaceTertiary, legacy),
 
-  /* COLOR SURFACE 4 */
-  colorSurfaceQuaternary: ({surfaceQuaternary}) =>
-    surfaceQuaternary?.background,
+  colorSurfaceTertiaryAccent: ({surfaceTertiary}) => surfaceTertiary?.accent,
 
-  colorSurfaceQuaternaryDisabled: ({surfaceQuaternary}) =>
-    surfaceQuaternary?.background?.adjust({
-      l: (l) => (l > 50 ? Math.min(l - 2.5, 97.5) : Math.max(l + 2.5, 2.5)),
-    }),
+  /* COLOR PRIMARY ACTION */
+  colorPrimaryAction: ({primaryAction}) => primaryAction?.background,
+  colorPrimaryActionHovered: ({primaryAction}) =>
+    colorActionHovered(primaryAction),
+  colorPrimaryActionPressed: ({primaryAction}) =>
+    colorActionPressed(primaryAction),
+  colorPrimaryActionText: ({primaryAction}, legacy) =>
+    colorActionText(primaryAction, legacy),
+  colorPrimaryActionTextHovered: ({primaryAction}) =>
+    colorActionTextHovered(primaryAction),
+  colorPrimaryActionTextPressed: ({primaryAction}) =>
+    colorActionTextPressed(primaryAction),
 
-  colorSurfaceQuaternarySubdued: ({surfaceQuaternary}) =>
-    colorSubdued(surfaceQuaternary),
+  /* COLOR SECONDARY ACTION */
+  colorSecondaryAction: ({secondaryAction}) => secondaryAction?.background,
+  colorSecondaryActionHovered: ({secondaryAction}) =>
+    colorActionHovered(secondaryAction),
+  colorSecondaryActionPressed: ({secondaryAction}) =>
+    colorActionPressed(secondaryAction),
+  colorSecondaryActionText: ({secondaryAction}, legacy) =>
+    colorActionText(secondaryAction, legacy),
+  colorSecondaryActionTextHovered: ({secondaryAction}) =>
+    colorActionTextHovered(secondaryAction),
+  colorSecondaryActionTextPressed: ({secondaryAction}) =>
+    colorActionTextPressed(secondaryAction),
 
-  colorSurfaceQuaternaryText: ({surfaceQuaternary}) =>
-    surfaceQuaternary?.foreground ??
-    surfaceQuaternary?.background?.adjust({
-      s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-      l: (l) => (l > 50 ? Math.max(l - 62.6, 0) : Math.min(l + 82, 98.3)),
-    }),
-
-  colorSurfaceQuaternaryTextSubdued: ({surfaceQuaternary}) =>
-    colorTextSubdued(surfaceQuaternary),
-
-  colorSurfaceQuaternaryTextEmphasized: ({surfaceQuaternary}) =>
-    colorTextEmphasized(surfaceQuaternary),
-
-  colorSurfaceQuaternaryBorder: ({surfaceQuaternary}) =>
-    colorBorder(surfaceQuaternary),
-
-  colorSurfaceQuaternaryBorderEmphasized: ({surfaceQuaternary}) =>
-    colorBorderEmphasized(surfaceQuaternary),
-
-  /* COLOR PRIMARY */
-  colorPrimary: ({primary}) => primary?.background,
-  colorPrimaryHovered: ({primary}) => colorHovered(primary),
-  colorPrimaryPressed: ({primary}) => colorPressed(primary),
-  colorPrimaryText: ({primary}) => colorText(primary),
-  colorPrimaryTextHovered: ({primary}) => colorTextHovered(primary),
-  colorPrimaryTextPressed: ({primary}) => colorTextPressed(primary),
-
-  /* COLOR SECONDARY */
-  colorSecondary: ({secondary}) => secondary?.background,
-  colorSecondaryHovered: ({secondary}) => colorHovered(secondary),
-  colorSecondaryPressed: ({secondary}) => colorPressed(secondary),
-  colorSecondaryText: ({secondary}) => colorText(secondary),
-  colorSecondaryTextHovered: ({secondary}) => colorTextHovered(secondary),
-  colorSecondaryTextPressed: ({secondary}) => colorTextPressed(secondary),
-
-  /* COLOR TERTIARY */
-  colorTertiary: ({tertiary}) => tertiary?.background,
-  colorTertiaryText: ({tertiary}) => colorText(tertiary),
-  colorTertiaryTextSubdued: ({tertiary}) =>
-    tertiary?.foreground
-      ? tertiary?.foreground?.adjust({
+  /* COLOR TERTIARY ACTION */
+  colorTertiaryAction: ({tertiaryAction}) => tertiaryAction?.background,
+  colorTertiaryActionText: ({tertiaryAction}) =>
+    colorActionText(tertiaryAction),
+  colorTertiaryActionTextSubdued: ({tertiaryAction}, legacy) =>
+    tertiaryAction?.foreground
+      ? tertiaryAction?.foreground?.adjust({
           l: (l) => Math.min(l + 20, 100),
         })
-      : tertiary?.background?.adjust({
+      : tertiaryAction?.background?.adjust({
           s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
-          l: (l) => (l > 50 ? Math.max(l - 49.9, 10) : Math.min(l + 63.2, 90)),
+          l: (l) =>
+            isLight(tertiaryAction?.background, legacy)
+              ? Math.max(l - 49.9, 10)
+              : Math.min(l + 63.2, 90),
         }),
 
   /* COLOR INTERACTIVE */
   colorInteractive: ({interactive}) => interactive?.background,
-
   colorInteractiveHovered: ({interactive}) => interactive?.background,
-
   colorInteractivePressed: ({interactive}) => interactive?.background,
-
   colorInteractiveText: ({interactive}) => interactive?.foreground,
-
   colorInteractiveTextHovered: ({interactive}) =>
     interactive?.foreground?.adjust({
       l: (l) => l + 10,
     }),
-
   colorInteractiveTextPressed: ({interactive}) =>
     interactive?.foreground?.adjust({
       l: (l) => l + 10,
     }),
 
+  /* COLOR INFO */
+  colorInfo: ({info}) => info?.background,
+  colorInfoDisabled: ({info}) => colorDisabled(info),
+  colorInfoSubdued: ({info}) => colorSubdued(info),
+  colorInfoText: ({info}, legacy) => colorText(info, legacy),
+  colorInfoTextSubdued: ({info}, legacy) => colorTextSubdued(info, legacy),
+  colorInfoTextEmphasized: ({info}, legacy) =>
+    colorTextEmphasized(info, legacy),
+  colorInfoBorder: ({info}, legacy) => colorBorder(info, legacy),
+  colorInfoBorderEmphasized: ({info}, legacy) =>
+    colorBorderEmphasized(info, legacy),
+  colorInfoAccent: ({info}) => info?.accent,
+
+  /* COLOR SUCCESS */
+  colorSuccess: ({success}) => success?.background,
+  colorSuccessDisabled: ({success}) => colorDisabled(success),
+  colorSuccessSubdued: ({success}) => colorSubdued(success),
+  colorSuccessText: ({success}, legacy) => colorText(success, legacy),
+  colorSuccessTextSubdued: ({success}, legacy) =>
+    colorTextSubdued(success, legacy),
+  colorSuccessTextEmphasized: ({success}, legacy) =>
+    colorTextEmphasized(success, legacy),
+  colorSuccessBorder: ({success}, legacy) => colorBorder(success, legacy),
+  colorSuccessBorderEmphasized: ({success}, legacy) =>
+    colorBorderEmphasized(success, legacy),
+  colorSuccessAccent: ({success}) => success?.accent,
+
+  /* COLOR WARNING */
+  colorWarning: ({warning}) => warning?.background,
+  colorWarningDisabled: ({warning}) => colorDisabled(warning),
+  colorWarningSubdued: ({warning}) => colorSubdued(warning),
+  colorWarningText: ({warning}, legacy) => colorText(warning, legacy),
+  colorWarningTextSubdued: ({warning}, legacy) =>
+    colorTextSubdued(warning, legacy),
+  colorWarningTextEmphasized: ({warning}, legacy) =>
+    colorTextEmphasized(warning, legacy),
+  colorWarningBorder: ({warning}, legacy) => colorBorder(warning, legacy),
+  colorWarningBorderEmphasized: ({warning}, legacy) =>
+    colorBorderEmphasized(warning, legacy),
+  colorWarningAccent: ({warning}) => warning?.accent,
+
   /* COLOR CRITICAL */
   colorCritical: ({critical}) => critical?.background,
-  colorCriticalText: ({critical}) => critical?.foreground,
-  colorCriticalBorder: ({critical}) =>
-    critical?.background?.adjust({
-      l: (l) => l - 17.5,
-    }),
-  colorCriticalBorderEmphasized: ({critical}) => critical?.foreground,
+  colorCriticalDisabled: ({critical}) => colorDisabled(critical),
+  colorCriticalSubdued: ({critical}) => colorSubdued(critical),
+  colorCriticalText: ({critical}, legacy) => colorText(critical, legacy),
+  colorCriticalTextSubdued: ({critical}, legacy) =>
+    colorTextSubdued(critical, legacy),
+  colorCriticalTextEmphasized: ({critical}, legacy) =>
+    colorTextEmphasized(critical, legacy),
+  colorCriticalBorder: ({critical}, legacy) => colorBorder(critical, legacy),
+  colorCriticalBorderEmphasized: ({critical}, legacy) =>
+    colorBorderEmphasized(critical, legacy),
+  colorCriticalAccent: ({critical}) => critical?.accent,
 };
 
 const TYPOGRAPHY_SCALE_MAP: {
@@ -640,35 +710,48 @@ const SPACING_VAR_MAP = {
   loose4x: 'var(--x-spacing-loose4x)',
 };
 
-function customPropertiesFromThemeConfiguration({
-  global,
-  buyerJourney,
-  colors,
-  typographyScale,
-  typographyPrimary,
-  typographySecondary,
-  controls,
-  textFields,
-  select,
-  optionList,
-  checkbox,
-  moneyLines,
-  moneySummary,
-  reviewBlock,
-  primaryButton,
-  secondaryButton,
-  tag,
-  banner,
-  typographyStyle1,
-  typographyStyle2,
-  typographyStyle3,
-  typographyStyle4,
-  typographyStyle5,
-  typographyStyle6,
-  typographyStyle7,
-  typographyStyle8,
-  typographyStyle9,
-}: ThemeConfiguration): Partial<CustomPropertyMap> {
+/**
+ * This scaling factor represents the ratio of the desired size of the radio/checkbox (18px) to the base font-size of the document.
+ */
+const RADIO_SCALE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
+const CHECKBOX_SCALE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
+
+const ICON_SMALL_SCALE = 10 / TYPOGRAPHY_FONT_SIZE_BASE;
+const ICON_LARGE_SCALE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
+
+function customPropertiesFromThemeConfiguration(
+  {
+    global,
+    buyerJourney,
+    colors,
+    typographyScale,
+    typographyPrimary,
+    typographySecondary,
+    controls,
+    textFields,
+    select,
+    optionList,
+    checkbox,
+    moneyLines,
+    moneySummary,
+    reviewBlock,
+    primaryButton,
+    secondaryButton,
+    tag,
+    banner,
+    thumbnail,
+    typographyStyle1,
+    typographyStyle2,
+    typographyStyle3,
+    typographyStyle4,
+    typographyStyle5,
+    typographyStyle6,
+    typographyStyle7,
+    typographyStyle8,
+    typographyStyle9,
+  }: ThemeConfiguration,
+  {legacy}: ThemeOptions,
+): Partial<CustomPropertyMap> {
   const globalTypographyLetterCase = maybeInMap(TYPOGRAPHY_CASE_MAP)(
     global.typographyLetterCase,
   );
@@ -703,11 +786,13 @@ function customPropertiesFromThemeConfiguration({
   const typographyPrimaryFonts = typographyPrimary.fonts ?? undefined;
   const typographyPrimaryWeightBase = typographyPrimary.weightBase ?? undefined;
   const typographyPrimaryWeightBold = typographyPrimary.weightBold ?? undefined;
+
   const typographySecondaryFonts = typographySecondary.fonts ?? undefined;
   const typographySecondaryWeightBase =
     typographySecondary.weightBase ?? undefined;
   const typographySecondaryWeightBold =
     typographySecondary.weightBold ?? undefined;
+
   const optionListBlockGap = maybeInMap(OPTION_LIST_GAP_MAP)(optionList.gap);
   const moneyLinesBlockGap = maybeInMap(MONEY_LINES_GAP_MAP)(moneyLines.gap);
   const moneyLinesSeparatorBlockGap = maybeInMap(MONEY_LINES_SEPARATOR_GAP_MAP)(
@@ -852,8 +937,27 @@ function customPropertiesFromThemeConfiguration({
   const bannerBorder = maybeInMap(BORDER_MAP)(banner.border);
   const bannerBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(banner.borderRadius);
 
+  /** To avoid an oval-y/rectangular shape caused by sub-pixel dimensions, we need JS to floor the size of our icons. */
+  const iconSizeSmall = typographyScale.base
+    ? `${Math.floor(
+        parseFloat(typographyScale.base.toString()) * ICON_SMALL_SCALE,
+      )}px`
+    : undefined;
+  const iconSizeDefault = typographyScale.base
+    ? `${typographyScale?.base?.toString()}px`
+    : undefined;
+  const iconSizeLarge = typographyScale.base
+    ? `${Math.floor(
+        parseFloat(typographyScale.base.toString()) * ICON_LARGE_SCALE,
+      )}px`
+    : undefined;
+
+  const thumbnailAspectRatio = thumbnail.aspectRatio
+    ? `${thumbnail.aspectRatio}`
+    : undefined;
+
   const customProperties: Partial<CustomPropertyMap> = {
-    ...customPropertiesFromRoleColors(colorsFromOverrides(colors)),
+    ...customPropertiesFromRoleColors(colorsFromOverrides(colors), legacy),
     ...customPropertiesFromTypographyScale(typographyScale),
     ...customPropertiesFromSpacing(typographyScale),
     typographyPrimaryFonts,
@@ -947,9 +1051,13 @@ function customPropertiesFromThemeConfiguration({
     optionListInlinePadding,
     tagBorderRadius,
     radioSize,
+    thumbnailAspectRatio,
     checkboxSize,
     bannerBorder,
     bannerBorderRadius,
+    iconSizeSmall,
+    iconSizeDefault,
+    iconSizeLarge,
   };
 
   for (const key of Object.keys(
@@ -963,11 +1071,14 @@ function customPropertiesFromThemeConfiguration({
   return customProperties;
 }
 
-function customPropertiesFromRoleColors(colors: Partial<RoleColors>) {
+function customPropertiesFromRoleColors(
+  colors: Partial<RoleColors>,
+  legacy?: boolean,
+) {
   const customProperties: Partial<CustomPropertyMap> = {};
 
   for (const property of Object.keys(COLOR_MAP) as (keyof typeof COLOR_MAP)[]) {
-    const color = COLOR_MAP[property]?.(colors);
+    const color = COLOR_MAP[property]?.(colors, legacy);
     if (color != null) customProperties[property] = toRgb(color);
   }
 

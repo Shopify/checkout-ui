@@ -5,19 +5,36 @@
   letter-spacing: var(--x-global-typography-kerning);
 }
 
-.isSubdued {
+.subdued {
   color: var(
     --x-default-color-text-subdued,
     var(--x-default-color-text, inherit)
   );
 }
 
-.isEmphasized {
-  font-weight: var(--x-typography-primary-weight-bold);
+.emphasized {
+  --this-font-weight: var(--x-typography-primary-weight-bold);
+  font-weight: var(--this-font-weight);
   color: var(
     --x-default-color-text-emphasized,
     var(--x-default-color-text, inherit)
   );
+}
+
+.appearanceAccent {
+  color: var(--x-default-color-accent);
+}
+
+.appearanceSuccess {
+  color: var(--x-color-success-accent);
+}
+
+.appearanceWarning {
+  color: var(--x-color-warning-accent);
+}
+
+.appearanceCritical {
+  color: var(--x-color-critical-accent);
 }
 
 .sizeSmall {

@@ -34,10 +34,10 @@ export const colorSurfacePrimary = styles['Surface-colorSurfacePrimary'];
 // .order-summary__scroll-indicator
 export const colorSurfaceSecondary = styles['Surface-colorSurfaceSecondary'];
 export const colorSurfaceTertiary = styles['Surface-colorSurfaceTertiary'];
-export const colorSurfaceQuaternary = styles['Surface-colorSurfaceQuaternary'];
 
 export const utilityDefaultBorderColor = styles['Utility-defaultBorderColor'];
 export const utilityDefaultTextColorSubdued =
   styles['Utility-defaultTextSubduedColor'];
 export const utilityDefaultTextColorEmphasized =
   styles['Utility-defaultTextEmphasizedColor'];
+export const utilityDefaultColorAccent = styles['Utility-defaultAccentColor'];

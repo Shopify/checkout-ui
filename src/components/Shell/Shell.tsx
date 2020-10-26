@@ -159,6 +159,7 @@ export interface ShellSectionProps {
   background?: ShellSectionBackground;
   inlineSize?: ShellSectionInlineSize;
   blockSize?: ShellSectionBlockSize;
+  backgroundImage?: string;
 }
 
 export function ShellSection({
@@ -168,8 +169,14 @@ export function ShellSection({
   blockSize,
   children,
   secondary,
+  backgroundImage,
 }: ShellSectionProps) {
   const Element = secondary ? 'aside' : 'div';
+  const style = backgroundImage
+    ? {
+        backgroundImage: `url(${JSON.stringify(backgroundImage)})`,
+      }
+    : undefined;
 
   return (
     <HeadingGroup>
@@ -183,8 +190,14 @@ export function ShellSection({
           blockSize && styles[variationName('Section-blockSize', blockSize)],
           secondary && styles['Section-secondary'],
         )}
+        style={inlineSize === 'toContainerEdge' ? style : undefined}
       >
-        <div className={styles.SectionInner}>{children}</div>
+        <div
+          className={styles.SectionInner}
+          style={inlineSize === 'contentSize' ? style : undefined}
+        >
+          {children}
+        </div>
       </Element>
     </HeadingGroup>
   );
@@ -250,11 +263,13 @@ export function ShellDisclosure({
   const {text, icon: disclosureIcon} = open
     ? {
         text: labels.closed,
-        icon: <Icon source="chevronUp" size="small" color="interactive" />,
+        icon: <Icon source="chevronUp" size="small" appearance="interactive" />,
       }
     : {
         text: labels.open,
-        icon: <Icon source="chevronDown" size="small" color="interactive" />,
+        icon: (
+          <Icon source="chevronDown" size="small" appearance="interactive" />
+        ),
       };
 
   const contentId = 'disclosure_content';
@@ -282,7 +297,7 @@ export function ShellDisclosure({
       >
         <span className={styles.DisclosureLayout}>
           <InlineStack spacing="tight" alignment="center">
-            <Icon source={icon} size="large" color="interactive" />
+            <Icon source={icon} size="large" appearance="interactive" />
             <Text>{text}</Text>
             {disclosureIcon}
           </InlineStack>

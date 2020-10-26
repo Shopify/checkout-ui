@@ -10,6 +10,7 @@ export {useTheme, useThemeConfiguration} from './hooks';
 export {HslColorTuple} from '../../utilities/hsluv';
 export {
   ThemeConfiguration,
+  ThemeOptions,
   ThemeSimpleBorderRadius,
   ThemeBorderRadius,
   ThemeSimpleBorder,

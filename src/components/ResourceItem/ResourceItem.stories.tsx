@@ -5,7 +5,6 @@ import {Thumbnail} from '../Thumbnail';
 import {TextBlock} from '../TextBlock';
 import {Icon} from '../Icon';
 import {InlineStack} from '../InlineStack';
-import {InlineSuccess} from '../InlineSuccess';
 
 import {ResourceItem, ResourceItemContent} from './ResourceItem';
 
@@ -56,14 +55,12 @@ export const multipleContent = () => {
         <TextBlock size="small" subdued>
           Blue
         </TextBlock>
-        <InlineStack alignment="center" spacing="xtight">
-          <InlineSuccess>
+        <TextBlock appearance="success">
+          <InlineStack alignment="center" spacing="xtight">
             <Icon source="checkmark" size="default" />
-          </InlineSuccess>
-          <InlineSuccess>
-            <TextBlock>Available</TextBlock>
-          </InlineSuccess>
-        </InlineStack>
+            <Text size="small">Available</Text>
+          </InlineStack>
+        </TextBlock>
       </ResourceItemContent>
       <ResourceItemContent>
         <Text emphasized>$10.00</Text>

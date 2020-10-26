@@ -27,7 +27,7 @@ export function Spinner({
       ) : (
         <Icon
           source={size === 'small' ? 'spinnerSmall' : 'spinner'}
-          color={color ? undefined : 'interactive'}
+          appearance={color ? undefined : 'accent'}
         />
       )}
     </div>

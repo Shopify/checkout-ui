@@ -88,13 +88,13 @@
   }
 
   &.Input-hasError:not(:checked) {
-    box-shadow: 0 0 0 em(2px) var(--x-color-critical-border-emphasized) inset;
+    box-shadow: 0 0 0 em(2px) var(--x-color-critical-accent) inset;
 
     /* stylelint-disable selector-max-class, selector-max-specificity */
     &:focus::before,
     &:active::before {
-      box-shadow: 0 0 0 em(1px) var(--x-color-critical-border-emphasized) inset,
-        0 0 0 em(3px) var(--x-color-critical-border-emphasized);
+      box-shadow: 0 0 0 em(1px) var(--x-color-critical-accent) inset,
+        0 0 0 em(3px) var(--x-color-critical-accent);
     }
     /* stylelint-enable selector-max-class, selector-max-specificity */
   }
@@ -105,14 +105,17 @@
 }
 
 .Input-backgroundSurfacePrimary {
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   background-color: var(--x-color-surface-primary);
 }
 
 .Input-backgroundSurfaceSecondary {
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   background-color: var(--x-color-surface-secondary);
 }
 
 .Input-backgroundSurfaceTertiary {
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   background-color: var(--x-color-surface-tertiary);
 }
 

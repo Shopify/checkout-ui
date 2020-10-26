@@ -1,6 +1,7 @@
 export {
   AppContext,
   Props,
+  TranslationKey,
   useAppContext,
   useTranslate,
   useLinkComponent,

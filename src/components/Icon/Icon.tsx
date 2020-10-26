@@ -1,10 +1,14 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
+import {utilityDefaultColorAccent} from '../../utilities/legacy';
 import {
+  camera,
+  cancelCircle,
   caretDown,
   cart,
   checkmark,
+  checkmarkCircle,
   chevronDown,
   chevronUp,
   chevronRight,
@@ -18,21 +22,26 @@ import {
   errorFill,
   info,
   lock,
+  mobile,
   questionFill,
   ship,
   spinner,
   spinnerSmall,
   success,
   warning,
+  warningCircle,
   warningFill,
 } from '../../icons';
 
 import styles from './Icon.css';
 
 const BUNDLED_ICONS = {
+  camera,
+  cancelCircle,
   caretDown,
   cart,
   checkmark,
+  checkmarkCircle,
   chevronDown,
   chevronUp,
   chevronRight,
@@ -46,32 +55,36 @@ const BUNDLED_ICONS = {
   errorFill,
   info,
   lock,
+  mobile,
   questionFill,
   spinner,
   spinnerSmall,
   success,
   ship,
   warning,
+  warningCircle,
   warningFill,
 };
 
 export interface Props {
   source: 'placeholder' | keyof typeof BUNDLED_ICONS;
-  color?:
+  appearance?:
+    | 'accent'
     | 'interactive'
     | 'subdued'
+    | 'info'
     | 'success'
-    | 'informative'
-    | 'critical'
-    | 'warning';
+    | 'warning'
+    | 'critical';
   size?: 'small' | 'default' | 'large';
   accessibilityLabel?: string;
 }
 
-export function Icon({source, color, size, accessibilityLabel}: Props) {
+export function Icon({source, appearance, size, accessibilityLabel}: Props) {
   const className = classNames(
     styles.Icon,
-    color && styles[variationName('color', color)],
+    appearance && styles[variationName('appearance', appearance)],
+    appearance && appearance === 'accent' && utilityDefaultColorAccent,
     size && styles[variationName('size', size)],
   );
 

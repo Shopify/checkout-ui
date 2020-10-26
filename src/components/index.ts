@@ -4,6 +4,7 @@ export {
   useTranslate,
   useLinkComponent,
   Props as AppContextProps,
+  TranslationKey,
   LinkLikeComponentProps,
 } from './AppContext';
 export {
@@ -36,7 +37,6 @@ export {Form} from './Form';
 export {Icon, Props as IconProps} from './Icon';
 export {Image} from './Image';
 export {InlineError, Props as InlineErrorProps} from './InlineError';
-export {InlineSuccess, Props as InlineSuccessProps} from './InlineSuccess';
 export {InlineStack} from './InlineStack';
 export {Layout} from './Layout';
 export {Labelled, Props as LabelledProps, useLabelled} from './Labelled';
@@ -137,7 +137,11 @@ export {
   StepPrimaryActionProps,
   STEP_SECTION_PRIMARY_HEADER_ID,
 } from './Step';
-export {Stepper, Props as StepperProps, StepperStep} from './Stepper';
+export {
+  ProgressTracker,
+  Props as ProgressTrackerProps,
+  ProgressTrackerStep,
+} from './ProgressTracker';
 export {Tag, Props as TagProps} from './Tag';
 export {Text} from './Text';
 export {TextBlock} from './TextBlock';
@@ -203,3 +207,4 @@ export {
 } from './VisuallyHidden';
 export {View} from './View';
 export {EmptyState, EmptyStateIcon, EmptyStateText} from './EmptyState';
+export {Stepper} from './Stepper';

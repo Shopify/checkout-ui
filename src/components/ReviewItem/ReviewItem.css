@@ -10,6 +10,7 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-primary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
   --review-block-inner-border-color: var(--x-color-surface-primary-border);
   --review-block-background-color: var(--x-color-surface-primary);
 }
@@ -21,6 +22,7 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-secondary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
   --review-block-inner-border-color: var(--x-color-surface-secondary-border);
   --review-block-background-color: var(--x-color-surface-secondary);
 }
@@ -32,6 +34,7 @@
   --x-default-color-text-emphasized: var(
     --x-color-surface-tertiary-text-emphasized
   );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
   --review-block-inner-border-color: var(--x-color-surface-tertiary-border);
   --review-block-background-color: var(--x-color-surface-tertiary);
 }

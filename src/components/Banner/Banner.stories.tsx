@@ -46,3 +46,9 @@ export const collapsible = () => (
     <Text>Here are some details.</Text>
   </Banner>
 );
+
+export const autofocus = () => (
+  <Banner autofocus title="Your order was updated on March 19, 2020">
+    <Text>Here are some details.</Text>
+  </Banner>
+);

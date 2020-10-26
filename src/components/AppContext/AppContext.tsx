@@ -16,9 +16,11 @@ export interface LinkLikeComponentProps extends HTMLProps<HTMLAnchorElement> {
   [key: string]: any;
 }
 
+export type TranslationKey = 'close' | 'expand' | 'submit' | 'processing';
+
 export interface Context {
   linkComponent?: ComponentType<LinkLikeComponentProps>;
-  translate(key: 'submit' | 'processing'): string;
+  translate(key: TranslationKey): string;
 }
 
 export const AppContextContext = createContext<Context | null>(null);

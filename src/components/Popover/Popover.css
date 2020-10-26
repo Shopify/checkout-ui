@@ -1,0 +1,103 @@
+.Overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.18);
+}
+
+.Popover {
+  --popover-offset: 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    background: white;
+    border-radius: 4px;
+    display: block;
+    height: 25px;
+    transform: rotate(45deg);
+    width: 25px;
+  }
+
+  &::after {
+    box-shadow: 0 19px 47px rgba(0, 0, 0, 0.35);
+    content: '';
+    z-index: -1;
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 0;
+    height: 100%;
+    width: 90%;
+    display: block;
+  }
+}
+
+.Popover-placementInlineStart,
+.Popover-placementInlineEnd {
+  &::before {
+    top: 18px;
+  }
+
+  &::after {
+    transform: translateY(var(--popover-offset));
+  }
+}
+
+.Popover-placementInlineStart {
+  &::before {
+    right: -8px;
+  }
+}
+
+.Popover-placementInlineEnd {
+  &::before {
+    left: -8px;
+  }
+}
+
+.Popover-placementBlockStart,
+.Popover-placementBlockEnd {
+  &::before {
+    left: calc(50% - 12px);
+  }
+
+  &::after {
+    transform: translateX(var(--popover-offset));
+  }
+}
+
+.Popover-placementBlockStart {
+  &::before {
+    bottom: -8px;
+  }
+}
+
+.Popover-placementBlockEnd {
+  &::before {
+    top: -8px;
+  }
+}
+
+.Content {
+  position: relative;
+  z-index: 2;
+  background-color: white;
+  border-radius: var(--x-border-radius-base);
+  min-height: 60px;
+  min-width: 100px;
+}
+
+.Content-placementInlineStart,
+.Content-placementInlineEnd {
+  transform: translateY(var(--popover-offset));
+}
+
+.Content-placementBlockStart,
+.Content-placementBlockEnd {
+  transform: translateX(var(--popover-offset));
+}

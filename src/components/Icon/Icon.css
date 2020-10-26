@@ -6,45 +6,49 @@
 }
 
 .sizeDefault {
-  width: em(14px);
-  height: em(14px);
+  width: var(--x-icon-size-default);
+  height: var(--x-icon-size-default);
 }
 
 .sizeSmall {
-  width: em(10px);
-  height: em(10px);
+  width: var(--x-icon-size-small);
+  height: var(--x-icon-size-small);
 }
 
 .sizeLarge {
-  width: em(18px);
-  height: em(18px);
+  width: var(--x-icon-size-large);
+  height: var(--x-icon-size-large);
 }
 
-.colorInteractive {
+.appearanceAccent {
+  color: var(--x-default-color-accent);
+}
+
+.appearanceInteractive {
   color: var(--x-color-interactive-text);
 }
 
-.colorSubdued {
+.appearanceSubdued {
   color: var(
     --x-default-color-text-subdued,
     var(--x-default-color-text, inherit)
   );
 }
 
-.colorInformative {
-  color: var(--color-text--informative);
+.appearanceInfo {
+  color: var(--x-color-info-accent);
 }
 
-.colorCritical {
-  color: var(--x-color-critical-text);
+.appearanceSuccess {
+  color: var(--x-color-success-accent);
 }
 
-.colorWarning {
-  color: var(--color-text--warning);
+.appearanceCritical {
+  color: var(--x-color-critical-accent);
 }
 
-.colorSuccess {
-  color: var(--color-text--success);
+.appearanceWarning {
+  color: var(--x-color-warning-accent);
 }
 
 .Svg,

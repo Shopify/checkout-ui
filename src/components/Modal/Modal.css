@@ -1,4 +1,4 @@
-.Wrapper {
+.Modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -18,13 +18,39 @@
   top: 50%;
   left: 50%;
   width: 90%;
+  height: auto;
+  max-width: rem(840px);
   max-height: 90%;
-  max-width: 600px;
+  border-radius: var(--x-border-radius-base);
   overflow: hidden;
   transform: translate(-50%, -50%);
-  background-color: var(--color--white);
-  border-radius: var(--x-border-radius-base);
   box-shadow: 0 5px 30px hsla(0, 0%, 0%, 0.2);
+  background-color: hsl(0, 0%, 100%);
+
+  /* temporary until we get proper color palettes customization for modals */
+  --x-default-color-border: hsl(0, 0%, 85%);
+  --x-default-color-border-emphasized: hsl(0, 0%, 58%);
+  --x-default-color-text: hsl(0, 0%, 33%);
+  --x-default-color-text-subdued: hsl(0, 0%, 45%);
+  --x-default-color-text-emphasized: hsl(0, 0%, 20%);
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+  }
+}
+
+.Content-isLong {
+  height: 90%;
+  max-height: none;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .Backdrop,
@@ -51,7 +77,7 @@
   padding: var(--x-spacing-base);
   border-block-end: 1px solid var(--x-default-color-border);
 
-  @media screen and (min-width: 750px) {
+  @media screen and (max-width: 1000px) {
     padding: var(--x-spacing-base) var(--x-spacing-loose2x);
   }
 }
@@ -59,7 +85,7 @@
 .Body {
   padding: var(--x-spacing-base);
 
-  @media screen and (min-width: 750px) {
+  @media screen and (max-width: 1000px) {
     padding: var(--x-spacing-loose2x);
   }
 }
