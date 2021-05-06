@@ -4,16 +4,33 @@ import {InlineStackProps} from '@shopify/argo-checkout';
 
 import styles from './InlineStack.css';
 
+export interface Props extends InlineStackProps {
+  /**
+   * Specifies the block alignment if elements wrap.
+   * @defaultValue `leading`
+   */
+  blockAlignment?: 'leading' | 'center' | 'trailing';
+}
+
 export function InlineStack({
-  spacing,
+  spacing = 'base',
   alignment,
+  blockAlignment,
   children,
-}: PropsWithChildren<InlineStackProps>) {
-  const className = classNames(
-    styles.InlineStack,
-    spacing && styles[variationName('spacing', spacing)],
-    alignment && styles[variationName('alignment', alignment)],
+  wrap,
+}: PropsWithChildren<Props>) {
+  const innerClassName = classNames(
+    styles.InlineStackInner,
+    wrap && styles['InlineStackInner-wrap'],
+    spacing && styles[variationName('InlineStackInner-spacing', spacing)],
+    alignment && styles[variationName('InlineStackInner-alignment', alignment)],
+    blockAlignment &&
+      styles[variationName('InlineStackInner-blockAlignment', blockAlignment)],
   );
 
-  return <div className={className}>{children}</div>;
+  return (
+    <div className={styles.InlineStack}>
+      <div className={innerClassName}>{children}</div>
+    </div>
+  );
 }

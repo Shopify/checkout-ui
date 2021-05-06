@@ -1,13 +1,11 @@
 import React, {
-  useReducer,
-  useMemo,
+  useState,
   useCallback,
   useEffect,
-  ReactNode,
+  PropsWithChildren,
 } from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
-import {useMounted} from '../../utilities/mounted';
 import {Text} from '../Text';
 import {Truncate} from '../Truncate';
 import {
@@ -16,112 +14,82 @@ import {
   ThemeBackground,
 } from '../Theme';
 
-import {State, Action, LabelledContext} from './context';
+import {LabelledContext} from './context';
 import styles from './Labelled.css';
 
 export interface Props {
-  children?: ReactNode;
   label: string;
   htmlFor?: string;
-  isEmpty?: boolean;
+  empty: boolean;
   position?: ThemeLabelPosition;
   background?: ThemeBackground;
   subdued?: boolean;
+  prefixed?: boolean;
+  hasIcon?: boolean;
 }
 
 export function Labelled({
   children,
   label,
   htmlFor,
-  isEmpty = true,
+  empty,
   position = 'inside',
   background = 'surfaceTertiary',
   subdued,
-}: Props) {
-  const mounted = useMounted();
+  prefixed,
+  hasIcon,
+}: PropsWithChildren<Props>) {
+  const [focused, setFocused] = useState(false);
+  const [wasNotEmpty, setWasNotEmpty] = useState(false);
 
-  const [state, dispatch] = useReducer(
-    (state: State, action: Action): State => {
-      if (!mounted.current) return state;
-
-      switch (action.type) {
-        case 'focus': {
-          return {...state, isFocused: true};
-        }
-        case 'blur': {
-          return {
-            ...state,
-            isFloating: !state.isEmpty,
-            isFocused: false,
-          };
-        }
-        case 'change': {
-          return {
-            ...state,
-            isFloating: true,
-            isEmpty: action.isEmpty,
-          };
-        }
-        case 'init': {
-          return {
-            ...state,
-            isFloating: !action.isEmpty,
-            isEmpty: action.isEmpty,
-          };
-        }
-      }
-    },
-    {
-      isEmpty,
-      isFloating: !isEmpty,
-      isFocused: false,
-    },
-  );
-
-  // Handle value changes that bypasses the on Change handler
-  // ie. asynchronously setting the value for a children
   useEffect(() => {
-    if (!state.isFocused && state.isEmpty !== isEmpty) {
-      dispatch({type: 'init', isEmpty});
+    if (!empty) {
+      setWasNotEmpty(true);
+    } else if (!focused) {
+      setWasNotEmpty(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEmpty]);
+  }, [focused, empty]);
 
-  const onFocus = useCallback(() => dispatch({type: 'focus'}), []);
-  const onBlur = useCallback(() => dispatch({type: 'blur'}), []);
-  const onChange = useCallback(
-    (isEmpty: boolean) => dispatch({type: 'change', isEmpty}),
-    [],
-  );
-  const value = useMemo(
-    () => ({
-      ...state,
-      onBlur,
-      onChange,
-      onFocus,
-    }),
-    [onBlur, onChange, onFocus, state],
-  );
+  const floating = (!empty || (empty && wasNotEmpty)) && position === 'inside';
+
+  const handleFocus = useCallback(() => {
+    setFocused(true);
+
+    if (prefixed) {
+      setWasNotEmpty(true);
+    }
+  }, [prefixed]);
+  const handleBlur = useCallback(() => setFocused(false), []);
+
   const {
     label: {typographyStyle},
   } = useThemeConfiguration();
 
   return (
-    <LabelledContext.Provider value={value}>
+    <LabelledContext.Provider
+      value={{
+        onFocus: handleFocus,
+        onBlur: handleBlur,
+        focused,
+        floating,
+      }}
+    >
       <div className={styles.Wrapper}>
         <div
           className={classNames({
-            [styles.isFloating]: state.isFloating && position === 'inside',
+            [styles.floating]: floating,
           })}
         >
           <label
+            id={`${htmlFor}-label`}
             htmlFor={htmlFor}
             className={classNames(
               styles.Label,
               styles[variationName('Label-position', position)],
-              subdued && styles['Label-isSubdued'],
+              subdued && styles['Label-subdued'],
               background &&
                 styles[variationName('Label-onBackground', background)],
+              hasIcon && styles['Label-nextToIcon'],
             )}
           >
             <Text size="small" subdued style={typographyStyle}>

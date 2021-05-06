@@ -5,6 +5,8 @@ export {
   StepContentProps,
   StepSection,
   StepSectionProps,
+  StepSectionContent,
+  StepSectionContentProps,
   StepSectionHeader,
   StepSectionHeaderProps,
   StepSectionShowcase,

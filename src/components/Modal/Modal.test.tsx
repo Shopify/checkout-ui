@@ -3,6 +3,7 @@ import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
 import {Portal} from '../Portal';
+import {Heading} from '../Heading';
 
 import {Modal} from './Modal';
 
@@ -57,14 +58,38 @@ describe('<Modal />', () => {
     expect(modal).toContainReactText(content);
   });
 
-  it('renders a header if the title prop is passed', async () => {
+  it('renders a header with Heading if the title prop is passed', async () => {
     const title = faker.random.words(2);
     const modal = await mountWithContext(
       <Modal src={defaultIFrameSrc} title={title} open />,
     );
 
     expect(modal).toContainReactComponent('header');
+    expect(modal).toContainReactComponent(Heading);
     expect(modal).toContainReactText(title);
+  });
+
+  it('does not render a Heading if titleHidden', async () => {
+    const title = faker.random.words(2);
+    const modal = await mountWithContext(
+      <Modal src={defaultIFrameSrc} title={title} open titleHidden />,
+    );
+
+    expect(modal).not.toContainReactComponent(Heading);
+  });
+
+  it('still renders a close button if no title', async () => {
+    const modal = await mountWithContext(<Modal src={defaultIFrameSrc} open />);
+
+    expect(modal).toContainReactComponent('button');
+  });
+
+  it('still renders a close button if titleHidden', async () => {
+    const modal = await mountWithContext(
+      <Modal src={defaultIFrameSrc} open titleHidden />,
+    );
+
+    expect(modal).toContainReactComponent('button');
   });
 
   describe('when the escape key is pressed', () => {
@@ -112,6 +137,30 @@ describe('<Modal />', () => {
       modal.find('button')?.trigger('onClick');
 
       expect(onCloseSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('resets the iFrameHeight', async () => {
+      const expectedHeight = 100;
+      const fakeEvent = {
+        target: {
+          contentWindow: {document: {body: {scrollHeight: expectedHeight}}},
+        },
+      };
+      const modal = await mountWithContext(
+        <Modal title="A modal" src={defaultIFrameSrc} open />,
+      );
+
+      modal.find('iframe')?.trigger('onLoad', fakeEvent as any);
+
+      expect(modal.find('iframe')!.prop('style')).toMatchObject({
+        height: `${expectedHeight}px`,
+      });
+
+      modal.find('button')?.trigger('onClick');
+      modal.setProps({open: false});
+      modal.setProps({open: true});
+
+      expect(modal.find('iframe')!.prop('style')).toBeUndefined();
     });
   });
 

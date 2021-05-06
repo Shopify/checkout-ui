@@ -1,0 +1,137 @@
+.Radio {
+  grid-area: control;
+  position: relative;
+}
+
+.Input {
+  --input-border-color: var(--x-default-color-border);
+  background-clip: padding-box;
+  border: 1px var(--input-border-color) solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  transition: all var(--x-duration-fast) var(--x-timing-ease-out);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    display: block;
+    pointer-events: none;
+    box-shadow: 0 0 0 0 var(--input-checked-color);
+    opacity: 0.3;
+    transition: box-shadow var(--x-duration-fast) var(--x-timing-ease-out);
+  }
+
+  &:focus,
+  &:active {
+    border-color: var(--input-checked-color);
+
+    &::before {
+      box-shadow: 0 0 0 em(3px) var(--input-checked-color);
+    }
+  }
+}
+
+.Input-sizeBase {
+  &,
+  &::before,
+  &::after {
+    margin-top: em(2px);
+    width: var(--x-radio-size-base);
+    height: var(--x-radio-size-base);
+  }
+}
+
+.Input-sizeLarge {
+  &,
+  &::before,
+  &::after {
+    margin-block: em(-1px);
+    width: var(--x-radio-size-large);
+    height: var(--x-radio-size-large);
+  }
+}
+
+.Input-checkedStyleRing {
+  &:checked {
+    border: em(6px) var(--input-checked-color) solid;
+  }
+}
+
+.Input-checkedStyleDisc {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    display: block;
+    pointer-events: none;
+    background-clip: padding-box;
+    border: em(4px) transparent solid;
+    background-color: var(--input-checked-color);
+    transform: scale(0);
+    transition: transform var(--x-duration-fast) var(--x-timing-ease-out);
+  }
+
+  &:checked::after {
+    transform: scale(1);
+  }
+}
+
+.Input-checkedColorInteractive {
+  --input-checked-color: var(--x-color-interactive-text);
+}
+
+.Input-checkedColorPrimary {
+  --input-checked-color: var(--x-color-primary-action);
+}
+
+.Input-isDisabled {
+  opacity: var(--x-opacity-disabled);
+  cursor: default;
+
+  &::before {
+    display: none;
+  }
+
+  &.Input-backgroundSurfacePrimary {
+    background-color: var(--x-color-surface-primary-disabled);
+  }
+
+  &.Input-backgroundSurfaceSecondary {
+    background-color: var(--x-color-surface-secondary-disabled);
+  }
+
+  &.Input-backgroundSurfaceTertiary {
+    background-color: var(--x-color-surface-tertiary-disabled);
+  }
+}
+
+.Input-backgroundTransparent {
+  background-color: transparent;
+}
+
+.Input-backgroundSurfacePrimary {
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
+  background-color: var(--x-color-surface-primary);
+}
+
+.Input-backgroundSurfaceSecondary {
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
+  background-color: var(--x-color-surface-secondary);
+}
+
+.Input-backgroundSurfaceTertiary {
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+  background-color: var(--x-color-surface-tertiary);
+}
+
+.Input-borderColorEmphasized {
+  --input-border-color: var(--x-default-color-border-emphasized);
+}

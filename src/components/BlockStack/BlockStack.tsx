@@ -4,15 +4,11 @@ import {BlockStackProps} from '@shopify/argo-checkout';
 
 import styles from './BlockStack.css';
 
-export interface Props extends Omit<BlockStackProps, 'spacing'> {
-  spacing?: 'none' | BlockStackProps['spacing'];
-}
-
 export function BlockStack({
   alignment,
-  spacing,
+  spacing = 'base',
   children,
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<BlockStackProps>) {
   const className = classNames(
     styles.BlockStack,
     alignment && styles[variationName('alignment', alignment)],

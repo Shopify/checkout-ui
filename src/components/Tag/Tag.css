@@ -9,6 +9,9 @@
 }
 
 .Label {
+  --x-default-color-text: var(--x-color-tertiary-action-text);
+  --x-default-color-text-subdued: var(--x-color-tertiary-action-text-subdued);
+  --x-default-color-text-emphasized: var(--x-color-tertiary-action-text);
   color: var(--x-color-tertiary-action-text);
   padding: var(--x-spacing-tight) 0 var(--x-spacing-tight)
     var(--x-spacing-tight);

@@ -5,7 +5,7 @@ import {PaymentIcon, Props} from './PaymentIcon';
 
 const meta = {
   component: PaymentIcon,
-  title: 'PaymentIcon',
+  title: 'checkout-web-ui/PaymentIcon',
   decorators: [
     (story: () => JSX.Element) => (
       <div

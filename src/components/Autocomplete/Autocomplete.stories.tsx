@@ -12,7 +12,7 @@ import {
 
 const meta = {
   component: Autocomplete,
-  title: 'Autocomplete',
+  title: 'checkout-web-ui/Autocomplete',
   decorators: [withKnobs, themeWithKnobs('textFields')],
 };
 
@@ -22,7 +22,7 @@ function Basic() {
   const [value, setValue] = useState('');
   const [options, setOptions] = useState<string[]>([]);
 
-  const onChange = (value: string) => {
+  const handleInput = (value: string) => {
     setValue(value);
 
     if (value === '') {
@@ -48,7 +48,7 @@ function Basic() {
       id="address"
       label="Address"
       name="address"
-      onChange={onChange}
+      onInput={handleInput}
       onSelectOption={onSelectOption}
       options={options}
       value={value}

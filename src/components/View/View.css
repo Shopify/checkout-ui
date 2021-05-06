@@ -1,49 +1,992 @@
-.inlinePaddingExtraTight {
+.View {
+  width: 100%;
+}
+
+.visibilityHidden {
+  /* Need to make sure we override any existing styles. */
+  /* stylelint-disable declaration-no-important */
+  position: absolute !important;
+  top: 0;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  overflow: hidden !important;
+  height: 1px !important;
+  width: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  /* stylelint-enable declaration-no-important */
+}
+
+.paddingInlineStartExtraTight {
   padding-inline-start: var(--x-spacing-tight4x);
+}
+.paddingInlineStartTight {
+  padding-inline-start: var(--x-spacing-tight1x);
+}
+.paddingInlineStartBase {
+  padding-inline-start: var(--x-spacing-base);
+}
+.paddingInlineStartLoose {
+  padding-inline-start: var(--x-spacing-loose1x);
+}
+.paddingInlineStartExtraLoose {
+  padding-inline-start: var(--x-spacing-loose4x);
+}
+.paddingInlineEndExtraTight {
   padding-inline-end: var(--x-spacing-tight4x);
 }
-
-.inlinePaddingTight {
-  padding-inline-start: var(--x-spacing-tight1x);
+.paddingInlineEndTight {
   padding-inline-end: var(--x-spacing-tight1x);
 }
-
-.inlinePaddingBase {
-  padding-inline-start: var(--x-spacing-base);
+.paddingInlineEndBase {
   padding-inline-end: var(--x-spacing-base);
 }
-
-.inlinePaddingLoose {
-  padding-inline-start: var(--x-spacing-loose1x);
+.paddingInlineEndLoose {
   padding-inline-end: var(--x-spacing-loose1x);
 }
-
-.inlinePaddingExtraLoose {
-  padding-inline-start: var(--x-spacing-loose4x);
+.paddingInlineEndExtraLoose {
   padding-inline-end: var(--x-spacing-loose4x);
 }
-
-.blockPaddingExtraTight {
+.paddingBlockStartExtraTight {
   padding-block-start: var(--x-spacing-tight4x);
+}
+.paddingBlockStartTight {
+  padding-block-start: var(--x-spacing-tight1x);
+}
+.paddingBlockStartBase {
+  padding-block-start: var(--x-spacing-base);
+}
+.paddingBlockStartLoose {
+  padding-block-start: var(--x-spacing-loose1x);
+}
+.paddingBlockStartExtraLoose {
+  padding-block-start: var(--x-spacing-loose4x);
+}
+.paddingBlockEndExtraTight {
   padding-block-end: var(--x-spacing-tight4x);
 }
-
-.blockPaddingTight {
-  padding-block-start: var(--x-spacing-tight1x);
+.paddingBlockEndTight {
   padding-block-end: var(--x-spacing-tight1x);
 }
-
-.blockPaddingBase {
-  padding-block-start: var(--x-spacing-base);
+.paddingBlockEndBase {
   padding-block-end: var(--x-spacing-base);
 }
-
-.blockPaddingLoose {
-  padding-block-start: var(--x-spacing-loose1x);
+.paddingBlockEndLoose {
   padding-block-end: var(--x-spacing-loose1x);
 }
-
-.blockPaddingExtraLoose {
-  padding-block-start: var(--x-spacing-loose4x);
+.paddingBlockEndExtraLoose {
   padding-block-end: var(--x-spacing-loose4x);
+}
+.backgroundSurfacePrimary {
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  --x-default-color-border: var(--x-color-surface-primary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-primary-border-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
+  background-color: var(--x-color-surface-primary);
+  color: var(--x-default-color-text);
+}
+.backgroundSurfaceSecondary {
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  --x-default-color-border: var(--x-color-surface-secondary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-secondary-border-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
+  background-color: var(--x-color-surface-secondary);
+  color: var(--x-default-color-text);
+}
+.backgroundSurfaceTertiary {
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  --x-default-color-border: var(--x-color-surface-tertiary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-tertiary-border-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+  background-color: var(--x-color-surface-tertiary);
+  color: var(--x-default-color-text);
+}
+.borderInlineStartBase {
+  border-inline-start: var(--x-border-width-base) solid
+    var(--x-default-color-border);
+}
+.borderInlineStartDotted {
+  border-inline-start: var(--x-border-width-base) dotted
+    var(--x-default-color-border);
+}
+.borderInlineEndBase {
+  border-inline-end: var(--x-border-width-base) solid
+    var(--x-default-color-border);
+}
+.borderInlineEndDotted {
+  border-inline-end: var(--x-border-width-base) dotted
+    var(--x-default-color-border);
+}
+.borderBlockStartBase {
+  border-block-start: var(--x-border-width-base) solid
+    var(--x-default-color-border);
+}
+.borderBlockStartDotted {
+  border-block-start: var(--x-border-width-base) dotted
+    var(--x-default-color-border);
+}
+.borderBlockEndBase {
+  border-block-end: var(--x-border-width-base) solid
+    var(--x-default-color-border);
+}
+.borderBlockEndDotted {
+  border-block-end: var(--x-border-width-base) dotted
+    var(--x-default-color-border);
+}
+.borderWidthInlineStartBase {
+  border-inline-start-width: var(--x-border-width-base);
+}
+.borderWidthInlineStartThick {
+  border-inline-start-width: var(--x-border-width-thick);
+}
+.borderWidthInlineEndBase {
+  border-inline-end-width: var(--x-border-width-base);
+}
+.borderWidthInlineEndThick {
+  border-inline-end-width: var(--x-border-width-thick);
+}
+.borderWidthBlockStartBase {
+  border-block-start-width: var(--x-border-width-base);
+}
+.borderWidthBlockStartThick {
+  border-block-start-width: var(--x-border-width-thick);
+}
+.borderWidthBlockEndBase {
+  border-block-end-width: var(--x-border-width-base);
+}
+.borderWidthBlockEndThick {
+  border-block-end-width: var(--x-border-width-thick);
+}
+.borderColorInlineStartBase {
+  border-inline-start-color: var(--x-default-color-border);
+}
+.borderColorInlineStartEmphasized {
+  border-inline-start-color: var(--x-default-color-border-emphasized);
+}
+.borderColorInlineEndBase {
+  border-inline-end-color: var(--x-default-color-border);
+}
+.borderColorInlineEndEmphasized {
+  border-inline-end-color: var(--x-default-color-border-emphasized);
+}
+.borderColorBlockStartBase {
+  border-block-start-color: var(--x-default-color-border);
+}
+.borderColorBlockStartEmphasized {
+  border-block-start-color: var(--x-default-color-border-emphasized);
+}
+.borderColorBlockEndBase {
+  border-block-end-color: var(--x-default-color-border);
+}
+.borderColorBlockEndEmphasized {
+  border-block-end-color: var(--x-default-color-border-emphasized);
+}
+.borderRadiusBlockStartTight {
+  border-start-start-radius: var(--x-border-radius-tight);
+}
+.borderRadiusBlockStartBase {
+  border-start-start-radius: var(--x-border-radius-base);
+}
+.borderRadiusInlineStartTight {
+  border-end-start-radius: var(--x-border-radius-tight);
+}
+.borderRadiusInlineStartBase {
+  border-end-start-radius: var(--x-border-radius-base);
+}
+.borderRadiusInlineEndTight {
+  border-start-end-radius: var(--x-border-radius-tight);
+}
+.borderRadiusInlineEndBase {
+  border-start-end-radius: var(--x-border-radius-base);
+}
+.borderRadiusBlockEndTight {
+  border-end-end-radius: var(--x-border-radius-tight);
+}
+.borderRadiusBlockEndBase {
+  border-end-end-radius: var(--x-border-radius-base);
+}
+
+@media screen and (min-width: 750px) {
+  .smallPaddingInlineStartExtraTight {
+    padding-inline-start: var(--x-spacing-tight4x);
+  }
+  .smallPaddingInlineStartTight {
+    padding-inline-start: var(--x-spacing-tight1x);
+  }
+  .smallPaddingInlineStartBase {
+    padding-inline-start: var(--x-spacing-base);
+  }
+  .smallPaddingInlineStarttLoose {
+    padding-inline-start: var(--x-spacing-loose1x);
+  }
+  .smallPaddingInlineStartExtraLoose {
+    padding-inline-start: var(--x-spacing-loose4x);
+  }
+  .smallPaddingInlineStartNone {
+    padding-inline-start: 0;
+  }
+  .smallPaddingInlineEndExtraTight {
+    padding-inline-end: var(--x-spacing-tight4x);
+  }
+  .smallPaddingInlineEndTight {
+    padding-inline-end: var(--x-spacing-tight1x);
+  }
+  .smallPaddingInlineEndBase {
+    padding-inline-end: var(--x-spacing-base);
+  }
+  .smallPaddingInlineEndLoose {
+    padding-inline-end: var(--x-spacing-loose1x);
+  }
+  .smallPaddingInlineEndExtraLoose {
+    padding-inline-end: var(--x-spacing-loose4x);
+  }
+  .smallPaddingInlineEndNone {
+    padding-inline-end: 0;
+  }
+  .smallPaddingBlockStartExtraTight {
+    padding-block-start: var(--x-spacing-tight4x);
+  }
+  .smallPaddingBlockStartTight {
+    padding-block-start: var(--x-spacing-tight1x);
+  }
+  .smallPaddingBlockStartBase {
+    padding-block-start: var(--x-spacing-base);
+  }
+  .smallPaddingBlockStartLoose {
+    padding-block-start: var(--x-spacing-loose1x);
+  }
+  .smallPaddingBlockStartExtraLoose {
+    padding-block-start: var(--x-spacing-loose4x);
+  }
+  .smallPaddingBlockStartNone {
+    padding-block-start: 0;
+  }
+  .smallPaddingBlockEndExtraTight {
+    padding-block-end: var(--x-spacing-tight4x);
+  }
+  .smallPaddingBlockEndTight {
+    padding-block-end: var(--x-spacing-tight1x);
+  }
+  .smallPaddingBlockEndBase {
+    padding-block-end: var(--x-spacing-base);
+  }
+  .smallPaddingBlockEndLoose {
+    padding-block-end: var(--x-spacing-loose1x);
+  }
+  .smallPaddingBlockEndExtraLoose {
+    padding-block-end: var(--x-spacing-loose4x);
+  }
+  .smallPaddingBlockEndNone {
+    padding-block-end: 0;
+  }
+  .smallBackgroundSurfacePrimary {
+    --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+    --x-default-color-text: var(--x-color-surface-primary-text);
+    --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-primary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-primary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-primary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-primary-accent);
+    background-color: var(--x-color-surface-primary);
+    color: var(--x-default-color-text);
+  }
+  .smallBackgroundSurfaceSecondary {
+    --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+    --x-default-color-text: var(--x-color-surface-secondary-text);
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-secondary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-secondary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-secondary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-secondary-accent);
+    background-color: var(--x-color-surface-secondary);
+    color: var(--x-default-color-text);
+  }
+  .smallBackgroundSurfaceTertiary {
+    --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+    --x-default-color-text: var(--x-color-surface-tertiary-text);
+    --x-default-color-text-subdued: var(
+      --x-color-surface-tertiary-text-subdued
+    );
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-tertiary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-tertiary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-tertiary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+    background-color: var(--x-color-surface-tertiary);
+    color: var(--x-default-color-text);
+  }
+  .smallBackgroundTransparent {
+    background-color: transparent;
+  }
+  .smallBorderInlineStartBase {
+    border-inline-start: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .smallBorderInlineStartDotted {
+    border-inline-start: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .smallBorderInlineStartNone {
+    border-inline-start: 0;
+  }
+  .smallBorderInlineEndBase {
+    border-inline-end: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .smallBorderInlineEndDotted {
+    border-inline-end: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .smallBorderInlineEndNone {
+    border-inline-end: 0;
+  }
+  .smallBorderBlockStartBase {
+    border-block-start: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .smallBorderBlockStartDotted {
+    border-block-start: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .smallBorderBlockStartNone {
+    border-block-start: 0;
+  }
+  .smallBorderBlockEndBase {
+    border-block-end: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .smallBorderBlockEndDotted {
+    border-block-end: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .smallBorderBlockEndNone {
+    border-block-end: 0;
+  }
+  .smallBorderWidthInlineStartBase {
+    border-inline-start-width: var(--x-border-width-base);
+  }
+  .smallBorderWidthInlineStartThick {
+    border-inline-start-width: var(--x-border-width-thick);
+  }
+  .smallBorderWidthInlineEndBase {
+    border-inline-end-width: var(--x-border-width-base);
+  }
+  .smallBorderWidthInlineEndThick {
+    border-inline-end-width: var(--x-border-width-thick);
+  }
+  .smallBorderWidthBlockStartBase {
+    border-block-start-width: var(--x-border-width-base);
+  }
+  .smallBorderWidthBlockStartThick {
+    border-block-start-width: var(--x-border-width-thick);
+  }
+  .smallBorderWidthBlockEndBase {
+    border-block-end-width: var(--x-border-width-base);
+  }
+  .smallBorderWidthBlockEndThick {
+    border-block-end-width: var(--x-border-width-thick);
+  }
+  .smallBorderColorInlineStartBase {
+    border-inline-start-color: var(--x-default-color-border);
+  }
+  .smallBorderColorInlineStartEmphasized {
+    border-inline-start-color: var(--x-default-color-border-emphasized);
+  }
+  .smallBorderColorInlineEndBase {
+    border-inline-end-color: var(--x-default-color-border);
+  }
+  .smallBorderColorInlineEndEmphasized {
+    border-inline-end-color: var(--x-default-color-border-emphasized);
+  }
+  .smallBorderColorBlockStartBase {
+    border-block-start-color: var(--x-default-color-border);
+  }
+  .smallBorderColorBlockStartEmphasized {
+    border-block-start-color: var(--x-default-color-border-emphasized);
+  }
+  .smallBorderColorBlockEndBase {
+    border-block-end-color: var(--x-default-color-border);
+  }
+  .smallBorderColorBlockEndEmphasized {
+    border-block-end-color: var(--x-default-color-border-emphasized);
+  }
+  .smallBorderRadiusBlockStartTight {
+    border-start-start-radius: var(--x-border-radius-tight);
+  }
+  .smallBorderRadiusBlockStartBase {
+    border-start-start-radius: var(--x-border-radius-base);
+  }
+  .smallBorderRadiusBlockStartNone {
+    border-start-start-radius: 0;
+  }
+  .smallBorderRadiusInlineStartTight {
+    border-end-start-radius: var(--x-border-radius-tight);
+  }
+  .smallBorderRadiusInlineStartBase {
+    border-end-start-radius: var(--x-border-radius-base);
+  }
+  .smallBorderRadiusInlineStartNone {
+    border-end-start-radius: 0;
+  }
+  .smallBorderRadiusInlineEndTight {
+    border-start-end-radius: var(--x-border-radius-tight);
+  }
+  .smallBorderRadiusInlineEndBase {
+    border-start-end-radius: var(--x-border-radius-base);
+  }
+  .smallBorderRadiusInlineEndNone {
+    border-start-end-radius: 0;
+  }
+  .smallBorderRadiusBlockEndTight {
+    border-end-end-radius: var(--x-border-radius-tight);
+  }
+  .smallBorderRadiusBlockEndBase {
+    border-end-end-radius: var(--x-border-radius-base);
+  }
+  .smallBorderRadiusBlockEndNone {
+    border-end-end-radius: 0;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .mediumPaddingInlineStartExtraTight {
+    padding-inline-start: var(--x-spacing-tight4x);
+  }
+  .mediumPaddingInlineStartTight {
+    padding-inline-start: var(--x-spacing-tight1x);
+  }
+  .mediumPaddingInlineStartBase {
+    padding-inline-start: var(--x-spacing-base);
+  }
+  .mediumPaddingInlineStartLoose {
+    padding-inline-start: var(--x-spacing-loose1x);
+  }
+  .mediumPaddingInlineStartExtraLoose {
+    padding-inline-start: var(--x-spacing-loose4x);
+  }
+  .mediumPaddingInlineStartNone {
+    padding-inline-start: 0;
+  }
+  .mediumPaddingInlineEndExtraTight {
+    padding-inline-end: var(--x-spacing-tight4x);
+  }
+  .mediumPaddingInlineEndTight {
+    padding-inline-end: var(--x-spacing-tight1x);
+  }
+  .mediumPaddingInlineEndBase {
+    padding-inline-end: var(--x-spacing-base);
+  }
+  .mediumPaddingInlineEndLoose {
+    padding-inline-end: var(--x-spacing-loose1x);
+  }
+  .mediumPaddingInlineEndExtraLoose {
+    padding-inline-end: var(--x-spacing-loose4x);
+  }
+  .mediumPaddingInlineEndNone {
+    padding-inline-end: 0;
+  }
+  .mediumPaddingBlockStartExtraTight {
+    padding-block-start: var(--x-spacing-tight4x);
+  }
+  .mediumPaddingBlockStartTight {
+    padding-block-start: var(--x-spacing-tight1x);
+  }
+  .mediumPaddingBlockStartBase {
+    padding-block-start: var(--x-spacing-base);
+  }
+  .mediumPaddingBlockStartLoose {
+    padding-block-start: var(--x-spacing-loose1x);
+  }
+  .mediumPaddingBlockStartExtraLoose {
+    padding-block-start: var(--x-spacing-loose4x);
+  }
+  .mediumPaddingBlockStartNone {
+    padding-block-start: 0;
+  }
+  .mediumPaddingBlockEndExtraTight {
+    padding-block-end: var(--x-spacing-tight4x);
+  }
+  .mediumPaddingBlockEndTight {
+    padding-block-end: var(--x-spacing-tight1x);
+  }
+  .mediumPaddingBlockEndBase {
+    padding-block-end: var(--x-spacing-base);
+  }
+  .mediumPaddingBlockEndLoose {
+    padding-block-end: var(--x-spacing-loose1x);
+  }
+  .mediumPaddingBlockEndExtraLoose {
+    padding-block-end: var(--x-spacing-loose4x);
+  }
+  .mediumPaddingBlockEndNone {
+    padding-block-end: 0;
+  }
+  .mediumBackgroundSurfacePrimary {
+    --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+    --x-default-color-text: var(--x-color-surface-primary-text);
+    --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-primary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-primary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-primary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-primary-accent);
+    background-color: var(--x-color-surface-primary);
+    color: var(--x-default-color-text);
+  }
+  .mediumBackgroundSurfaceSecondary {
+    --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+    --x-default-color-text: var(--x-color-surface-secondary-text);
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-secondary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-secondary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-secondary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-secondary-accent);
+    background-color: var(--x-color-surface-secondary);
+    color: var(--x-default-color-text);
+  }
+  .mediumBackgroundSurfaceTertiary {
+    --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+    --x-default-color-text: var(--x-color-surface-tertiary-text);
+    --x-default-color-text-subdued: var(
+      --x-color-surface-tertiary-text-subdued
+    );
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-tertiary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-tertiary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-tertiary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+    background-color: var(--x-color-surface-tertiary);
+    color: var(--x-default-color-text);
+  }
+  .mediumBackgroundTransparent {
+    background-color: transparent;
+  }
+  .mediumBorderInlineStartBase {
+    border-inline-start: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .mediumBorderInlineStartDotted {
+    border-inline-start: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .mediumBorderInlineStartNone {
+    border-inline-start: 0;
+  }
+  .mediumBorderInlineEndBase {
+    border-inline-end: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .mediumBorderInlineEndDotted {
+    border-inline-end: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .mediumBorderInlineEndNone {
+    border-inline-end: 0;
+  }
+  .mediumBorderBlockStartBase {
+    border-block-start: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .mediumBorderBlockStartDotted {
+    border-block-start: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .mediumBorderBlockStartNone {
+    border-block-start: 0;
+  }
+  .mediumBorderBlockEndBase {
+    border-block-end: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .mediumBorderBlockEndDotted {
+    border-block-end: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .mediumBorderBlockEndNone {
+    border-block-end: 0;
+  }
+  .mediumBorderWidthInlineStartBase {
+    border-inline-start-width: var(--x-border-width-base);
+  }
+  .mediumBorderWidthInlineStartThick {
+    border-inline-start-width: var(--x-border-width-thick);
+  }
+  .mediumBorderWidthInlineEndBase {
+    border-inline-end-width: var(--x-border-width-base);
+  }
+  .mediumBorderWidthInlineEndThick {
+    border-inline-end-width: var(--x-border-width-thick);
+  }
+  .mediumBorderWidthBlockStartBase {
+    border-block-start-width: var(--x-border-width-base);
+  }
+  .mediumBorderWidthBlockStartThick {
+    border-block-start-width: var(--x-border-width-thick);
+  }
+  .mediumBorderWidthBlockEndBase {
+    border-block-end-width: var(--x-border-width-base);
+  }
+  .mediumBorderWidthBlockEndThick {
+    border-block-end-width: var(--x-border-width-thick);
+  }
+  .mediumBorderColorInlineStartBase {
+    border-inline-start-color: var(--x-default-color-border);
+  }
+  .mediumBorderColorInlineStartEmphasized {
+    border-inline-start-color: var(--x-default-color-border-emphasized);
+  }
+  .mediumBorderColorInlineEndBase {
+    border-inline-end-color: var(--x-default-color-border);
+  }
+  .mediumBorderColorInlineEndEmphasized {
+    border-inline-end-color: var(--x-default-color-border-emphasized);
+  }
+  .mediumBorderColorBlockStartBase {
+    border-block-start-color: var(--x-default-color-border);
+  }
+  .mediumBorderColorBlockStartEmphasized {
+    border-block-start-color: var(--x-default-color-border-emphasized);
+  }
+  .mediumBorderColorBlockEndBase {
+    border-block-end-color: var(--x-default-color-border);
+  }
+  .mediumBorderColorBlockEndEmphasized {
+    border-block-end-color: var(--x-default-color-border-emphasized);
+  }
+  .mediumBorderRadiusBlockStartTight {
+    border-start-start-radius: var(--x-border-radius-tight);
+  }
+  .mediumBorderRadiusBlockStartBase {
+    border-start-start-radius: var(--x-border-radius-base);
+  }
+  .mediumBorderRadiusBlockStartNone {
+    border-start-start-radius: 0;
+  }
+  .mediumBorderRadiusInlineStartTight {
+    border-end-start-radius: var(--x-border-radius-tight);
+  }
+  .mediumBorderRadiusInlineStartBase {
+    border-end-start-radius: var(--x-border-radius-base);
+  }
+  .mediumBorderRadiusInlineStartNone {
+    border-end-start-radius: 0;
+  }
+  .mediumBorderRadiusInlineEndTight {
+    border-start-end-radius: var(--x-border-radius-tight);
+  }
+  .mediumBorderRadiusInlineEndBase {
+    border-start-end-radius: var(--x-border-radius-base);
+  }
+  .mediumBorderRadiusInlineEndNone {
+    border-start-end-radius: 0;
+  }
+  .mediumBorderRadiusBlockEndTight {
+    border-end-end-radius: var(--x-border-radius-tight);
+  }
+  .mediumBorderRadiusBlockEndBase {
+    border-end-end-radius: var(--x-border-radius-base);
+  }
+  .mediumBorderRadiusBlockEndNone {
+    border-end-end-radius: 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .largePaddingInlineStartExtraTight {
+    padding-inline-start: var(--x-spacing-tight4x);
+  }
+  .largePaddingInlineStartTight {
+    padding-inline-start: var(--x-spacing-tight1x);
+  }
+  .largePaddingInlineStartBase {
+    padding-inline-start: var(--x-spacing-base);
+  }
+  .largePaddingInlineStartLoose {
+    padding-inline-start: var(--x-spacing-loose1x);
+  }
+  .largePaddingInlineStartExtraLoose {
+    padding-inline-start: var(--x-spacing-loose4x);
+  }
+  .largePaddingInlineStartNone {
+    padding-inline-start: 0;
+  }
+  .largePaddingInlineEndExtraTight {
+    padding-inline-end: var(--x-spacing-tight4x);
+  }
+  .largePaddingInlineEndTight {
+    padding-inline-end: var(--x-spacing-tight1x);
+  }
+  .largePaddingInlineEndBase {
+    padding-inline-end: var(--x-spacing-base);
+  }
+  .largePaddingInlineEndLoose {
+    padding-inline-end: var(--x-spacing-loose1x);
+  }
+  .largePaddingInlineEndExtraLoose {
+    padding-inline-end: var(--x-spacing-loose4x);
+  }
+  .largePaddingInlineEndNone {
+    padding-inline-end: 0;
+  }
+  .largePaddingBlockStartExtraTight {
+    padding-block-start: var(--x-spacing-tight4x);
+  }
+  .largePaddingBlockStartTight {
+    padding-block-start: var(--x-spacing-tight1x);
+  }
+  .largePaddingBlockStartBase {
+    padding-block-start: var(--x-spacing-base);
+  }
+  .largePaddingBlockStartLoose {
+    padding-block-start: var(--x-spacing-loose1x);
+  }
+  .largePaddingBlockStartExtraLoose {
+    padding-block-start: var(--x-spacing-loose4x);
+  }
+  .largePaddingBlockStartNone {
+    padding-block-start: 0;
+  }
+  .largePaddingBlockEndExtraTight {
+    padding-block-end: var(--x-spacing-tight4x);
+  }
+  .largePaddingBlockEndTight {
+    padding-block-end: var(--x-spacing-tight1x);
+  }
+  .largePaddingBlockEndBase {
+    padding-block-end: var(--x-spacing-base);
+  }
+  .largePaddingBlockEndLoose {
+    padding-block-end: var(--x-spacing-loose1x);
+  }
+  .largePaddingBlockEndExtraLoose {
+    padding-block-end: var(--x-spacing-loose4x);
+  }
+  .largePaddingBlockEndNone {
+    padding-block-end: 0;
+  }
+  .largeBackgroundSurfacePrimary {
+    --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+    --x-default-color-text: var(--x-color-surface-primary-text);
+    --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-primary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-primary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-primary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-primary-accent);
+    background-color: var(--x-color-surface-primary);
+    color: var(--x-default-color-text);
+  }
+  .largeBackgroundSurfaceSecondary {
+    --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+    --x-default-color-text: var(--x-color-surface-secondary-text);
+    --x-default-color-text-subdued: var(
+      --x-color-surface-secondary-text-subdued
+    );
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-secondary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-secondary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-secondary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-secondary-accent);
+    background-color: var(--x-color-surface-secondary);
+    color: var(--x-default-color-text);
+  }
+  .largeBackgroundSurfaceTertiary {
+    --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+    --x-default-color-text: var(--x-color-surface-tertiary-text);
+    --x-default-color-text-subdued: var(
+      --x-color-surface-tertiary-text-subdued
+    );
+    --x-default-color-text-emphasized: var(
+      --x-color-surface-tertiary-text-emphasized
+    );
+    --x-default-color-border: var(--x-color-surface-tertiary-border);
+    --x-default-color-border-emphasized: var(
+      --x-color-surface-tertiary-border-emphasized
+    );
+    --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+    background-color: var(--x-color-surface-tertiary);
+    color: var(--x-default-color-text);
+  }
+  .largeBackgroundTransparent {
+    background-color: transparent;
+  }
+  .largeBorderInlineStartBase {
+    border-inline-start: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .largeBorderInlineStartDotted {
+    border-inline-start: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .largeBorderInlineStartNone {
+    border-inline-start: 0;
+  }
+  .largeBorderInlineEndBase {
+    border-inline-end: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .largeBorderInlineEndDotted {
+    border-inline-end: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .largeBorderInlineEndNone {
+    border-inline-end: 0;
+  }
+  .largeBorderBlockStartBase {
+    border-block-start: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .largeBorderBlockStartDotted {
+    border-block-start: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .largeBorderBlockStartNone {
+    border-block-start: 0;
+  }
+  .largeBorderBlockEndBase {
+    border-block-end: var(--x-border-width-base) solid
+      var(--x-default-color-border);
+  }
+  .largeBorderBlockEndDotted {
+    border-block-end: var(--x-border-width-base) dotted
+      var(--x-default-color-border);
+  }
+  .largeBorderBlockEndNone {
+    border-block-end: 0;
+  }
+  .largeBorderWidthInlineStartBase {
+    border-inline-start-width: var(--x-border-width-base);
+  }
+  .largeBorderWidthInlineStartThick {
+    border-inline-start-width: var(--x-border-width-thick);
+  }
+  .largeBorderWidthInlineEndBase {
+    border-inline-end-width: var(--x-border-width-base);
+  }
+  .largeBorderWidthInlineEndThick {
+    border-inline-end-width: var(--x-border-width-thick);
+  }
+  .largeBorderWidthBlockStartBase {
+    border-block-start-width: var(--x-border-width-base);
+  }
+  .largeBorderWidthBlockStartThick {
+    border-block-start-width: var(--x-border-width-thick);
+  }
+  .largeBorderWidthBlockEndBase {
+    border-block-end-width: var(--x-border-width-base);
+  }
+  .largeBorderWidthBlockEndThick {
+    border-block-end-width: var(--x-border-width-thick);
+  }
+  .largeBorderColorInlineStartBase {
+    border-inline-start-color: var(--x-default-color-border);
+  }
+  .largeBorderColorInlineStartEmphasized {
+    border-inline-start-color: var(--x-default-color-border-emphasized);
+  }
+  .largeBorderColorInlineEndBase {
+    border-inline-end-color: var(--x-default-color-border);
+  }
+  .largeBorderColorInlineEndEmphasized {
+    border-inline-end-color: var(--x-default-color-border-emphasized);
+  }
+  .largeBorderColorBlockStartBase {
+    border-block-start-color: var(--x-default-color-border);
+  }
+  .largeBorderColorBlockStartEmphasized {
+    border-block-start-color: var(--x-default-color-border-emphasized);
+  }
+  .largeBorderColorBlockEndBase {
+    border-block-end-color: var(--x-default-color-border);
+  }
+  .largeBorderColorBlockEndEmphasized {
+    border-block-end-color: var(--x-default-color-border-emphasized);
+  }
+  .largeBorderRadiusBlockStartTight {
+    border-start-start-radius: var(--x-border-radius-tight);
+  }
+  .largeBorderRadiusBlockStartBase {
+    border-start-start-radius: var(--x-border-radius-base);
+  }
+  .largeBorderRadiusBlockStartNone {
+    border-start-start-radius: 0;
+  }
+  .largeBorderRadiusInlineStartTight {
+    border-end-start-radius: var(--x-border-radius-tight);
+  }
+  .largeBorderRadiusInlineStartBase {
+    border-end-start-radius: var(--x-border-radius-base);
+  }
+  .largeBorderRadiusInlineStartNone {
+    border-end-start-radius: 0;
+  }
+  .largeBorderRadiusInlineEndTight {
+    border-start-end-radius: var(--x-border-radius-tight);
+  }
+  .largeBorderRadiusInlineEndBase {
+    border-start-end-radius: var(--x-border-radius-base);
+  }
+  .largeBorderRadiusInlineEndNone {
+    border-start-end-radius: 0;
+  }
+  .largeBorderRadiusBlockEndTight {
+    border-end-end-radius: var(--x-border-radius-tight);
+  }
+  .largeBorderRadiusBlockEndBase {
+    border-end-end-radius: var(--x-border-radius-base);
+  }
+  .largeBorderRadiusBlockEndNone {
+    border-end-end-radius: 0;
+  }
 }

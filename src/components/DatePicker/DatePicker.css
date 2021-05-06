@@ -1,0 +1,111 @@
+.DatePicker {
+  position: relative;
+}
+
+.Controls {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(
+    7,
+    minmax(var(--x-datepicker-min-column-size), 1fr)
+  );
+  grid-template-rows: auto;
+  width: 100%;
+}
+
+.ControlsPrevious,
+.ControlsNext {
+  padding: var(--x-spacing-tight1x);
+  border-radius: var(--x-control-border-radius, var(--x-global-border-radius));
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--x-default-color-subdued);
+  }
+}
+
+.ControlsPrevious {
+  grid-column: 1;
+}
+
+.ControlsNext {
+  grid-column: 7;
+}
+
+.Month {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: none;
+  border-spacing: 0;
+}
+
+.MonthLabel {
+  padding: var(--x-spacing-tight1x);
+  line-height: 1;
+}
+
+.MonthLabel-current {
+  font-weight: var(--x-typography-primary-weight-bold);
+  color: var(--x-default-color-text-emphasized);
+}
+
+.WeekDays,
+.Week {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(
+    7,
+    minmax(var(--x-datepicker-min-column-size), 1fr)
+  );
+}
+
+.Week {
+  grid-template-rows: var(--x-datepicker-min-row-size);
+}
+
+.Weekday {
+  text-align: center;
+  padding: var(--x-spacing-tight1x);
+}
+
+.DayCell {
+  margin-bottom: rem(1px);
+}
+
+.Day {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--x-default-color-text);
+  border-radius: var(--x-control-border-radius, var(--x-global-border-radius));
+  transition: background-color var(--x-duration-fast) var(--x-timing-base),
+    color var(--x-duration-fast) var(--x-timing-base);
+
+  &:not(.Day-disabled):hover {
+    background-color: var(--x-color-primary-action-hovered);
+    color: var(--x-color-primary-action-text-hovered);
+  }
+}
+
+.Day-today {
+  font-weight: var(--x-typography-primary-weight-bold);
+  color: var(--x-default-color-text-emphasized);
+}
+
+.Day-disabled {
+  color: var(--x-default-color-text-subdued);
+  cursor: unset;
+  opacity: var(--x-opacity-disabled);
+}
+
+.Day-selected,
+.Day-inRange {
+  background-color: var(--x-color-primary-action);
+  color: var(--x-color-primary-action-text);
+}

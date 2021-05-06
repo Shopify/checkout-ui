@@ -8,7 +8,7 @@ import {CalloutBanner} from './CalloutBanner';
 
 const meta = {
   component: CalloutBanner,
-  title: 'CalloutBanner',
+  title: 'checkout-web-ui/CalloutBanner',
   decorators: [themeWithKnobs('headingLevel3')],
 };
 

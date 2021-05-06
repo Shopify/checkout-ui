@@ -44,10 +44,29 @@ module.exports = {
       },
     ],
 
+    // This is our typical style, not sure why it's not the default rule.
+    '@typescript-eslint/array-type': [
+      'error',
+      {default: 'array', readonly: 'array'},
+    ],
+
     // testId pattern is deprecated
     'react/forbid-component-props': ['error', {forbid: ['testID']}],
     'react/forbid-dom-props': ['error', {forbid: ['testID']}],
     'import/no-extraneous-dependencies': 'off',
+
+    // These are all removed in a resolution version of the typescript rules we have,
+    // but are enabled in the shared config written against an older version.
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/class-name-casing': 'off',
+
+    // Conflict with our hardcoded, more modern version of TypeScript
+    // Doesn’t understand `foo?.bar`
+    'babel/no-unused-expressions': 'off',
+
+    // Just to make a TypeScript upgrade easier, sorry future developers (CS)
+    '@typescript-eslint/ban-types': 'off',
   },
   overrides: [
     {
@@ -56,19 +75,23 @@ module.exports = {
         'no-unused-vars': 'off',
       },
     },
-    {
-      files: ['sewing-kit.config.ts'],
-      rules: {
-        'import/no-extraneous-dependencies': 'off',
-      },
-    },
   ],
   ignorePatterns: [
     'node_modules',
+    '**/node_modules/*',
+    '**/__generated__/*',
     'build',
-    '/index.*',
-    '/argo.*',
-    '/webpack.*',
+    'coverage',
+    'yarn.lock',
+    'yarn-error.log',
+    '*.yml',
+    '*.json',
+    '*.md',
+    '*.mp4',
+    '*.html',
+    '*.graphql.d.ts',
+    'app/graphql/*types/*',
+    '!.storybook',
   ],
   env: {
     node: true,

@@ -16,9 +16,12 @@ import {
   CustomPropertyMap,
   RoleColors,
   RoleColorOverrides,
+  ColorGroupOverrides,
   ThemeConstructor,
   TypographyScale,
   TypographyScaleOverrides,
+  DurationScale,
+  DurationScaleOverrides,
   ThemeTypographyFonts,
   ThemeTypographyWeight,
   ColorGroup,
@@ -35,6 +38,7 @@ export const ThemeContext = createContext<UiTheme | undefined>(undefined);
 export function createTheme(
   {
     global = {},
+    durationScale = {},
     buyerJourney = {},
     typographyScale = {},
     typographyPrimary = {},
@@ -42,6 +46,7 @@ export function createTheme(
     headingLevel1 = {},
     headingLevel2 = {},
     headingLevel3 = {},
+    link = {},
     controls = {},
     label = {},
     textFields = {},
@@ -52,6 +57,8 @@ export function createTheme(
     reviewBlock = {},
     actions = {},
     lineItems = {},
+    stockProblemsLineItems = {},
+    throttleLineItems = {},
     moneyLines = {},
     moneySummary = {},
     primaryButton = {},
@@ -59,6 +66,7 @@ export function createTheme(
     formLayout = {},
     tag = {},
     tooltip = {},
+    popover = {},
     banner = {},
     thumbnail = {},
     typographyStyle1 = {},
@@ -77,6 +85,7 @@ export function createTheme(
   return new UiTheme(
     {
       global,
+      durationScale,
       buyerJourney,
       typographyScale,
       typographyPrimary,
@@ -84,6 +93,7 @@ export function createTheme(
       headingLevel1,
       headingLevel2,
       headingLevel3,
+      link,
       controls,
       label,
       textFields,
@@ -94,6 +104,8 @@ export function createTheme(
       reviewBlock,
       actions,
       lineItems,
+      stockProblemsLineItems,
+      throttleLineItems,
       moneyLines,
       moneySummary,
       primaryButton,
@@ -101,6 +113,7 @@ export function createTheme(
       formLayout,
       tag,
       tooltip,
+      popover,
       banner,
       thumbnail,
       typographyStyle1,
@@ -138,6 +151,7 @@ export class UiTheme {
       ...configuration,
       colors: colorsFromOverrides(configuration.colors ?? {}),
       typographyScale: configuration.typographyScale ?? {},
+      durationScale: configuration.durationScale ?? {},
     };
     this.customProperties = customPropertiesFromThemeConfiguration(
       this.configuration,
@@ -147,22 +161,37 @@ export class UiTheme {
   }
 
   preview(
-    colors: Partial<RoleColorOverrides>,
+    overrides: Partial<RoleColorOverrides>,
     typographyScale: Partial<TypographyScaleOverrides>,
+    durationScale: Partial<DurationScaleOverrides>,
   ) {
+    for (const key of Object.keys(
+      this.configuration.colors,
+    ) as (keyof RoleColors)[]) {
+      this.configuration.colors[key] = overrideColorGroup(
+        this.configuration.colors[key],
+        overrides[key],
+      );
+    }
+
     const colorsCustomProperties = customPropertiesFromRoleColors(
-      colorsFromOverrides(colors),
+      this.configuration.colors,
       this.options.legacy ?? false,
     );
 
-    const typographyScaleCustomProperties = customPropertiesFromTypographyScale(
-      typographyScale,
-    );
+    const typographyScaleCustomProperties = customPropertiesFromScaleMap<
+      TypographyScaleOverrides
+    >(typographyScale, TYPOGRAPHY_SCALE_MAP);
+
+    const durationScaleCustomProperties = customPropertiesFromScaleMap<
+      DurationScaleOverrides
+    >(durationScale, DURATION_SCALE_MAP);
 
     for (const listener of this.listeners.preview) {
       listener({
         ...colorsCustomProperties,
         ...typographyScaleCustomProperties,
+        ...durationScaleCustomProperties,
       });
     }
   }
@@ -244,7 +273,7 @@ export function colorTextSubdued(colorGroup?: ColorGroup, legacy?: boolean) {
         l: (l) =>
           isLight(colorGroup?.foreground, legacy)
             ? Math.max(l - 35, 0)
-            : l - 15,
+            : l + 43.2,
       })
     : colorGroup?.background?.adjust({
         s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
@@ -267,25 +296,14 @@ function colorActionPressed(colorGroup?: ColorGroup) {
   });
 }
 
+/* Currently used for default / hover / pressed states. */
 function colorActionText(colorGroup?: ColorGroup, legacy?: boolean) {
   return (
     colorGroup?.foreground ??
     colorGroup?.background?.adjust({
-      l: () => (isLight(colorGroup?.background, legacy) ? 4 : 96),
+      l: () => (isLight(colorGroup?.background, legacy) ? 4 : 100),
     })
   );
-}
-
-function colorActionTextHovered(colorGroup?: ColorGroup) {
-  return colorGroup?.background?.adjust({
-    l: (l) => l - 10,
-  });
-}
-
-function colorActionTextPressed(colorGroup?: ColorGroup) {
-  return colorGroup?.background?.adjust({
-    l: (l) => l - 10,
-  });
 }
 
 function colorsFromOverrides(overrideColors: Partial<RoleColorOverrides>) {
@@ -307,6 +325,31 @@ function colorsFromOverrides(overrideColors: Partial<RoleColorOverrides>) {
       },
     };
   }, {});
+}
+
+function overrideColorGroup(
+  colorGroup?: ColorGroup,
+  overrideGroup?: ColorGroupOverrides,
+) {
+  if (!colorGroup || !overrideGroup) {
+    return colorGroup;
+  }
+
+  const getColor = (color?: HslColorString | HslColorTuple | Hsl) => {
+    return color ? normalizeColor(color) : undefined;
+  };
+
+  const getOverridenColor = (colorKey: keyof ColorGroup) => {
+    return overrideGroup.hasOwnProperty(colorKey)
+      ? getColor(overrideGroup[colorKey])
+      : colorGroup[colorKey];
+  };
+
+  return {
+    background: getOverridenColor('background'),
+    foreground: getOverridenColor('foreground'),
+    accent: getOverridenColor('accent'),
+  };
 }
 
 function colorBorder(colorGroup?: ColorGroup, legacy?: boolean) {
@@ -356,6 +399,7 @@ const COLOR_MAP: {
 } = {
   /* COLOR CANVAS */
   colorCanvas: ({canvas}) => canvas?.background,
+  colorCanvasSubdued: ({canvas}) => colorSubdued(canvas),
   colorCanvasText: ({canvas}) => colorText(canvas),
   colorCanvasTextSubdued: ({canvas}) => colorTextSubdued(canvas),
   colorCanvasTextEmphasized: ({canvas}) => colorTextEmphasized(canvas),
@@ -363,7 +407,7 @@ const COLOR_MAP: {
   colorCanvasBorderEmphasized: ({canvas}) => colorBorderEmphasized(canvas),
   colorCanvasAccent: ({canvas}) => canvas?.accent,
 
-  /* COLOR SURFACE 1 */
+  /* COLOR SURFACE PRIMARY */
   colorSurfacePrimary: ({surfacePrimary}) => surfacePrimary?.background,
 
   colorSurfacePrimaryDisabled: ({surfacePrimary}) =>
@@ -389,7 +433,7 @@ const COLOR_MAP: {
 
   colorSurfacePrimaryAccent: ({surfacePrimary}) => surfacePrimary?.accent,
 
-  /* COLOR SURFACE 2 */
+  /* COLOR SURFACE SECONDARY */
   colorSurfaceSecondary: ({surfaceSecondary}) => surfaceSecondary?.background,
 
   colorSurfaceSecondaryDisabled: ({surfaceSecondary}) =>
@@ -415,7 +459,7 @@ const COLOR_MAP: {
 
   colorSurfaceSecondaryAccent: ({surfaceSecondary}) => surfaceSecondary?.accent,
 
-  /* COLOR SURFACE 3 */
+  /* COLOR SURFACE TERTIARY */
   colorSurfaceTertiary: ({surfaceTertiary}) => surfaceTertiary?.background,
 
   colorSurfaceTertiaryDisabled: ({surfaceTertiary}) =>
@@ -441,6 +485,12 @@ const COLOR_MAP: {
 
   colorSurfaceTertiaryAccent: ({surfaceTertiary}) => surfaceTertiary?.accent,
 
+  /* COLOR STYLES */
+  color1: ({color1}) => color1?.background,
+  color1Text: ({color1}) => color1?.foreground,
+  color2: ({color2}) => color2?.background,
+  color2Text: ({color2}) => color2?.foreground,
+
   /* COLOR PRIMARY ACTION */
   colorPrimaryAction: ({primaryAction}) => primaryAction?.background,
   colorPrimaryActionHovered: ({primaryAction}) =>
@@ -449,10 +499,10 @@ const COLOR_MAP: {
     colorActionPressed(primaryAction),
   colorPrimaryActionText: ({primaryAction}, legacy) =>
     colorActionText(primaryAction, legacy),
-  colorPrimaryActionTextHovered: ({primaryAction}) =>
-    colorActionTextHovered(primaryAction),
-  colorPrimaryActionTextPressed: ({primaryAction}) =>
-    colorActionTextPressed(primaryAction),
+  colorPrimaryActionTextHovered: ({primaryAction}, legacy) =>
+    colorActionText(primaryAction, legacy),
+  colorPrimaryActionTextPressed: ({primaryAction}, legacy) =>
+    colorActionText(primaryAction, legacy),
 
   /* COLOR SECONDARY ACTION */
   colorSecondaryAction: ({secondaryAction}) => secondaryAction?.background,
@@ -462,10 +512,10 @@ const COLOR_MAP: {
     colorActionPressed(secondaryAction),
   colorSecondaryActionText: ({secondaryAction}, legacy) =>
     colorActionText(secondaryAction, legacy),
-  colorSecondaryActionTextHovered: ({secondaryAction}) =>
-    colorActionTextHovered(secondaryAction),
-  colorSecondaryActionTextPressed: ({secondaryAction}) =>
-    colorActionTextPressed(secondaryAction),
+  colorSecondaryActionTextHovered: ({secondaryAction}, legacy) =>
+    colorActionText(secondaryAction, legacy),
+  colorSecondaryActionTextPressed: ({secondaryAction}, legacy) =>
+    colorActionText(secondaryAction, legacy),
 
   /* COLOR TERTIARY ACTION */
   colorTertiaryAction: ({tertiaryAction}) => tertiaryAction?.background,
@@ -486,8 +536,14 @@ const COLOR_MAP: {
 
   /* COLOR INTERACTIVE */
   colorInteractive: ({interactive}) => interactive?.background,
-  colorInteractiveHovered: ({interactive}) => interactive?.background,
-  colorInteractivePressed: ({interactive}) => interactive?.background,
+  colorInteractiveHovered: ({interactive}) =>
+    interactive?.background?.adjust({
+      l: (l) => l + 5,
+    }),
+  colorInteractivePressed: ({interactive}) =>
+    interactive?.background?.adjust({
+      l: (l) => l + 5,
+    }),
   colorInteractiveText: ({interactive}) => interactive?.foreground,
   colorInteractiveTextHovered: ({interactive}) =>
     interactive?.foreground?.adjust({
@@ -559,7 +615,7 @@ const TYPOGRAPHY_SCALE_MAP: {
     scale: Partial<TypographyScale>,
   ) => string | undefined;
 } = {
-  typographySizeXSmall: ({base, ratio}) =>
+  typographySizeExtraSmall: ({base, ratio}) =>
     base ? modularScale(-1, base, ratio) : undefined,
   typographySizeSmall: ({base, ratio}) =>
     base ? modularScale(-0.5, base, ratio) : undefined,
@@ -569,20 +625,20 @@ const TYPOGRAPHY_SCALE_MAP: {
     base ? modularScale(0.5, base, ratio) : undefined,
   typographySizeLarge: ({base, ratio}) =>
     base ? modularScale(1, base, ratio) : undefined,
-  typographySizeXLarge: ({base, ratio}) =>
+  typographySizeExtraLarge: ({base, ratio}) =>
     base ? modularScale(2, base, ratio) : undefined,
-  typographySizeXXLarge: ({base, ratio}) =>
+  typographySizeExtraExtraLarge: ({base, ratio}) =>
     base ? modularScale(3, base, ratio) : undefined,
 };
 
 const TYPOGRAPHY_SIZE_MAP = {
-  xsmall: 'var(--x-typography-size-xsmall)',
+  extraSmall: 'var(--x-typography-size-extra-small)',
   small: 'var(--x-typography-size-small)',
   base: 'var(--x-typography-size-default)',
   medium: 'var(--x-typography-size-medium)',
   large: 'var(--x-typography-size-large)',
-  xlarge: 'var(--x-typography-size-xlarge)',
-  xxlarge: 'var(--x-typography-size-xxlarge)',
+  extraLarge: 'var(--x-typography-size-extra-large)',
+  extraExtraLarge: 'var(--x-typography-size-extra-extra-large)',
 };
 
 const TYPOGRAPHY_CASE_MAP = {
@@ -604,8 +660,9 @@ const TYPOGRAPHY_KERNING_MAP = {
 };
 
 const TYPOGRAPHY_LINE_SIZE_MAP = {
-  base: '1.3',
+  base: '1.5',
   large: '1.5',
+  small: '1.3',
 };
 
 const TYPOGRAPHY_PRIMARY_WEIGHT_MAP = {
@@ -666,62 +723,59 @@ const BORDER_MAP = {
   none: 'var(--x-border-none)',
 };
 
-const OPTION_LIST_GAP_MAP = {
-  base: 'var(--x-spacing-base)',
-  tight: 'var(--x-spacing-tight4x)',
-  none: '0',
-};
-
-const MONEY_LINES_GAP_MAP = {
-  base: 'var(--x-spacing-tight)',
-  tight: 'var(--x-spacing-tight1x)',
-  none: '0',
-};
-
-const MONEY_LINES_SEPARATOR_GAP_MAP = {
-  base: 'var(--x-spacing-loose1x)',
-  tight: 'var(--x-spacing-base)',
-  none: '0',
-};
-
-const REVIEW_BLOCK_GAP_MAP = {
-  base: 'var(--x-spacing-base)',
-  tight: 'var(--x-spacing-tight4x)',
-  none: '0',
-};
-
-const BUYER_JOURNEY_GAP_MAP = {
-  base: 'var(--x-spacing-tight1x)',
-  loose: 'var(--x-spacing-loose2x)',
-};
-
 const SPACING_VAR_MAP = {
   none: '0',
-  tight4x: 'var(--x-spacing-tight4x)',
-  tight3x: 'var(--x-spacing-tight3x)',
-  tight2x: 'var(--x-spacing-tight2x)',
-  tight1x: 'var(--x-spacing-tight1x)',
-  tight: 'var(--x-spacing-tight)',
+  extraTight: 'var(--x-spacing-tight4x)',
+  tight: 'var(--x-spacing-tight1x)',
   base: 'var(--x-spacing-base)',
-  loose: 'var(--x-spacing-loose)',
-  loose1x: 'var(--x-spacing-loose1x)',
-  loose2x: 'var(--x-spacing-loose2x)',
-  loose3x: 'var(--x-spacing-loose3x)',
-  loose4x: 'var(--x-spacing-loose4x)',
+  loose: 'var(--x-spacing-loose1x)',
+  extraLoose: 'var(--x-spacing-loose4x)',
+};
+
+const DURATION_VAR_MAP = {
+  none: '0',
+  fast: 'var(--x-duration-fast)',
+  base: 'var(--x-duration-base)',
+  slow: 'var(--x-duration-slow)',
+  slower: 'var(--x-duration-slower)',
+  slowest: 'var(--x-duration-slowest)',
+};
+
+const DURATION_SCALE_MAP: {
+  [CustomProperty in keyof CustomPropertyMap]?: (
+    scale: Partial<DurationScale>,
+  ) => string | undefined;
+} = {
+  durationFast: ({base, ratio}) =>
+    base ? modularScale(-1, base, ratio, 'ms') : undefined,
+  durationBase: ({base, ratio}) =>
+    base ? modularScale(0, base, ratio, 'ms') : undefined,
+  durationSlow: ({base, ratio}) =>
+    base ? modularScale(1, base, ratio, 'ms') : undefined,
+  durationSlower: ({base, ratio}) =>
+    base ? modularScale(2, base, ratio, 'ms') : undefined,
+  durationSlowest: ({base, ratio}) =>
+    base ? modularScale(3, base, ratio, 'ms') : undefined,
 };
 
 /**
- * This scaling factor represents the ratio of the desired size of the radio/checkbox (18px) to the base font-size of the document.
+ * This scaling factor represents the ratio of the desired size of the radio/checkbox to the base font-size of the document.
  */
-const RADIO_SCALE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
+const RADIO_SCALE_BASE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
+const RADIO_LARGE_SCALE = 22 / TYPOGRAPHY_FONT_SIZE_BASE;
+
 const CHECKBOX_SCALE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
 
+/**
+ * This scaling factor represents the ratio of the desired size of the icons to the base font-size of the document.
+ */
 const ICON_SMALL_SCALE = 10 / TYPOGRAPHY_FONT_SIZE_BASE;
 const ICON_LARGE_SCALE = 18 / TYPOGRAPHY_FONT_SIZE_BASE;
 
 function customPropertiesFromThemeConfiguration(
   {
     global,
+    durationScale,
     buyerJourney,
     colors,
     typographyScale,
@@ -740,6 +794,7 @@ function customPropertiesFromThemeConfiguration(
     tag,
     banner,
     thumbnail,
+    link,
     typographyStyle1,
     typographyStyle2,
     typographyStyle3,
@@ -755,13 +810,17 @@ function customPropertiesFromThemeConfiguration(
   const globalTypographyLetterCase = maybeInMap(TYPOGRAPHY_CASE_MAP)(
     global.typographyLetterCase,
   );
-  const globalTypographyLineSize = maybeInMap(TYPOGRAPHY_LINE_SIZE_MAP)(
-    global.typographyLineSize,
+  const globalTypographyLineSizeDefault = maybeInMap(TYPOGRAPHY_LINE_SIZE_MAP)(
+    global.typographyLineSizeDefault,
+  );
+  const globalTypographyLineSizeSmall = maybeInMap(TYPOGRAPHY_LINE_SIZE_MAP)(
+    global.typographyLineSizeSmall,
   );
   const globalTypographyKerning = maybeInMap(TYPOGRAPHY_KERNING_MAP)(
     global.typographyKerning,
   );
   const globalBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(global.borderRadius);
+
   const controlBorderRadius = maybeInMap(SIMPLE_BORDER_RADIUS_MAP)(
     controls.borderRadius,
   );
@@ -793,16 +852,29 @@ function customPropertiesFromThemeConfiguration(
   const typographySecondaryWeightBold =
     typographySecondary.weightBold ?? undefined;
 
-  const optionListBlockGap = maybeInMap(OPTION_LIST_GAP_MAP)(optionList.gap);
-  const moneyLinesBlockGap = maybeInMap(MONEY_LINES_GAP_MAP)(moneyLines.gap);
-  const moneyLinesSeparatorBlockGap = maybeInMap(MONEY_LINES_SEPARATOR_GAP_MAP)(
-    moneyLines.gap,
+  const optionListBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
+    optionList.spacing,
   );
-  const buyerJourneyInlineGap = maybeInMap(BUYER_JOURNEY_GAP_MAP)(
-    buyerJourney.gap,
+  const moneyLinesBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
+    moneyLines.spacing,
   );
-  const reviewBlockBlockGap = maybeInMap(REVIEW_BLOCK_GAP_MAP)(reviewBlock.gap);
+  const moneyLinesSeparatorBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
+    moneyLines.spacing,
+  );
+  const buyerJourneyInlineSpacing = maybeInMap(SPACING_VAR_MAP)(
+    buyerJourney.spacing,
+  );
+  const reviewBlockBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
+    reviewBlock.spacing,
+  );
   const reviewBlockBorder = maybeInMap(BORDER_MAP)(reviewBlock.border);
+  const reviewBlockBlockPadding = maybeInMap(SPACING_VAR_MAP)(
+    reviewBlock.blockPadding,
+  );
+  const reviewBlockInlinePadding = maybeInMap(SPACING_VAR_MAP)(
+    reviewBlock.inlinePadding,
+  );
+
   const [
     style1TypographySize,
     style1TypographyCase,
@@ -920,14 +992,19 @@ function customPropertiesFromThemeConfiguration(
 
   const tagBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(tag.borderRadius);
 
-  /** To avoid an oval-y shape caused by sub-pixel dimensions, we need JS to floor the size of our radio buttons. */
-  const radioSize = typographyScale.base
+  /** To avoid an oval-y shape caused by subpixel rendering, we need JS to floor the size of our radio buttons. */
+  const radioSizeBase = typographyScale.base
     ? `${Math.floor(
-        parseFloat(typographyScale.base.toString()) * RADIO_SCALE,
+        parseFloat(typographyScale.base.toString()) * RADIO_SCALE_BASE,
+      )}px`
+    : undefined;
+  const radioSizeLarge = typographyScale.base
+    ? `${Math.floor(
+        parseFloat(typographyScale.base.toString()) * RADIO_LARGE_SCALE,
       )}px`
     : undefined;
 
-  /** To avoid an rectangular shape caused by sub-pixel dimensions, we need JS to floor the size of our checkboxes. */
+  /** To avoid an rectangular shape caused by subpixel rendering, we need JS to floor the size of our checkboxes. */
   const checkboxSize = typographyScale.base
     ? `${Math.floor(
         parseFloat(typographyScale.base.toString()) * CHECKBOX_SCALE,
@@ -937,7 +1014,7 @@ function customPropertiesFromThemeConfiguration(
   const bannerBorder = maybeInMap(BORDER_MAP)(banner.border);
   const bannerBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(banner.borderRadius);
 
-  /** To avoid an oval-y/rectangular shape caused by sub-pixel dimensions, we need JS to floor the size of our icons. */
+  /** To avoid an oval-y/rectangular shape caused by subpixel rendering, we need JS to floor the size of our icons. */
   const iconSizeSmall = typographyScale.base
     ? `${Math.floor(
         parseFloat(typographyScale.base.toString()) * ICON_SMALL_SCALE,
@@ -956,10 +1033,24 @@ function customPropertiesFromThemeConfiguration(
     ? `${thumbnail.aspectRatio}`
     : undefined;
 
+  const linkTransitionDuration = maybeInMap(DURATION_VAR_MAP)(
+    link.transitionDuration,
+  );
+
   const customProperties: Partial<CustomPropertyMap> = {
     ...customPropertiesFromRoleColors(colorsFromOverrides(colors), legacy),
-    ...customPropertiesFromTypographyScale(typographyScale),
-    ...customPropertiesFromSpacing(typographyScale),
+    ...customPropertiesFromScaleMap<TypographyScale>(
+      typographyScale,
+      TYPOGRAPHY_SCALE_MAP,
+    ),
+    ...customPropertiesFromScaleMap<TypographyScale>(
+      typographyScale,
+      SPACING_MAP,
+    ),
+    ...customPropertiesFromScaleMap<DurationScale>(
+      durationScale,
+      DURATION_SCALE_MAP,
+    ),
     typographyPrimaryFonts,
     typographyPrimaryWeightBase,
     typographyPrimaryWeightBold,
@@ -967,7 +1058,8 @@ function customPropertiesFromThemeConfiguration(
     typographySecondaryWeightBase,
     typographySecondaryWeightBold,
     globalTypographyLetterCase,
-    globalTypographyLineSize,
+    globalTypographyLineSizeDefault,
+    globalTypographyLineSizeSmall,
     globalTypographyKerning,
     globalBorderRadius,
     controlBorderRadius,
@@ -978,13 +1070,15 @@ function customPropertiesFromThemeConfiguration(
     selectBorderRadius,
     selectBorder,
     optionListBorderRadius,
-    optionListBlockGap,
+    optionListBlockSpacing,
     reviewBlockBorderRadius,
-    reviewBlockBlockGap,
+    reviewBlockBlockSpacing,
     reviewBlockBorder,
-    moneyLinesBlockGap,
-    moneyLinesSeparatorBlockGap,
-    buyerJourneyInlineGap,
+    reviewBlockBlockPadding,
+    reviewBlockInlinePadding,
+    moneyLinesBlockSpacing,
+    moneyLinesSeparatorBlockSpacing,
+    buyerJourneyInlineSpacing,
     style1TypographySize,
     style1TypographyCase,
     style1TypographyFonts,
@@ -1050,8 +1144,10 @@ function customPropertiesFromThemeConfiguration(
     optionListBlockPadding,
     optionListInlinePadding,
     tagBorderRadius,
-    radioSize,
+    radioSizeBase,
+    radioSizeLarge,
     thumbnailAspectRatio,
+    linkTransitionDuration,
     checkboxSize,
     bannerBorder,
     bannerBorderRadius,
@@ -1079,33 +1175,25 @@ function customPropertiesFromRoleColors(
 
   for (const property of Object.keys(COLOR_MAP) as (keyof typeof COLOR_MAP)[]) {
     const color = COLOR_MAP[property]?.(colors, legacy);
-    if (color != null) customProperties[property] = toRgb(color);
+    customProperties[property] = color && toRgb(color);
   }
 
   return customProperties;
 }
 
-function customPropertiesFromTypographyScale(scale: Partial<TypographyScale>) {
+function customPropertiesFromScaleMap<T>(
+  scale: Partial<T>,
+  map: {
+    [CustomProperty in keyof CustomPropertyMap]?: (
+      scale: Partial<T>,
+    ) => string | undefined;
+  },
+) {
   const customProperties: Partial<CustomPropertyMap> = {};
 
-  for (const property of Object.keys(
-    TYPOGRAPHY_SCALE_MAP,
-  ) as (keyof typeof TYPOGRAPHY_SCALE_MAP)[]) {
-    const fontSize = TYPOGRAPHY_SCALE_MAP[property]?.(scale);
-    if (fontSize != null) customProperties[property] = fontSize;
-  }
-
-  return customProperties;
-}
-
-function customPropertiesFromSpacing(scale: Partial<TypographyScale>) {
-  const customProperties: Partial<CustomPropertyMap> = {};
-
-  for (const property of Object.keys(
-    SPACING_MAP,
-  ) as (keyof typeof SPACING_MAP)[]) {
-    const spacing = SPACING_MAP[property]?.(scale);
-    if (spacing != null) customProperties[property] = spacing;
+  for (const property of Object.keys(map) as (keyof typeof map)[]) {
+    const value = map[property]?.(scale);
+    if (value != null) customProperties[property] = value;
   }
 
   return customProperties;

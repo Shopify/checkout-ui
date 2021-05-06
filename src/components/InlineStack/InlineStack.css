@@ -1,91 +1,100 @@
+/*
+** Let's keep an eye on `gap` support and simplify this garbage
+** when we can.
+** - JF
+*/
 .InlineStack {
   display: flex;
+}
 
-  & > * + * {
-    margin-inline-start: var(--x-spacing-base);
-  }
+.InlineStackInner {
+  display: flex;
+}
 
-  @supports (display: grid) {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: auto;
-    grid-column-gap: var(--x-spacing-base);
-    justify-content: start;
+.InlineStackInner-wrap {
+  flex-wrap: wrap;
+}
 
-    & > * + * {
-      margin-inline-start: 0 !important; /* stylelint-disable-line declaration-no-important */
-    }
+.InlineStackInner-spacingNone {
+  margin-block-start: 0;
+  margin-inline-start: 0;
+
+  & > * {
+    margin-block-start: 0;
+    margin-inline-start: 0;
   }
 }
 
-.spacingXtight {
-  & > * + * {
+.InlineStackInner-spacingExtraTight {
+  margin-block-start: calc(var(--x-spacing-tight4x) * -1);
+  margin-inline-start: calc(var(--x-spacing-tight4x) * -1);
+
+  & > * {
+    margin-block-start: var(--x-spacing-tight4x);
     margin-inline-start: var(--x-spacing-tight4x);
   }
-
-  @supports (display: grid) {
-    grid-column-gap: var(--x-spacing-tight4x);
-  }
 }
 
-.spacingTight {
-  & > * + * {
+.InlineStackInner-spacingTight {
+  margin-block-start: calc(var(--x-spacing-tight1x) * -1);
+  margin-inline-start: calc(var(--x-spacing-tight1x) * -1);
+
+  & > * {
+    margin-block-start: var(--x-spacing-tight1x);
     margin-inline-start: var(--x-spacing-tight1x);
   }
+}
 
-  @supports (display: grid) {
-    grid-column-gap: var(--x-spacing-tight1x);
+.InlineStackInner-spacingBase {
+  margin-block-start: calc(var(--x-spacing-base) * -1);
+  margin-inline-start: calc(var(--x-spacing-base) * -1);
+
+  & > * {
+    margin-block-start: var(--x-spacing-base);
+    margin-inline-start: var(--x-spacing-base);
   }
 }
 
-.spacingLoose {
-  & > * + * {
+.InlineStackInner-spacingLoose {
+  margin-block-start: calc(var(--x-spacing-loose1x) * -1);
+  margin-inline-start: calc(var(--x-spacing-loose1x) * -1);
+
+  & > * {
+    margin-block-start: var(--x-spacing-loose1x);
     margin-inline-start: var(--x-spacing-loose1x);
   }
-
-  @supports (display: grid) {
-    grid-column-gap: var(--x-spacing-loose1x);
-  }
 }
 
-.spacingXloose {
-  & > * + * {
+.InlineStackInner-spacingExtraLoose {
+  margin-block-start: calc(var(--x-spacing-loose4x) * -1);
+  margin-inline-start: calc(var(--x-spacing-loose4x) * -1);
+
+  & > * {
+    margin-block-start: var(--x-spacing-loose4x);
     margin-inline-start: var(--x-spacing-loose4x);
   }
-
-  @supports (display: grid) {
-    grid-column-gap: var(--x-spacing-loose4x);
-  }
 }
 
-.alignmentLeading {
+.InlineStackInner-alignmentLeading {
   align-items: flex-start;
-
-  @supports (display: grid) {
-    align-items: start;
-  }
 }
 
-.alignmentCenter {
+.InlineStackInner-alignmentCenter {
   align-items: center;
-
-  @supports (display: grid) {
-    align-items: center;
-  }
 }
 
-.alignmentTrailing {
+.InlineStackInner-alignmentTrailing {
   align-items: flex-end;
-
-  @supports (display: grid) {
-    align-items: end;
-  }
 }
 
-.alignmentBaseline {
+.InlineStackInner-alignmentBaseline {
   align-items: baseline;
+}
 
-  @supports (display: grid) {
-    align-items: baseline;
-  }
+.InlineStackInner-blockAlignmentCenter {
+  justify-content: center;
+}
+
+.InlineStackInner-blockAlignmentTrailing {
+  justify-content: flex-end;
 }

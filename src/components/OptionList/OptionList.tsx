@@ -2,7 +2,7 @@ import React, {useRef, useMemo} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {Heading} from '../Heading';
-import {VisuallyHidden} from '../VisuallyHidden';
+import {View} from '../View';
 import {useThemeConfiguration} from '../Theme';
 
 import {OptionListContext} from './context';
@@ -16,6 +16,7 @@ export interface Props {
   allowMultiple?: boolean;
   title?: string;
   titleHidden?: boolean;
+  controlHidden?: boolean;
 }
 
 export function OptionList({
@@ -24,6 +25,7 @@ export function OptionList({
   onChange,
   title,
   titleHidden,
+  controlHidden = false,
   allowMultiple = false,
   children,
 }: Props) {
@@ -35,19 +37,20 @@ export function OptionList({
       id,
       selectedItems,
       allowMultiple,
+      controlHidden,
       get onChange() {
         return onChangeRef.current;
       },
     }),
-    [allowMultiple, id, selectedItems],
+    [allowMultiple, id, selectedItems, controlHidden],
   );
 
   const titleMarkup =
     title &&
     (titleHidden ? (
-      <VisuallyHidden>
+      <View visibility="hidden">
         <legend>{title}</legend>
-      </VisuallyHidden>
+      </View>
     ) : (
       <legend className={styles.Title}>
         <Heading level={3} role="presentation">
@@ -57,20 +60,24 @@ export function OptionList({
     ));
 
   const {
+    controls: {background: controlsBackground},
     optionList: {
-      background = 'surfaceTertiary',
-      gap = 'none',
+      background: optionListBackground,
+      spacing = 'none',
       border = 'full',
       borderStyle = 'base',
     },
   } = useThemeConfiguration();
+
+  const background =
+    optionListBackground || controlsBackground || 'surfaceTertiary';
 
   const className = classNames(
     styles.OptionList,
     styles[variationName('OptionList-background', background)],
     styles[variationName('OptionList-border', border)],
     styles[variationName('OptionList-borderStyle', borderStyle)],
-    gap === 'none' && styles.isContainer,
+    spacing === 'none' && styles.isContainer,
   );
 
   return (

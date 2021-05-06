@@ -12,7 +12,7 @@ describe('<Icon />', () => {
     expect(icon).toContainReactComponent('div');
   });
 
-  it('renders an actual icon>', () => {
+  it('renders an actual icon', () => {
     const icon = mount(<Icon source="chevronDown" />);
 
     expect(icon).toContainReactComponent(chevronDown);

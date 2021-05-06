@@ -9,7 +9,7 @@ import {Layout} from './Layout';
 
 const meta = {
   component: Layout,
-  title: 'Layout',
+  title: 'checkout-web-ui/Layout',
 };
 
 export default meta;
@@ -38,6 +38,7 @@ function ExampleSmallContent() {
         backgroundColor: 'lightgrey',
         border: '1px #000 solid',
         padding: '1em',
+        width: '100%',
       }}
     >
       Content block
@@ -292,21 +293,26 @@ export const defaultMaxInlineSize = () => (
 export const media = () => (
   <>
     <Text>
-      Default 2 columns - <code>[0.75, 0.25]</code> maxInlineSize:{' '}
-      <code>1000px</code>
-      <br /> Media Small 2 rows - <code>[1, 1]</code> maxInlineSize:{' '}
-      <code>95%</code>
-      <br /> Media Medium 2 columns - <code>
+      Default 2 columns - <code>[1, 1]</code>
+      <br /> Media above small 2 rows - <code>
+        [0.75, 0.25]
+      </code> maxInlineSize: <code>95%</code> spacing: <code>extraTight</code>
+      <br /> Media above medium 2 rows - <code>
         [0.5, 0.5]
-      </code> maxInlineSize: <code>95%</code>
+      </code> maxInlineSize: <code>85%</code> spacing: <code>base</code>
+      <br /> Media above large 2 rows - <code>
+        [0.25, 0.75]
+      </code> maxInlineSize: <code>75%</code> spacing: <code>extraLoose</code>
     </Text>
     <Layout
-      sizes={[0.75, 0.25]}
-      maxInlineSize={1000}
-      media={[
-        {viewportSize: 'small', sizes: [1, 1], maxInlineSize: 0.95},
-        {viewportSize: 'medium', sizes: [0.5, 0.5], maxInlineSize: 0.95},
-      ]}
+      sizes={{
+        base: [1, 1],
+        small: [0.75, 0.25],
+        medium: [0.5, 0.5],
+        large: [0.25, 0.75],
+      }}
+      maxInlineSize={{small: 0.95, medium: 0.85, large: 0.75}}
+      spacing={{small: 'extraTight', medium: 'base', large: 'extraLoose'}}
     >
       <ExampleSmallContent />
       <ExampleContent />
@@ -319,12 +325,12 @@ export const commonLayouts = () => (
     <Text>Checkout</Text>
     <ExampleBox>
       <Layout sizes={[0.5, 0.5]}>
-        <View inlinePadding="base" blockPadding="base">
+        <View padding="base">
           <Layout maxInlineSize={500} inlineAlignment="trailing">
             <ExampleSmallContent />
           </Layout>
         </View>
-        <View inlinePadding="base" blockPadding="base">
+        <View padding="base">
           <Layout maxInlineSize={500} inlineAlignment="leading">
             <ExampleContent />
           </Layout>
@@ -335,12 +341,8 @@ export const commonLayouts = () => (
     <Text>Siberia</Text>
     <ExampleBox>
       <Layout sizes={[0.5, 0.5]} maxInlineSize={925} blockAlignment="center">
-        <View inlinePadding="base" blockPadding="base">
-          Main
-        </View>
-        <View inlinePadding="base" blockPadding="base">
-          Sidebar
-        </View>
+        <View padding="base">Main</View>
+        <View padding="base">Sidebar</View>
       </Layout>
     </ExampleBox>
 
@@ -354,4 +356,54 @@ export const commonLayouts = () => (
       </Layout>
     </ExampleBox>
   </>
+);
+
+export const spacing = () => (
+  <>
+    <Text>ExtraTight</Text>
+    <Layout spacing="extraTight" sizes={[1, 0.5, 0.5]}>
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+    </Layout>
+
+    <Text>Tight</Text>
+    <Layout spacing="tight" sizes={[1, 0.5, 0.5]}>
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+    </Layout>
+
+    <Text>Base</Text>
+    <Layout spacing="base" sizes={[1, 0.5, 0.5]}>
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+    </Layout>
+
+    <Text>Loose</Text>
+    <Layout spacing="loose" sizes={[1, 0.5, 0.5]}>
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+    </Layout>
+
+    <Text>ExtraLoose</Text>
+    <Layout spacing="extraLoose" sizes={[1, 0.5, 0.5]}>
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+    </Layout>
+  </>
+);
+
+export const nested = () => (
+  <Layout sizes={[1, 1, 1]} spacing="base">
+    <ExampleSmallContent />
+    <Layout sizes={[0.25, 0.75]} spacing="base">
+      <ExampleSmallContent />
+      <ExampleSmallContent />
+    </Layout>
+    <ExampleSmallContent />
+  </Layout>
 );

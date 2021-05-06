@@ -19,6 +19,10 @@
 .inlineAlignmentEnd {
   grid-template-columns: 1fr 1fr;
   justify-items: end;
+
+  & .Label {
+    text-align: right;
+  }
 }
 
 .inlineAlignmentStart {
@@ -30,6 +34,7 @@
   grid-template-columns: 1fr 1fr;
 
   & .Label {
+    text-align: right;
     justify-self: end;
   }
 

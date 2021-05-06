@@ -15,7 +15,7 @@ import {
 
 const meta = {
   component: OptionList,
-  title: 'OptionList',
+  title: 'checkout-web-ui/OptionList',
   decorators: [withKnobs, themeWithKnobs('optionList')],
 };
 

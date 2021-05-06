@@ -1,8 +1,14 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
-import {utilityDefaultColorAccent} from '../../utilities/legacy';
 import {
+  utilityDefaultColorAccent,
+  utilityDefaultTextColorSubdued,
+} from '../../utilities/legacy';
+import {
+  arrowLeft,
+  arrowRight,
+  calendar,
   camera,
   cancelCircle,
   caretDown,
@@ -20,22 +26,34 @@ import {
   delivery,
   disabled,
   errorFill,
+  geolocation,
   info,
+  list,
+  locateMe,
   lock,
+  map,
+  marker,
   mobile,
   questionFill,
-  ship,
+  reorder,
   spinner,
   spinnerSmall,
+  store,
   success,
+  truck,
   warning,
   warningCircle,
   warningFill,
+  giftFill,
+  external,
 } from '../../icons';
 
 import styles from './Icon.css';
 
 const BUNDLED_ICONS = {
+  arrowLeft,
+  arrowRight,
+  calendar,
   camera,
   cancelCircle,
   caretDown,
@@ -53,21 +71,32 @@ const BUNDLED_ICONS = {
   delivery,
   disabled,
   errorFill,
+  geolocation,
   info,
+  list,
+  locateMe,
   lock,
+  map,
+  marker,
   mobile,
   questionFill,
+  reorder,
   spinner,
   spinnerSmall,
+  store,
   success,
-  ship,
+  truck,
   warning,
   warningCircle,
   warningFill,
+  giftFill,
+  external,
 };
 
+export type IconSource = keyof typeof BUNDLED_ICONS;
+
 export interface Props {
-  source: 'placeholder' | keyof typeof BUNDLED_ICONS;
+  source: 'placeholder' | IconSource;
   appearance?:
     | 'accent'
     | 'interactive'
@@ -85,6 +114,7 @@ export function Icon({source, appearance, size, accessibilityLabel}: Props) {
     styles.Icon,
     appearance && styles[variationName('appearance', appearance)],
     appearance && appearance === 'accent' && utilityDefaultColorAccent,
+    appearance && appearance === 'subdued' && utilityDefaultTextColorSubdued,
     size && styles[variationName('size', size)],
   );
 
@@ -98,6 +128,7 @@ export function Icon({source, appearance, size, accessibilityLabel}: Props) {
         className={styles.Svg}
         focusable="false"
         aria-hidden="true"
+        role="presentation"
       />
     );
   }
@@ -108,3 +139,5 @@ export function Icon({source, appearance, size, accessibilityLabel}: Props) {
     </span>
   );
 }
+
+export const AVAILABLE_ICONS = Object.keys(BUNDLED_ICONS);

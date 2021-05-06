@@ -1,9 +1,7 @@
 import React, {useState, useCallback} from 'react';
 
-import {HiddenForAccessibility} from '../HiddenForAccessibility';
 import {BlockStack} from '../BlockStack';
-import {Field} from '../TextField';
-import {Labelled} from '../Labelled';
+import {TextFieldInternal} from '../TextField';
 import {Connected} from '../Connected';
 import {Button} from '../Button';
 import {InlineError} from '../InlineError';
@@ -37,12 +35,12 @@ export interface Props {
   max?: number;
   /**
    * The lowest number that can be inputted in the stepper field
-   * @default 0
+   * @defaultValue 0
    */
   min?: number;
   /**
    * The amount the number can increase or decrease by
-   * @default 1
+   * @defaultValue 1
    */
   step?: number;
   /**
@@ -155,35 +153,29 @@ export function Stepper({
   return (
     <BlockStack spacing="tight">
       <Connected trailing="auto" leading="auto">
-        <HiddenForAccessibility>
-          <Button onPress={() => handleChange(-1)}>-</Button>
-        </HiddenForAccessibility>
-        <Labelled label={label} htmlFor={id} isEmpty={quantity === undefined}>
-          <Field
-            type="number"
-            min={min}
-            max={max}
-            step={step}
-            id={id}
-            label={label}
-            error={error}
-            name={name}
-            aria-required={required}
-            value={`${quantity}`}
-            required={required}
-            onChange={(value) => {
-              setQuantity(Number(value));
-              if (onChange) {
-                onChange(value);
-              }
-            }}
-            onBlur={onBlur}
-            onFocus={onFocus}
-          />
-        </Labelled>
-        <HiddenForAccessibility>
-          <Button onPress={() => handleChange(1)}>+</Button>
-        </HiddenForAccessibility>
+        <Button onPress={() => handleChange(-1)}>-</Button>
+        <TextFieldInternal
+          label={label}
+          type="number"
+          min={min}
+          max={max}
+          step={step}
+          id={id}
+          error={Boolean(error)}
+          name={name}
+          aria-required={required}
+          value={quantity === undefined ? '' : `${quantity}`}
+          required={required}
+          onChange={(value) => {
+            setQuantity(Number(value));
+            if (onChange) {
+              onChange(value);
+            }
+          }}
+          onBlur={onBlur}
+          onFocus={onFocus}
+        />
+        <Button onPress={() => handleChange(1)}>+</Button>
       </Connected>
       {errorMarkup}
     </BlockStack>

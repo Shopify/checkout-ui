@@ -4,7 +4,7 @@ import {ProgressTracker, ProgressTrackerStep} from '.';
 
 const meta = {
   component: ProgressTracker,
-  title: 'ProgressTracker',
+  title: 'checkout-web-ui/ProgressTracker',
 };
 
 export default meta;
@@ -25,7 +25,7 @@ function step(step: string, state: string, stateHidden = true) {
     case 'onItsWay':
       return (
         <ProgressTrackerStep
-          icon="ship"
+          icon="truck"
           id={step}
           label="On its way"
           description="March 17"

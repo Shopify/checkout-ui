@@ -4,7 +4,7 @@ import {Portal} from './Portal';
 
 const meta = {
   component: Portal,
-  title: 'Portal',
+  title: 'checkout-web-ui/Portal',
 };
 
 export default meta;

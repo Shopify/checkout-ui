@@ -4,7 +4,7 @@ import {SkeletonText} from './SkeletonText';
 
 const meta = {
   component: SkeletonText,
-  title: 'SkeletonText',
+  title: 'checkout-web-ui/SkeletonText',
 };
 
 export default meta;

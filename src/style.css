@@ -4,38 +4,13 @@
   --color--lightest-grey: hsl(0, 0%, 90%);
   --color--white: hsl(0, 0%, 100%);
 
-  /* Animation and transition */
-  --duration--none: 0;
-  --duration--fast: 100ms;
-  --duration--base: 200ms;
-  --duration--slow: 300ms;
-  --duration--slower: 400ms;
-  --duration--slowest: 500ms;
-  --duration-always--fast: 100ms;
-  --duration-always--base: 200ms;
-  --duration-always--slow: 300ms;
-  --duration-always--slower: 400ms;
-  --duration-always--slowest: 500ms;
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    --duration--fast: 0.001ms;
-    --duration--base: 0.001ms;
-    --duration--slow: 0.001ms;
-    --duration--slower: 0.001ms;
-    --duration--slowest: 0.001ms;
-  }
-
-  --timing--base: ease-in-out;
-  --timing--ease-out: cubic-bezier(0.3, 0.5, 0.5, 1);
-  --timing--linear: linear;
-  --timing--spring: cubic-bezier(0.3, 0, 0, 1);
-
   /* Design system */
 
   /* For now, using --x- prefix for these "design primitive" variables */
 
   /* color background */
   --x-color-canvas: hsl(0, 0%, 100%);
+  --x-color-canvas-subdued: hsl(0, 0%, 98%);
   --x-color-canvas-text: hsl(0, 0%, 33%);
   --x-color-canvas-text-subdued: hsl(0, 0%, 45%);
   --x-color-canvas-text-emphasized: hsl(0, 0%, 20%);
@@ -51,7 +26,7 @@
   --x-color-surface-primary-border: hsl(0, 0%, 85%);
   --x-color-surface-primary-border-emphasized: hsl(0, 0%, 58%);
   --x-color-surface-primary-disabled: hsl(0, 0%, 97.3%);
-  --x-color-surface-primary-accent: hsl(204, 77%, 42%);
+  --x-color-surface-primary-accent: hsl(204, 77%, 41%);
 
   /* color surface 2 */
   --x-color-surface-secondary: hsl(0, 0%, 98%);
@@ -62,7 +37,7 @@
   --x-color-surface-secondary-border: hsl(0, 0%, 85%);
   --x-color-surface-secondary-border-emphasized: hsl(0, 0%, 58%);
   --x-color-surface-secondary-disabled: hsl(0, 0%, 95.3%);
-  --x-color-surface-secondary-accent: hsl(204, 77%, 42%);
+  --x-color-surface-secondary-accent: hsl(204, 77%, 41%);
 
   /* color surface 3 */
   --x-color-surface-tertiary: hsl(0, 0%, 100%);
@@ -73,12 +48,12 @@
   --x-color-surface-tertiary-border: hsl(0, 0%, 85%);
   --x-color-surface-tertiary-border-emphasized: hsl(0, 0%, 58%);
   --x-color-surface-tertiary-disabled: hsl(0, 0%, 97.3%);
-  --x-color-surface-tertiary-accent: hsl(204, 77%, 42%);
+  --x-color-surface-tertiary-accent: hsl(204, 77%, 41%);
 
   /* color primary */
-  --x-color-primary-action: hsl(204, 77%, 42%);
-  --x-color-primary-action-hovered: hsl(204, 77%, 32%);
-  --x-color-primary-action-pressed: hsl(204, 77%, 32%);
+  --x-color-primary-action: hsl(204, 77%, 41%);
+  --x-color-primary-action-hovered: hsl(204, 79%, 32%);
+  --x-color-primary-action-pressed: hsl(204, 79%, 32%);
   --x-color-primary-action-text: hsl(0, 0%, 100%);
   --x-color-primary-action-text-hovered: hsl(0, 0%, 100%);
   --x-color-primary-action-text-pressed: hsl(0, 0%, 100%);
@@ -100,9 +75,9 @@
   --x-color-interactive: transparent;
   --x-color-interactive-hovered: transparent;
   --x-color-interactive-pressed: transparent;
-  --x-color-interactive-text: hsl(204, 77%, 42%);
-  --x-color-interactive-text-hovered: hsl(204, 77%, 36%);
-  --x-color-interactive-text-pressed: hsl(204, 77%, 36%);
+  --x-color-interactive-text: hsl(204, 77%, 41%);
+  --x-color-interactive-text-hovered: hsl(204, 76%, 50%);
+  --x-color-interactive-text-pressed: hsl(204, 76%, 50%);
   --x-color-interactive-icon: hsl(0, 0%, 100%);
 
   /* color info */
@@ -114,7 +89,7 @@
   --x-color-info-text-emphasized: hsl(0, 0%, 20%);
   --x-color-info-border: hsl(205, 63%, 89%);
   --x-color-info-border-emphasized: hsl(192, 100%, 13%);
-  --x-color-info-accent: hsl(204, 77%, 42%);
+  --x-color-info-accent: hsl(204, 77%, 41%);
 
   /* color success */
   --x-color-success: hsl(132, 52%, 94%);
@@ -125,18 +100,18 @@
   --x-color-success-text-emphasized: hsl(0, 0%, 20%);
   --x-color-success-border: hsl(127, 42%, 87%);
   --x-color-success-border-emphasized: hsl(134, 27%, 15%);
-  --x-color-success-accent: hsl(131, 86%, 34%);
+  --x-color-success-accent: hsl(131, 89%, 28%);
 
   /* color warning */
   --x-color-warning: hsl(47, 100%, 94%);
-  --x-color-warning-disabled: hsl(131, 56%, 90%);
-  --x-color-warning-subdued: hsl(133, 55%, 91%);
+  --x-color-warning-disabled: hsl(48, 100%, 87%);
+  --x-color-warning-subdued: hsl(47, 100%, 89%);
   --x-color-warning-text: hsl(0, 0%, 33%);
   --x-color-warning-text-subdued: hsl(0, 0%, 45%);
   --x-color-warning-text-emphasized: hsl(0, 0%, 20%);
   --x-color-warning-border: hsl(46, 63%, 84%);
-  --x-color-warning-border-emphasized: hsl(134, 27%, 15%);
-  --x-color-warning-accent: hsl(44, 100%, 36%);
+  --x-color-warning-border-emphasized: hsl(53, 100%, 11%);
+  --x-color-warning-accent: hsl(44, 100%, 29%);
 
   /* color critical */
   --x-color-critical: hsl(0, 100%, 96%);
@@ -147,7 +122,7 @@
   --x-color-critical-text-emphasized: hsl(0, 0%, 20%);
   --x-color-critical-border: hsl(0, 82%, 89%);
   --x-color-critical-border-emphasized: hsl(0, 100%, 18%);
-  --x-color-critical-accent: hsl(0, 77%, 53%);
+  --x-color-critical-accent: hsl(0, 77%, 51%);
 
   /* typography - font stacks */
   --x-typography-primary-fonts: -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -164,13 +139,13 @@
   --x-typography-secondary-weight-bold: 500;
 
   /* typography - ratio of 1:1.285 */
-  --x-typography-size-xsmall: rem(9px);
+  --x-typography-size-extra-small: rem(9px);
   --x-typography-size-small: rem(12px);
   --x-typography-size-default: rem(14px);
   --x-typography-size-medium: rem(16px);
   --x-typography-size-large: rem(18px);
-  --x-typography-size-xlarge: rem(24px);
-  --x-typography-size-xxlarge: rem(28px);
+  --x-typography-size-extra-large: rem(24px);
+  --x-typography-size-extra-extra-large: rem(28px);
 
   /* spacing - ratio of 1:1.225 */
   --x-spacing-tight4x: rem(5px);
@@ -185,6 +160,27 @@
   --x-spacing-loose3x: rem(32px);
   --x-spacing-loose4x: rem(38px);
 
+  /* motion - duration ratio of 1:1.5 */
+  --x-duration-none: 0;
+  --x-duration-fast: 133.333ms;
+  --x-duration-base: 200ms;
+  --x-duration-slow: 300ms;
+  --x-duration-slower: 450ms;
+  --x-duration-slowest: 675ms;
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    --x-duration-fast: 0.001ms;
+    --x-duration-base: 0.001ms;
+    --x-duration-slow: 0.001ms;
+    --x-duration-slower: 0.001ms;
+    --x-duration-slowest: 0.001ms;
+  }
+
+  --x-timing-base: ease-in-out;
+  --x-timing-ease-out: cubic-bezier(0.3, 0.5, 0.5, 1);
+  --x-timing-linear: linear;
+  --x-timing-spring: cubic-bezier(0.3, 0, 0, 1);
+
   /* border */
   --x-border-full: 1px;
   --x-border-block-end: 0 0 1px;
@@ -196,51 +192,60 @@
   --x-border-radius-base: em(5px);
   --x-border-radius-fully-rounded: em(23px);
 
+  /* border width */
+  --x-border-width-base: 1px;
+  --x-border-width-thick: em(2px);
+
   /* defaults */
-  --x-default-color-accent: hsl(204, 77%, 42%);
+  --x-default-color-accent: hsl(204, 77%, 41%);
   --x-default-color-border: hsl(0, 0%, 85%);
   --x-default-color-border-emphasized: hsl(0, 0%, 58%);
 
-  /* component groups */
+  /* global */
   --x-global-typography-letter-case: none;
-  --x-global-typography-line-size: 1.3;
+  --x-global-typography-line-size-default: 1.5;
+  --x-global-typography-line-size-small: 1.3;
   --x-global-typography-kerning: normal;
   --x-global-border-radius: var(--x-border-radius-base);
-  --x-control-border-radius: var(--x-border-radius-base);
-  --x-text-field-border-radius: var(--x-border-radius-base);
-  --x-checkbox-border-radius: var(--x-border-radius-base);
-  --x-option-list-border-radius: var(--x-border-radius-base);
-  --x-select-border-radius: var(--x-border-radius-base);
-  --x-review-block-border-radius: var(--x-border-radius-base);
-  --x-tag-border-radius: var(--x-border-radius-base);
 
   /* option lists */
-  --x-option-list-block-gap: 0;
+  --x-option-list-block-spacing: 0;
   --x-option-list-block-padding: var(--x-spacing-loose);
   --x-option-list-inline-padding: var(--x-spacing-loose);
 
+  /* review blocks */
+  --x-review-block-block-padding: var(--x-spacing-tight);
+  --x-review-block-inline-padding: var(--x-spacing-loose);
+
   /* money lines */
-  --x-money-lines-block-gap: var(--x-spacing-tight);
-  --x-money-lines-separator-block-gap: var(--x-spacing-loose1x);
+  --x-money-lines-block-spacing: var(--x-spacing-tight);
+  --x-money-lines-separator-block-spacing: var(--x-spacing-loose1x);
   --x-money-lines-block-padding: 0;
   --x-money-lines-inline-padding: 0;
   --x-money-summary-block-padding: 0;
   --x-money-summary-inline-padding: 0;
 
   /* buyer journey */
-  --x-buyer-journey-inline-gap: var(--x-spacing-tight1x);
+  --x-buyer-journey-inline-spacing: var(--x-spacing-tight1x);
 
   /* buttons */
   --x-primary-button-block-padding: var(--x-spacing-loose1x);
   --x-primary-button-inline-padding: var(--x-spacing-loose2x);
   --x-secondary-button-block-padding: var(--x-spacing-loose1x);
   --x-secondary-button-inline-padding: var(--x-spacing-loose2x);
+  --x-tertiary-button-block-padding: var(--x-spacing-tight4x);
+  --x-tertiary-button-inline-padding: var(--x-spacing-tight3x);
 
   /* radio */
-  --x-radio-size: em(18px);
+  --x-radio-size-base: em(18px);
+  --x-radio-size-large: em(22px);
 
   /* checkbox */
   --x-checkbox-size: em(18px);
+
+  /* datepicker */
+  --x-datepicker-min-column-size: rem(44px);
+  --x-datepicker-min-row-size: rem(44px);
 
   /* icons */
   --x-icon-size-small: em(10px);
@@ -249,6 +254,12 @@
 
   /* thumbnail */
   --x-thumbnail-aspect-ratio: 1;
+
+  /* link */
+  --x-link-transition-duration: var(--x-duration-base);
+
+  /* opacity */
+  --x-opacity-disabled: 0.7;
 }
 
 /* Global
@@ -282,6 +293,12 @@ body {
 /* Typography
    ----------------------------------------------------------------------------- */
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
   margin: 0;
 }

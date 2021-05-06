@@ -71,7 +71,7 @@ export function useThemeConfiguration(): ThemeConfiguration {
         forceUpdate();
       }
     });
-  });
+  }, [forceUpdate, theme]);
 
   return internals.current.reactiveConfiguration;
 }

@@ -1,0 +1,19 @@
+.sizeExtraSmall {
+  height: var(--x-spacing-tight4x);
+}
+
+.sizeSmall {
+  height: var(--x-spacing-tight1x);
+}
+
+.sizeBase {
+  height: var(--x-spacing-base);
+}
+
+.sizeLarge {
+  height: var(--x-spacing-loose1x);
+}
+
+.sizeExtraLarge {
+  height: var(--x-spacing-loose4x);
+}

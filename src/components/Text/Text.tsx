@@ -12,18 +12,14 @@ import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './Text.css';
 
-interface Props
-  extends PropsWithChildren<Omit<TextProps, 'size' | 'appearance'>> {
+interface Props extends PropsWithChildren<TextProps> {
   /** Changes the text based on the Theme styles */
   style?: ThemeTypographyStyle;
-  /** Changes the size */
-  size?: 'xsmall' | TextProps['size'];
-  appearance?: 'accent' | TextProps['appearance'];
 }
 
 export function Text({
   children,
-  size,
+  size = 'base',
   emphasized,
   subdued,
   appearance,
@@ -92,9 +88,7 @@ export function Text({
     }
   }
 
-  return emphasized ? (
-    <strong {...defaultProps}>{children}</strong>
-  ) : (
-    <span {...defaultProps}>{children}</span>
-  );
+  const Component = emphasized ? 'strong' : 'span';
+
+  return <Component {...defaultProps}>{children}</Component>;
 }

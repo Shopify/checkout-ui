@@ -24,7 +24,11 @@ export const CustomProperties = memo(function CustomProperties({
 
       const normalized = customPropertiesToStyleProp(customProperties);
       for (const property of Object.keys(normalized)) {
-        root.style.setProperty(property, normalized[property]);
+        if (normalized[property]) {
+          root.style.setProperty(property, normalized[property]);
+        } else {
+          root.style.removeProperty(property);
+        }
       }
     });
   }, [theme]);

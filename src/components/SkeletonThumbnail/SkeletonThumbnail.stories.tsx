@@ -4,7 +4,7 @@ import {SkeletonThumbnail} from './SkeletonThumbnail';
 
 const meta = {
   component: SkeletonThumbnail,
-  title: 'SkeletonThumbnail',
+  title: 'checkout-web-ui/SkeletonThumbnail',
 };
 
 export default meta;

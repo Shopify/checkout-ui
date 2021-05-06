@@ -3,8 +3,8 @@ import faker from 'faker';
 
 import {mountWithContext} from '../../../../test-utilities';
 import {CheckboxControl} from '../../../Checkbox';
-import {RadioControl} from '../../../Radio';
-import {VisuallyHidden} from '../../../VisuallyHidden';
+import {RadioControl} from '../../../RadioControl';
+import {View} from '../../../View';
 import {OptionList, Props as OptionListProps} from '../../OptionList';
 
 import {Option, Props} from './Option';
@@ -70,7 +70,7 @@ describe('<Option />', () => {
     expect(optionList.find(Option)).toContainReactComponent(CheckboxControl);
   });
 
-  it('renders visually hidden label when label and childrens are set', () => {
+  it('renders visually hidden View when label and childrens are set', () => {
     const labelContent = faker.random.word();
 
     const optionList = mountWithContext(
@@ -81,10 +81,12 @@ describe('<Option />', () => {
       </OptionList>,
     );
 
-    expect(optionList.find(VisuallyHidden)).toContainReactText(labelContent);
+    expect(optionList.find(View, {visibility: 'hidden'})).toContainReactText(
+      labelContent,
+    );
   });
 
-  describe('allow multiple', () => {
+  describe('allowMultiple', () => {
     it('allows the selection of multiple options', () => {
       const firstItem = faker.random.uuid();
       const secondItem = faker.random.uuid();
@@ -129,6 +131,28 @@ describe('<Option />', () => {
       optionList.find(Option)!.find(CheckboxControl)!.trigger('onChange');
 
       expect(onChangeSpy).toHaveBeenCalledWith([]);
+    });
+  });
+
+  describe('controlHidden', () => {
+    it('shows control by default', () => {
+      const optionList = mountWithContext(
+        <OptionList {...defaultOptionListProps}>
+          <Option {...defaultProps} />
+        </OptionList>,
+      );
+
+      expect(optionList.find(Option)).toContainReactComponent(RadioControl);
+    });
+
+    it('hides control when true', () => {
+      const optionList = mountWithContext(
+        <OptionList {...defaultOptionListProps} controlHidden>
+          <Option {...defaultProps} />
+        </OptionList>,
+      );
+
+      expect(optionList.find(Option)).not.toContainReactComponent(RadioControl);
     });
   });
 });

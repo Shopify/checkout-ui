@@ -2,7 +2,7 @@ import React from 'react';
 import {mount} from '@quilted/react-testing/dom';
 import faker from 'faker';
 
-import {HiddenForAccessibility} from '../HiddenForAccessibility';
+import {View} from '../View';
 
 import {Image, MEDIA_MAP} from './Image';
 
@@ -62,14 +62,18 @@ describe('<Image />', () => {
   });
 
   describe('decorative', () => {
-    it('wraps the image with <HiddenForAccessibility />', () => {
+    it('wraps the image with <View accessibilityVisibility="hidden" />', () => {
       const image = mount(<Image source={source} decorative />);
-      expect(image).toContainReactComponent(HiddenForAccessibility);
+      expect(image).toContainReactComponent(View, {
+        accessibilityVisibility: 'hidden',
+      });
     });
 
-    it('by default the image is not wrapped with <HiddenForAccessibility />', () => {
+    it('by default the image is not wrapped with <View accessibilityVisibility="hidden" />', () => {
       const image = mount(<Image source={source} />);
-      expect(image).not.toContainReactComponent(HiddenForAccessibility);
+      expect(image).not.toContainReactComponent(View, {
+        accessibilityVisibility: 'hidden',
+      });
     });
   });
 

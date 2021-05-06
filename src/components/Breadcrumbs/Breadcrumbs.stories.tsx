@@ -7,7 +7,7 @@ import {Breadcrumbs} from '.';
 
 const meta = {
   component: Breadcrumbs,
-  title: 'Breadcrumbs',
+  title: 'checkout-web-ui/Breadcrumbs',
   decorators: [withKnobs, themeWithKnobs('buyerJourney')],
 };
 

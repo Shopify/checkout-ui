@@ -11,7 +11,7 @@ import {TextContainer} from './TextContainer';
 
 const meta = {
   component: TextContainer,
-  title: 'TextContainer',
+  title: 'checkout-web-ui/TextContainer',
   decorators: [withKnobs, themeWithKnobs('headingLevel2', 'headingLevel3')],
 };
 

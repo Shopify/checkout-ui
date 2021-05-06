@@ -4,7 +4,7 @@ import {Spinner} from './Spinner';
 
 const meta = {
   component: Spinner,
-  title: 'Spinner',
+  title: 'checkout-web-ui/Spinner',
 };
 
 export default meta;
@@ -25,9 +25,9 @@ export const color = () => (
   </>
 );
 
-export const children = () => (
+export const accessibilityLabel = () => (
   <>
     <p>To see the accessible content, enable “Reduce Motion” in your OS.</p>
-    <Spinner>Loading...</Spinner>
+    <Spinner accessibilityLabel="Loading..." />
   </>
 );

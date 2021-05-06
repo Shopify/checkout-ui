@@ -4,7 +4,7 @@ import {InlineError} from './InlineError';
 
 const meta = {
   component: InlineError,
-  title: 'InlineError',
+  title: 'checkout-web-ui/InlineError',
 };
 
 export default meta;

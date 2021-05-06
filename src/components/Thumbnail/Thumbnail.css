@@ -4,7 +4,7 @@
   height: 100%;
 }
 
-.Thumbnail-aspectRatioLandscape {
+.aspectRatioLandscape {
   width: calc(em(64px) / var(--x-thumbnail-aspect-ratio));
 
   & > .Image,
@@ -13,7 +13,7 @@
   }
 }
 
-.Thumbnail-aspectRatioPortrait {
+.aspectRatioPortrait {
   height: calc(em(64px) * var(--x-thumbnail-aspect-ratio));
 
   & > .Image,
@@ -26,7 +26,47 @@
 .Placeholder {
   width: em(64px);
   height: em(64px);
-  border-radius: calc(var(--x-global-border-radius) * 2);
+  border-radius: calc(var(--x-global-border-radius) * 1.6);
+}
+
+.sizeSmall {
+  width: em(35px);
+
+  & > .Image,
+  & > .Placeholder {
+    width: em(35px);
+    height: em(35px);
+  }
+
+  /* stylelint-disable selector-max-class */
+  &.aspectRatioLandscape {
+    width: calc(em(35px) / var(--x-thumbnail-aspect-ratio));
+
+    & > .Image,
+    & > .Placeholder {
+      width: calc(em(35px) / var(--x-thumbnail-aspect-ratio));
+    }
+  }
+
+  &.aspectRatioPortrait {
+    height: calc(em(35px) * var(--x-thumbnail-aspect-ratio));
+
+    & > .Image,
+    & > .Placeholder {
+      height: calc(em(35px) * var(--x-thumbnail-aspect-ratio));
+    }
+  }
+  /* stylelint-enable selector-max-class */
+
+  & .Icon {
+    display: block;
+    width: em(18px);
+    height: em(18px);
+  }
+
+  & .Badge {
+    font-size: var(--x-typography-size-extra-small);
+  }
 }
 
 .Image {
@@ -71,6 +111,7 @@
   border-radius: calc(var(--size) / 2);
   font-size: var(--x-typography-size-small);
   font-weight: var(--x-typography-primary-weight-bold);
+  line-height: var(--x-global-typography-line-size-small);
 }
 
 .Badge-backgroundSubdued {

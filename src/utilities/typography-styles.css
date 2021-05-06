@@ -1,4 +1,5 @@
-[class].style1 {
+[class].style1,
+[class].placeholderStyle1::placeholder {
   font-size: var(--x-style1-typography-size, var(--this-font-size));
   text-transform: var(--x-style1-typography-case, var(--this-text-transform));
   font-family: var(--x-style1-typography-fonts, var(--this-font-family));
@@ -10,7 +11,8 @@
   );
 }
 
-[class].style2 {
+[class].style2,
+[class].placeholderStyle2::placeholder {
   font-size: var(--x-style2-typography-size, var(--this-font-size));
   text-transform: var(--x-style2-typography-case, var(--this-text-transform));
   font-family: var(--x-style2-typography-fonts, var(--this-font-family));
@@ -22,7 +24,8 @@
   );
 }
 
-[class].style3 {
+[class].style3,
+[class].placeholderStyle3::placeholder {
   font-size: var(--x-style3-typography-size, var(--this-font-size));
   text-transform: var(--x-style3-typography-case, var(--this-text-transform));
   font-family: var(--x-style3-typography-fonts, var(--this-font-family));
@@ -34,7 +37,8 @@
   );
 }
 
-[class].style4 {
+[class].style4,
+[class].placeholderStyle4::placeholder {
   font-size: var(--x-style4-typography-size, var(--this-font-size));
   text-transform: var(--x-style4-typography-case, var(--this-text-transform));
   font-family: var(--x-style4-typography-fonts, var(--this-font-family));
@@ -46,7 +50,8 @@
   );
 }
 
-[class].style5 {
+[class].style5,
+[class].placeholderStyle5::placeholder {
   font-size: var(--x-style5-typography-size, var(--this-font-size));
   text-transform: var(--x-style5-typography-case, var(--this-text-transform));
   font-family: var(--x-style5-typography-fonts, var(--this-font-family));
@@ -58,7 +63,8 @@
   );
 }
 
-[class].style6 {
+[class].style6,
+[class].placeholderStyle6::placeholder {
   font-size: var(--x-style6-typography-size, var(--this-font-size));
   text-transform: var(--x-style6-typography-case, var(--this-text-transform));
   font-family: var(--x-style6-typography-fonts, var(--this-font-family));
@@ -70,7 +76,8 @@
   );
 }
 
-[class].style7 {
+[class].style7,
+[class].placeholderStyle7::placeholder {
   font-size: var(--x-style7-typography-size, var(--this-font-size));
   text-transform: var(--x-style7-typography-case, var(--this-text-transform));
   font-family: var(--x-style7-typography-fonts, var(--this-font-family));
@@ -82,7 +89,8 @@
   );
 }
 
-[class].style8 {
+[class].style8,
+[class].placeholderStyle8::placeholder {
   font-size: var(--x-style8-typography-size, var(--this-font-size));
   text-transform: var(--x-style8-typography-case, var(--this-text-transform));
   font-family: var(--x-style8-typography-fonts, var(--this-font-family));
@@ -94,7 +102,8 @@
   );
 }
 
-[class].style9 {
+[class].style9,
+[class].placeholderStyle9::placeholder {
   font-size: var(--x-style9-typography-size, var(--this-font-size));
   text-transform: var(--x-style9-typography-case, var(--this-text-transform));
   font-family: var(--x-style9-typography-fonts, var(--this-font-family));

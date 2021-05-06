@@ -7,6 +7,7 @@ import {
 
 export interface ThemeConfiguration {
   readonly global: ThemeGlobal;
+  readonly durationScale: Partial<DurationScale>;
   readonly buyerJourney: ThemeBuyerJourney;
   readonly colors: Partial<RoleColors>;
   readonly typographyScale: Partial<TypographyScale>;
@@ -15,6 +16,7 @@ export interface ThemeConfiguration {
   readonly headingLevel1: ThemeHeading;
   readonly headingLevel2: ThemeHeading;
   readonly headingLevel3: ThemeHeading;
+  readonly link: ThemeLink;
   readonly controls: ThemeControls;
   readonly label: ThemeLabel;
   readonly textFields: ThemeTextFields;
@@ -25,6 +27,8 @@ export interface ThemeConfiguration {
   readonly reviewBlock: ThemeReviewBlock;
   readonly actions: ThemeActions;
   readonly lineItems: ThemeLineItems;
+  readonly stockProblemsLineItems: ThemeLineItems;
+  readonly throttleLineItems: ThemeLineItems;
   readonly moneyLines: ThemeMoneyLines;
   readonly moneySummary: ThemeMoneySummary;
   readonly primaryButton: ThemeButton;
@@ -32,6 +36,7 @@ export interface ThemeConfiguration {
   readonly formLayout: ThemeFormLayout;
   readonly tag: ThemeTag;
   readonly tooltip: ThemeTooltip;
+  readonly popover: ThemePopover;
   readonly banner: ThemeBanner;
   readonly thumbnail: ThemeThumbnail;
   readonly typographyStyle1: ThemeTypographyStyleCustomizations;
@@ -49,7 +54,7 @@ export interface ThemeOptions {
   readonly legacy?: boolean;
 }
 
-export type ThemeTypographyLineSize = 'base' | 'large';
+export type ThemeTypographyLineSize = 'base' | 'small' | 'large';
 export type ThemeTypographyKerning = 'base' | 'loose' | 'xloose';
 export type ThemeSimpleBorderRadius = 'none' | 'base';
 export type ThemeBorderRadius =
@@ -59,27 +64,16 @@ export type ThemeBorderRadius =
 export type ThemeBorderColor = 'base' | 'emphasized';
 export type ThemeSimpleBorder = 'none' | 'full';
 export type ThemeBorder = ThemeSimpleBorder | 'blockEnd';
-export type ThemeResourceListBorder =
-  | ThemeBorder
-  | 'betweenItems'
-  | 'aroundItems';
 export type ThemeBorderStyle = 'base' | 'dotted';
+export type ThemeBorderWidth = 'base' | 'thick';
 
 export type ThemeSpacing =
   | 'none'
-  | 'tight4x'
-  | 'tight3x'
-  | 'tight2x'
-  | 'tight1x'
+  | 'extraTight'
   | 'tight'
   | 'base'
   | 'loose'
-  | 'loose1x'
-  | 'loose2x'
-  | 'loose3x'
-  | 'loose4x';
-export type ThemeSimpleSpacing = 'tight' | 'base';
-export type ThemeResourceItemSpacing = 'none' | 'tight' | 'base' | 'loose';
+  | 'extraLoose';
 export type ThemeErrorIndentation = 'none' | 'toText';
 
 export interface ThemeLabel {
@@ -94,14 +88,36 @@ export interface ThemeTypographyStyleCustomizations {
   kerning?: ThemeTypographyKerning;
 }
 
+export interface DurationScale {
+  base?: number | string;
+  ratio?: number | string;
+}
+
+export interface DurationScaleOverrides {
+  base?: number | string;
+  ratio?: number | string;
+}
+
+export type ThemeDuration =
+  | 'none'
+  | 'fast'
+  | 'base'
+  | 'slow'
+  | 'slower'
+  | 'slowest';
+
+export interface ThemeMotion {
+  durationScale?: DurationScale;
+}
+
 export interface ThemeGlobal {
   borderRadius?: ThemeSimpleBorderRadius;
   typographyLetterCase?: ThemeTypographyLetterCase;
-  typographyLineSize?: ThemeTypographyLineSize;
+  typographyLineSizeDefault?: ThemeTypographyLineSize;
+  typographyLineSizeSmall?: ThemeTypographyLineSize;
   typographyKerning?: ThemeTypographyKerning;
 }
 
-export type ThemeBuyerJourneyGap = 'base' | 'loose';
 export type ThemeBuyerJourneyNumberStyle =
   | 'none'
   | 'decimal'
@@ -111,14 +127,13 @@ export type ThemeBuyerJourneyPostion = 'start' | 'inline';
 export interface ThemeBuyerJourney {
   alignment?: ThemeBuyerJourneyAlignment;
   position?: ThemeBuyerJourneyPostion;
-  gap?: ThemeBuyerJourneyGap;
+  spacing?: ThemeSpacing;
   chevronIconSeparator?: boolean;
   numberStyle?: ThemeBuyerJourneyNumberStyle;
   typographyStyle?: ThemeTypographyStyle;
 }
 
 export type ThemeLabelPosition = 'inside' | 'outside' | 'inline';
-export type ThemeGap = 'base' | 'tight' | 'none';
 
 export type ThemeMoneyLineInlineAlignment =
   | 'toEdge'
@@ -136,6 +151,7 @@ export interface ThemeControls {
   background?: ThemeBackground;
   borderColor?: ThemeBorderColor;
   borderRadius?: ThemeSimpleBorderRadius;
+  transitionDuration?: ThemeDuration;
 }
 
 export interface ThemeTextFields {
@@ -150,6 +166,7 @@ export interface ThemeTextFields {
   errorTypographyStyle?: ThemeTypographyStyle;
 }
 
+export type ThemeResourceListBorder = ThemeSimpleBorder | 'inner' | 'outer';
 export type ThemeOptionListBorder = ThemeSimpleBorder | 'inner';
 
 export interface ThemeOptionList {
@@ -157,18 +174,24 @@ export interface ThemeOptionList {
   borderRadius?: ThemeBorderRadius;
   border?: ThemeOptionListBorder;
   borderStyle?: ThemeBorderStyle;
-  gap?: ThemeGap;
+  spacing?: ThemeSpacing;
   blockPadding?: ThemeSpacing;
   inlinePadding?: ThemeSpacing;
   detailsBackground?: ThemeBackground;
   typographyStyle?: ThemeTypographyStyle;
 }
 
+export type ThemeDivider = 'toContainerEdge' | 'contentSize';
+export type ThemeResourceItemDivider = 'none' | ThemeDivider;
+
 export interface ThemeReviewBlock {
   background?: ThemeBackground;
   borderRadius?: ThemeBorderRadius;
   border?: ThemeSimpleBorder;
-  gap?: ThemeGap;
+  spacing?: ThemeSpacing;
+  inlinePadding?: ThemeSpacing;
+  blockPadding?: ThemeSpacing;
+  divider?: ThemeDivider;
 }
 
 export type ThemeSelectDisclosureIcon = 'caretDown' | 'chevronDown';
@@ -196,9 +219,16 @@ export interface ThemeCheckbox {
   errorTypographyStyle?: ThemeTypographyStyle;
 }
 
+export type ThemeRadioCheckedStyle = 'disc' | 'ring';
+export type ThemeRadioCheckedColor = 'interactive' | 'primary';
+export type ThemeRadioSize = 'base' | 'large';
+
 export interface ThemeRadio {
   background?: ThemeBackground;
   borderColor?: ThemeBorderColor;
+  checkedStyle?: ThemeRadioCheckedStyle;
+  checkedColor?: ThemeRadioCheckedColor;
+  size?: ThemeRadioSize;
 }
 
 export type ThemeThumbnailBadgePosition = 'none' | 'base';
@@ -207,24 +237,30 @@ export type ThemeThumbnailBadgeBackground = 'subdued' | 'primary';
 export type ThemeLineItemQuantityPosition =
   | 'none'
   | 'thumbnailBadge'
-  | 'inline';
+  | 'inline'
+  | 'inlinePrimary';
 
 export interface ThemeLineItems {
-  gap?: ThemeGap;
+  spacing?: ThemeSpacing;
   border?: ThemeResourceListBorder;
   borderStyle?: ThemeBorderStyle;
   borderColor?: ThemeBorderColor;
   background?: ThemeBackground;
-  blockPadding?: ThemeResourceItemSpacing;
-  inlinePadding?: ThemeResourceItemSpacing;
+  blockPadding?: ThemeSpacing;
+  inlinePadding?: ThemeSpacing;
+  itemDivider?: ThemeResourceItemDivider;
+  itemSpacing?: ThemeSpacing;
   quantityPosition?: ThemeLineItemQuantityPosition;
   titleTypographyStyle?: ThemeTypographyStyle;
-  subtitleTypographyStyle?: ThemeTypographyStyle;
+  optionsTypographyStyle?: ThemeTypographyStyle;
+  optionsAppearance?: ThemeAppearance;
+  optionsFormat?: ThemeOptionsFormat;
   propertiesTypographyStyle?: ThemeTypographyStyle;
+  propertiesAppearance?: ThemeAppearance;
 }
 
 export interface ThemeMoneyLines {
-  gap?: ThemeGap;
+  spacing?: ThemeSpacing;
   background?: ThemeBackground;
   blockPadding?: ThemeSpacing;
   inlinePadding?: ThemeSpacing;
@@ -260,7 +296,7 @@ export interface ThemeButton {
 }
 
 export interface ThemeFormLayout {
-  spacing?: ThemeSimpleSpacing;
+  spacing?: ThemeSpacing;
 }
 
 export interface ThemeTag {
@@ -278,6 +314,18 @@ export type ThemeTextAlignment = 'start' | 'center';
 export interface ThemeTooltip {
   background?: ThemeSurfaceBackground;
   borderRadius?: ThemeBorderRadius;
+  opacity?: ThemeOpacity;
+  textAlignment?: ThemeTextAlignment;
+}
+
+export type ThemePopoverConnector = 'arrow' | 'none';
+
+export type ThemeDepth = 'none' | 'far';
+// 'closest' | 'closer' | 'close' | 'farther' | 'farthest'
+
+export interface ThemePopover {
+  connector?: ThemePopoverConnector;
+  depth?: ThemeDepth;
   opacity?: ThemeOpacity;
   textAlignment?: ThemeTextAlignment;
 }
@@ -312,6 +360,8 @@ export interface RoleColors {
   success: ColorGroup;
   warning: ColorGroup;
   critical: ColorGroup;
+  color1: ColorGroup;
+  color2: ColorGroup;
 }
 
 export interface TypographyScale {
@@ -331,6 +381,10 @@ export type CSSFontWeight =
   | '800'
   | '900';
 
+export type ThemeAppearance = 'subdued' | 'emphasized' | 'base';
+
+export type ThemeOptionsFormat = 'inline' | 'descriptionList';
+
 export interface ThemeTypographyFont {
   fonts?: string;
   weightBase?: CSSFontWeight;
@@ -340,13 +394,13 @@ export interface ThemeTypographyFont {
 }
 
 export type ThemeTypographySize =
-  | 'xsmall'
+  | 'extraSmall'
   | 'small'
   | 'base'
   | 'medium'
   | 'large'
-  | 'xlarge'
-  | 'xxlarge';
+  | 'extraLarge'
+  | 'extraExtraLarge';
 
 export type ThemeTypographyLetterCase = 'none' | 'title' | 'upper' | 'lower';
 export type ThemeTypographyFonts = 'primary' | 'secondary';
@@ -366,13 +420,23 @@ export interface ThemeHeading {
   typographyStyle?: ThemeTypographyStyle;
 }
 
+export type ThemeColorStyle = 'color1' | 'color2';
+
+export interface ThemeLink {
+  transitionDuration?: ThemeDuration;
+  colorHovered?: ThemeColorStyle;
+  colorPressed?: ThemeColorStyle;
+}
+
 export type RoleColorOverrides = {
-  [Color in keyof RoleColors]: {
-    foreground?: Hsl | HslColorString | HslColorTuple;
-    background?: Hsl | HslColorString | HslColorTuple;
-    accent?: Hsl | HslColorString | HslColorTuple;
-  };
+  [Color in keyof RoleColors]: ColorGroupOverrides;
 };
+
+export interface ColorGroupOverrides {
+  foreground?: Hsl | HslColorString | HslColorTuple;
+  background?: Hsl | HslColorString | HslColorTuple;
+  accent?: Hsl | HslColorString | HslColorTuple;
+}
 
 export interface TypographyScaleOverrides {
   base?: number | string;
@@ -381,14 +445,16 @@ export interface TypographyScaleOverrides {
 
 export type ThemeConstructor = Omit<
   ThemeConfiguration,
-  'colors' | 'typographyScale'
+  'colors' | 'typographyScale' | 'durationScale'
 > & {
   colors?: RoleColorOverrides;
   typographyScale?: TypographyScaleOverrides;
+  durationScale?: DurationScaleOverrides;
 };
 
 export interface CustomPropertyMap {
   colorCanvas: RgbColorString;
+  colorCanvasSubdued: RgbColorString;
   colorCanvasBorder: RgbColorString;
   colorCanvasBorderEmphasized: RgbColorString;
   colorCanvasText: RgbColorString;
@@ -451,6 +517,11 @@ export interface CustomPropertyMap {
   colorInteractiveTextHovered: RgbColorString;
   colorInteractiveTextPressed: RgbColorString;
 
+  color1: RgbColorString;
+  color1Text: RgbColorString;
+  color2: RgbColorString;
+  color2Text: RgbColorString;
+
   colorInfo: RgbColorString;
   colorInfoDisabled: RgbColorString;
   colorInfoSubdued: RgbColorString;
@@ -491,13 +562,13 @@ export interface CustomPropertyMap {
   colorCriticalBorderEmphasized: RgbColorString;
   colorCriticalAccent: RgbColorString;
 
-  typographySizeXSmall: string;
+  typographySizeExtraSmall: string;
   typographySizeSmall: string;
   typographySizeDefault: string;
   typographySizeMedium: string;
   typographySizeLarge: string;
-  typographySizeXLarge: string;
-  typographySizeXXLarge: string;
+  typographySizeExtraLarge: string;
+  typographySizeExtraExtraLarge: string;
 
   typographyPrimaryFonts: string;
   typographyPrimaryWeightBase: string;
@@ -518,8 +589,16 @@ export interface CustomPropertyMap {
   spacingLoose3x: string;
   spacingLoose4x: string;
 
+  durationNone: string;
+  durationFast: string;
+  durationBase: string;
+  durationSlow: string;
+  durationSlower: string;
+  durationSlowest: string;
+
   globalTypographyLetterCase?: string;
-  globalTypographyLineSize?: string;
+  globalTypographyLineSizeDefault?: string;
+  globalTypographyLineSizeSmall?: string;
   globalTypographyKerning?: string;
 
   globalBorderRadius?: string;
@@ -535,12 +614,14 @@ export interface CustomPropertyMap {
   checkboxBorder?: string;
   reviewBlockBorder?: string;
 
-  optionListBlockGap?: string;
-  reviewBlockBlockGap?: string;
-  moneyLinesBlockGap?: string;
-  moneyLinesSeparatorBlockGap?: string;
+  controlTransitionDuration?: string;
 
-  buyerJourneyInlineGap?: string;
+  optionListBlockSpacing?: string;
+  reviewBlockBlockSpacing?: string;
+  moneyLinesBlockSpacing?: string;
+  moneyLinesSeparatorBlockSpacing?: string;
+
+  buyerJourneyInlineSpacing?: string;
 
   style1TypographySize?: string;
   style1TypographyCase?: string;
@@ -618,10 +699,13 @@ export interface CustomPropertyMap {
 
   optionListBlockPadding?: string;
   optionListInlinePadding?: string;
+  reviewBlockBlockPadding?: string;
+  reviewBlockInlinePadding?: string;
 
   tagBorderRadius?: string;
 
-  radioSize?: string;
+  radioSizeBase?: string;
+  radioSizeLarge?: string;
   checkboxSize?: string;
 
   bannerBorder?: string;
@@ -632,4 +716,6 @@ export interface CustomPropertyMap {
   iconSizeLarge?: string;
 
   thumbnailAspectRatio?: string;
+
+  linkTransitionDuration?: string;
 }

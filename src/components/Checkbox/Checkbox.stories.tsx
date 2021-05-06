@@ -9,7 +9,7 @@ import {Checkbox} from './Checkbox';
 
 const meta = {
   component: Checkbox,
-  title: 'Checkbox',
+  title: 'checkout-web-ui/Checkbox',
   decorators: [withKnobs, themeWithKnobs('checkbox')],
 };
 

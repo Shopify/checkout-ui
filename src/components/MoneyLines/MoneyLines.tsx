@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 
-import {MaybeVisuallyHidden} from '../VisuallyHidden';
+import {View} from '../View';
 import {Heading} from '../Heading';
 import {createIdCreator} from '../../utilities/id';
 
@@ -20,11 +20,15 @@ export function MoneyLines({
 }: PropsWithChildren<Props>) {
   const headingId = createId();
 
+  const titleMarkup = <Heading id={headingId}>{title}</Heading>;
+
   return (
     <>
-      <MaybeVisuallyHidden condition={titleHidden}>
-        <Heading id={headingId}>{title}</Heading>
-      </MaybeVisuallyHidden>
+      {titleHidden ? (
+        <View visibility="hidden">{titleMarkup}</View>
+      ) : (
+        titleMarkup
+      )}
 
       <div
         className={styles.MoneyLines}

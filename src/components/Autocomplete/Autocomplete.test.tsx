@@ -118,7 +118,7 @@ describe('<Autocomplete />', () => {
         <Autocomplete {...defaultProps} onChange={onChangeSpy} />,
       );
 
-      autocomplete.find(Field)?.trigger('onInput', 'address');
+      autocomplete.find(Field)?.trigger('onChange', 'address');
 
       expect(onChangeSpy.mock.calls).toMatchObject([['address']]);
       expect(onChangeSpy).toHaveBeenCalledTimes(1);

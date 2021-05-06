@@ -10,11 +10,13 @@ import styles from './Spinner.css';
 export function Spinner({
   size,
   color,
-  children,
+  accessibilityLabel,
 }: PropsWithChildren<SpinnerProps>) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const showAccessibleContent = Boolean(children && prefersReducedMotion);
+  const showAccessibleContent = Boolean(
+    accessibilityLabel && prefersReducedMotion,
+  );
 
   const className = showAccessibleContent
     ? undefined
@@ -23,11 +25,12 @@ export function Spinner({
   return (
     <div className={className}>
       {showAccessibleContent ? (
-        children
+        accessibilityLabel
       ) : (
         <Icon
           source={size === 'small' ? 'spinnerSmall' : 'spinner'}
           appearance={color ? undefined : 'accent'}
+          accessibilityLabel={accessibilityLabel}
         />
       )}
     </div>

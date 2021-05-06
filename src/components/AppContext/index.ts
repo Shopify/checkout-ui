@@ -4,6 +4,7 @@ export {
   TranslationKey,
   useAppContext,
   useTranslate,
+  useGeolocation,
   useLinkComponent,
   LinkLikeComponentProps,
 } from './AppContext';

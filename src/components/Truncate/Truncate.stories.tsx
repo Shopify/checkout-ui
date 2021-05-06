@@ -1,13 +1,13 @@
 import React from 'react';
-import faker from 'faker';
 
+import {faker} from '../../test-utilities';
 import {Text} from '../Text';
 
 import {Truncate} from './Truncate';
 
 const meta = {
   component: Truncate,
-  title: 'Truncate',
+  title: 'checkout-web-ui/Truncate',
   decorators: [
     (story: () => JSX.Element) => (
       <div

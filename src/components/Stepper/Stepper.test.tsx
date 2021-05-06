@@ -73,8 +73,8 @@ describe('<Stepper />', () => {
         <Stepper {...defaultProps} value={value} onChange={onChange} />,
       );
       stepper
-        .find('input')!
-        .trigger('onInput', {currentTarget: {value: `${value}`}});
+        .find('input' as any)!
+        .trigger('oninput', {currentTarget: {value: `${value}`}});
 
       expect(onChange).not.toHaveBeenCalled();
       expect(stepper).toContainReactComponent(Field, {value: `${value}`});
@@ -88,8 +88,8 @@ describe('<Stepper />', () => {
       );
 
       stepper
-        .find('input')!
-        .trigger('onInput', {currentTarget: {value: `${value}`}});
+        .find('input' as any)!
+        .trigger('oninput', {currentTarget: {value: `${value}`}});
       expect(onChange).not.toHaveBeenCalled();
     });
 
@@ -101,11 +101,12 @@ describe('<Stepper />', () => {
 
       const value = faker.random.number();
       stepper
-        .find('input')!
-        .trigger('onInput', {currentTarget: {value: `${value}`}});
+        .find('input' as any)!
+        .trigger('oninput', {currentTarget: {value: `${value}`}});
+
       stepper
         .find('input')!
-        .trigger('onChange', {currentTarget: {value: `${value}`}});
+        .trigger('onBlur', {currentTarget: {value: `${value}`}});
 
       expect(onChange).toHaveBeenCalledWith(`${value}`);
     });

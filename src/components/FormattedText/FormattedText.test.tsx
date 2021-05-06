@@ -1,15 +1,24 @@
 import React from 'react';
 import {mount} from '@quilted/react-testing/dom';
 
+import {Text} from '../Text';
+
 import {FormattedText} from './FormattedText';
 
 describe('<FormattedText />', () => {
   describe('content', () => {
-    it('renders its content', () => {
+    it('renders a string when passed a string as content', () => {
       const content = 'Snowdevil';
       const formatted = mount(<FormattedText>{content}</FormattedText>);
 
       expect(formatted).toContainReactText(content);
+    });
+
+    it('renders a React component when passed a component as content', () => {
+      const content = <Text>Text</Text>;
+      const formatted = mount(<FormattedText>{content}</FormattedText>);
+
+      expect(formatted).toContainReactComponent(Text);
     });
 
     it('replaces new line characters by <br>s', () => {

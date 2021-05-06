@@ -8,11 +8,10 @@
   A frozen spinner is arguably a worst experience and since
   our spinners are usually small, we believe its ok to ignore
   the user's preference in that case.
-  This explain the use of var(--duration-always--slowest) that is
-  not reset to 0ms when prefers-reduced-motion media is true.
+  This explains why the duration is hardcoded and not impacted by the
+  prefers-reduced-motion media set in style.css.
   */
-  animation: fade-in var(--duration-always--slowest) var(--timing--base),
-    rotate var(--duration-always--slowest) linear infinite;
+  animation: fade-in 500ms var(--x-timing-base), rotate 500ms linear infinite;
 }
 
 .sizeLarge {

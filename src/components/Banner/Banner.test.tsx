@@ -209,4 +209,27 @@ describe('<Banner />', () => {
       });
     });
   });
+
+  describe('onDismiss()', () => {
+    it('is called when the dismiss button is clicked', () => {
+      const spy = jest.fn();
+      const banner = mountWithContext(<Banner onDismiss={spy} />);
+      banner.find('button')?.trigger('onClick');
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('renders a close button', () => {
+      const banner = mountWithContext(
+        <Banner onDismiss={() => {}} {...defaultProps} />,
+      );
+
+      expect(banner).toContainReactComponent(Icon, {
+        source: 'close',
+      });
+      expect(banner).toContainReactComponent(Icon);
+      expect(banner).toContainReactComponent(Bookend, {
+        leading: true,
+      });
+    });
+  });
 });

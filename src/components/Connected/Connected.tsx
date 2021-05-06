@@ -1,10 +1,13 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
+import {Responsive} from '@shopify/argo-checkout';
+
+import {useResponsive} from '../../utilities/responsive';
 
 import {ConnectedContext} from './hook';
 import styles from './Connected.css';
 
-type Spacing = 'xtight' | 'tight' | 'loose' | 'xloose';
+type Spacing = 'extraTight' | 'tight' | 'base' | 'loose' | 'extraLoose';
 type Size = 'auto';
 
 export interface Props {
@@ -12,8 +15,13 @@ export interface Props {
   leading?: Size;
   /** Sets the sizing of the trailing child */
   trailing?: Size;
-  /** Adjust spacing between children */
+  /**
+   * Adjust spacing between children
+   * @defaultValue `base`
+   */
   spacing?: Spacing;
+  /** Whether or not to stack the children vertically */
+  stack?: boolean | Responsive<boolean>;
 }
 
 /**
@@ -23,10 +31,13 @@ export interface Props {
  */
 export function Connected({
   children,
-  spacing,
+  spacing = 'base',
   leading,
   trailing,
+  stack = false,
 }: PropsWithChildren<Props>) {
+  const responsiveClassNames = useResponsive({stack});
+
   return (
     <ConnectedContext.Provider value>
       <div
@@ -34,7 +45,8 @@ export function Connected({
           styles.Connected,
           leading && styles[variationName('leading', leading)],
           trailing && styles[variationName('trailing', trailing)],
-          spacing && styles[variationName('spacing', spacing)],
+          styles[variationName('spacing', spacing)],
+          responsiveClassNames.map((className) => styles[className]),
         )}
       >
         {children}

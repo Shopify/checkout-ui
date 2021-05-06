@@ -13,10 +13,12 @@ import {Heading} from '../Heading';
 import {Icon} from '../Icon';
 import {useTransition} from '../../utilities/transition';
 import {useFocusTrap} from '../../utilities/focusTrap';
+import {createIdCreator, useId} from '../../utilities/id';
 
 import styles from './Modal.css';
 
 const DEFAULT_IFRAME_CONTENT_HEIGHT = 400;
+const createId = createIdCreator('ModalHeading');
 
 interface CommonProps {
   /**
@@ -34,6 +36,7 @@ interface CommonProps {
   onClose?: () => void;
   open?: boolean;
   title?: string;
+  titleHidden?: boolean;
 }
 
 interface IFrameProps {
@@ -60,6 +63,7 @@ export function Modal({
   onClose,
   open: openProp = false,
   title,
+  titleHidden,
   ...props
 }: Props) {
   const translate = useTranslate();
@@ -67,7 +71,8 @@ export function Modal({
   const [iframeHeight, setIframeHeight] = useState<number>();
   const titleBarRef = useRef<HTMLElement>(null);
   const activatorRef = useRef<Element | null>(null);
-  const modalRef = useFocusTrap();
+  const modalRef = useFocusTrap({preventScroll: true});
+  const modalHeadingId = useId(undefined, createId);
 
   const transition = useTransition(open, {enter: 'fast'});
   const transitionClassName = styles[variationName('transition', transition)];
@@ -77,6 +82,8 @@ export function Modal({
     if (activatorRef?.current instanceof HTMLElement)
       activatorRef.current.focus();
     if (onClose) onClose();
+    document.body.style.overflow = 'auto';
+    setIframeHeight(undefined);
   }, [onClose]);
 
   const handleKeyDown = useCallback(
@@ -90,6 +97,7 @@ export function Modal({
 
   useEffect(() => {
     if (openProp) {
+      document.body.style.overflow = 'hidden';
       activatorRef.current = document.activeElement;
       setOpen(true);
     } else {
@@ -121,48 +129,63 @@ export function Modal({
 
   if (!open) return null;
 
+  const ariaLabelOrLabelledby = titleHidden
+    ? {'aria-label': title}
+    : {'aria-labelledby': modalHeadingId};
+
+  const titleMarkup = titleHidden ? (
+    <span />
+  ) : (
+    <Heading level={1} id={modalHeadingId}>
+      {title}
+    </Heading>
+  );
+
   return (
     <Portal>
       <div className={styles.Modal}>
         {/* TODO: <ScrollLock />, <Scrollable /> */}
-        <div className={classNames(styles.Backdrop, transitionClassName)} />
-        <div
-          className={classNames(styles.Content, transitionClassName, {
-            [styles['Content-isLong']]: long,
-          })}
-          role="dialog"
-          aria-labelledby="id-of-the-header-title"
-          aria-modal
-          tabIndex={-1}
-          ref={modalRef}
-        >
-          {title && (
-            <header className={styles.Header} ref={titleBarRef}>
-              <Heading level={1}>{title}</Heading>
-              {!blocking && (
-                <button
-                  type="button"
-                  className={styles.Button}
-                  onClick={() => closeModal()}
-                  aria-label={translate('close') || 'Close'}
-                >
-                  <Icon source="close" size="large" />
-                </button>
-              )}
-            </header>
-          )}
-          {isIFrameProps(props) ? (
-            <iframe
-              src={props.src}
-              name={props.iFrameName}
-              title={props.iFrameTitle || 'body markup'}
-              className={styles.IFrame}
-              {...(iframeHeight && {style: {height: `${iframeHeight}px`}})}
-              {...(!long && {onLoad: handleIFrameLoad})}
-            />
-          ) : (
-            <div className={styles.Body}>{props.children}</div>
-          )}
+        <div className={classNames(styles.Backdrop, transitionClassName)}>
+          <div
+            className={classNames(styles.Content, transitionClassName, {
+              [styles['Content-isLong']]: long,
+            })}
+            role="dialog"
+            aria-modal
+            /** @see https://dequeuniversity.com/rules/axe/4.1/scrollable-region-focusable?application=axeAPI */
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+            ref={modalRef}
+            {...ariaLabelOrLabelledby}
+          >
+            {(!titleHidden || !blocking) && (
+              <header className={styles.Header} ref={titleBarRef}>
+                {titleMarkup}
+                {!blocking && (
+                  <button
+                    type="button"
+                    className={styles.Button}
+                    onClick={() => closeModal()}
+                    aria-label={translate('close') || 'Close'}
+                  >
+                    <Icon source="close" size="large" />
+                  </button>
+                )}
+              </header>
+            )}
+            {isIFrameProps(props) ? (
+              <iframe
+                src={props.src}
+                name={props.iFrameName}
+                title={props.iFrameTitle || 'body markup'}
+                className={styles.IFrame}
+                {...(iframeHeight && {style: {height: `${iframeHeight}px`}})}
+                {...(!long && {onLoad: handleIFrameLoad})}
+              />
+            ) : (
+              <div className={styles.Body}>{props.children}</div>
+            )}
+          </div>
         </div>
       </div>
     </Portal>

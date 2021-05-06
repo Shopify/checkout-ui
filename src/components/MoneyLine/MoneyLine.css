@@ -74,7 +74,7 @@
 }
 
 .MoneyLineSeparator {
-  margin: var(--x-money-lines-separator-block-gap) 0 !important; /* stylelint-disable-line declaration-no-important */
+  margin: var(--x-money-lines-separator-block-spacing) 0 !important; /* stylelint-disable-line declaration-no-important */
   border: none;
   border-block-start: 1px solid var(--x-default-color-border, transparent);
 }

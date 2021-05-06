@@ -34,7 +34,10 @@ export function ProgressTracker({activeStep, children}: Props) {
 
   return (
     <ProgressTrackerContext.Provider value={contextValue}>
-      <ol className={styles.ProgressTracker}>{children}</ol>
+      {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+      <ol className={styles.ProgressTracker} role="list">
+        {children}
+      </ol>
     </ProgressTrackerContext.Provider>
   );
 }

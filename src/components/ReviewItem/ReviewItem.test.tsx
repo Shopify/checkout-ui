@@ -1,15 +1,12 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 
 import {mountWithContext} from '../../test-utilities';
 import {Link} from '../Link';
-import {TextBlock} from '../TextBlock';
 import {Heading} from '../Heading';
-import {VisuallyHidden} from '../VisuallyHidden';
-import {HiddenForAccessibility} from '../HiddenForAccessibility';
 
 import {ReviewBlock, ReviewItem, Props} from './ReviewItem';
 
-const defaultProps: Props = {
+const defaultProps: PropsWithChildren<Props> = {
   label: 'Contact',
   children: 'snowdevil@shopify.com',
 };
@@ -56,25 +53,19 @@ describe('<ReviewItem />', () => {
     });
   });
 
-  it('renders a hidden label for screen readers when `linkAriaLabel` is provided', () => {
+  it('sets an aria-label on Link when `linkAccessibilityLabel` is provided', () => {
     const reviewItem = mountWithContext(
       <ReviewItem
         {...defaultProps}
         to="/information"
         linkLabel="Change"
-        linkAriaLabel="Change contact information"
+        linkAccessibilityLabel="Change contact information"
       />,
     );
 
-    expect(reviewItem.find(Link)).toContainReactComponent(VisuallyHidden, {
-      children: 'Change contact information',
+    expect(reviewItem).toContainReactComponent(Link, {
+      accessibilityLabel: 'Change contact information',
     });
-    expect(reviewItem.find(Link)).toContainReactComponent(
-      HiddenForAccessibility,
-      {
-        children: 'Change',
-      },
-    );
   });
 });
 
@@ -99,17 +90,14 @@ describe('<ReviewBlock />', () => {
     });
   });
 
-  it('renders a <VisuallyHidden> when a title and titleHidden are passed as props', () => {
+  it('links the Heading with the section using aria-labelledBy', () => {
     const reviewBlock = mountWithContext(
       <ReviewBlock title="Review" titleHidden />,
     );
+    const heading = reviewBlock.find(Heading);
 
-    const visuallyHidden = reviewBlock.find(VisuallyHidden);
-    expect(visuallyHidden).toContainReactComponent(TextBlock, {
-      children: 'Review',
-    });
     expect(reviewBlock).toContainReactComponent('div', {
-      'aria-labelledby': visuallyHidden?.find(TextBlock)?.prop('id'),
+      'aria-labelledby': heading?.prop('id'),
     });
   });
 });

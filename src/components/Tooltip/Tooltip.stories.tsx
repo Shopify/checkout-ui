@@ -7,7 +7,7 @@ import {Tooltip} from './Tooltip';
 
 const meta = {
   component: Tooltip,
-  title: 'Tooltip',
+  title: 'checkout-web-ui/Tooltip',
   decorators: [
     (story: () => JSX.Element) => (
       <div

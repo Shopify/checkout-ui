@@ -1,20 +1,13 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {SelectProps as SelectPropsArgo} from '@shopify/argo-checkout';
+import {SelectProps} from '@shopify/argo-checkout';
 
-import {View} from '../View';
 import {InlineError} from '../InlineError';
 import {Text} from '../Text';
 import {Icon} from '../Icon';
 import {Truncate} from '../Truncate';
 import {BlockStack} from '../BlockStack';
-import {InlineStack} from '../InlineStack';
-import {
-  useThemeConfiguration,
-  ThemeLabelPosition,
-  ThemeBorder,
-  ThemeBackground,
-} from '../Theme';
+import {useThemeConfiguration} from '../Theme';
 import {autocompleteToHtml} from '../../utilities/autocomplete';
 import {useId, createIdCreator} from '../../utilities/id';
 import {errorId} from '../../utilities/errors';
@@ -26,20 +19,10 @@ export const PLACEHOLDER_VALUE = '';
 
 const createId = createIdCreator('Select');
 
-export interface SelectProps extends SelectPropsArgo {
-  /* Whether the field is read only */
-  readonly?: boolean;
-  labelPosition?: ThemeLabelPosition | 'inline';
-  background?: ThemeBackground;
-  border?: ThemeBorder;
-  disclosureIconSeparator?: boolean;
-}
-
 export function Select({
   id: explicitId,
   name,
   label,
-  labelPosition,
   options,
   value = PLACEHOLDER_VALUE,
   disabled,
@@ -49,19 +32,17 @@ export function Select({
   autocomplete,
   placeholder,
   onChange,
-  border,
-  background,
-  disclosureIconSeparator,
 }: SelectProps) {
   const {
+    controls: {background: controlsBackground},
     select: {
-      labelPosition: themeLabelPosition = 'inside',
-      background: themeBackground = 'surfaceTertiary',
-      border: themeBorder = 'full',
+      labelPosition = 'inside',
+      background: selectBackground,
+      border = 'full',
       borderColor = 'base',
       focusBorder = 'full',
       disclosureIcon = 'caretDown',
-      disclosureIconSeparator: themeDisclosureIconSeparator = true,
+      disclosureIconSeparator = true,
       typographyStyle,
       errorIndentation,
       errorTypographyStyle,
@@ -69,13 +50,9 @@ export function Select({
     label: {typographyStyle: labelTypographyStyle},
   } = useThemeConfiguration();
 
-  const finalLabelPosition = labelPosition ?? themeLabelPosition;
-  const finalBorder = border ?? themeBorder;
-  const finalDisclosureIconSeparator =
-    disclosureIconSeparator ?? themeDisclosureIconSeparator;
-  const finalBackground = background ?? themeBackground;
-
   const id = useId(explicitId, createId);
+  const background =
+    selectBackground || controlsBackground || 'surfaceTertiary';
 
   const errorMarkup = error && (
     <span
@@ -94,9 +71,9 @@ export function Select({
     Boolean(error) && styles.hasError,
     disabled && styles['Select-isDisabled'],
     readonly && styles['Select-isReadOnly'],
-    styles[variationName('Select-label', finalLabelPosition)],
-    styles[variationName('Select-background', finalBackground)],
-    styles[variationName('Select-border', finalBorder)],
+    styles[variationName('Select-label', labelPosition)],
+    styles[variationName('Select-background', background)],
+    styles[variationName('Select-border', border)],
     styles[variationName('Select-borderColor', borderColor)],
     styles[variationName('Select-focusBorder', focusBorder)],
     typographyStyle && typographyStyles[typographyStyle],
@@ -106,19 +83,19 @@ export function Select({
     <label
       className={classNames(
         styles.Label,
-        styles[variationName('Label-position', finalLabelPosition)],
+        styles[variationName('Label-position', labelPosition)],
         {
           [styles['Label-isPlaceholder']]:
             value === PLACEHOLDER_VALUE && placeholder === label,
         },
-        background && styles[variationName('Label-onBackground', background)],
+        styles[variationName('Label-onBackground', background)],
       )}
       htmlFor={id}
     >
       <Text
         size={
           !(value === PLACEHOLDER_VALUE && placeholder === label) ||
-          finalLabelPosition === 'inside'
+          labelPosition === 'inside'
             ? 'small'
             : undefined
         }
@@ -131,12 +108,11 @@ export function Select({
   );
 
   const view = (
-    <>
-      {finalLabelPosition === 'outside' || finalLabelPosition === 'inline'
-        ? labelMarkup
-        : null}
+    /* eslint-disable-next-line @shopify/jsx-prefer-fragment-wrappers */
+    <div>
+      {labelPosition === 'outside' ? labelMarkup : null}
       <div className={styles.Wrapper}>
-        {finalLabelPosition === 'inside' && labelMarkup}
+        {labelPosition === 'inside' && labelMarkup}
         <select
           name={name}
           id={id}
@@ -172,26 +148,20 @@ export function Select({
         <div
           className={classNames(
             styles.Selector,
-            finalDisclosureIconSeparator && styles['Selector-separated'],
-            finalDisclosureIconSeparator &&
+            disclosureIconSeparator && styles['Selector-separated'],
+            disclosureIconSeparator &&
               styles[variationName('Selector-borderColor', borderColor)],
           )}
         >
           <Icon source={disclosureIcon} size="small" />
         </div>
       </div>
-    </>
+    </div>
   );
 
   return (
     <BlockStack spacing="tight">
-      {finalLabelPosition === 'inline' ? (
-        <InlineStack spacing="xtight" alignment="center">
-          {view}
-        </InlineStack>
-      ) : (
-        <View>{view}</View>
-      )}
+      {view}
       {errorMarkup}
     </BlockStack>
   );

@@ -16,7 +16,7 @@ export interface Props {
   activator: HTMLElement | null;
   /**
    * Position the popper relative to the activator.
-   * @default 'blockStart'
+   * @defaultValue 'blockStart'
    */
   placement?: Placement;
   /**

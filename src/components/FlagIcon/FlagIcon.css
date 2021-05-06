@@ -1,5 +1,15 @@
 .FlagIcon {
-  display: inline-block;
+  display: block;
   max-height: 100%;
   max-width: 100%;
+}
+
+.sizeSmall {
+  width: em(20px);
+  height: em(15px);
+}
+
+.sizeDefault {
+  width: em(27px);
+  height: em(20px);
 }

@@ -6,16 +6,22 @@
 }
 
 .sizeDefault {
+  min-width: var(--x-icon-size-default);
+  min-height: var(--x-icon-size-default);
   width: var(--x-icon-size-default);
   height: var(--x-icon-size-default);
 }
 
 .sizeSmall {
+  min-width: var(--x-icon-size-small);
+  min-height: var(--x-icon-size-small);
   width: var(--x-icon-size-small);
   height: var(--x-icon-size-small);
 }
 
 .sizeLarge {
+  min-width: var(--x-icon-size-large);
+  min-height: var(--x-icon-size-large);
   width: var(--x-icon-size-large);
   height: var(--x-icon-size-large);
 }

@@ -1,1 +1,7 @@
-export {TextField, Field} from './TextField';
+export {
+  Props,
+  InternalProps,
+  TextField,
+  TextFieldInternal,
+  Field,
+} from './TextField';

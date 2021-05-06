@@ -7,9 +7,10 @@
   pointer-events: none;
   inset-block-start: em(5.6px);
   inset-inline-start: em(12px);
-  transition: all var(--duration--base) var(--timing--base);
+  transition: all var(--x-duration-base) var(--x-timing-base);
   user-select: none;
   opacity: 0;
+  transform: translateY(em(3px));
   z-index: 1;
   max-width: calc(100% - em(26px));
 
@@ -30,7 +31,7 @@
   }
 }
 
-.Label-isSubdued {
+.Label-subdued {
   z-index: inherit;
 }
 
@@ -39,8 +40,14 @@
   margin-block-end: var(--x-spacing-tight4x);
 }
 
-.isFloating {
+.Label-nextToIcon {
+  inset-inline-start: calc(em(12px) * 2);
+  margin-inline-start: rem(24px);
+}
+
+.floating {
   & .Label {
     opacity: 1;
+    transform: translateY(0);
   }
 }

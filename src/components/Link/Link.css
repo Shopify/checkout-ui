@@ -2,18 +2,55 @@
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   text-decoration: none;
+  color: inherit;
+}
+
+.appearanceDefault {
+  background-color: var(--x-color-interactive);
   color: var(--x-color-interactive-text);
-  transition: color var(--duration--base) var(--timing--base);
+  transition: color var(--x-link-transition-duration) var(--x-timing-base),
+    background-color var(--x-link-transition-duration) var(--x-timing-base);
 
   &:hover {
-    color: var(--x-color-interactive-text-hovered);
+    --this-background-color: var(--x-color-interactive-hovered);
+    --this-color: var(--x-color-interactive-text-hovered);
+    background-color: var(--this-background-color);
+    color: var(--this-color);
   }
 
   &:active {
-    color: var(--x-color-interactive-text-pressed);
+    --this-background-color: var(--x-color-interactive-pressed);
+    --this-color: var(--x-color-interactive-text-pressed);
+    background-color: var(--this-background-color);
+    color: var(--this-color);
   }
 }
 
 .underline {
   text-decoration: underline;
+}
+
+.appearanceInheritColor:hover {
+  text-decoration: none;
+}
+
+.colorHoveredColor1:hover {
+  background-color: var(--x-color1, var(--this-background-color));
+  color: var(--x-color1-text, var(--this-color));
+}
+
+.colorHoveredColor2:hover {
+  background-color: var(--x-color2, var(--this-background-color));
+  color: var(--x-color2-text, var(--this-color));
+}
+
+/* Order does matter. :active pseudo-selector need to come after :hover */
+.colorPressedColor1:active {
+  background-color: var(--x-color1, var(--this-background-color));
+  color: var(--x-color1-text, var(--this-color));
+}
+
+.colorPressedColor2:active {
+  background-color: var(--x-color2, var(--this-background-color));
+  color: var(--x-color2-text, var(--this-color));
 }

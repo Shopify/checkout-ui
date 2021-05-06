@@ -7,7 +7,7 @@ import {Select} from './Select';
 
 const meta = {
   component: Select,
-  title: 'Select',
+  title: 'checkout-web-ui/Select',
   decorators: [withKnobs, themeWithKnobs('select')],
 };
 

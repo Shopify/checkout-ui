@@ -6,7 +6,7 @@ import {TextBlock} from './TextBlock';
 
 const meta = {
   component: TextBlock,
-  title: 'TextBlock',
+  title: 'checkout-web-ui/TextBlock',
 };
 
 export default meta;
@@ -80,10 +80,11 @@ export const allStatus = () => (
 
 export const allSizes = () => (
   <TextContainer>
+    <TextBlock size="extraSmall">Extra small</TextBlock>
     <TextBlock size="small">Small</TextBlock>
     <TextBlock>Default</TextBlock>
     <TextBlock size="medium">Medium</TextBlock>
     <TextBlock size="large">Large</TextBlock>
-    <TextBlock size="xlarge">Extra large</TextBlock>
+    <TextBlock size="extraLarge">Extra large</TextBlock>
   </TextContainer>
 );

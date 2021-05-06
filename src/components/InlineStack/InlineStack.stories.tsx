@@ -1,123 +1,86 @@
 import React from 'react';
 
-import {TextContainer} from '../TextContainer';
-import {TextBlock} from '../TextBlock';
+import {View} from '../View';
 
-import {InlineStack} from './InlineStack';
+import {InlineStack as InlineStackComponent, Props} from './InlineStack';
 
 const meta = {
-  component: InlineStack,
-  title: 'InlineStack',
+  component: InlineStackComponent,
+  title: 'checkout-web-ui/InlineStack',
+  argTypes: {
+    demoWidth: {control: {type: 'range', min: 0, max: 100}},
+    spacing: {
+      control: {
+        type: 'select',
+        options: [
+          undefined,
+          'none',
+          'extraTight',
+          'tight',
+          'base',
+          'loose',
+          'extraLoose',
+        ],
+      },
+    },
+    alignment: {
+      control: {
+        type: 'select',
+        options: [undefined, 'leading', 'center', 'trailing', 'baseline'],
+      },
+    },
+    blockAlignment: {
+      control: {
+        type: 'select',
+        options: [undefined, 'center', 'trailing'],
+      },
+    },
+  },
 };
 
 export default meta;
 
-function Content() {
+function Content({size = 1}: {size?: number}) {
   return (
-    <div style={{backgroundColor: 'lightgrey'}}>
-      <TextBlock>This is content</TextBlock>
-    </div>
+    <div
+      style={{
+        backgroundColor: 'lightgrey',
+        width: '5em',
+        height: `${size}em`,
+      }}
+    />
   );
 }
 
-function ContentLong() {
+export const InlineStack = ({
+  demoWidth,
+  ...args
+}: Props & {demoWidth: number}) => {
   return (
-    <div style={{backgroundColor: 'lightgrey'}}>
-      <TextContainer>
-        <TextBlock>
-          This is content lorem ipsum dolor sit amet, consectetur adipiscing
-          elit eum maxime, corrupti atque voluptatum nisi modi.
-        </TextBlock>
-        <TextBlock>
-          This is content lorem ipsum dolor sit amet, consectetur adipiscing
-          elit eum maxime, corrupti.
-        </TextBlock>
-      </TextContainer>
-    </div>
+    <View maxInlineSize={Number(`0.${demoWidth}`)} border="dotted">
+      <InlineStackComponent {...args}>
+        <Content />
+        <Content size={3} />
+        <Content />
+        <Content size={2} />
+        <Content />
+        <Content />
+        <Content size={3} />
+        <Content />
+        <Content size={2} />
+      </InlineStackComponent>
+    </View>
   );
-}
+};
 
-export const defaultState = () => (
-  <InlineStack>
-    <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content /> <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content /> <Content />
-    <Content />
-    <Content />
-  </InlineStack>
-);
+InlineStack.args = {
+  demoWidth: 25,
+  spacing: undefined,
+  alignment: undefined,
+  blockAlignment: undefined,
+  wrap: false,
+};
 
-export const Alignment = () => (
-  <>
-    <InlineStack alignment="leading">
-      <ContentLong />
-      <Content />
-      <Content />
-    </InlineStack>
-    <br />
-    <InlineStack alignment="center">
-      <ContentLong />
-      <Content />
-      <Content />
-    </InlineStack>
-    <br />
-    <InlineStack alignment="trailing">
-      <ContentLong />
-      <Content />
-      <Content />
-    </InlineStack>
-    <br />
-    <InlineStack alignment="baseline">
-      <ContentLong />
-      <Content />
-      <TextBlock size="large">This is a large text</TextBlock>
-    </InlineStack>
-  </>
-);
-
-export const AllSpacings = () => (
-  <>
-    <InlineStack spacing="xtight">
-      <Content />
-      <Content />
-      <Content />
-    </InlineStack>
-    <InlineStack spacing="tight">
-      <Content />
-      <Content />
-      <Content />
-    </InlineStack>
-    <InlineStack>
-      <Content />
-      <Content />
-      <Content />
-    </InlineStack>
-    <InlineStack spacing="loose">
-      <Content />
-      <Content />
-      <Content />
-    </InlineStack>
-    <InlineStack spacing="xloose">
-      <Content />
-      <Content />
-      <Content />
-    </InlineStack>
-  </>
-);
+InlineStack.story = {
+  name: 'InlineStack',
+};

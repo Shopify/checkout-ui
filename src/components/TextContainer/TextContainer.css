@@ -1,7 +1,5 @@
-.TextContainer {
-  & > * + * {
-    margin-top: var(--x-spacing-base);
-  }
+.spacingBase > * + * {
+  margin-top: var(--x-spacing-base);
 }
 
 .spacingNone > * + * {

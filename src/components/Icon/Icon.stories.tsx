@@ -6,7 +6,7 @@ import {Icon} from './Icon';
 
 const meta = {
   component: Icon,
-  title: 'Icon',
+  title: 'checkout-web-ui/Icon',
 };
 
 export default meta;
@@ -37,7 +37,12 @@ export const allSizes = () => (
 
 export const allIcons = () => (
   <InlineStack>
+    <Icon source="arrowLeft" size="large" />
+    <Icon source="arrowRight" size="large" />
+    <Icon source="camera" size="large" />
+    <Icon source="cancelCircle" size="large" />
     <Icon source="caretDown" size="large" />
+    <Icon source="cart" size="large" />
     <Icon source="checkmark" size="large" />
     <Icon source="chevronDown" size="large" />
     <Icon source="chevronUp" size="large" />
@@ -46,17 +51,27 @@ export const allIcons = () => (
     <Icon source="close" size="large" />
     <Icon source="critical" size="large" />
     <Icon source="discount" size="large" />
-    <Icon source="delivery" size="large" />
     <Icon source="delivered" size="large" />
+    <Icon source="delivery" size="large" />
     <Icon source="disabled" size="large" />
     <Icon source="errorFill" size="large" />
+    <Icon source="external" size="large" />
+    <Icon source="geolocation" size="large" />
+    <Icon source="giftFill" size="large" />
     <Icon source="info" size="large" />
+    <Icon source="list" size="large" />
+    <Icon source="locateMe" size="large" />
     <Icon source="lock" size="large" />
     <Icon source="mobile" size="large" />
+    <Icon source="map" size="large" />
+    <Icon source="marker" size="large" />
     <Icon source="questionFill" size="large" />
-    <Icon source="ship" size="large" />
+    <Icon source="spinner" size="large" />
+    <Icon source="store" size="large" />
     <Icon source="success" size="large" />
+    <Icon source="truck" size="large" />
     <Icon source="warning" size="large" />
+    <Icon source="warningCircle" size="large" />
     <Icon source="warningFill" size="large" />
   </InlineStack>
 );

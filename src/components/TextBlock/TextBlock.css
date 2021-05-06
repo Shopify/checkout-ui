@@ -1,6 +1,4 @@
 .TextBlock {
-  font-size: var(--x-typography-size-default);
-  line-height: var(--x-global-typography-line-size);
   text-transform: var(--x-global-typography-letter-case);
   letter-spacing: var(--x-global-typography-kerning);
 }
@@ -37,8 +35,18 @@
   color: var(--x-color-critical-accent);
 }
 
+.sizeExtraSmall {
+  --this-font-size: var(--x-typography-size-extra-small);
+  font-size: var(--this-font-size);
+}
+
 .sizeSmall {
   --this-font-size: var(--x-typography-size-small);
+  font-size: var(--this-font-size);
+}
+
+.sizeBase {
+  --this-font-size: var(--x-typography-size-default);
   font-size: var(--this-font-size);
 }
 
@@ -52,7 +60,7 @@
   font-size: var(--this-font-size);
 }
 
-.sizeXlarge {
-  --this-font-size: var(--x-typography-size-xlarge);
+.sizeExtraLarge {
+  --this-font-size: var(--x-typography-size-extra-large);
   font-size: var(--this-font-size);
 }

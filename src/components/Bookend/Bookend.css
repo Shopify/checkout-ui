@@ -3,7 +3,6 @@
 
   & > * {
     flex-grow: 1;
-    margin-inline-start: var(--x-spacing-base);
 
     &:first-child {
       margin-inline-start: 0;
@@ -27,7 +26,7 @@
   align-items: baseline;
 }
 
-.spacingXtight > * {
+.spacingExtraTight > * {
   margin-inline-start: var(--x-spacing-tight4x);
 }
 
@@ -35,11 +34,15 @@
   margin-inline-start: var(--x-spacing-tight1x);
 }
 
+.spacingBase > * {
+  margin-inline-start: var(--x-spacing-base);
+}
+
 .spacingLoose > * {
   margin-inline-start: var(--x-spacing-loose1x);
 }
 
-.spacingXloose > * {
+.spacingExtraloose > * {
   margin-inline-start: var(--x-spacing-loose4x);
 }
 

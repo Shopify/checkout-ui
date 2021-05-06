@@ -1,0 +1,9 @@
+.FormattedText {
+  & strong {
+    font-weight: var(--x-typography-primary-weight-bold);
+    color: var(
+      --x-default-color-text-emphasized,
+      var(--x-default-color-text, inherit)
+    );
+  }
+}

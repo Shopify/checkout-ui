@@ -9,7 +9,7 @@ import {Tag} from './Tag';
 
 const meta = {
   component: Tag,
-  title: 'Tag',
+  title: 'checkout-web-ui/Tag',
   decorators: [withKnobs, themeWithKnobs('tag')],
 };
 
@@ -17,13 +17,13 @@ export default meta;
 
 export const tags = () => (
   <InlineStack>
-    <Tag>
+    <Tag accessibilityLabel="Remove tag">
       <Text emphasized>Hello, world!</Text>
     </Tag>
-    <Tag>
+    <Tag accessibilityLabel="Remove tag">
       <Text emphasized>Hello, world!</Text>
     </Tag>
-    <Tag>
+    <Tag accessibilityLabel="Remove tag">
       <Text emphasized>Hello, world!</Text>
     </Tag>
   </InlineStack>
