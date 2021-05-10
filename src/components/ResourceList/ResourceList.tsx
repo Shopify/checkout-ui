@@ -5,9 +5,9 @@ import {createIdCreator, useId} from '../../utilities/id';
 import {utilityDefaultBorderColor} from '../../utilities/legacy';
 import {Heading} from '../Heading';
 import {HeadingGroup} from '../HeadingGroup';
-import {VisuallyHidden} from '../VisuallyHidden';
+import {View} from '../View';
 import {
-  ThemeGap,
+  ThemeSpacing,
   ThemeResourceListBorder,
   ThemeBorderStyle,
   ThemeBorderColor,
@@ -23,14 +23,14 @@ export interface Props {
   border?: ThemeResourceListBorder;
   borderStyle?: ThemeBorderStyle;
   borderColor?: ThemeBorderColor;
-  gap?: ThemeGap;
+  spacing?: ThemeSpacing;
 }
 
 export function ResourceList({
   children,
   title,
   titleHidden,
-  gap,
+  spacing,
   border,
   borderStyle,
   borderColor,
@@ -39,7 +39,7 @@ export function ResourceList({
   const className = classNames(
     styles.ResourceList,
     utilityDefaultBorderColor,
-    gap && styles[variationName('gap', gap)],
+    spacing && styles[variationName('spacing', spacing)],
     border && styles[variationName('border', border)],
     borderStyle && styles[variationName('borderStyle', borderStyle)],
     borderColor && styles[variationName('borderColor', borderColor)],
@@ -50,7 +50,7 @@ export function ResourceList({
   return (
     <>
       {title && titleHidden ? (
-        <VisuallyHidden>{titleMarkup}</VisuallyHidden>
+        <View visibility="hidden">{titleMarkup}</View>
       ) : (
         titleMarkup
       )}
@@ -102,7 +102,7 @@ export function ResourceListHeaderContent({
         primary ? styles['ResourceListHeaderContent-isPrimary'] : undefined
       }
     >
-      {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
+      {hidden ? <View visibility="hidden">{children}</View> : children}
     </div>
   );
 }

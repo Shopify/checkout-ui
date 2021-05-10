@@ -1,16 +1,10 @@
 .Tiles {
   display: flex;
   flex-wrap: wrap;
-  margin-block-start: calc(var(--x-spacing-base) * -1);
-  margin-inline-start: calc(var(--x-spacing-base) * -1);
 
   & > * {
     min-width: var(--tile-width, 0);
     max-width: 100%;
-    padding-block-start: var(--x-spacing-base);
-    padding-inline-start: var(--x-spacing-base);
-    flex: 0 0
-      calc((var(--tiles-breakpoint, 0) + var(--x-spacing-base) - 100%) * 999);
   }
 }
 
@@ -25,7 +19,7 @@
   }
 }
 
-.spacingXtight {
+.spacingExtraTight {
   margin-block-start: calc(var(--x-spacing-tight4x) * -1);
   margin-inline-start: calc(var(--x-spacing-tight4x) * -1);
 
@@ -51,6 +45,18 @@
   }
 }
 
+.spacingBase {
+  margin-block-start: calc(var(--x-spacing-base) * -1);
+  margin-inline-start: calc(var(--x-spacing-base) * -1);
+
+  & > * {
+    padding-block-start: var(--x-spacing-base);
+    padding-inline-start: var(--x-spacing-base);
+    flex: 0 0
+      calc((var(--tiles-breakpoint, 0) + var(--x-spacing-base) - 100%) * 999);
+  }
+}
+
 .spacingLoose {
   margin-block-start: calc(var(--x-spacing-loose1x) * -1);
   margin-inline-start: calc(var(--x-spacing-loose1x) * -1);
@@ -64,7 +70,7 @@
   }
 }
 
-.spacingXloose {
+.spacingExtraLoose {
   margin-block-start: calc(var(--x-spacing-loose4x) * -1);
   margin-inline-start: calc(var(--x-spacing-loose4x) * -1);
 

@@ -10,7 +10,7 @@ import {Connected} from './Connected';
 
 const meta = {
   component: Connected,
-  title: 'Connected',
+  title: 'checkout-web-ui/Connected',
   decorators: [withKnobs, themeWithKnobs('textFields')],
 };
 
@@ -39,6 +39,20 @@ export const leading = () => (
 
 export const both = () => (
   <Connected leading="auto" trailing="auto">
+    <TextField label="Name" />
+    <Button>Hello, world!</Button>
+  </Connected>
+);
+
+export const stack = () => (
+  <Connected stack>
+    <TextField label="Name" />
+    <Button>Hello, world!</Button>
+  </Connected>
+);
+
+export const responsive = () => (
+  <Connected stack={{base: true, medium: false}} spacing="extraLoose">
     <TextField label="Name" />
     <Button>Hello, world!</Button>
   </Connected>

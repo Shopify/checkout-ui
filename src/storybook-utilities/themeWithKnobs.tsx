@@ -32,6 +32,8 @@ enum Group {
   Color = 'Color',
   Typography = 'Typography',
   Thumbnail = 'Thumbnail',
+  Link = 'Link',
+  ReviewBlock = 'Review block',
 }
 
 enum Label {
@@ -44,6 +46,10 @@ enum Label {
   InlinePadding = 'Inline padding',
   LoadingStyle = 'Loading style',
   BadgeColor = 'Badge color',
+  ColorHovered = 'Color hovered',
+  ColorPressed = 'Color pressed',
+  TransitionDuration = 'Transition duration',
+  Spacing = 'Spacing',
 }
 
 enum Action {
@@ -51,7 +57,6 @@ enum Action {
 }
 
 enum Breadcrumb {
-  Gap = 'Gap',
   ChevronIconSeparator = 'Chevron icon separator',
   NumberStyle = 'Number style',
 }
@@ -67,7 +72,6 @@ const SIMPLE_BORDER_OPTIONS = optionify(['full', 'none']);
 const BORDER_OPTIONS = optionify(['full', 'blockEnd', 'none']);
 const LABEL_POSITION_OPTIONS = optionify(['inside', 'outside']);
 const ACTIONS_DISPLAY_OPTIONS = optionify(['inline', 'block']);
-const BREADCRUMB_GAP_OPTIONS = optionify(['base', 'loose']);
 const NUMBER_STYLE_OPTIONS = optionify([
   'none',
   'decimal',
@@ -76,33 +80,26 @@ const NUMBER_STYLE_OPTIONS = optionify([
 const STYLE_OPTIONS = optionify(['style1']);
 const SIZE_OPTIONS = optionify([
   'base',
-  'xsmall',
+  'extraSmall',
   'small',
   'medium',
   'large',
-  'xlarge',
-  'xxlarge',
+  'extraLarge',
+  'extraExtraLarge',
 ]);
 const LETTER_CASE_OPTIONS = optionify(['none', 'title', 'upper', 'lower']);
 const FONT_OPTIONS = optionify(['primary', 'secondary']);
 const WEIGHT_OPTIONS = optionify(['base', 'bold']);
-const LINE_SIZE_OPTIONS = optionify(['base', 'large']);
+const LINE_SIZE_OPTIONS = optionify(['base', 'small']);
 const KERNING_OPTIONS = optionify(['base', 'loose', 'xloose']);
 const SPACING_OPTIONS = optionify([
   'none',
-  'tight4x',
-  'tight3x',
-  'tight2x',
-  'tight1x',
+  'extraTight',
   'tight',
   'base',
   'loose',
-  'loose1x',
-  'loose2x',
-  'loose3x',
-  'loose4x',
+  'extraLoose',
 ]);
-const SIMPLE_SPACING_OPTIONS = optionify(['tight', 'base']);
 const LOADING_STYLE_OPTIONS = optionify(['spinner', 'progressBar']);
 const ERROR_INDENTATION_OPTIONS = optionify(['none', 'toText']);
 const OPACITY_OPTIONS = optionify(['translucent', 'opaque']);
@@ -122,6 +119,16 @@ const FONT_WEIGHT_OPTIONS = optionify([
   '900',
 ]);
 const BADGE_COLOR_OPTIONS = optionify(['subdued', 'primary']);
+const COLOR_STYLE_OPTIONS = optionify(['color1', 'color2']);
+const TRANSITION_DURATION_OPTIONS = optionify([
+  'none',
+  'fast',
+  'base',
+  'slow',
+  'slower',
+  'slowest',
+]);
+const DIVIDER_OPTIONS = optionify(['toContainerEdge']);
 
 export function themeWithKnobs(...picks: Keys): DecoratorFunction {
   return (storyFn) => <ThemeWithKnobs pick={picks}>{storyFn()}</ThemeWithKnobs>;
@@ -140,7 +147,7 @@ function ThemeWithKnobs({pick = [], children}: Props) {
   };
   const actions = {display: undefined};
   const buyerJourney = {
-    gap: undefined,
+    spacing: undefined,
     chevronIconSeparator: true,
     numberStyle: undefined,
     typographyStyle: undefined,
@@ -189,10 +196,25 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     border: undefined,
     borderRadius: undefined,
     borderStyle: undefined,
-    gap: undefined,
+    spacing: undefined,
     blockPadding: undefined,
     inlinePadding: undefined,
     typographyStyle: undefined,
+  };
+
+  const reviewBlock = {
+    borderRadius: undefined,
+    border: undefined,
+    spacing: undefined,
+    inlinePadding: undefined,
+    blockPadding: undefined,
+    divider: undefined,
+  };
+
+  const link = {
+    transitionDuration: undefined,
+    colorHovered: undefined,
+    colorPressed: undefined,
   };
 
   if (pick.includes('textFields')) {
@@ -247,10 +269,10 @@ function ThemeWithKnobs({pick = [], children}: Props) {
   }
 
   if (pick.includes('buyerJourney')) {
-    buyerJourney.gap = select(
-      Breadcrumb.Gap,
-      BREADCRUMB_GAP_OPTIONS,
-      buyerJourney.gap,
+    buyerJourney.spacing = select(
+      Label.Spacing,
+      SPACING_OPTIONS,
+      buyerJourney.spacing,
       Group.Breadcrumb,
     );
     buyerJourney.chevronIconSeparator = boolean(
@@ -342,10 +364,10 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       optionList.borderStyle,
       Group.OptionList,
     );
-    optionList.gap = select(
-      'Gap',
+    optionList.spacing = select(
+      Label.Spacing,
       optionify(['none', 'tight', 'base']),
-      optionList.gap,
+      optionList.spacing,
       Group.OptionList,
     );
     optionList.blockPadding = select(
@@ -365,6 +387,45 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       STYLE_OPTIONS,
       optionList.typographyStyle,
       Group.OptionList,
+    );
+  }
+
+  if (pick.includes('reviewBlock')) {
+    reviewBlock.borderRadius = select(
+      Label.BorderRadius,
+      BORDER_RADIUS_OPTIONS,
+      reviewBlock.borderRadius,
+      Group.ReviewBlock,
+    );
+    reviewBlock.border = select(
+      Label.Border,
+      OPTION_LIST_BORDER_OPTIONS,
+      reviewBlock.border,
+      Group.ReviewBlock,
+    );
+    reviewBlock.spacing = select(
+      Label.Spacing,
+      optionify(['none', 'tight', 'base']),
+      reviewBlock.spacing,
+      Group.ReviewBlock,
+    );
+    reviewBlock.blockPadding = select(
+      Label.BlockPadding,
+      SPACING_OPTIONS,
+      reviewBlock.blockPadding,
+      Group.ReviewBlock,
+    );
+    reviewBlock.inlinePadding = select(
+      Label.InlinePadding,
+      SPACING_OPTIONS,
+      reviewBlock.inlinePadding,
+      Group.ReviewBlock,
+    );
+    reviewBlock.divider = select(
+      'Divider',
+      DIVIDER_OPTIONS,
+      reviewBlock.divider,
+      Group.ReviewBlock,
     );
   }
 
@@ -452,7 +513,7 @@ function ThemeWithKnobs({pick = [], children}: Props) {
   if (pick.includes('formLayout')) {
     formLayout.spacing = select(
       'Spacing',
-      SIMPLE_SPACING_OPTIONS,
+      SPACING_OPTIONS,
       formLayout.spacing,
       Group.FormLayout,
     );
@@ -488,6 +549,27 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     );
   }
 
+  if (pick.includes('link')) {
+    link.transitionDuration = select(
+      Label.TransitionDuration,
+      TRANSITION_DURATION_OPTIONS,
+      link.transitionDuration,
+      Group.Link,
+    );
+    link.colorHovered = select(
+      Label.ColorHovered,
+      COLOR_STYLE_OPTIONS,
+      link.colorHovered,
+      Group.Link,
+    );
+    link.colorPressed = select(
+      Label.ColorPressed,
+      COLOR_STYLE_OPTIONS,
+      link.colorPressed,
+      Group.Link,
+    );
+  }
+
   const theme = createTheme({
     textFields,
     select: selects,
@@ -505,6 +587,8 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     banner,
     thumbnail,
     optionList,
+    reviewBlock,
+    link,
     typographyStyle1: {
       size: select(`Size`, SIZE_OPTIONS, undefined, Group.Style),
       letterCase: select(
@@ -573,6 +657,8 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       success: hsluvColorGroup('Success'),
       warning: hsluvColorGroup('Warning'),
       critical: hsluvColorGroup('Critical'),
+      color1: hsluvColorGroup('Color 1'),
+      color2: hsluvColorGroup('Color 2'),
     },
   });
   return <Theme theme={theme}>{children}</Theme>;

@@ -1,104 +1,72 @@
 import React from 'react';
+import {BlockStackProps as Props} from '@shopify/argo-checkout';
 
-import {InlineStack} from '../InlineStack';
-
-import {BlockStack} from './BlockStack';
+import {BlockStack as BlockStackComponent} from './BlockStack';
 
 const meta = {
-  component: BlockStack,
-  title: 'BlockStack',
+  component: BlockStackComponent,
+  title: 'checkout-web-ui/BlockStack',
+  argTypes: {
+    spacing: {
+      control: {
+        type: 'select',
+        options: [
+          undefined,
+          'none',
+          'extraTight',
+          'tight',
+          'base',
+          'loose',
+          'extraLoose',
+        ],
+      },
+    },
+    alignment: {
+      control: {
+        type: 'select',
+        options: [undefined, 'leading', 'center', 'trailing'],
+      },
+    },
+  },
 };
 
 export default meta;
 
-function Content() {
-  return <div style={{backgroundColor: 'lightgrey'}}>Content block</div>;
+function Content({size = 1}: {size?: number}) {
+  return (
+    <div
+      style={{
+        backgroundColor: 'lightgrey',
+        width: '5em',
+        height: `${size}em`,
+      }}
+    />
+  );
 }
 
-export const spacing = () => (
-  <InlineStack>
-    <BlockStack spacing="xtight">
-      <Content />
-      <Content />
-      <Content />
-      <Content />
-    </BlockStack>
-
-    <BlockStack spacing="tight">
-      <Content />
-      <Content />
-      <Content />
-      <Content />
-    </BlockStack>
-
-    <BlockStack>
-      <Content />
-      <Content />
-      <Content />
-      <Content />
-    </BlockStack>
-
-    <BlockStack spacing="loose">
-      <Content />
-      <Content />
-      <Content />
-      <Content />
-    </BlockStack>
-
-    <BlockStack spacing="xloose">
-      <Content />
-      <Content />
-      <Content />
-      <Content />
-    </BlockStack>
-  </InlineStack>
-);
-
-export const alignment = () => (
-  <>
-    <BlockStack alignment="leading">
-      <Content />
-    </BlockStack>
-    <BlockStack alignment="center">
-      <Content />
-    </BlockStack>
-    <BlockStack alignment="trailing">
-      <Content />
-    </BlockStack>
-  </>
-);
-
-export const nested = () => (
-  <>
-    <BlockStack spacing="xtight">
-      <Content />
-      <Content />
-      <BlockStack spacing="tight">
+export const BlockStack = ({...args}: Props) => {
+  return (
+    <>
+      <BlockStackComponent {...args}>
+        <Content />
+        <Content size={3} />
+        <Content />
+        <Content size={2} />
         <Content />
         <Content />
-        <BlockStack>
-          <Content />
-          <Content />
-          <BlockStack spacing="loose">
-            <Content />
-            <Content />
-            <BlockStack spacing="xloose">
-              <Content />
-              <Content />
-              <Content />
-              <Content />
-            </BlockStack>
-            <Content />
-            <Content />
-          </BlockStack>
-          <Content />
-          <Content />
-        </BlockStack>
+        <Content size={3} />
         <Content />
-        <Content />
-      </BlockStack>
-      <Content />
-      <Content />
-    </BlockStack>
-  </>
-);
+        <Content size={2} />
+      </BlockStackComponent>
+    </>
+  );
+};
+
+BlockStack.args = {
+  spacing: undefined,
+  alignment: undefined,
+};
+
+BlockStack.story = {
+  name: 'BlockStack',
+};

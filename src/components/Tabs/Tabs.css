@@ -1,0 +1,124 @@
+.Tabs {
+  --tabs-border-width: rem(1px);
+  --tabs-border-style: solid;
+}
+
+.TabList {
+  --tabs-divider-width: rem(2px);
+  --tabs-divider-style: solid;
+  display: flex;
+  align-items: stretch;
+  border: var(--tabs-border-width) var(--x-default-color-border)
+    var(--tabs-border-style);
+  border-bottom: var(--tabs-divider-width)
+    var(--x-color-surface-tertiary-border) var(--tabs-divider-style);
+  border-top-left-radius: var(
+    --x-control-border-radius,
+    var(--x-global-border-radius)
+  );
+  border-top-right-radius: var(
+    --x-control-border-radius,
+    var(--x-global-border-radius)
+  );
+}
+
+.Tab {
+  --tabs-focus-border-width: rem(2px);
+  --tabs-selected-divider-width: rem(4px);
+  position: relative;
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--x-spacing-loose) var(--x-spacing-loose);
+  font-weight: var(--x-typography-primary-weight-base);
+  color: var(--x-color-surface-tertiary-text-subdued);
+  background-color: var(--x-color-surface-tertiary);
+
+  /* ::before is the bottom border */
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: calc(-1 * var(--tabs-divider-width));
+    left: 0;
+    right: 0;
+    height: var(--tabs-divider-width);
+    background-color: transparent;
+  }
+
+  /* ::after is the focus ring */
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: calc(-1 * var(--tabs-border-width));
+    left: calc(-1 * var(--tabs-border-width));
+    right: calc(-1 * var(--tabs-border-width));
+    bottom: calc(-1 * var(--tabs-divider-width));
+    border: var(--tabs-focus-border-width) solid transparent;
+  }
+
+  &:hover::before {
+    background-color: var(--x-color-surface-tertiary-border-emphasized);
+  }
+
+  &:focus {
+    outline: none;
+
+    &::after {
+      border-color: var(--x-color-interactive-text);
+    }
+  }
+
+  /* stylelint-disable-next-line selector-max-specificity */
+  &:active::after,
+  &:focus:not(:focus-visible)::after {
+    border-color: transparent;
+  }
+
+  &:active:not(.selected) {
+    background-color: var(--x-color-surface-tertiary-subdued);
+  }
+
+  &.selected {
+    color: var(--x-color-interactive-text);
+
+    &::before {
+      bottom: calc(-1 * var(--tabs-divider-width));
+      height: var(--tabs-selected-divider-width);
+      background-color: var(--x-color-interactive-text);
+    }
+  }
+
+  &:first-of-type,
+  &:first-of-type::after {
+    border-top-left-radius: var(
+      --x-control-border-radius,
+      var(--x-global-border-radius)
+    );
+  }
+
+  &:last-of-type,
+  &:last-of-type::after {
+    border-top-right-radius: var(
+      --x-control-border-radius,
+      var(--x-global-border-radius)
+    );
+  }
+}
+
+.TabPanel {
+  &.bordered {
+    border: var(--tabs-border-width) var(--x-default-color-border)
+      var(--tabs-border-style);
+    border-top: none;
+    border-bottom-left-radius: var(
+      --x-control-border-radius,
+      var(--x-global-border-radius)
+    );
+    border-bottom-right-radius: var(
+      --x-control-border-radius,
+      var(--x-global-border-radius)
+    );
+  }
+}

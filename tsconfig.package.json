@@ -13,7 +13,7 @@
     "composite": true,
     "jsx": "preserve",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -25,7 +25,9 @@
       "dom.iterable",
       "es2018",
       "esnext.asynciterable",
-      "scripthost"
+      "scripthost",
+      "WebWorker",
+      "WebWorker.ImportScripts"
     ],
     "module": "commonjs",
     "target": "es2017",

@@ -15,11 +15,7 @@ import {useTransition} from '../../utilities/transition';
 
 import styles from './Shell.css';
 
-export type ShellHeaderPosition =
-  | 'start'
-  | 'fixed'
-  | 'inline'
-  | 'inlineSecondary';
+export type ShellHeaderPosition = 'start' | 'inline' | 'inlineSecondary';
 
 export type ShellSubheaderPosition = 'start' | 'inline';
 export type ShellFooterPosition = 'inline' | 'end';
@@ -67,35 +63,6 @@ export interface ShellHeaderProps {
   background?: string;
 }
 
-export function ShellHeader({
-  children,
-  alignment,
-  blockPadding,
-  background,
-}: ShellHeaderProps) {
-  const style = background
-    ? {
-        backgroundImage: `url(${JSON.stringify(background)})`,
-      }
-    : undefined;
-
-  return (
-    <HeadingGroup>
-      <header
-        role="banner"
-        style={style}
-        className={classNames(
-          styles.Header,
-          styles[variationName('Header-alignment', alignment)],
-          styles[variationName('Header-blockPadding', blockPadding)],
-        )}
-      >
-        <div className={styles.HeaderInner}>{children}</div>
-      </header>
-    </HeadingGroup>
-  );
-}
-
 export type ShellSubheaderAlignment = 'start' | 'center' | 'end';
 
 export interface ShellSubheaderProps {
@@ -113,34 +80,6 @@ export function ShellSubheader({children, alignment}: ShellSubheaderProps) {
     >
       <div className={styles.SubheaderInner}>{children}</div>
     </div>
-  );
-}
-
-export interface ShellHeadingProps {
-  to?: string;
-  logo?: {source: string; maxWidth?: number};
-  children: string;
-}
-
-export function ShellHeading({to, logo, children}: ShellHeadingProps) {
-  const content = logo?.source ? (
-    <img
-      src={logo.source}
-      alt={children}
-      // TODO: convert to rems
-      style={logo.maxWidth ? {maxWidth: logo.maxWidth} : undefined}
-      className={styles.Logo}
-    />
-  ) : (
-    children
-  );
-
-  return to ? (
-    <a className={styles.Heading} href={to}>
-      {content}
-    </a>
-  ) : (
-    <span className={styles.Heading}>{content}</span>
   );
 }
 

@@ -4,39 +4,25 @@ import React, {
   ReactNode,
   useEffect,
   useCallback,
-  ComponentProps,
 } from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
-import {BlockStack} from '../BlockStack';
-import {Field} from '../TextField';
-import {Labelled} from '../Labelled';
+import {
+  InternalProps as TextFieldInternalProps,
+  TextFieldInternal,
+} from '../TextField';
 import {useThemeConfiguration} from '../Theme';
 import {Popper} from '../Popper';
 import {Icon} from '../Icon';
-import {InlineError} from '../InlineError';
-import {isEmptyString} from '../../utilities/strings';
 import {isFocused} from '../../utilities/focus';
-import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './Autocomplete.css';
 
-export interface Props {
-  error?: string;
-  id: string;
-  label: string;
-  name: string;
-  onChange?(option: any): void;
+export interface Props extends TextFieldInternalProps {
   options: any[];
   onSelectOption?(option: any): void;
-  value: string;
   ariaLabel: string;
   title: string;
-  required?: boolean;
-  autocomplete?: ComponentProps<typeof Field>['autocomplete'];
-  disabled?: boolean;
-  readonly?: boolean;
-  children?: ReactNode;
 }
 
 export function Autocomplete({
@@ -44,6 +30,7 @@ export function Autocomplete({
   id,
   label,
   name,
+  onInput,
   onChange,
   options,
   onSelectOption,
@@ -62,25 +49,12 @@ export function Autocomplete({
   const popperRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const {
-    textFields: {
-      labelPosition,
-      background = 'surfaceTertiary',
-      errorIndentation,
-      errorTypographyStyle,
-    },
+    controls: {background: controlsBackground},
+    textFields: {background: textFieldsBackground},
   } = useThemeConfiguration();
 
-  const errorMarkup = error && (
-    <span
-      className={classNames(
-        errorIndentation &&
-          styles[variationName('Error-errorIndentation', errorIndentation)],
-        errorTypographyStyle && typographyStyles[errorTypographyStyle],
-      )}
-    >
-      <InlineError controlID={id}>{error}</InlineError>
-    </span>
-  );
+  const background =
+    textFieldsBackground || controlsBackground || 'surfaceTertiary';
 
   const handleOpen = () => {
     if (open) {
@@ -106,16 +80,14 @@ export function Autocomplete({
     setOpen(false);
   }, [open]);
 
-  const handleChange = (newValue: string) => {
+  const handleInput = (newValue: string) => {
     if (newValue === '') {
       handleClose();
     } else {
       handleOpen();
     }
 
-    if (onChange) {
-      onChange(newValue);
-    }
+    onInput?.(newValue);
   };
 
   const handleOptionMouseOver = (index: number) => {
@@ -273,38 +245,27 @@ export function Autocomplete({
 
   return (
     <>
-      <BlockStack spacing="tight">
-        <Labelled
-          label={label}
-          htmlFor={id}
-          isEmpty={isEmptyString(value)}
-          position={labelPosition}
-          background={background}
-          subdued={readonly}
-        >
-          <Field
-            ariaActiveDescendant={open ? `${id}-option-${selected}` : undefined}
-            ariaAutocomplete="list"
-            ariaControls={`${id}-options`}
-            ariaExpanded={renderPopper}
-            required={required}
-            autocomplete={!open && autocomplete}
-            error={error}
-            id={id}
-            label={label}
-            name={name}
-            onInput={handleChange}
-            onFocus={handleOpen}
-            onKeyDown={handleKeyDown}
-            ref={fieldRef}
-            role="combobox"
-            value={value}
-            disabled={disabled}
-            readonly={readonly}
-          />
-        </Labelled>
-        {errorMarkup}
-      </BlockStack>
+      <TextFieldInternal
+        label={label}
+        ariaActiveDescendant={open ? `${id}-option-${selected}` : undefined}
+        ariaAutocomplete="list"
+        ariaControls={`${id}-options`}
+        ariaExpanded={renderPopper}
+        required={required}
+        autocomplete={!open && autocomplete}
+        error={error}
+        id={id}
+        name={name}
+        onInput={handleInput}
+        onChange={onChange}
+        onFocus={handleOpen}
+        onKeyDown={handleKeyDown}
+        ref={fieldRef}
+        role="combobox"
+        controlledValue={value}
+        disabled={disabled}
+        readonly={readonly}
+      />
       {renderPopper && (
         <Popper
           activator={fieldRef.current}

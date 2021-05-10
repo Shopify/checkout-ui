@@ -2,7 +2,7 @@ import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 import {ImageProps} from '@shopify/argo-checkout';
 
-import {HiddenForAccessibility} from '../HiddenForAccessibility';
+import {View} from '../View';
 
 import styles from './Image.css';
 
@@ -90,7 +90,7 @@ function MaybeHiddenForA11y({
   condition,
 }: PropsWithChildren<MaybeProps>) {
   return condition ? (
-    <HiddenForAccessibility>{children}</HiddenForAccessibility>
+    <View accessibilityVisibility="hidden">{children}</View>
   ) : (
     <>{children}</>
   );

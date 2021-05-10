@@ -13,8 +13,8 @@
   text-align: center;
   text-decoration: none;
   text-transform: var(--x-global-typography-letter-case);
-  transition: background-color var(--duration--base) var(--timing--base),
-    color var(--duration--base) var(--timing--base);
+  transition: background-color var(--x-duration-base) var(--x-timing-base),
+    color var(--x-duration-base) var(--x-timing-base);
 
   &:hover {
     background-color: var(--x-color-primary-action-hovered);
@@ -38,7 +38,7 @@
 
 .Content,
 .LoadingContent {
-  transition: opacity var(--duration--slow) var(--timing--base);
+  transition: opacity var(--x-duration-slow) var(--x-timing-base);
 }
 
 .Spinner {
@@ -48,75 +48,108 @@
   transform: translate(-50%, -50%);
 }
 
-.isSubdued,
-.isPlain {
+.subdued,
+.plain {
   background-color: transparent;
-  color: var(--x-color-primary-action);
 
   &:hover {
     background-color: transparent;
+  }
+
+  &:active {
+    background-color: transparent;
+  }
+}
+
+.subdued {
+  box-shadow: inset 0 0 0 1px var(--x-default-color-border);
+  color: var(--x-color-primary-action);
+
+  &:hover {
     color: var(--x-color-primary-action-hovered);
   }
 
   &:active {
-    background-color: transparent;
     color: var(--x-color-primary-action-pressed);
   }
 }
 
-.isPlain {
+.plain {
   font-weight: var(--x-typography-primary-weight-base);
-  padding: em(5px);
-  margin: em(-5px);
+  padding: 0;
+  border-radius: var(--x-border-radius-none);
+  color: inherit;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: em(-5px);
+    z-index: 0;
+
+    @media (any-hover: none) {
+      inset: em(-20px) em(-24px);
+    }
+  }
+
+  & .Content {
+    z-index: 1;
+    position: relative;
+  }
+}
+
+.appearanceDefault {
+  background-color: var(--x-color-interactive);
   color: var(--x-color-interactive-text);
-  transition: color var(--duration--base) var(--timing--base);
+  transition: background-color var(--x-duration-base) var(--x-timing-base),
+    color var(--x-duration-base) var(--x-timing-base);
 
   &:hover {
-    color: var(--x-color-interactive-text-hovered);
+    --this-background-color: var(--x-color-interactive-hovered);
+    --this-color: var(--x-color-interactive-text-hovered);
+    background-color: var(--this-background-color);
+    color: var(--this-color);
   }
 
   &:active {
-    color: var(--x-color-interactive-text-pressed);
-  }
-
-  @media (any-hover: none) {
-    padding: em(20px) em(24px);
-    margin: em(-20px) em(-24px);
+    --this-background-color: var(--x-color-interactive-pressed);
+    --this-color: var(--x-color-interactive-text-pressed);
+    background-color: var(--this-background-color);
+    color: var(--this-color);
   }
 }
 
-.isUnderline {
+.appearanceInheritColor:hover {
+  text-decoration: none;
+}
+
+.underline {
   text-decoration: underline;
 }
 
-.isFill {
+.fill {
   display: flex;
   justify-content: center;
   min-width: 100%;
 
-  &.isPlain {
+  &.plain {
     margin: 0;
     padding: 0;
   }
 }
 
-.isSubdued {
-  box-shadow: inset 0 0 0 1px var(--x-default-color-border);
-}
-
-.isDisabled,
-.isLoading {
+.disabled,
+.loading {
   pointer-events: none;
   cursor: default;
 }
 
-.isDisabled {
+.disabled {
   /* TODO */
   background-color: hsl(0, 0%, 85%);
   color: hsl(0, 0%, 100%);
 }
 
-.isLoading-transitionEnter {
+.loading-transitionEnter {
   & .LoadingContent {
     opacity: 0;
   }
@@ -128,8 +161,8 @@
   }
 }
 
-.isLoading-transitionEntering,
-.isLoading-transitionEntered {
+.loading-transitionEntering,
+.loading-transitionEntered {
   & .LoadingContent {
     opacity: 1;
   }
@@ -143,7 +176,7 @@
   }
 }
 
-.isSecondary {
+.secondary {
   background-color: var(--x-color-secondary-action);
   color: var(--x-color-secondary-action-text);
   padding: var(--x-secondary-button-block-padding)
@@ -159,10 +192,17 @@
   }
 }
 
-.isConnected {
+.tertiary {
+  background-color: var(--x-color-tertiary-action);
+  color: var(--x-color-tertiary-action-text);
+  padding: var(--x-tertiary-button-block-padding)
+    var(--x-tertiary-button-inline-padding);
+}
+
+.connected {
   padding-block-end: 0;
   padding-block-start: 0;
-  height: em(47px);
+  height: em(46px);
 }
 
 .progressBar {
@@ -192,10 +232,10 @@
     animation-duration: 20s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(0, 1, 0.5, 1);
-    animation-delay: var(--duration--base);
+    animation-delay: var(--x-duration-base);
   }
 
-  &.isSecondary {
+  &.secondary {
     background-color: var(--x-color-secondary-action-pressed);
 
     &::before {
@@ -203,7 +243,7 @@
     }
   }
 
-  &.isDisabled {
+  &.disabled {
     background-color: hsl(0, 0%, 85%);
 
     &::before {
@@ -211,8 +251,8 @@
     }
   }
 
-  &.isSubdued,
-  &.isPlain {
+  &.subdued,
+  &.plain {
     background-color: transparent;
 
     &::before {
@@ -292,4 +332,25 @@
   100% {
     transform: scaleX(1);
   }
+}
+
+.colorHoveredColor1:hover {
+  background-color: var(--x-color1, var(--this-background-color));
+  color: var(--x-color1-text, var(--this-color));
+}
+
+.colorHoveredColor2:hover {
+  background-color: var(--x-color2, var(--this-background-color));
+  color: var(--x-color2-text, var(--this-color));
+}
+
+/* Order does matter. :active pseudo-selector need to come after :hover */
+.colorPressedColor1:active {
+  background-color: var(--x-color1, var(--this-background-color));
+  color: var(--x-color1-text, var(--this-color));
+}
+
+.colorPressedColor2:active {
+  background-color: var(--x-color2, var(--this-background-color));
+  color: var(--x-color2-text, var(--this-color));
 }

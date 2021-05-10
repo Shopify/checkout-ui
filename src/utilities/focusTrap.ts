@@ -15,7 +15,7 @@ const FOCUSABLE_ELEMENTS = `
   audio[controls],
   video[controls]`;
 
-export function useFocusTrap() {
+export function useFocusTrap({preventScroll} = {preventScroll: false}) {
   const ref = useRef<HTMLElement | null>(null);
 
   const findFocusableElements = useCallback(
@@ -38,19 +38,22 @@ export function useFocusTrap() {
     [],
   );
 
-  const setRef = useCallback((node) => {
-    if (node) {
-      if (!ref.current) {
-        ref.current = node;
+  const setRef = useCallback(
+    (node) => {
+      if (node) {
+        if (!ref.current) {
+          ref.current = node;
 
-        setTimeout(() => {
-          ref?.current?.focus();
-        });
+          setTimeout(() => {
+            ref?.current?.focus({preventScroll});
+          });
+        }
+      } else {
+        ref.current = null;
       }
-    } else {
-      ref.current = null;
-    }
-  }, []);
+    },
+    [preventScroll],
+  );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

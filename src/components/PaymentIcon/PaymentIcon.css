@@ -1,6 +1,6 @@
 .PaymentIcon {
   border-radius: em(3px);
-  transition: all var(--duration--base) var(--timing--base);
+  transition: all var(--x-duration-base) var(--x-timing-base);
   width: auto;
   height: em(24px);
 }

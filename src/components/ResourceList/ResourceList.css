@@ -5,16 +5,35 @@
   flex-direction: column;
 
   & > * + * {
-    margin-block-start: var(--x-resource-list-block-gap, var(--x-spacing-base));
+    margin-block-start: var(
+      --x-resource-list-block-spacing,
+      var(--x-spacing-base)
+    );
   }
 }
 
-.gapNone {
-  --x-resource-list-block-gap: 0;
+.spacingNone {
+  --x-resource-list-block-spacing: 0;
 }
 
-.gapTight {
-  --x-resource-list-block-gap: var(--x-spacing-tight);
+.spacingExtraTight {
+  --x-resource-list-block-spacing: var(--x-spacing-tight4x);
+}
+
+.spacingTight {
+  --x-resource-list-block-spacing: var(--x-spacing-tight1x);
+}
+
+.spacingBase {
+  --x-resource-list-block-spacing: var(--x-spacing-base);
+}
+
+.spacingLoose {
+  --x-resource-list-block-spacing: var(--x-spacing-loose1x);
+}
+
+.spacingExtraLoose {
+  --x-resource-list-block-spacing: var(--x-spacing-loose4x);
 }
 
 .borderStyleDotted {
@@ -28,20 +47,41 @@
   );
 }
 
-.borderBlockEnd {
-  padding-block-end: var(--x-spacing-loose1x);
-  border-block-end: 1px var(--x-resource-list-border-style)
-    var(--x-resource-list-border-color);
-}
-
-.borderAroundItems {
-  & > * {
-    border-block: 1px var(--x-resource-list-border-style)
-      var(--x-resource-list-border-color);
+.borderInner {
+  &.spacingNone {
+    & > * {
+      &:not(:first-child) {
+        border-block-start-width: 0;
+      }
+    }
   }
 
-  &.gapNone > *:not(:last-child) {
-    border-block-end: 0;
+  & > *:not(.ResourceListHeader) {
+    border-block: 1px var(--x-resource-list-border-style)
+      var(--x-resource-list-border-color);
+
+    &:first-child {
+      border-block-start-width: 0;
+    }
+
+    &:last-child {
+      border-block-end-width: 0;
+    }
+  }
+}
+
+.borderOuter {
+  &.spacingNone {
+    & > * {
+      &:not(:last-child) {
+        border-block-end-width: 0;
+      }
+    }
+  }
+
+  & > *:not(.ResourceListHeader) {
+    border-block: 1px var(--x-resource-list-border-style)
+      var(--x-resource-list-border-color);
   }
 }
 
@@ -63,7 +103,7 @@
     }
   }
 
-  &.gapNone > *:not(:last-child) {
+  &.spacingNone > *:not(:last-child) {
     border-block-end: 0;
   }
 }
@@ -72,6 +112,10 @@
   display: flex;
   align-items: center;
   width: 100%;
+
+  @nest .borderInner > & {
+    border-block-start-width: 0;
+  }
 }
 
 .ResourceListHeader-isHidden {
@@ -80,6 +124,12 @@
 
   & + * {
     margin-block-start: 0;
+  }
+
+  @nest .borderInner > & {
+    & + * {
+      border-block-start-width: 0;
+    }
   }
 
   @nest .borderFull > & {

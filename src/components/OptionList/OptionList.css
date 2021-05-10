@@ -125,7 +125,7 @@
   background-color: var(--option-list-background-color);
 
   &:not(:first-child) {
-    margin-top: var(--x-option-list-block-gap);
+    margin-top: var(--x-option-list-block-spacing);
   }
 
   &:first-child {
@@ -153,9 +153,12 @@
 
 .OptionLabel {
   display: block;
-  cursor: pointer;
   padding: var(--x-option-list-block-padding)
     var(--x-option-list-inline-padding);
+}
+
+.OptionLabel-cursorPointer {
+  cursor: pointer;
 }
 
 .Details {

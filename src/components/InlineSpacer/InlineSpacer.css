@@ -1,0 +1,28 @@
+.InlineSpacer {
+  display: inline-block;
+}
+
+.sizeExtraSmall {
+  width: var(--x-spacing-tight4x);
+  min-width: var(--x-spacing-tight4x);
+}
+
+.sizeSmall {
+  width: var(--x-spacing-tight1x);
+  min-width: var(--x-spacing-tight1x);
+}
+
+.sizeBase {
+  width: var(--x-spacing-base);
+  min-width: var(--x-spacing-base);
+}
+
+.sizeLarge {
+  width: var(--x-spacing-loose1x);
+  min-width: var(--x-spacing-loose1x);
+}
+
+.sizeExtraLarge {
+  width: var(--x-spacing-loose4x);
+  min-width: var(--x-spacing-loose4x);
+}

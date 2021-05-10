@@ -29,29 +29,13 @@ export function StepContent({grouped, children}: StepContentProps) {
 
 export interface StepSectionProps {
   title?: string;
-  primary?: boolean;
   children?: ReactNode;
-  description?: string;
 }
 
-export function StepSection({
-  title,
-  primary = false,
-  children,
-  description,
-}: StepSectionProps) {
-  const header = title && (
-    <StepSectionHeader
-      title={title}
-      primary={primary}
-      description={description}
-    />
-  );
-
+export function StepSection({children, title}: StepSectionProps) {
   return (
     <section aria-label={title} className={styles.Section}>
-      {header}
-      <HeadingGroup>{children}</HeadingGroup>
+      {children}
     </section>
   );
 }
@@ -66,21 +50,27 @@ export const STEP_SECTION_PRIMARY_HEADER_ID = 'primary-header';
 
 export function StepSectionHeader({
   title,
-  primary = false,
-  description: descriptionProp,
+  primary,
+  description,
 }: StepSectionHeaderProps) {
-  const description = descriptionProp && (
-    <TextBlock>{descriptionProp}</TextBlock>
-  );
-
   return (
     <TextContainer spacing="tight">
-      <Heading id={primary ? STEP_SECTION_PRIMARY_HEADER_ID : undefined}>
-        {title}
-      </Heading>
-      {description}
+      {title ? (
+        <Heading id={primary ? STEP_SECTION_PRIMARY_HEADER_ID : undefined}>
+          {title}
+        </Heading>
+      ) : null}
+      {description ? <TextBlock>{description}</TextBlock> : null}
     </TextContainer>
   );
+}
+
+export interface StepSectionContentProps {
+  children?: ReactNode;
+}
+
+export function StepSectionContent({children}: StepSectionContentProps) {
+  return <HeadingGroup>{children}</HeadingGroup>;
 }
 
 export interface StepSectionShowcaseProps {

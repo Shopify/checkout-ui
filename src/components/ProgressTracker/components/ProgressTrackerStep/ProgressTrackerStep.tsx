@@ -3,7 +3,7 @@ import {classNames} from '@shopify/css-utilities';
 
 import {Icon, Props as IconProps} from '../../../Icon';
 import {TextBlock} from '../../../TextBlock';
-import {VisuallyHidden} from '../../../VisuallyHidden';
+import {View} from '../../../View';
 import {useProgressTracker} from '../../hooks';
 
 import styles from './ProgressTrackerStep.css';
@@ -122,7 +122,7 @@ export function ProgressTrackerStepLabel({
     <>
       <div className={className}>
         {stateHidden ? (
-          <VisuallyHidden>{state}</VisuallyHidden>
+          <View visibility="hidden">{state}</View>
         ) : (
           <TextBlock>{state}</TextBlock>
         )}

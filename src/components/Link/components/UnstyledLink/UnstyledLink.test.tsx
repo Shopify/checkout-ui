@@ -41,4 +41,77 @@ describe('<UnstyledLink />', () => {
 
     expect(unstyledLink).toContainReactComponent(CustomLink, defaultProps);
   });
+
+  describe('language', () => {
+    it('renders an anchor with lang attribute', () => {
+      const unstyledLink = mountWithContext(
+        <UnstyledLink {...defaultProps} language="en" />,
+      );
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        lang: 'en',
+      });
+    });
+  });
+
+  describe('ariaBusy', () => {
+    it('renders an anchor with aria-busy when set', () => {
+      const unstyledLink = mountWithContext(
+        <UnstyledLink {...defaultProps} ariaBusy />,
+      );
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-busy': true,
+      });
+    });
+
+    it('does not renders with aria-busy when not set', () => {
+      const unstyledLink = mountWithContext(<UnstyledLink {...defaultProps} />);
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-busy': undefined,
+      });
+    });
+  });
+
+  describe('ariaLive', () => {
+    it('renders an anchor with aria-live value when set', () => {
+      const unstyledLink = mountWithContext(
+        <UnstyledLink {...defaultProps} ariaLive="assertive" />,
+      );
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-live': 'assertive',
+      });
+    });
+
+    it('does not renders with aria-live when not set', () => {
+      const unstyledLink = mountWithContext(<UnstyledLink {...defaultProps} />);
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-live': undefined,
+      });
+    });
+  });
+
+  describe('ariaLabel', () => {
+    it('renders an anchor with aria-label when set', () => {
+      const content = 'Accessible label';
+      const unstyledLink = mountWithContext(
+        <UnstyledLink {...defaultProps} ariaLabel={content} />,
+      );
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-label': content,
+      });
+    });
+
+    it('does not renders with aria-live when not set', () => {
+      const unstyledLink = mountWithContext(<UnstyledLink {...defaultProps} />);
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-label': undefined,
+      });
+    });
+  });
 });

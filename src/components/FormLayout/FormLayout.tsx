@@ -1,11 +1,9 @@
 import React, {PropsWithChildren} from 'react';
 import {FormLayoutProps, FormLayoutGroupProps} from '@shopify/argo-checkout';
-import {classNames, variationName} from '@shopify/css-utilities';
 
 import {BlockStack} from '../BlockStack';
+import {Layout} from '../Layout';
 import {useThemeConfiguration} from '../Theme';
-
-import styles from './FormLayout.css';
 
 export function FormLayout({children}: PropsWithChildren<FormLayoutProps>) {
   const {
@@ -21,19 +19,17 @@ export function FormLayoutGroup({
   children,
 }: PropsWithChildren<FormLayoutGroupProps>) {
   const {
-    formLayout: {spacing},
+    formLayout: {spacing = 'base'},
   } = useThemeConfiguration();
 
+  const normalizedSpacing = spacing === 'none' ? undefined : spacing;
+
   return (
-    <div
-      className={classNames(
-        styles.Group,
-        spacing &&
-          spacing !== 'base' &&
-          styles[variationName('spacing', spacing)],
-      )}
+    <Layout
+      sizes={{base: [1, 1, 1], small: ['fill', 'fill', 'fill']}}
+      spacing={normalizedSpacing}
     >
       {children}
-    </div>
+    </Layout>
   );
 }

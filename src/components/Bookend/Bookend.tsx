@@ -6,7 +6,7 @@ import styles from './Bookend.css';
 
 export function Bookend({
   children,
-  spacing,
+  spacing = 'base',
   alignment,
   leading,
   trailing,

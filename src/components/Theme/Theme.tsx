@@ -13,14 +13,15 @@ import {
 export interface Props {
   children?: ReactNode;
   theme: UiTheme;
+  shouldLoadFonts?: boolean;
 }
 
-export function Theme({children, theme}: Props) {
+export function Theme({children, theme, shouldLoadFonts}: Props) {
   const supportsCustomProperties = useSupportsCustomProperties();
 
   return (
     <ThemeContext.Provider value={theme}>
-      <MaybeWebFonts condition={process.env.NODE_ENV !== 'production'}>
+      <MaybeWebFonts condition={Boolean(shouldLoadFonts)}>
         {supportsCustomProperties ? (
           <CustomProperties>
             <Canvas>{children}</Canvas>

@@ -2,17 +2,12 @@
   display: flex;
   flex-direction: column;
 
-  & > * + * {
-    margin-block-start: var(--x-spacing-base);
-  }
-
   & .BlockStack {
     min-width: 0;
   }
 
   @supports (display: grid) {
     display: grid;
-    grid-row-gap: var(--x-spacing-base);
 
     & > * + * {
       margin-block-start: 0 !important; /* stylelint-disable-line declaration-no-important */
@@ -30,7 +25,7 @@
   }
 }
 
-.spacingXtight {
+.spacingExtraTight {
   & > * + * {
     margin-block-start: var(--x-spacing-tight4x);
   }
@@ -50,6 +45,16 @@
   }
 }
 
+.spacingBase {
+  & > * + * {
+    margin-block-start: var(--x-spacing-base);
+  }
+
+  @supports (display: grid) {
+    grid-row-gap: var(--x-spacing-base);
+  }
+}
+
 .spacingLoose {
   & > * + * {
     margin-block-start: var(--x-spacing-loose1x);
@@ -60,7 +65,7 @@
   }
 }
 
-.spacingXloose {
+.spacingExtraLoose {
   & > * + * {
     margin-block-start: var(--x-spacing-loose4x);
   }

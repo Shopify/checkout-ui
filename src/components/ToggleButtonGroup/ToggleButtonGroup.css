@@ -1,0 +1,46 @@
+.ToggleButtonGroup {
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+  color: var(--x-color-surface-tertiary-text);
+  background-color: var(--x-color-surface-tertiary);
+  display: flex;
+  border: 1px solid var(--x-default-color-border);
+  border-radius: var(--x-global-border-radius);
+}
+
+.ToggleButton {
+  display: flex;
+  flex: 1;
+
+  &:first-child .Button {
+    border-top-left-radius: calc(var(--x-global-border-radius) - 1px);
+    border-bottom-left-radius: calc(var(--x-global-border-radius) - 1px);
+  }
+
+  &:not(:first-child) {
+    border-inline-start: 1px solid var(--x-color-surface-tertiary-border);
+  }
+
+  &:last-child .Button {
+    border-top-right-radius: calc(var(--x-global-border-radius) - 1px);
+    border-bottom-right-radius: calc(var(--x-global-border-radius) - 1px);
+  }
+}
+
+.Button {
+  flex: 1;
+  padding: var(--x-spacing-base);
+  border: 2px solid transparent;
+
+  &:active {
+    outline: none;
+  }
+}
+
+.Button-selected {
+  border-color: var(--x-default-color-accent);
+}

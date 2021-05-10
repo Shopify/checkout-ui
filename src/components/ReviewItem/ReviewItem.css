@@ -42,25 +42,21 @@
 .ReviewItem {
   display: flex;
   align-items: baseline;
-
-  &:first-child {
-    padding-block-end: var(--x-spacing-tight);
-  }
+  padding-block: var(--x-review-block-block-padding);
+  margin-inline: var(--x-review-block-inline-padding);
 
   &:not(:first-child) {
     border-block-start: 1px var(--x-default-color-border) solid;
     border-width: var(--x-review-block-border, var(--x-border-full));
-    padding-block-start: var(--x-spacing-tight);
-    padding-block-end: var(--x-spacing-tight);
-    margin-block-start: var(--x-review-block-block-gap);
+    margin-block-start: var(--x-review-block-block-spacing);
   }
 
-  &:last-child {
-    padding-block-end: 0;
-  }
-
-  &.isContainer {
-    padding: var(--x-spacing-tight) var(--x-spacing-loose);
+  &.isContainer,
+  &.dividerToEdge {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: var(--x-review-block-inline-padding);
+    padding-inline-end: var(--x-review-block-inline-padding);
   }
 }
 
@@ -72,7 +68,6 @@
     --x-review-block-border-radius,
     var(--x-global-border-radius)
   );
-  padding: var(--x-spacing-tight) var(--x-spacing-loose);
 
   & > * {
     --x-default-color-border: var(--review-block-inner-border-color);
@@ -103,4 +98,8 @@
   @media all and (max-width: 749px) {
     flex-wrap: wrap;
   }
+}
+
+.Wrapper-noWrap {
+  flex-wrap: nowrap;
 }

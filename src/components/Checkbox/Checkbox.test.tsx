@@ -2,8 +2,6 @@ import React from 'react';
 import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
-import {VisuallyHidden} from '../VisuallyHidden';
-import {HiddenForAccessibility} from '../HiddenForAccessibility';
 import {InlineError} from '../InlineError';
 
 import {Checkbox} from './Checkbox';
@@ -95,7 +93,7 @@ describe('<Checkbox />', () => {
   });
 
   describe('accessibilityLabel', () => {
-    it('renders visually hidden content when the accessibilityLabel is set', () => {
+    it('adds an aria-label to the label when the accessibilityLabel is set', () => {
       const accessibilityLabelContent = 'Accessibility content';
 
       const checkbox = mountWithContext(
@@ -105,23 +103,21 @@ describe('<Checkbox />', () => {
         />,
       );
 
-      expect(checkbox.find(VisuallyHidden)).toContainReactText(
-        accessibilityLabelContent,
-      );
+      expect(checkbox).toContainReactComponent('label', {
+        'aria-label': accessibilityLabelContent,
+      });
     });
 
-    it('hides the label for accessibility purposes when the accessibilityLabel is set', () => {
-      const children = 'Basic label';
+    it('does not add aria-label to the label when accessibilityLabel is not set', () => {
+      const accessibilityLabelContent = 'Accessibility content';
 
       const checkbox = mountWithContext(
-        <Checkbox {...defaultProps} accessibilityLabel="Accessibility content">
-          {children}
-        </Checkbox>,
+        <Checkbox {...defaultProps}>Default content</Checkbox>,
       );
 
-      expect(checkbox.find(HiddenForAccessibility)).toContainReactText(
-        children,
-      );
+      expect(checkbox).not.toContainReactComponent('label', {
+        'aria-label': accessibilityLabelContent,
+      });
     });
   });
 });

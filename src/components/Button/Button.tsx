@@ -2,6 +2,7 @@ import React, {forwardRef, PropsWithChildren, useCallback} from 'react';
 import {ButtonProps} from '@shopify/argo-checkout';
 import {classNames, variationName} from '@shopify/css-utilities';
 
+import {useContainingForm} from '../../utilities/forms';
 import {useTranslate} from '../AppContext';
 import {useTransition} from '../../utilities/transition';
 import {Spinner} from '../Spinner';
@@ -15,133 +16,174 @@ import typographyStyles from '../../utilities/typography-styles.css';
 import styles from './Button.css';
 
 export interface Props extends PropsWithChildren<ButtonProps> {
-  /** Whether the button should fill all available inline space. */
-  fill?: boolean;
   /** Renders a button that is visually styled with secondary colors */
   secondary?: boolean;
+  /** Renders a button that is visually styled with tertiary colors and padding */
+  tertiary?: boolean;
   /** Adds an underline to the text when rendered as a plain button */
   underline?: boolean;
+  /**
+   * Specify the color of the Button when `plain`.
+   * `inheritColor` will take the color of its parent.
+   */
+  appearance?: 'inheritColor';
+  onMouseEnter?(): void;
 }
 
-export const Button = forwardRef(
-  (
-    {
-      children,
-      submit = false,
-      disabled,
-      onPress,
-      to,
-      subdued,
-      plain,
-      secondary,
-      loading = false,
-      fill = false,
-      loadingLabel,
-      underline,
-    }: Props,
-    ref,
-  ) => {
-    const href = disabled ? undefined : to;
-    const onClick = disabled ? undefined : () => onPress?.();
-    const refsSetter = useCallback(
-      (instance: HTMLButtonElement) => {
-        if (typeof ref === 'function') {
-          ref(instance);
-        } else if (ref) {
-          ref.current = instance;
-        }
-      },
-      [ref],
-    );
+export const Button = forwardRef(function Button(
+  {
+    children,
+    submit = false,
+    disabled,
+    onPress,
+    to,
+    subdued,
+    plain,
+    secondary,
+    tertiary,
+    loading = false,
+    fill = false,
+    loadingLabel,
+    accessibilityLabel,
+    underline,
+    appearance,
+    onMouseEnter,
+  }: Props,
+  ref,
+) {
+  const href = disabled ? undefined : to;
+  const onClick = disabled ? undefined : () => onPress?.();
+  const refsSetter = useCallback(
+    (instance: HTMLButtonElement) => {
+      if (typeof ref === 'function') {
+        ref(instance);
+      } else if (ref) {
+        ref.current = instance;
+      }
+    },
+    [ref],
+  );
 
-    const translate = useTranslate();
-    const prefersReducedMotion = usePrefersReducedMotion();
-    const transition = useTransition(loading, {
-      enter: 'slow',
-    });
+  const translate = useTranslate();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const transition = useTransition(loading, {
+    enter: 'slow',
+  });
 
-    const connected = useConnected();
-    const {
-      primaryButton: {
-        typographyStyle: primaryStyle,
-        loadingStyle: primaryLoading = 'spinner',
-      },
-      secondaryButton: {
-        typographyStyle: secondaryStyle,
-        loadingStyle: secondaryLoading = 'spinner',
-      },
-    } = useThemeConfiguration();
+  const connected = useConnected();
+  const {
+    primaryButton: {
+      typographyStyle: primaryStyle,
+      loadingStyle: primaryLoading = 'spinner',
+    },
+    secondaryButton: {
+      typographyStyle: secondaryStyle,
+      loadingStyle: secondaryLoading = 'spinner',
+    },
+    link: {colorHovered, colorPressed},
+  } = useThemeConfiguration();
 
-    const loadingStyle = secondary ? secondaryLoading : primaryLoading;
+  const form = useContainingForm();
 
-    const classes = classNames(
-      styles.Button,
-      legacyButtonClassName,
-      subdued && styles.isSubdued,
-      plain && styles.isPlain,
-      plain && underline && styles.isUnderline,
-      disabled && styles.isDisabled,
-      loading && loadingStyle === 'spinner' && styles.isLoading,
-      fill && styles.isFill,
-      loading &&
-        loadingStyle === 'spinner' &&
-        styles[variationName('isLoading-transition', transition)],
-      connected && styles.isConnected,
-      secondary && styles.isSecondary,
-      loading && loadingStyle === 'progressBar' && styles[loadingStyle],
-    );
+  const loadingStyle = secondary ? secondaryLoading : primaryLoading;
 
-    const normalizedLoadingLabel = loadingLabel
-      ? loadingLabel
-      : translate('processing');
+  const classes = classNames(
+    styles.Button,
+    legacyButtonClassName,
+    subdued && !plain && styles.subdued,
+    plain && styles.plain,
+    plain &&
+      (appearance === 'inheritColor'
+        ? styles.appearanceInheritColor
+        : styles.appearanceDefault),
+    plain &&
+      colorHovered &&
+      styles[variationName('colorHovered', colorHovered)],
+    plain &&
+      colorPressed &&
+      styles[variationName('colorPressed', colorPressed)],
+    plain && underline && styles.underline,
+    plain && appearance === 'inheritColor' && styles.underline,
+    disabled && styles.disabled,
+    loading && loadingStyle === 'spinner' && styles.loading,
+    fill && styles.fill,
+    loading &&
+      loadingStyle === 'spinner' &&
+      styles[variationName('loading-transition', transition)],
+    connected && styles.connected,
+    secondary && styles.secondary,
+    tertiary && styles.tertiary,
+    loading && loadingStyle === 'progressBar' && styles[loadingStyle],
+  );
 
-    const contentTypography = secondary
-      ? secondaryStyle && typographyStyles[secondaryStyle]
-      : primaryStyle && typographyStyles[primaryStyle];
-    const content = (
-      <span className={classNames(styles.Content, contentTypography)}>
-        {loading && loadingStyle === 'progressBar' && prefersReducedMotion
-          ? normalizedLoadingLabel
-          : children}
-      </span>
-    );
+  const normalizedLoadingLabel = loadingLabel
+    ? loadingLabel
+    : translate('processing');
 
-    const type = submit ? 'submit' : 'button';
+  const contentTypography = secondary
+    ? secondaryStyle && typographyStyles[secondaryStyle]
+    : primaryStyle && typographyStyles[primaryStyle];
 
-    const loadingMarkup = (
-      <span
-        className={classNames(
-          styles.LoadingContent,
-          !prefersReducedMotion && styles.Spinner,
-        )}
-      >
-        <Spinner size="small" color="inherit">
-          {normalizedLoadingLabel}
-        </Spinner>
-      </span>
-    );
+  const contentClassNames = classNames(
+    styles.Content,
+    !plain && contentTypography,
+  );
+  const content = (
+    <span className={contentClassNames}>
+      {loading && loadingStyle === 'progressBar' && prefersReducedMotion
+        ? normalizedLoadingLabel
+        : children}
+    </span>
+  );
 
-    if (href) {
-      return (
-        <UnstyledLink to={href} className={classes} onPress={onPress}>
-          {content}
-          {loading && loadingStyle === 'spinner' && loadingMarkup}
-        </UnstyledLink>
-      );
-    }
+  const type = submit ? 'submit' : 'button';
 
+  const loadingMarkup = (
+    <span
+      className={classNames(
+        styles.LoadingContent,
+        !prefersReducedMotion && styles.Spinner,
+      )}
+    >
+      <Spinner
+        size="small"
+        color="inherit"
+        accessibilityLabel={normalizedLoadingLabel}
+      />
+    </span>
+  );
+
+  if (href) {
     return (
-      <button
-        type={type}
+      <UnstyledLink
+        to={href}
         className={classes}
-        disabled={disabled || loading}
-        onClick={onClick}
-        aria-busy={loading}
-        ref={refsSetter}
+        onPress={onPress}
+        ariaBusy={loading}
+        ariaLive={loading ? 'assertive' : 'polite'}
+        ariaLabel={accessibilityLabel}
       >
         {content}
         {loading && loadingStyle === 'spinner' && loadingMarkup}
-      </button>
+      </UnstyledLink>
     );
-  },
-);
+  }
+
+  return (
+    <button
+      type={type}
+      form={submit && form?.nested ? form.id : undefined}
+      className={classes}
+      disabled={disabled || loading}
+      onClick={onClick}
+      aria-busy={loading}
+      aria-live={loading ? 'assertive' : undefined}
+      aria-label={accessibilityLabel}
+      ref={refsSetter}
+      onMouseEnter={onMouseEnter}
+    >
+      {content}
+      {loading && loadingStyle === 'spinner' && loadingMarkup}
+    </button>
+  );
+});

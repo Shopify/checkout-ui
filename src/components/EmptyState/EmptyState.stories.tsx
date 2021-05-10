@@ -6,7 +6,7 @@ import {EmptyState, EmptyStateIcon, EmptyStateText} from './EmptyState';
 
 const meta = {
   component: EmptyState,
-  title: 'EmptyState',
+  title: 'checkout-web-ui/EmptyState',
 };
 
 export default meta;

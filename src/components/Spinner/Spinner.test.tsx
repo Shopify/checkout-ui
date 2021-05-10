@@ -15,39 +15,45 @@ describe('<Spinner />', () => {
     matchMedia.restore();
   });
 
-  it('removes the Spinner styling when user prefers reduced motion and that accessible content is provided', () => {
+  it('removes the Spinner when user prefers reduced motion and that accessible content is provided', () => {
     matchMedia.setMedia(() => ({matches: true}));
 
-    const spinner = mountWithContext(<Spinner>Loading</Spinner>);
+    const spinner = mountWithContext(<Spinner accessibilityLabel="Loading" />);
 
     expect(spinner).not.toContainReactComponent('div', {
       className: 'Spinner',
     });
   });
 
-  describe('children', () => {
-    it('renders the childrens if user prefers reduced motion', () => {
+  it('renders an Icon when user prefers motion', () => {
+    matchMedia.setMedia(() => ({matches: false}));
+
+    const spinner = mountWithContext(<Spinner />);
+
+    expect(spinner).toContainReactComponent(Icon);
+  });
+
+  describe('accessibilityLabel', () => {
+    it('renders the accessible label if user prefers reduced motion', () => {
       matchMedia.setMedia(() => ({matches: true}));
 
       const accessibleText = 'Loading';
-      const spinner = mountWithContext(<Spinner>{accessibleText}</Spinner>);
+      const spinner = mountWithContext(
+        <Spinner accessibilityLabel={accessibleText} />,
+      );
 
       expect(spinner).toContainReactText(accessibleText);
     });
 
-    it('does not renders the childrens if user does not prefers reduced motion', () => {
+    it('does not renders the accessible label if user prefers motion', () => {
       matchMedia.setMedia(() => ({matches: false}));
 
       const accessibleText = 'Loading';
-      const spinner = mountWithContext(<Spinner>{accessibleText}</Spinner>);
+      const spinner = mountWithContext(
+        <Spinner accessibilityLabel={accessibleText} />,
+      );
 
       expect(spinner).not.toContainReactText(accessibleText);
-    });
-
-    it('renders an Icon if childrens are not provided', () => {
-      const spinner = mountWithContext(<Spinner />);
-
-      expect(spinner).toContainReactComponent(Icon);
     });
   });
 

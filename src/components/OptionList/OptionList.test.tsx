@@ -2,7 +2,7 @@ import React from 'react';
 import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
-import {VisuallyHidden} from '../VisuallyHidden';
+import {View} from '../View';
 
 import {OptionListContext} from './context';
 import {OptionList, Props} from './OptionList';
@@ -34,6 +34,7 @@ describe('<OptionList />', () => {
     const selectedItems = [faker.random.uuid()];
     const onChange = () => null;
     const allowMultiple = false;
+    const controlHidden = false;
 
     const accordion = mountWithContext(
       <OptionList
@@ -50,6 +51,7 @@ describe('<OptionList />', () => {
       selectedItems,
       onChange,
       allowMultiple,
+      controlHidden,
     });
   });
 
@@ -71,7 +73,9 @@ describe('<OptionList />', () => {
       <OptionList {...defaultProps} title={title} titleHidden />,
     );
 
-    expect(accordion.find(VisuallyHidden)).toContainReactComponent('legend');
+    expect(
+      accordion.find(View, {visibility: 'hidden'}),
+    ).toContainReactComponent('legend');
     expect(accordion.find('legend')).toContainReactText(title);
   });
 });

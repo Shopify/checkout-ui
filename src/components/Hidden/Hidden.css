@@ -1,0 +1,21 @@
+.Hidden {
+  display: contents;
+}
+
+.hiddenOnSmall {
+  @media all and (max-width: 749px) {
+    display: none;
+  }
+}
+
+.hiddenOnMedium {
+  @media all and (min-width: 750px) and (max-width: 999px) {
+    display: none;
+  }
+}
+
+.hiddenOnLarge {
+  @media all and (min-width: 1000px) {
+    display: none;
+  }
+}

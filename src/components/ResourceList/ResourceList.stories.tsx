@@ -1,8 +1,9 @@
 import React from 'react';
+import {withKnobs} from '@storybook/addon-knobs';
 
+import {themeWithKnobs} from '../../storybook-utilities';
 import {Text} from '../Text';
 import {Thumbnail} from '../Thumbnail';
-import {ResourceItem, ResourceItemContent} from '../ResourceItem';
 
 import {
   ResourceList,
@@ -10,12 +11,12 @@ import {
   ResourceListHeaderContent,
 } from './ResourceList';
 
+import {ResourceItem, ResourceItemContent} from '.';
+
 const meta = {
   component: ResourceList,
-  title: 'ResourceList',
-  decorators: [
-    (story: () => JSX.Element) => <div style={{margin: '1em'}}>{story()}</div>,
-  ],
+  title: 'checkout-web-ui/ResourceList',
+  decorators: [withKnobs, themeWithKnobs()],
 };
 
 export default meta;
@@ -38,7 +39,7 @@ function Item() {
 }
 
 export const multipleItems = () => (
-  <ResourceList>
+  <ResourceList title="Products" titleHidden>
     <Item />
     <Item />
     <Item />
@@ -46,29 +47,29 @@ export const multipleItems = () => (
 );
 
 export const oneItem = () => (
-  <ResourceList>
-    <Item />
-  </ResourceList>
-);
-
-export const borderBlockEnd = () => (
-  <ResourceList border="blockEnd">
-    <Item />
-    <Item />
+  <ResourceList title="Products" titleHidden>
     <Item />
   </ResourceList>
 );
 
 export const borderFull = () => (
-  <ResourceList border="full">
+  <ResourceList title="Products" titleHidden border="full">
     <Item />
     <Item />
     <Item />
   </ResourceList>
 );
 
-export const borderAroundItems = () => (
-  <ResourceList border="aroundItems">
+export const borderInner = () => (
+  <ResourceList title="Products" titleHidden border="inner">
+    <Item />
+    <Item />
+    <Item />
+  </ResourceList>
+);
+
+export const borderOuter = () => (
+  <ResourceList title="Products" titleHidden border="outer">
     <Item />
     <Item />
     <Item />
@@ -76,7 +77,7 @@ export const borderAroundItems = () => (
 );
 
 export const withHeader = () => (
-  <ResourceList>
+  <ResourceList title="Products" titleHidden>
     <ResourceListHeader>
       <ResourceListHeaderContent>
         <Text>Image</Text>
@@ -95,7 +96,7 @@ export const withHeader = () => (
 );
 
 export const withHiddenHeaderContent = () => (
-  <ResourceList titleHidden title="title">
+  <ResourceList titleHidden title="Products">
     <ResourceListHeader>
       <ResourceListHeaderContent primary>
         <Text emphasized>test</Text>

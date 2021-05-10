@@ -4,7 +4,7 @@
 }
 
 .Label {
-  transition: top var(--duration--base) var(--timing--base);
+  transition: top var(--x-duration-base) var(--x-timing-base);
 }
 
 .Label-positionInside {
@@ -51,11 +51,11 @@
   font-size: var(--x-typography-size-default);
   line-height: inherit;
   outline: none;
-  padding-block: em(21px) em(6px);
+  padding-block: em(19px) em(4px);
   padding-inline: em(12px) var(--selector-width, em(40px));
-  min-height: em(47px);
-  transition: box-shadow var(--duration--base) var(--timing--base),
-    border var(--duration--base) var(--timing--base);
+  min-height: em(44px);
+  transition: box-shadow var(--x-duration-base) var(--x-timing-base),
+    border var(--x-duration-base) var(--x-timing-base);
   text-transform: var(--x-global-typography-letter-case);
   letter-spacing: var(--x-global-typography-kerning);
   width: 100%;
@@ -80,8 +80,8 @@
 }
 
 .Select-labelOutside {
-  padding-block-start: em(14px);
-  padding-block-end: em(13px);
+  padding-block-start: em(11px);
+  padding-block-end: em(12px);
 }
 
 .Select-labelInline {
@@ -268,10 +268,10 @@
 }
 
 .Select-isDisabled {
-  opacity: 0.7;
+  opacity: var(--x-opacity-disabled);
 
   & + .Selector {
-    opacity: 0.7;
+    opacity: var(--x-opacity-disabled);
   }
 
   &.Select-backgroundSurfacePrimary {
@@ -288,10 +288,10 @@
 }
 
 .Select-isReadOnly {
-  opacity: 0.7;
+  opacity: var(--x-opacity-disabled);
 
   & + .Selector {
-    opacity: 0.7;
+    opacity: var(--x-opacity-disabled);
   }
 
   &.Select-backgroundSurfacePrimary {

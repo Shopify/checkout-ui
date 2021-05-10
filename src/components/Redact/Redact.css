@@ -1,0 +1,29 @@
+.Redact {
+  border-radius: var(--x-global-border-radius);
+  border: 1px solid transparent; /*  Windows Users + High Contrast */
+  background-color: var(--x-default-color-border);
+}
+
+.blockSizeExtraSmall {
+  height: var(--x-typography-size-extra-small);
+}
+
+.blockSizeSmall {
+  height: var(--x-typography-size-small);
+}
+
+.blockSizeBase {
+  height: var(--x-typography-size-default);
+}
+
+.blockSizeMedium {
+  height: var(--x-typography-size-medium);
+}
+
+.blockSizeLarge {
+  height: var(--x-typography-size-large);
+}
+
+.blockSizeExtraLarge {
+  height: var(--x-typography-size-extra-large);
+}

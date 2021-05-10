@@ -6,7 +6,7 @@ import {Tiles} from './Tiles';
 
 const meta = {
   component: Tiles,
-  title: 'Tiles',
+  title: 'checkout-web-ui/Tiles',
 };
 
 export default meta;
@@ -14,15 +14,9 @@ export default meta;
 function ExampleTile() {
   return (
     <View>
-      <div
-        style={{
-          backgroundColor: 'lightgrey',
-          border: '1px #000 solid',
-          padding: '1em',
-        }}
-      >
+      <View background="surfaceSecondary" border="base" padding="base">
         Content block
-      </div>
+      </View>
     </View>
   );
 }
@@ -30,16 +24,10 @@ function ExampleTile() {
 function LongExampleTile() {
   return (
     <View>
-      <div
-        style={{
-          backgroundColor: 'lightgrey',
-          border: '1px #000 solid',
-          padding: '1em',
-        }}
-      >
+      <View background="surfaceSecondary" border="base" padding="base">
         This is a long content block that wraps on multiple lines. This is a
         long content block that wraps on multiple lines.
-      </div>
+      </View>
     </View>
   );
 }
@@ -56,7 +44,7 @@ export const defaultState = () => (
 );
 
 export const allProps = () => (
-  <Tiles spacing="xtight" maxPerLine={4} breakAt={600} alignment="center">
+  <Tiles spacing="extraTight" maxPerLine={4} breakAt={600} alignment="center">
     <ExampleTile />
     <LongExampleTile />
     <ExampleTile />
@@ -74,7 +62,7 @@ export const Spacing = () => (
       <ExampleTile />
       <ExampleTile />
     </Tiles>
-    <Tiles spacing="xtight">
+    <Tiles spacing="extraTight">
       <ExampleTile />
       <ExampleTile />
       <ExampleTile />
@@ -86,7 +74,7 @@ export const Spacing = () => (
       <ExampleTile />
       <ExampleTile />
     </Tiles>
-    <Tiles>
+    <Tiles spacing="base">
       <ExampleTile />
       <ExampleTile />
       <ExampleTile />
@@ -98,7 +86,7 @@ export const Spacing = () => (
       <ExampleTile />
       <ExampleTile />
     </Tiles>
-    <Tiles spacing="xloose">
+    <Tiles spacing="extraLoose">
       <ExampleTile />
       <ExampleTile />
       <ExampleTile />
@@ -108,39 +96,39 @@ export const Spacing = () => (
 );
 
 export const Alignment = () => (
-  <div style={{width: '400px'}}>
-    <div style={{border: '1px #999 dotted'}}>
+  <View maxInlineSize={400}>
+    <View border="base">
       <Tiles alignment="leading">
         <ExampleTile />
         <LongExampleTile />
         <ExampleTile />
       </Tiles>
-    </div>
+    </View>
     <br />
-    <div style={{border: '1px #999 dotted'}}>
+    <View border="base">
       <Tiles alignment="center">
         <ExampleTile />
         <LongExampleTile />
         <ExampleTile />
       </Tiles>
-    </div>
+    </View>
     <br />
-    <div style={{border: '1px #999 dotted'}}>
+    <View border="base">
       <Tiles alignment="trailing">
         <ExampleTile />
         <LongExampleTile />
         <ExampleTile />
       </Tiles>
-    </div>
+    </View>
     <br />
-    <div style={{border: '1px #999 dotted'}}>
+    <View border="base">
       <Tiles alignment="baseline">
         <ExampleTile />
         <LongExampleTile />
         <ExampleTile />
       </Tiles>
-    </div>
-  </div>
+    </View>
+  </View>
 );
 
 export const maxPerLine = () => (
@@ -165,14 +153,14 @@ export const breakAt = () => (
     </Tiles>
     <br />
     <p>This Tiles is inside a 599px wrapper and breaks at 600px:</p>
-    <div style={{width: '599px', border: '1px #999 dotted'}}>
+    <View maxInlineSize={599} border="base">
       <Tiles breakAt={600} spacing="none">
         <ExampleTile />
         <ExampleTile />
         <ExampleTile />
         <ExampleTile />
       </Tiles>
-    </div>
+    </View>
   </>
 );
 

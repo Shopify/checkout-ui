@@ -1,26 +1,22 @@
 import {classNames, variationName} from '@shopify/css-utilities';
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, {
-  CSSProperties,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, {ReactNode, useCallback, useEffect, useState} from 'react';
 
-import {rem} from '../../utilities/units';
+import {createIdCreator, useId} from '../../utilities/id';
+import {
+  isFocused,
+  findFirstFocusableNode,
+  findLastFocusableNode,
+  findNextFocusableNode,
+} from '../../utilities/focus';
 import {Popper, Props as PopperProps} from '../Popper';
+import {useThemeConfiguration} from '../Theme';
 
 import styles from './Popover.css';
-
-interface ExtendedCSSProperties extends CSSProperties {
-  '--popover-offset'?: string;
-}
 
 export interface Props {
   children: ReactNode;
   /**
-   * Element used to activate the Popover
+   * Element used to activate the popover
    */
   activator: HTMLElement | null;
   /**
@@ -28,49 +24,130 @@ export interface Props {
    */
   open: boolean;
   /**
+   * Position the popover relative to the activator
+   * @defaultValue 'inlineEnd'
+   */
+  placement?: PopperProps['placement'];
+  /**
+   * Defines the style of the backdrop under the popover
+   */
+  backdrop?: 'translucent' | 'none';
+  /**
    * Callback to run when the Popover is closed
    */
   onClose: () => void;
-  /**
-   * Moves the Popover relative to its arrow.
-   *
-   * Number is in pixels
-   *
-   * Example:
-   * - `10` represents `10px` */
-  offset?: number;
-  /**
-   * Position the Popover relative to the activator.
-   * @default 'inlineEnd'
-   */
-  placement?: PopperProps['placement'];
 }
+
+const createId = createIdCreator('Popover');
 
 export function Popover({
   children,
   activator,
-  open: openProp,
-  onClose,
-  offset,
+  open,
   placement = 'inlineEnd',
+  backdrop = 'none',
+  onClose,
 }: Props) {
-  const [open, setOpen] = useState(openProp);
+  const [popoverRef, setPopoverRef] = useState<HTMLElement | null>(null);
+  const {
+    popover: {connector = 'arrow', depth = 'far'},
+  } = useThemeConfiguration();
 
-  useEffect(() => {
-    setOpen(openProp);
-  }, [openProp]);
+  const id = useId(undefined, createId);
+  const nextFocusableNode = activator && findNextFocusableNode(activator);
+  const firstFocusableNode = popoverRef && findFirstFocusableNode(popoverRef);
+  const lastFocusableNode = popoverRef && findLastFocusableNode(popoverRef);
+
+  const setActivatorAccessibilityAttributes = useCallback(
+    () => {
+      activator?.setAttribute('aria-controls', id);
+      activator?.setAttribute('aria-expanded', String(open));
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activator, id, open],
+  );
 
   const handleClose = useCallback(() => {
-    setOpen(false);
-    if (activator instanceof HTMLElement) {
-      activator.focus();
-    }
     onClose?.();
-  }, [activator, onClose]);
+  }, [onClose]);
+
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (
+        event.target instanceof Node &&
+        !activator?.contains(event.target) &&
+        !popoverRef?.contains(event.target)
+      ) {
+        handleClose();
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handleClose, activator, popoverRef],
+  );
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Escape':
+        case 'Esc':
+          handleClose();
+          activator?.focus();
+          break;
+        case 'Tab': {
+          if (isFocused(activator) && event.shiftKey) {
+            handleClose();
+          } else if (isFocused(activator)) {
+            event.preventDefault();
+            firstFocusableNode?.focus();
+          } else if (isFocused(firstFocusableNode) && event.shiftKey) {
+            event.preventDefault();
+            activator?.focus();
+            handleClose();
+          } else if (isFocused(lastFocusableNode) && !event.shiftKey) {
+            event.preventDefault();
+            nextFocusableNode?.focus();
+            handleClose();
+          }
+          break;
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      handleClose,
+      activator,
+      nextFocusableNode,
+      firstFocusableNode,
+      lastFocusableNode,
+    ],
+  );
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener('keydown', handleKeyDown, false);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown, false);
+    };
+  }, [open, handleKeyDown]);
+
+  useEffect(() => {
+    setActivatorAccessibilityAttributes();
+  });
 
   const popoverClassName = classNames(
     styles.Popover,
     styles[variationName('Popover-placement', placement)],
+    styles[variationName('Popover-connector', connector)],
+    styles[variationName('Popover-depth', depth)],
   );
 
   const contentClassName = classNames(
@@ -78,20 +155,23 @@ export function Popover({
     styles[variationName('Content-placement', placement)],
   );
 
-  const popoverStyle: ExtendedCSSProperties = {
-    '--popover-offset': offset
-      ? rem(offset)
-      : undefined /* stylelint-disable-line value-keyword-case */,
-  };
+  const backdropClassName = classNames(
+    styles.Backdrop,
+    styles[variationName('Backdrop-style', backdrop)],
+  );
+
+  const offset = connector === 'arrow' ? 15 : 5;
 
   return open ? (
     <>
-      <Popper activator={activator} placement={placement} offset={15}>
-        <div className={popoverClassName} style={popoverStyle}>
+      <Popper activator={activator} placement={placement} offset={offset}>
+        <div className={popoverClassName} id={id} ref={setPopoverRef}>
           <div className={contentClassName}>{children}</div>
         </div>
       </Popper>
-      <div className={styles.Overlay} onClick={handleClose} />
+      {backdrop === 'translucent' ? (
+        <div className={backdropClassName} />
+      ) : null}
     </>
   ) : null;
 }

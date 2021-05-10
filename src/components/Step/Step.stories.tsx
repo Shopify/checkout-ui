@@ -13,11 +13,12 @@ import {
   StepSectionShowcase,
   StepPrimaryAction,
   StepSecondaryAction,
+  StepSectionContent,
 } from './Step';
 
 const meta = {
   component: Step,
-  title: 'Step',
+  title: 'checkout-web-ui/Step',
   decorators: [withKnobs, themeWithKnobs('actions')],
 };
 
@@ -38,20 +39,24 @@ export const noActions = () => (
 export const withSections = () => (
   <Step>
     <StepContent>
-      <StepSection
-        title="Contact information"
-        description="This is a description"
-      >
-        {stepSectionContent}
+      <StepSection title="Contact information">
+        <StepSectionHeader
+          title="Contact information"
+          description="This is a description"
+        />
+        <StepSectionContent>{stepSectionContent}</StepSectionContent>
       </StepSection>
-      <StepSection
-        title="Shipping information"
-        description="This is a description"
-      >
-        {stepSectionContent}
+      <StepSection title="Shipping information">
+        <StepSectionHeader
+          title="Shipping information"
+          description="This is a description"
+        />
+        <StepSectionContent>{stepSectionContent}</StepSectionContent>
       </StepSection>
       <StepSection>
-        <p>This is Section content without a Title</p>
+        <StepSectionContent>
+          <p>This is Section content without a Title</p>
+        </StepSectionContent>
       </StepSection>
     </StepContent>
   </Step>
@@ -60,14 +65,14 @@ export const withSections = () => (
 export const withSectionsAndShowcase = () => (
   <Step>
     <StepContent>
-      <StepSection>
+      <StepSection title="Contact information">
         <StepSectionShowcase>{stepSectionShowcase}</StepSectionShowcase>
         <StepSectionHeader
           title="Contact information"
           description="This is a description"
         />
         <StepSectionShowcase>{stepSectionShowcase}</StepSectionShowcase>
-        {stepSectionContent}
+        <StepSectionContent>{stepSectionContent}</StepSectionContent>
         <StepSectionShowcase>{stepSectionShowcase}</StepSectionShowcase>
       </StepSection>
     </StepContent>
@@ -77,20 +82,24 @@ export const withSectionsAndShowcase = () => (
 export const withGroupedSections = () => (
   <Step>
     <StepContent grouped>
-      <StepSection
-        title="Contact information"
-        description="This is a description"
-      >
-        {stepSectionContent}
+      <StepSection title="Contact information">
+        <StepSectionHeader
+          title="Contact information"
+          description="This is a description"
+        />
+        <StepSectionContent>{stepSectionContent}</StepSectionContent>
       </StepSection>
-      <StepSection
-        title="Shipping information"
-        description="This is a description"
-      >
-        {stepSectionContent}
+      <StepSection title="Shipping information">
+        <StepSectionHeader
+          title="Shipping information"
+          description="This is a description"
+        />
+        <StepSectionContent>{stepSectionContent}</StepSectionContent>
       </StepSection>
       <StepSection>
-        <p>This is Section content without a Title</p>
+        <StepSectionContent>
+          <p>This is Section content without a Title</p>
+        </StepSectionContent>
       </StepSection>
     </StepContent>
   </Step>
@@ -99,13 +108,13 @@ export const withGroupedSections = () => (
 export const withGroupedSectionsAndShowcase = () => (
   <Step>
     <StepContent grouped>
-      <StepSection>
+      <StepSection title="Contact information">
         <StepSectionShowcase>{stepSectionShowcase}</StepSectionShowcase>
         <StepSectionHeader
           title="Contact information"
           description="This is a description"
         />
-        {stepSectionContent}
+        <StepSectionContent>{stepSectionContent}</StepSectionContent>
         <StepSectionShowcase>{stepSectionShowcase}</StepSectionShowcase>
         <StepSectionShowcase>{stepSectionShowcase}</StepSectionShowcase>
       </StepSection>

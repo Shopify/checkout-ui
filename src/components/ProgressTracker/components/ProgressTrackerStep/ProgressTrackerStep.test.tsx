@@ -3,7 +3,7 @@ import {mount} from '@quilted/react-testing/dom';
 
 import {TextBlock} from '../../../TextBlock';
 import {ProgressTracker} from '../../ProgressTracker';
-import {VisuallyHidden} from '../../../VisuallyHidden';
+import {View} from '../../../View';
 
 import {
   ProgressTrackerStep,
@@ -123,17 +123,19 @@ describe('<ProgressTrackerStep />', () => {
       },
     );
 
-    expect(firstProgressTrackerStep).toContainReactComponent(VisuallyHidden);
+    expect(firstProgressTrackerStep).toContainReactComponent(View, {
+      visibility: 'hidden',
+    });
     expect(firstProgressTrackerStep).toContainReactComponentTimes(TextBlock, 1);
 
-    expect(finalProgressTrackerStep).not.toContainReactComponent(
-      VisuallyHidden,
-    );
+    expect(finalProgressTrackerStep).not.toContainReactComponent(View, {
+      visibility: 'hidden',
+    });
     expect(finalProgressTrackerStep).toContainReactComponentTimes(TextBlock, 2);
 
-    expect(firstProgressTrackerStep.find(VisuallyHidden)).toContainReactText(
-      'State 1',
-    );
+    expect(
+      firstProgressTrackerStep.find(View, {visibility: 'hidden'}),
+    ).toContainReactText('State 1');
     expect(finalProgressTrackerStep.find(TextBlock)).toContainReactText(
       'State 2',
     );

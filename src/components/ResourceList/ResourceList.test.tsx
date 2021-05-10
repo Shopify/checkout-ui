@@ -2,13 +2,13 @@ import React from 'react';
 import {mount} from '@quilted/react-testing/dom';
 import faker from 'faker';
 
-import {ResourceItem} from '../ResourceItem';
-
 import {
   ResourceList,
   ResourceListHeader,
   ResourceListHeaderContent,
 } from './ResourceList';
+
+import {ResourceItem} from '.';
 
 describe('<ResourceList />', () => {
   it('renders its children', () => {

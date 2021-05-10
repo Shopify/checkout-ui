@@ -9,7 +9,7 @@ import {Banner} from './Banner';
 
 const meta = {
   component: Banner,
-  title: 'Banner',
+  title: 'checkout-web-ui/Banner',
   decorators: [withKnobs, themeWithKnobs('banner', 'headingLevel3')],
 };
 
@@ -49,6 +49,31 @@ export const collapsible = () => (
 
 export const autofocus = () => (
   <Banner autofocus title="Your order was updated on March 19, 2020">
+    <Text>Here are some details.</Text>
+  </Banner>
+);
+
+export const dismissible = () => (
+  <Banner
+    title="Your order was updated on March 19, 2020"
+    onDismiss={() => {
+      // eslint-disable-next-line no-alert
+      alert('dismissed');
+    }}
+  >
+    <Text>Here are some details.</Text>
+  </Banner>
+);
+
+export const collapsibleAndDismissible = () => (
+  <Banner
+    title="Your order was updated on March 19, 2020"
+    onDismiss={() => {
+      // eslint-disable-next-line no-alert
+      alert('dismissed');
+    }}
+    collapsible
+  >
     <Text>Here are some details.</Text>
   </Banner>
 );

@@ -7,10 +7,10 @@ import {Stepper} from './Stepper';
 
 const meta = {
   component: Stepper,
-  title: 'Stepper',
+  title: 'checkout-web-ui/Stepper',
   decorators: [
     withKnobs,
-    themeWithKnobs('textFields'),
+    themeWithKnobs('textFields', 'primaryButton'),
     (story: () => JSX.Element) => (
       <div
         style={{

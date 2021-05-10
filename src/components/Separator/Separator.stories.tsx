@@ -2,18 +2,19 @@ import React from 'react';
 
 import {BlockStack} from '../BlockStack';
 import {InlineStack} from '../InlineStack';
+import {Text} from '../Text';
 
 import {Separator} from './Separator';
 
 const meta = {
   component: Separator,
-  title: 'Separator',
+  title: 'checkout-web-ui/Separator',
 };
 
 export default meta;
 
 function Content() {
-  return <span>Hello, world!</span>;
+  return <Text>Hello, world!</Text>;
 }
 
 export const defaultState = () => (
@@ -41,7 +42,7 @@ export const width = () => (
     <Content />
     <Separator width="thick" />
     <Content />
-    <Separator width="xthick" />
+    <Separator width="extraThick" />
     <InlineStack>
       <Content />
       <Separator direction="vertical" />
@@ -50,7 +51,7 @@ export const width = () => (
       <Content />
       <Separator direction="vertical" width="thick" />
       <Content />
-      <Separator direction="vertical" width="xthick" />
+      <Separator direction="vertical" width="extraThick" />
       <Content />
     </InlineStack>
   </BlockStack>

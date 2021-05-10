@@ -79,11 +79,10 @@
 .Actions-displayInline {
   @media all and (min-width: 750px) {
     align-items: center;
-    justify-content: space-between;
-    grid-column-gap: var(--x-spacing-base);
+    grid-column-gap: var(--x-spacing-loose1x);
     grid-template-rows: auto;
-    grid-template-columns: auto auto;
-    grid-template-areas: 'secondary primary';
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'primary secondary';
   }
 }
 

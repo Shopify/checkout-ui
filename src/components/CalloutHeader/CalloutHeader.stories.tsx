@@ -8,7 +8,7 @@ import {CalloutHeader} from './CalloutHeader';
 
 const meta = {
   component: CalloutHeader,
-  title: 'CalloutHeader',
+  title: 'checkout-web-ui/CalloutHeader',
   decorators: [
     (story: () => JSX.Element) => (
       <div

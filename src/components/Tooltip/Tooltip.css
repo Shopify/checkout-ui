@@ -17,8 +17,8 @@
   max-width: em(180px);
   padding: var(--x-spacing-tight);
   opacity: 0;
-  transition: transform var(--duration--base) var(--timing--spring),
-    opacity var(--duration--base) var(--timing--spring);
+  transition: transform var(--x-duration-base) var(--x-timing-spring),
+    opacity var(--x-duration-base) var(--x-timing-spring);
 
   &.transitionEntered {
     transform: scale(1) perspective(1px);

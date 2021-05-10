@@ -6,7 +6,7 @@ import {Text} from './Text';
 
 const meta = {
   component: Text,
-  title: 'Text',
+  title: 'checkout-web-ui/Text',
 };
 
 export default meta;
@@ -77,10 +77,11 @@ export const allRoles = () => (
 
 export const allSizes = () => (
   <BlockStack>
+    <Text size="extraSmall">Extra small</Text>
     <Text size="small">Small</Text>
     <Text>Default</Text>
     <Text size="medium">Medium</Text>
     <Text size="large">Large</Text>
-    <Text size="xlarge">Extra large</Text>
+    <Text size="extraLarge">Extra large</Text>
   </BlockStack>
 );

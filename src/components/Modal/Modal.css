@@ -1,42 +1,40 @@
 .Modal {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   z-index: 1001;
 }
 
 .Backdrop {
+  position: fixed;
+  overflow: auto;
   width: 100%;
   height: 100%;
-  background-color: hsla(211, 24.1%, 17.1%, 0.4);
+  background-color: hsla(0, 0%, 0%, 0.6);
 }
 
 .Content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90%;
-  height: auto;
+  --x-default-color-border: var(--x-color-surface-primary-border);
+  --x-default-color-border-emphasized: var(
+    --x-color-surface-primary-border-emphasized
+  );
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
+  margin: 4em auto 5%;
   max-width: rem(840px);
-  max-height: 90%;
   border-radius: var(--x-border-radius-base);
   overflow: hidden;
-  transform: translate(-50%, -50%);
   box-shadow: 0 5px 30px hsla(0, 0%, 0%, 0.2);
-  background-color: hsl(0, 0%, 100%);
-
-  /* temporary until we get proper color palettes customization for modals */
-  --x-default-color-border: hsl(0, 0%, 85%);
-  --x-default-color-border-emphasized: hsl(0, 0%, 58%);
-  --x-default-color-text: hsl(0, 0%, 33%);
-  --x-default-color-text-subdued: hsl(0, 0%, 45%);
-  --x-default-color-text-emphasized: hsl(0, 0%, 20%);
+  background-color: var(--x-color-surface-primary);
+  color: var(--x-color-surface-primary-text);
 
   @media screen and (max-width: 1000px) {
+    margin: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     max-width: none;
     max-height: none;
     border-radius: 0;
@@ -56,7 +54,7 @@
 .Backdrop,
 .Content {
   opacity: 0;
-  transition: opacity var(--duration--slow) var(--timing--base);
+  transition: opacity var(--x-duration-slow) var(--x-timing-base);
 
   &.transitionEntered {
     opacity: 1;
@@ -66,8 +64,14 @@
 .IFrame {
   display: block;
   border: none;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - var(--x-spacing-base) * 2);
+  height: calc(100% - var(--x-spacing-base) * 2);
+  margin: var(--x-spacing-base);
+
+  @media screen and (max-width: 1000px) {
+    margin: var(--x-spacing-base) var(--x-spacing-loose2x);
+    width: calc(100% - var(--x-spacing-loose2x) * 2);
+  }
 }
 
 .Header {
@@ -93,7 +97,5 @@
 .Button {
   display: block;
   padding: var(--x-spacing-tight1x);
-
-  /* Negative value */
   margin: calc(var(--x-spacing-tight1x) * -1);
 }

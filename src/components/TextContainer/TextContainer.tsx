@@ -6,7 +6,7 @@ import styles from './TextContainer.css';
 
 export function TextContainer({
   alignment,
-  spacing,
+  spacing = 'base',
   children,
 }: PropsWithChildren<TextContainerProps>) {
   const className = classNames(

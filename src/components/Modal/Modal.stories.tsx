@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {withKnobs} from '@storybook/addon-knobs';
-import faker from 'faker';
 
+import {faker} from '../../test-utilities';
 import {themeWithKnobs} from '../../storybook-utilities';
 import {Text} from '../Text';
 import {Button} from '../Button';
@@ -12,20 +12,20 @@ import {Modal} from './Modal';
 
 const meta = {
   component: Modal,
-  title: 'Modal',
+  title: 'checkout-web-ui/Modal',
   decorators: [withKnobs, themeWithKnobs('headingLevel1')],
 };
 
 export default meta;
 
 export const text = () => (
-  <Modal open>
+  <Modal open title={faker.random.words(2)} titleHidden>
     <Text>{faker.lorem.paragraphs(1)}</Text>
   </Modal>
 );
 
 export const longText = () => (
-  <Modal open>
+  <Modal open title={faker.random.words(2)} titleHidden>
     <Text>{faker.lorem.paragraphs(100)}</Text>
   </Modal>
 );
@@ -48,13 +48,34 @@ export const blocking = () => (
   </Modal>
 );
 
-export const iframe = () => <Modal src="https://www.example.com/" open />;
+export const blockingWithHiddenTitle = () => (
+  <Modal title={faker.random.words(2)} blocking open titleHidden>
+    <Text>{faker.lorem.paragraphs(1)}</Text>
+  </Modal>
+);
+
+export const iframe = () => (
+  <Modal
+    src="https://www.example.com/"
+    open
+    title={faker.random.words(2)}
+    titleHidden
+  />
+);
 
 export const iframeWithTitle = () => (
   <Modal src="http://www.example.com/" title={faker.random.words(3)} open />
 );
 
-export const long = () => <Modal src="http://www.example.com/" open long />;
+export const long = () => (
+  <Modal
+    src="http://www.example.com/"
+    open
+    long
+    title={faker.random.words(2)}
+    titleHidden
+  />
+);
 
 export const focusTrap = () => (
   <Modal title={faker.random.words(3)} open>

@@ -1,27 +1,20 @@
-import React, {ReactNode} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {createIdCreator, useId} from '../../utilities/id';
 import {utilityDefaultBorderColor} from '../../utilities/legacy';
 import {useThemeConfiguration} from '../Theme';
 import {HeadingGroup} from '../HeadingGroup';
-import {
-  Link,
-  VisuallyHidden,
-  HiddenForAccessibility,
-  Heading,
-  Text,
-  TextBlock,
-} from '..';
+import {Link, View, Heading, Text} from '..';
 
 import styles from './ReviewItem.css';
 
 export interface Props {
-  children?: ReactNode;
   label: string;
   to?: string;
   linkLabel?: string;
-  linkAriaLabel?: string;
+  linkAccessibilityLabel?: string;
+  noWrap?: boolean;
 }
 
 const createId = createIdCreator('ReviewBlock');
@@ -31,27 +24,28 @@ export function ReviewItem({
   label,
   to,
   linkLabel,
-  linkAriaLabel,
-}: Props) {
+  linkAccessibilityLabel,
+  noWrap,
+}: PropsWithChildren<Props>) {
   const {
-    reviewBlock: {gap = 'none'},
+    reviewBlock: {spacing = 'none', divider},
   } = useThemeConfiguration();
 
   const className = classNames(
     styles.ReviewItem,
-    gap !== 'none' && styles.isContainer,
+    spacing !== 'none' && styles.isContainer,
     utilityDefaultBorderColor,
-  );
-
-  const linkContent = linkAriaLabel ? (
-    <HiddenForAccessibility>{linkLabel}</HiddenForAccessibility>
-  ) : (
-    linkLabel
+    divider === 'toContainerEdge' && styles.dividerToEdge,
   );
 
   return (
     <div role="row" className={className} key={label}>
-      <div className={styles.Wrapper}>
+      <div
+        className={classNames(
+          styles.Wrapper,
+          noWrap && styles['Wrapper-noWrap'],
+        )}
+      >
         <div role="rowheader" className={styles.Label}>
           <Text subdued>{label}</Text>
         </div>
@@ -59,48 +53,49 @@ export function ReviewItem({
           {children}
         </div>
       </div>
-      {to && (
+      {to ? (
         <div role="cell">
-          <Link to={to}>
-            <Text size="small">{linkContent}</Text>
-            {linkAriaLabel && <VisuallyHidden>{linkAriaLabel}</VisuallyHidden>}
+          <Link to={to} accessibilityLabel={linkAccessibilityLabel}>
+            <Text size="small">{linkLabel}</Text>
           </Link>
         </div>
-      )}
+      ) : null}
     </div>
   );
+}
+
+export interface ReviewBlockProps {
+  title?: string;
+  titleHidden?: boolean;
 }
 
 export function ReviewBlock({
   children,
   title,
   titleHidden,
-}: {
-  children?: ReactNode;
-  title?: string;
-  titleHidden?: boolean;
-}) {
+}: PropsWithChildren<ReviewBlockProps>) {
   const id = useId(undefined, createId);
   const {
-    reviewBlock: {background = 'transparent', gap = 'none'},
+    reviewBlock: {background = 'transparent', spacing = 'none'},
   } = useThemeConfiguration();
 
   const className = classNames(
     styles.ReviewBlock,
     background && styles[variationName('ReviewBlock-background', background)],
-    gap === 'none' && styles.isContainer,
+    spacing === 'none' && styles.isContainer,
     utilityDefaultBorderColor,
   );
+
+  const titleMarkup = <Heading id={id}>{title}</Heading>;
 
   return (
     <>
       {titleHidden ? (
-        <VisuallyHidden>
-          <TextBlock id={id}>{title}</TextBlock>
-        </VisuallyHidden>
+        <View visibility="hidden">{titleMarkup}</View>
       ) : (
-        <Heading id={id}>{title}</Heading>
+        titleMarkup
       )}
+
       <HeadingGroup>
         <div aria-labelledby={id} role="table" className={className}>
           {children}

@@ -10,7 +10,7 @@ import {Bookend} from './Bookend';
 
 const meta = {
   component: Bookend,
-  title: 'Bookend',
+  title: 'checkout-web-ui/Bookend',
   decorators: [withKnobs, themeWithKnobs('textFields')],
 };
 

@@ -1,1 +1,1 @@
-export {BlockStack, Props} from './BlockStack';
+export {BlockStack} from './BlockStack';

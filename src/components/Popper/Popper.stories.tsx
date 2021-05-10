@@ -7,7 +7,7 @@ import {Placement} from './utilities/offsets';
 
 const meta = {
   component: Popper,
-  title: 'Popper',
+  title: 'checkout-web-ui/Popper',
   decorators: [
     (story: () => JSX.Element) => (
       <div

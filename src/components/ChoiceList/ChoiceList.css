@@ -1,0 +1,24 @@
+.Wrapper {
+  display: grid;
+  justify-content: start;
+
+  /*
+    We’d naturally use `gap: var(--x-spacing-tight1x)`, but Autoprefixer
+    has an issue where it won’t transform both the grid and custom property
+    syntax. This leaves custom properties in the fallback grid declaration,
+    which causes it to be ignored. Once this issue is fixed:
+    https://github.com/csstools/postcss-preset-env/issues/180
+    we will be able to use the gap property as expected.
+  */
+  grid-template: 'control gap label' auto / auto var(--x-spacing-tight1x) auto;
+}
+
+.Label {
+  display: block;
+  grid-area: label;
+  cursor: pointer;
+}
+
+.Label-isDisabled {
+  cursor: default;
+}

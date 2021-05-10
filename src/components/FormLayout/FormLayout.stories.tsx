@@ -8,7 +8,7 @@ import {Select} from '../Select';
 import {FormLayout, FormLayoutGroup} from './FormLayout';
 
 const meta = {
-  title: 'FormLayout',
+  title: 'checkout-web-ui/FormLayout',
   component: FormLayout,
   decorators: [withKnobs, themeWithKnobs('formLayout', 'textFields', 'select')],
 };
@@ -17,7 +17,7 @@ export default meta;
 
 export const defaultState = () => {
   const selectCountryProps = {
-    id: 'select',
+    id: 'country',
     name: 'country',
     label: 'Country',
     options: [
@@ -37,7 +37,7 @@ export const defaultState = () => {
   };
 
   const selectProvinceProps = {
-    id: 'select',
+    id: 'province',
     name: 'province',
     label: 'Province',
     options: [
@@ -62,8 +62,8 @@ export const defaultState = () => {
         <Select {...selectCountryProps} />
         <Select {...selectProvinceProps} />
       </FormLayoutGroup>
-      <TextField label="Address" name="address1" id="address1" />
-      <TextField label="Apartment, suite, etc." name="address2" id="address2" />
+      <TextField label="Address" name="address0" id="address0" />
+      <TextField label="Apartment, suite, etc." name="address1" id="address1" />
     </FormLayout>
   );
 };

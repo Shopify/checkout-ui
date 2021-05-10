@@ -3,8 +3,6 @@ import {classNames, variationName} from '@shopify/css-utilities';
 import {CheckboxProps} from '@shopify/argo-checkout';
 
 import {Icon} from '../Icon';
-import {VisuallyHidden} from '../VisuallyHidden';
-import {HiddenForAccessibility} from '../HiddenForAccessibility';
 import {InlineError} from '../InlineError';
 import {useThemeConfiguration} from '../Theme';
 import {useId, createIdCreator} from '../../utilities/id';
@@ -19,6 +17,7 @@ const createId = createIdCreator('Checkbox');
 
 export function Checkbox({
   id: explicitId,
+  name,
   accessibilityLabel,
   error,
   disabled,
@@ -65,15 +64,12 @@ export function Checkbox({
         disabled={disabled}
         {...rest}
       />
-      <label htmlFor={id} className={labelClassName}>
-        {accessibilityLabel ? (
-          <>
-            <VisuallyHidden>{accessibilityLabel}</VisuallyHidden>
-            <HiddenForAccessibility>{children}</HiddenForAccessibility>
-          </>
-        ) : (
-          children
-        )}
+      <label
+        htmlFor={id}
+        className={labelClassName}
+        aria-label={accessibilityLabel ? accessibilityLabel : undefined}
+      >
+        {children}
       </label>
       {errorMarkup}
     </div>
@@ -96,8 +92,12 @@ export function CheckboxControl({
   onChange,
 }: ControlProps) {
   const {
-    checkbox: {background = 'surfaceTertiary', borderColor = 'base'},
+    controls: {background: controlsBackground},
+    checkbox: {background: checkboxBackground, borderColor = 'base'},
   } = useThemeConfiguration();
+
+  const background =
+    checkboxBackground || controlsBackground || 'surfaceTertiary';
 
   const className = classNames(
     styles.Input,

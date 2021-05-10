@@ -10,6 +10,7 @@ import {Bookend} from '../Bookend';
 import {Icon} from '../Icon';
 import {View} from '../View';
 import {TextContainer} from '../TextContainer';
+import {InlineStack} from '../InlineStack';
 
 import styles from './Banner.css';
 
@@ -18,6 +19,9 @@ export interface Props extends PropsWithChildren<BannerProps> {
    * Checks whether autofocus on the banner needs to be applied.
    */
   autofocus?: boolean;
+
+  /** Callback when banner is dismissed */
+  onDismiss?(): void;
 }
 
 const createId = createIdCreator('Banner');
@@ -29,6 +33,7 @@ export function Banner({
   status = 'info',
   title,
   autofocus = false,
+  onDismiss,
 }: Props) {
   const translate = useTranslate();
   const [collapsed, setCollapsed] = useState(true);
@@ -49,6 +54,38 @@ export function Banner({
   const controlId = collapsed ? undefined : id;
   const showChildren = !collapsible || (collapsible && !collapsed);
 
+  const dismissButton = (
+    <View>
+      <button
+        type="button"
+        className={styles.Button}
+        onClick={onDismiss}
+        aria-label={translate('dismissNotification')}
+      >
+        <Icon source="close" size="small" />
+      </button>
+    </View>
+  );
+
+  const collapsibleButton = (
+    <View>
+      <button
+        type="button"
+        className={styles.Button}
+        onClick={() => setCollapsed((collapsed) => !collapsed)}
+        aria-pressed={!collapsed}
+        aria-expanded={!collapsed}
+        aria-controls={controlId}
+      >
+        <Icon
+          size="small"
+          source={collapsed ? 'chevronDown' : 'chevronUp'}
+          accessibilityLabel={translate('expand')}
+        />
+      </button>
+    </View>
+  );
+
   return (
     <div
       className={className}
@@ -58,7 +95,10 @@ export function Banner({
       {...(autofocus && {tabIndex: -1})}
       ref={bannerRef}
     >
-      <Bookend leading={!iconHidden} trailing={collapsible}>
+      <Bookend
+        leading={!iconHidden}
+        trailing={collapsible || Boolean(onDismiss)}
+      >
         {!iconHidden && (
           <div className={styles.Icon}>
             <Icon source={status} />
@@ -74,23 +114,11 @@ export function Banner({
             </div>
           )}
         </TextContainer>
-        {collapsible && (
-          <View>
-            <button
-              type="button"
-              className={styles.Button}
-              onClick={() => setCollapsed((collapsed) => !collapsed)}
-              aria-pressed={!collapsed}
-              aria-expanded={!collapsed}
-              aria-controls={controlId}
-            >
-              <Icon
-                size="small"
-                source={collapsed ? 'chevronDown' : 'chevronUp'}
-                accessibilityLabel={translate('expand')}
-              />
-            </button>
-          </View>
+        {(collapsible || onDismiss) && (
+          <InlineStack spacing="loose">
+            {collapsible && collapsibleButton}
+            {onDismiss && dismissButton}
+          </InlineStack>
         )}
       </Bookend>
     </div>

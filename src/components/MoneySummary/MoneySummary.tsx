@@ -64,7 +64,7 @@ export function MoneySummary({
                 {prefix}
               </Text>
             )}
-            <Text emphasized size="xlarge" style={valueTypographyStyle}>
+            <Text emphasized size="extraLarge" style={valueTypographyStyle}>
               {value}
             </Text>
           </InlineStack>

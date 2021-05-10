@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 
 import {mountWithContext} from '../../test-utilities';
 
@@ -6,222 +6,225 @@ import {Labelled, Props} from './Labelled';
 import {useLabelled} from './hook';
 import {LabelledContext} from './context';
 
-const defaultProps: Props = {
-  children: <div />,
+const defaultProps: PropsWithChildren<Props> = {
+  children: <Child />,
   label: '',
   htmlFor: '',
-  isEmpty: true,
+  empty: true,
 };
 
 describe('<Labelled />', () => {
   it('renders the children', async () => {
-    const labelled = mountWithContext(
-      <Labelled {...defaultProps}>
-        <Child />
-      </Labelled>,
-    );
+    const labelled = mountWithContext(<Labelled {...defaultProps} />);
     expect(labelled).toContainReactComponent(Child);
   });
 
   it('wraps children with a LabelledContext.Provider', async () => {
-    const label = 'Email';
     const labelled = mountWithContext(
-      <Labelled {...defaultProps} label={label} />,
+      <Labelled {...defaultProps} label="Email" />,
     );
     expect(labelled).toProvideReactContext(LabelledContext);
   });
 
-  it('hides the floating label if no value is entered', async () => {
-    const label = 'Email';
+  it('renders a floating label when the value is prefilled', async () => {
     const labelled = mountWithContext(
-      <Labelled {...defaultProps} label={label} />,
+      <Labelled {...defaultProps} label="Email" empty={false} />,
     );
 
     expect(labelled).toProvideReactContext(
       LabelledContext,
       expect.objectContaining({
-        isFloating: false,
+        floating: true,
+      }),
+    );
+  });
+
+  it('does not render a floating label on focus when empty', async () => {
+    const labelled = mountWithContext(
+      <Labelled {...defaultProps} label="Email" />,
+    );
+
+    // Gain focus
+    labelled.act(() => {
+      labelled.find('input')?.trigger('onFocus');
+    });
+
+    expect(labelled).toProvideReactContext(
+      LabelledContext,
+      expect.objectContaining({
+        floating: false,
       }),
     );
   });
 
   it('renders a floating label once a value is entered', async () => {
-    const label = 'Email';
     const labelled = mountWithContext(
-      <Labelled {...defaultProps} label={label}>
-        <Child />
-      </Labelled>,
+      <Labelled {...defaultProps} label="Email" />,
     );
 
+    // Enter value
     labelled.act(() => {
-      labelled.find('input')?.trigger('oninput' as any, {
-        target: {
-          value: 'snowdevil@shopify.com',
-        },
-      });
+      labelled.setProps({empty: false});
     });
 
     expect(labelled).toProvideReactContext(
       LabelledContext,
       expect.objectContaining({
-        isFloating: true,
+        floating: true,
       }),
     );
   });
 
-  it('displays a floating label once a value is entered and removed', async () => {
-    const label = 'Email';
+  it('renders a floating label when focused, then the value is removed', async () => {
     const labelled = mountWithContext(
-      <Labelled {...defaultProps} label={label}>
-        <Child />
-      </Labelled>,
+      <Labelled {...defaultProps} empty={false} label="Email" />,
     );
 
-    // Enter value
+    // Gain focus
     labelled.act(() => {
-      labelled.find('input')?.trigger('oninput' as any, {
-        target: {
-          value: 'snowdevil@shopify.com',
-        },
-      });
+      labelled.find('input')?.trigger('onFocus');
     });
 
     // Remove value
     labelled.act(() => {
-      labelled.find('input')?.trigger('oninput' as any, {
-        target: {
-          value: '',
-        },
-      });
+      labelled.setProps({empty: true});
     });
 
     expect(labelled).toProvideReactContext(
       LabelledContext,
       expect.objectContaining({
-        isFloating: true,
+        floating: true,
       }),
     );
   });
 
-  it('hides a floating label once a value is entered, removed and focus is lost', async () => {
-    const label = 'Email';
+  it('does not render a floating label when not focused and the value is removed', async () => {
     const labelled = mountWithContext(
-      <Labelled {...defaultProps} label={label}>
-        <Child />
-      </Labelled>,
+      <Labelled {...defaultProps} empty={false} label="Email" />,
     );
+
+    // Remove value
+    labelled.act(() => {
+      labelled.setProps({empty: true});
+    });
+
+    expect(labelled).toProvideReactContext(
+      LabelledContext,
+      expect.objectContaining({
+        floating: false,
+      }),
+    );
+  });
+
+  it('does not render a floating label when focused, then a value is entered, then removed, then the focus is lost', async () => {
+    const labelled = mountWithContext(
+      <Labelled {...defaultProps} label="Email" />,
+    );
+
+    // Gain focus
+    labelled.act(() => {
+      labelled.find('input')?.trigger('onFocus');
+    });
 
     // Enter value
     labelled.act(() => {
-      labelled.find('input')?.trigger('oninput' as any, {
-        target: {
-          value: 'snowdevil@shopify.com',
-        },
-      });
+      labelled.setProps({empty: false});
     });
 
     // Remove value
     labelled.act(() => {
-      labelled.find('input')?.trigger('oninput' as any, {
-        target: {
-          value: '',
-        },
-      });
+      labelled.setProps({empty: true});
     });
 
     // Lose focus
     labelled.act(() => {
-      labelled.find('input')?.trigger('onBlur', {
-        target: {
-          value: '',
-        },
-      });
+      labelled.find('input')?.trigger('onBlur');
     });
 
     expect(labelled).toProvideReactContext(
       LabelledContext,
       expect.objectContaining({
-        isFloating: false,
+        floating: false,
       }),
     );
   });
 
-  it('displays a floating label once a value is entered and focus is lost', async () => {
-    const label = 'Email';
+  it('renders a floating label when focused, then a value is entered, then the focus is lost', async () => {
     const labelled = mountWithContext(
-      <Labelled {...defaultProps} label={label}>
-        <Child />
-      </Labelled>,
+      <Labelled {...defaultProps} label="Email" />,
     );
+
+    // Gain focus
+    labelled.act(() => {
+      labelled.find('input')?.trigger('onFocus');
+    });
 
     // Enter value
     labelled.act(() => {
-      labelled.find('input')?.trigger('oninput' as any, {
-        target: {
-          value: 'snowdevil@shopify.com',
-        },
-      });
+      labelled.setProps({empty: false});
     });
 
     // Lose focus
     labelled.act(() => {
-      labelled.find('input')?.trigger('onBlur', {
-        target: {
-          value: '',
-        },
-      });
+      labelled.find('input')?.trigger('onBlur');
     });
 
     expect(labelled).toProvideReactContext(
       LabelledContext,
       expect.objectContaining({
-        isFloating: true,
+        floating: true,
       }),
     );
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('displays a floating label if the field is initially empty but its value gets updated', async () => {
-    const asynchValue = '150 Elgin';
+  it('renders a floating label when focused, then a value is entered, then lost focus, then focused, then the value removed', async () => {
     const labelled = mountWithContext(
-      <Labelled {...defaultProps}>
-        <Child value="" />
-      </Labelled>,
+      <Labelled {...defaultProps} label="Email" />,
     );
 
-    // TODO - Failing test, review how we want to test children with async values. Recent Preact changes skip setProperty for children and key props
-    // might be the culprit of this specific behaviour. https://github.com/preactjs/preact/pull/2213
+    // Gain focus
     labelled.act(() => {
-      labelled.setProps({
-        isEmpty: false,
-        children: <Child value={asynchValue} />,
-      });
+      labelled.find('input')?.trigger('onFocus');
     });
 
-    expect(labelled).toContainReactComponent('input', {
-      value: asynchValue,
+    // Enter value
+    labelled.act(() => {
+      labelled.setProps({empty: false});
+    });
+
+    // Lose focus
+    labelled.act(() => {
+      labelled.find('input')?.trigger('onBlur');
+    });
+
+    // Gain focus
+    labelled.act(() => {
+      labelled.find('input')?.trigger('onFocus');
+    });
+
+    // Remove value
+    labelled.act(() => {
+      labelled.setProps({empty: true});
     });
 
     expect(labelled).toProvideReactContext(
       LabelledContext,
       expect.objectContaining({
-        isFloating: true,
+        floating: true,
       }),
     );
   });
 });
 
 function Child({value}: {value?: string}) {
-  const {onBlur, onChange, onFocus} = useLabelled();
+  const {onBlur, onFocus} = useLabelled();
 
   return (
     <input
       value={value}
       onBlur={onBlur}
-      onChange={({target}) => {
-        onChange(!target.value || target.value === '');
-      }}
       onFocus={onFocus}
+      onChange={() => {}}
     />
   );
 }

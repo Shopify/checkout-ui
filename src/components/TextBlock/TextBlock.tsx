@@ -9,19 +9,18 @@ import {
   utilityDefaultColorAccent,
 } from '../../utilities/legacy';
 import typographyStyles from '../../utilities/typography-styles.css';
+import {InlineFormattingContext} from '../../utilities/inlineFormatting';
 
 import styles from './TextBlock.css';
 
-export interface Props
-  extends PropsWithChildren<Omit<TextBlockProps, 'appearance'>> {
+export interface Props extends PropsWithChildren<TextBlockProps> {
   /** Changes the text based on the Theme styles */
   style?: ThemeTypographyStyle;
-  appearance?: 'accent' | TextBlockProps['appearance'];
 }
 
 export function TextBlock({
   children,
-  size,
+  size = 'base',
   emphasized,
   subdued,
   appearance,
@@ -43,8 +42,10 @@ export function TextBlock({
   const content = emphasized ? <strong>{children}</strong> : children;
 
   return (
-    <p className={className} id={id}>
-      {content}
-    </p>
+    <InlineFormattingContext.Provider value>
+      <p className={className} id={id}>
+        {content}
+      </p>
+    </InlineFormattingContext.Provider>
   );
 }

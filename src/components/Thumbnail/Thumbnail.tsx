@@ -6,6 +6,8 @@ import {Icon} from '../Icon';
 
 import styles from './Thumbnail.css';
 
+type Size = 'small' | 'base';
+
 export interface Props {
   badge?: string | number;
   description: string;
@@ -15,9 +17,16 @@ export interface Props {
    * e.g., ["https://example.org/foo_100x100.jpg", "https://example.org/foo_200x200.jpg 2x"]
    */
   sources?: string[];
+  size?: Size;
 }
 
-export function Thumbnail({badge, description, source, sources}: Props) {
+export function Thumbnail({
+  badge,
+  description,
+  source,
+  sources,
+  size = 'base',
+}: Props) {
   const {
     thumbnail: {aspectRatio, border = 'full', badgeBackground = 'subdued'},
   } = useThemeConfiguration();
@@ -26,13 +35,10 @@ export function Thumbnail({badge, description, source, sources}: Props) {
     <div
       className={classNames(
         styles.Thumbnail,
+        styles[variationName('size', size)],
         border && styles[variationName('border', border)],
-        aspectRatio &&
-          aspectRatio < 1 &&
-          styles['Thumbnail-aspectRatioLandscape'],
-        aspectRatio &&
-          aspectRatio > 1 &&
-          styles['Thumbnail-aspectRatioPortrait'],
+        aspectRatio && aspectRatio < 1 && styles.aspectRatioLandscape,
+        aspectRatio && aspectRatio > 1 && styles.aspectRatioPortrait,
       )}
     >
       {badge != null && (

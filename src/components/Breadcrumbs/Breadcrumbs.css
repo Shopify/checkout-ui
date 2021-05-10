@@ -18,6 +18,6 @@
 
 .Separator {
   display: block;
-  margin-left: var(--x-buyer-journey-inline-gap);
-  margin-right: var(--x-buyer-journey-inline-gap);
+  margin-left: var(--x-buyer-journey-inline-spacing);
+  margin-right: var(--x-buyer-journey-inline-spacing);
 }

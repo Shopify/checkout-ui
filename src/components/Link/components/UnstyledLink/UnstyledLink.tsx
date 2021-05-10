@@ -1,32 +1,37 @@
-import React, {ReactNode} from 'react';
+import React, {PropsWithChildren} from 'react';
+import {LinkProps} from '@shopify/argo-checkout';
 
 import {useLinkComponent} from '../../../AppContext';
 
-export interface Props {
-  children?: ReactNode;
+import styles from './UnstyledLink.css';
+
+export interface Props extends Omit<LinkProps, 'to'> {
   /** CSS class that is applied to the link */
   className?: string;
   /** Destination to navigate to. */
   to: string;
-  /** Open the link in a new window or tab */
-  external?: boolean;
-  /** Unique identifier. Typically used as a target for another component’s controls to associate an accessible label with an action. */
-  id?: string;
-  /** Callback when pressed. If `to` is provided, it will execute the callback and navigate specified. */
-  onPress?(): void;
+  ariaBusy?: boolean;
+  ariaLive?: 'assertive' | 'polite' | 'off';
+  ariaLabel?: string;
 }
 
 export function UnstyledLink({
   children,
-  className,
+  className: classNameProp,
   to,
   external,
   id,
+  language,
+  ariaBusy,
+  ariaLive,
+  ariaLabel,
   onPress,
-}: Props) {
+}: PropsWithChildren<Props>) {
   const LinkComponent = useLinkComponent();
 
   const handleClick = onPress && (() => onPress());
+
+  const className = classNameProp ?? styles.UnstyledLink;
 
   if (LinkComponent) {
     return (
@@ -36,6 +41,10 @@ export function UnstyledLink({
         external={external}
         id={id}
         className={className}
+        lang={language}
+        aria-label={ariaLabel}
+        aria-busy={ariaBusy}
+        aria-live={ariaLive}
       >
         {children}
       </LinkComponent>
@@ -53,6 +62,10 @@ export function UnstyledLink({
       rel={rel}
       id={id}
       className={className}
+      lang={language}
+      aria-label={ariaLabel}
+      aria-busy={ariaBusy}
+      aria-live={ariaLive}
     >
       {children}
     </a>

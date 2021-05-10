@@ -1,9 +1,11 @@
 import React from 'react';
 import {matchMedia} from '@shopify/jest-dom-mocks';
+import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
 import {UnstyledLink} from '../Link';
 import {Spinner} from '../Spinner';
+import {Form} from '../Form';
 
 import {Button} from './Button';
 
@@ -81,6 +83,34 @@ describe('<Button />', () => {
       const button = mountWithContext(<Button {...defaultProps} submit />);
       expect(button).toContainReactComponent('button', {type: 'submit'});
     });
+
+    it('renders a form id when rendered in a nested form', () => {
+      const testId = faker.random.word();
+      const button = mountWithContext(
+        <Form onSubmit={noop}>
+          <Form id={testId} onSubmit={noop}>
+            <Button {...defaultProps} submit />
+          </Form>
+        </Form>,
+      );
+
+      expect(button).toContainReactComponent('button', {
+        type: 'submit',
+        form: testId,
+      });
+    });
+
+    it('does not render a form id when rendered in a non-nested form', () => {
+      const button = mountWithContext(
+        <Form onSubmit={noop}>
+          <Button {...defaultProps} submit />
+        </Form>,
+      );
+      expect(button).toContainReactComponent('button', {
+        type: 'submit',
+        form: undefined,
+      });
+    });
   });
 
   describe('loading', () => {
@@ -92,6 +122,27 @@ describe('<Button />', () => {
     it('indicates that the button is getting updated', () => {
       const button = mountWithContext(<Button {...defaultProps} loading />);
       expect(button).toContainReactComponent('button', {'aria-busy': true});
+
+      const unstyledLink = mountWithContext(
+        <Button {...defaultProps} loading to="/shipping" />,
+      );
+      expect(unstyledLink).toContainReactComponent(UnstyledLink, {
+        ariaBusy: true,
+      });
+    });
+
+    it('sets the right priority of announcement for screen readers', () => {
+      const button = mountWithContext(<Button {...defaultProps} loading />);
+      expect(button).toContainReactComponent('button', {
+        'aria-live': 'assertive',
+      });
+
+      const unstyledLink = mountWithContext(
+        <Button {...defaultProps} loading to="/shipping" />,
+      );
+      expect(unstyledLink).toContainReactComponent(UnstyledLink, {
+        ariaLive: 'assertive',
+      });
     });
 
     it('renders a <Spinner> when loading', () => {
@@ -101,11 +152,13 @@ describe('<Button />', () => {
       expect(button).toContainReactComponent(Spinner);
     });
 
-    it('renders the accessibleLabel as the Spinner children when provided', () => {
+    it('renders the loadingLabel as the Spinner children when provided', () => {
       const button = mountWithContext(
         <Button {...defaultProps} loadingLabel="Processing" loading />,
       );
-      expect(button).toContainReactComponent(Spinner, {children: 'Processing'});
+      expect(button).toContainReactComponent(Spinner, {
+        accessibilityLabel: 'Processing',
+      });
     });
 
     it('adds the Spinner class when user does not prefers reduced motion', () => {
@@ -132,4 +185,27 @@ describe('<Button />', () => {
       });
     });
   });
+
+  describe('accessibilityLabel', () => {
+    it('renders an accessible label when provided', () => {
+      const content = 'Accessible label';
+      const button = mountWithContext(
+        <Button {...defaultProps} accessibilityLabel={content} />,
+      );
+      expect(button).toContainReactComponent('button', {'aria-label': content});
+
+      const unstyledLink = mountWithContext(
+        <Button
+          {...defaultProps}
+          accessibilityLabel={content}
+          to="/shipping"
+        />,
+      );
+      expect(unstyledLink).toContainReactComponent(UnstyledLink, {
+        ariaLabel: content,
+      });
+    });
+  });
 });
+
+function noop() {}

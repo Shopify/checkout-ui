@@ -7,7 +7,7 @@ import {Heading} from './Heading';
 
 const meta = {
   component: Heading,
-  title: 'Heading',
+  title: 'checkout-web-ui/Heading',
   decorators: [
     withKnobs,
     themeWithKnobs('headingLevel1', 'headingLevel2', 'headingLevel3'),
