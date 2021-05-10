@@ -1,6 +1,6 @@
 {
   "name": "@shopify/checkout-ui-react",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Checkout UI library",
   "publishConfig": {
     "access": "public",
