@@ -5,7 +5,7 @@ const PostCssFunctions = require('postcss-functions');
 module.exports = {
   stories: ['../src/**/*.stories.tsx'],
   addons: ['@storybook/addon-knobs/register'],
-  webpackFinal: async (config) => {
+  webpackFinal: (config) => {
     config.module.rules = [];
     config.module.rules.push({
       test: /\.(ts|tsx)$/,

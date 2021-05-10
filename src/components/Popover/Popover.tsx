@@ -58,10 +58,13 @@ export function Popover({
   const firstFocusableNode = popoverRef && findFirstFocusableNode(popoverRef);
   const lastFocusableNode = popoverRef && findLastFocusableNode(popoverRef);
 
-  const setActivatorAccessibilityAttributes = useCallback(() => {
-    activator?.setAttribute('aria-controls', id);
-    activator?.setAttribute('aria-expanded', String(open));
-  }, [activator, id, open]);
+  const setActivatorAccessibilityAttributes = useCallback(
+    () => {
+      activator?.setAttribute('aria-controls', id);
+      activator?.setAttribute('aria-expanded', String(open));
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activator, id, open],
+  );
 
   const handleClose = useCallback(() => {
     onClose?.();
@@ -77,6 +80,7 @@ export function Popover({
         handleClose();
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [handleClose, activator, popoverRef],
   );
 
@@ -107,6 +111,7 @@ export function Popover({
         }
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       handleClose,
       activator,

@@ -72,6 +72,7 @@ export function DatePicker<T extends ISODate[] | ISODate | Range>({
 
   const weekStartDay = useMemo(
     () => getWeekStartDay(geolocation?.countryCode),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [geolocation],
   );
 
