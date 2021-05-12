@@ -83,7 +83,6 @@
     "@babel/preset-env": "^7.0.0",
     "@shopify/argo-checkout": "^0.10.1",
     "@shopify/css-utilities": "1.0.5",
-    "@shopify/react-hooks": "1.9.1",
     "@shopify/webpack-ignore-typescript-export-warnings-plugin": "^1.0.4",
     "@svgr/webpack": "^5.1.0",
     "babel-loader": "^8.1.0",
