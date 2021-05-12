@@ -92,7 +92,6 @@
   "dependencies": {
     "@shopify/argo-checkout": "^0.10.1",
     "@shopify/css-utilities": "1.0.5",
-    "core-js": "^3.0.0",
     "hsluv": "0.1.0"
   },
   "resolutions": {

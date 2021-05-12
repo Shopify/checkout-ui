@@ -3,7 +3,6 @@ import {classNames, variationName} from '@shopify/css-utilities';
 import {HeadingProps} from '@shopify/argo-checkout';
 
 import {useThemeConfiguration} from '../Theme';
-
 import {useAutoHeadingLevel} from '../../utilities/auto-headings';
 import {utilityDefaultTextColorEmphasized} from '../../utilities/legacy';
 import typographyStyles from '../../utilities/typography-styles.css';
