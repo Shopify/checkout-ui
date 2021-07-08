@@ -1,5 +1,15 @@
-export const DEFAULT_FONT_STACK = `-apple-system, BlinkMacSystemFont, 'Segoe UI',
+export enum ThemeDefault {
+  FontStack = `-apple-system, BlinkMacSystemFont, 'Segoe UI',
 Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-'Segoe UI Symbol', sans-serif`;
-export const DEFAULT_COLOR_TEXT_EMPHASIZED = 'hsl(0, 0%, 20%)';
-export const DEFAULT_FONT_SIZE = '14px';
+'Segoe UI Symbol', sans-serif`,
+  FontSize = '14px',
+  ColorTextEmphasized = 'hsl(0, 0%, 20%)',
+  ColorPrimaryAction = 'hsl(204, 77%, 41%)',
+  ColorPrimaryActionText = 'hsl(0, 0%, 100%)',
+  ColorSecondaryAction = 'hsl(204, 77%, 41%)',
+  ColorSecondaryActionText = 'hsl(0, 0%, 100%)',
+  ColorCriticalAccent = 'hsl(0, 77%, 51%)',
+  ColorCriticalText = 'hsl(0, 0%, 100%)',
+  ButtonPadding = '1.4rem 1.7rem',
+  ButtonBorderRadius = '0.5rem',
+}

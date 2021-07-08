@@ -1,114 +1,89 @@
-import React from 'react';
+import React, {ComponentPropsWithRef} from 'react';
 import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
-import {Portal} from '../Portal';
 import {Heading} from '../Heading';
 
 import {Modal} from './Modal';
 
+const Child = () => <div />;
+
 describe('<Modal />', () => {
-  const defaultIFrameSrc = faker.internet.url();
+  const defaultProps = {
+    title: faker.random.words(2),
+    children: <Child />,
+    open: true,
+    onClose: () => {},
+  };
+  const defaultPropsWithSource = {
+    ...defaultProps,
+    children: undefined,
+    source: faker.internet.url(),
+  };
+  const defaultPropsWithBlocking = {
+    ...defaultProps,
+    onClose: undefined,
+  };
 
   describe('open prop', () => {
     it('renders the modal when the open prop is true', async () => {
-      const modal = await mountWithContext(
-        <Modal open src={defaultIFrameSrc} />,
-      );
-      expect(modal).toContainReactComponent(Portal);
+      const modal = await mountWithContext(<Modal {...defaultProps} />);
+      expect(modal).toContainReactComponent(Child);
     });
 
-    it("doesn't render the modal when the open prop is undefined", async () => {
-      const modal = await mountWithContext(<Modal src={defaultIFrameSrc} />);
-      expect(modal).not.toContainReactComponent(Portal);
-    });
-
-    it('calls onClose when open changes from true to false', async () => {
-      const onCloseSpy = jest.fn();
+    it("doesn't render the modal when the open prop is false", async () => {
       const modal = await mountWithContext(
-        <Modal onClose={onCloseSpy} src={defaultIFrameSrc} open />,
+        <Modal {...defaultProps} open={false} />,
       );
-      modal.setProps({open: false});
 
-      expect(onCloseSpy).toHaveBeenCalledTimes(1);
+      expect(modal).not.toContainReactComponent(Child);
     });
   });
 
   it('renders an iframe is the src prop is passed', async () => {
-    const iFrameSrc = faker.internet.url();
-    const iFrameName = faker.random.words(2);
-
-    const modal = await mountWithContext(
-      <Modal src={iFrameSrc} iFrameName={iFrameName} open />,
-    );
+    const modal = await mountWithContext(<Modal {...defaultPropsWithSource} />);
     expect(modal).toContainReactComponent('iframe', {
-      src: iFrameSrc,
-      name: iFrameName,
+      src: defaultPropsWithSource.source,
+      title: defaultPropsWithSource.title,
     });
   });
 
   it('renders its children if no src prop is passed', async () => {
-    const content = faker.random.words(2);
-    const modal = await mountWithContext(
-      <Modal open>
-        <p>{content}</p>
-      </Modal>,
-    );
+    const modal = await mountWithContext(<Modal {...defaultProps} />);
     expect(modal).not.toContainReactComponent('iframe');
-    expect(modal).toContainReactText(content);
+    expect(modal).toContainReactComponent(Child);
   });
 
   it('renders a header with Heading if the title prop is passed', async () => {
-    const title = faker.random.words(2);
-    const modal = await mountWithContext(
-      <Modal src={defaultIFrameSrc} title={title} open />,
-    );
+    const modal = await mountWithContext(<Modal {...defaultProps} />);
 
     expect(modal).toContainReactComponent('header');
     expect(modal).toContainReactComponent(Heading);
-    expect(modal).toContainReactText(title);
+    expect(modal).toContainReactText(defaultProps.title);
   });
 
   it('does not render a Heading if titleHidden', async () => {
-    const title = faker.random.words(2);
     const modal = await mountWithContext(
-      <Modal src={defaultIFrameSrc} title={title} open titleHidden />,
+      <Modal {...defaultProps} titleHidden />,
     );
 
     expect(modal).not.toContainReactComponent(Heading);
   });
 
-  it('still renders a close button if no title', async () => {
-    const modal = await mountWithContext(<Modal src={defaultIFrameSrc} open />);
-
-    expect(modal).toContainReactComponent('button');
-  });
-
   it('still renders a close button if titleHidden', async () => {
     const modal = await mountWithContext(
-      <Modal src={defaultIFrameSrc} open titleHidden />,
+      <Modal {...defaultProps} titleHidden />,
     );
 
-    expect(modal).toContainReactComponent('button');
+    const header = modal.find('header');
+    expect(header).toContainReactComponent('button');
   });
 
   describe('when the escape key is pressed', () => {
-    it('closes the modal', async () => {
-      const modal = await mountWithContext(
-        <Modal src={defaultIFrameSrc} open />,
-      );
-      const event = new KeyboardEvent('keydown', {key: 'Escape'} as any);
-      modal.act(() => document.dispatchEvent(event));
-
-      expect(modal).not.toContainReactComponent(Portal);
-    });
-
     it('calls onClose callback', async () => {
       const onCloseSpy = jest.fn();
       const modal = await mountWithContext(
-        <Modal onClose={onCloseSpy} open>
-          Hi
-        </Modal>,
+        <Modal {...defaultProps} onClose={onCloseSpy} />,
       );
       const event = new KeyboardEvent('keydown', {key: 'Escape'} as any);
       modal.act(() => document.dispatchEvent(event));
@@ -118,28 +93,21 @@ describe('<Modal />', () => {
   });
 
   describe('when the close button is clicked', () => {
-    it('closes the modal', async () => {
-      const modal = await mountWithContext(
-        <Modal src={defaultIFrameSrc} title="A modal" open />,
-      );
-      modal.find('button')?.trigger('onClick');
-
-      expect(modal).not.toContainReactComponent(Portal);
-    });
-
     it('calls onClose callback', async () => {
       const onCloseSpy = jest.fn();
       const modal = await mountWithContext(
-        <Modal title="A modal" onClose={onCloseSpy} open>
-          Hi
-        </Modal>,
+        <Modal {...defaultProps} onClose={onCloseSpy} />,
       );
-      modal.find('button')?.trigger('onClick');
+      const header = modal.find('header');
+      header?.find('button')?.trigger('onClick');
 
       expect(onCloseSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('resets the iFrameHeight', async () => {
+    // Skipped until we figure out how to test async events
+    // as the `iframeHeight` is reset on `transitionend`
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('resets the iFrameHeight', async () => {
       const expectedHeight = 100;
       const fakeEvent = {
         target: {
@@ -147,16 +115,16 @@ describe('<Modal />', () => {
         },
       };
       const modal = await mountWithContext(
-        <Modal title="A modal" src={defaultIFrameSrc} open />,
+        <Modal {...defaultPropsWithSource} />,
       );
 
       modal.find('iframe')?.trigger('onLoad', fakeEvent as any);
 
       expect(modal.find('iframe')!.prop('style')).toMatchObject({
-        height: `${expectedHeight}px`,
+        height: expectedHeight,
       });
 
-      modal.find('button')?.trigger('onClick');
+      modal.find('header button')?.trigger('onClick');
       modal.setProps({open: false});
       modal.setProps({open: true});
 
@@ -164,30 +132,46 @@ describe('<Modal />', () => {
     });
   });
 
+  describe('when the backdrop is clicked', () => {
+    it('calls onClose callback', async () => {
+      const onCloseSpy = jest.fn();
+      const modal = await mountWithContext(
+        <Modal {...defaultProps} onClose={onCloseSpy} />,
+      );
+      const backdrop = modal.findWhere<ComponentPropsWithRef<'div'>>(
+        (node: any) => node?.props.className?.includes('Backdrop'),
+      );
+
+      backdrop?.trigger('onClick');
+
+      expect(onCloseSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('blocking prop', () => {
     it("doesn't render the close button", async () => {
       const modal = await mountWithContext(
-        <Modal src={defaultIFrameSrc} title="A modal" open blocking />,
+        <Modal {...defaultPropsWithBlocking} blocking />,
       );
 
-      expect(modal).not.toContainReactComponent('button');
+      expect(modal).not.toContainReactComponent('header button');
     });
 
     it("doesn't close the modal when the escape key is pressed", async () => {
       const modal = await mountWithContext(
-        <Modal src={defaultIFrameSrc} open blocking />,
+        <Modal {...defaultPropsWithBlocking} blocking />,
       );
       const event = new KeyboardEvent('keydown', {key: 'Escape'} as any);
       modal.act(() => document.dispatchEvent(event));
 
-      expect(modal).toContainReactComponent(Portal);
+      expect(modal).toContainReactComponent(Child);
     });
   });
 
-  describe('long prop', () => {
+  describe('blockSize prop', () => {
     it("doesn't add the onLoad prop when present", async () => {
       const modal = await mountWithContext(
-        <Modal src={defaultIFrameSrc} open long />,
+        <Modal blockSize="fill" {...defaultPropsWithSource} />,
       );
       const iframe = modal.find('iframe');
 
@@ -196,11 +180,23 @@ describe('<Modal />', () => {
 
     it('adds the onLoad prop when absent', async () => {
       const modal = await mountWithContext(
-        <Modal src={defaultIFrameSrc} open />,
+        <Modal {...defaultPropsWithSource} />,
       );
       const iframe = modal.find('iframe');
 
       expect(iframe?.prop('onLoad')).not.toBeUndefined();
+    });
+  });
+
+  describe('maxInlineSize prop', () => {
+    it('sets a max-width to the dialog', async () => {
+      const modal = await mountWithContext(
+        <Modal maxInlineSize={0.9} {...defaultProps} />,
+      );
+
+      expect(modal).toContainReactComponent('div', {
+        style: {maxWidth: '90%'},
+      });
     });
   });
 });

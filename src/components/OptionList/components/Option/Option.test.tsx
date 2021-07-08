@@ -4,7 +4,6 @@ import faker from 'faker';
 import {mountWithContext} from '../../../../test-utilities';
 import {CheckboxControl} from '../../../Checkbox';
 import {RadioControl} from '../../../RadioControl';
-import {View} from '../../../View';
 import {OptionList, Props as OptionListProps} from '../../OptionList';
 
 import {Option, Props} from './Option';
@@ -68,22 +67,6 @@ describe('<Option />', () => {
     );
 
     expect(optionList.find(Option)).toContainReactComponent(CheckboxControl);
-  });
-
-  it('renders visually hidden View when label and childrens are set', () => {
-    const labelContent = faker.random.word();
-
-    const optionList = mountWithContext(
-      <OptionList {...defaultOptionListProps}>
-        <Option {...defaultProps} label={labelContent}>
-          Childrens
-        </Option>
-      </OptionList>,
-    );
-
-    expect(optionList.find(View, {visibility: 'hidden'})).toContainReactText(
-      labelContent,
-    );
   });
 
   describe('allowMultiple', () => {
@@ -153,6 +136,36 @@ describe('<Option />', () => {
       );
 
       expect(optionList.find(Option)).not.toContainReactComponent(RadioControl);
+    });
+  });
+
+  describe('accessibilityLabel', () => {
+    it('renders an accessible label for an option when provided', () => {
+      const accessibilityLabel = faker.random.word();
+
+      const optionList = mountWithContext(
+        <OptionList {...defaultOptionListProps}>
+          <Option {...defaultProps} accessibilityLabel={accessibilityLabel} />
+        </OptionList>,
+      );
+
+      expect(optionList.find(Option)).toContainReactComponent('label', {
+        'aria-label': accessibilityLabel,
+      });
+    });
+
+    it('does not render an accessible label by default', () => {
+      const accessibilityLabel = faker.random.word();
+
+      const optionList = mountWithContext(
+        <OptionList {...defaultOptionListProps}>
+          <Option {...defaultProps} />
+        </OptionList>,
+      );
+
+      expect(optionList.find(Option)).not.toContainReactComponent('label', {
+        'aria-label': accessibilityLabel,
+      });
     });
   });
 });

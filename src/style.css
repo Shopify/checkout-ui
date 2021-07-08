@@ -50,21 +50,21 @@
   --x-color-surface-tertiary-disabled: hsl(0, 0%, 97.3%);
   --x-color-surface-tertiary-accent: hsl(204, 77%, 41%);
 
-  /* color primary */
+  /* color primary action */
   --x-color-primary-action: hsl(204, 77%, 41%);
   --x-color-primary-action-hovered: hsl(204, 79%, 32%);
-  --x-color-primary-action-pressed: hsl(204, 79%, 32%);
   --x-color-primary-action-text: hsl(0, 0%, 100%);
   --x-color-primary-action-text-hovered: hsl(0, 0%, 100%);
-  --x-color-primary-action-text-pressed: hsl(0, 0%, 100%);
+  --x-color-primary-action-border: hsl(204, 79%, 32%);
+  --x-color-primary-action-disabled: hsl(204, 0%, 41%);
 
-  /* color secondary */
-  --x-color-secondary-action: hsl(204, 0%, 42%);
-  --x-color-secondary-action-hovered: hsl(204, 0%, 32%);
-  --x-color-secondary-action-pressed: hsl(204, 0%, 32%);
+  /* color secondary action */
+  --x-color-secondary-action: hsl(204, 77%, 41%);
+  --x-color-secondary-action-hovered: hsl(204, 79%, 32%);
   --x-color-secondary-action-text: hsl(0, 0%, 100%);
   --x-color-secondary-action-text-hovered: hsl(0, 0%, 100%);
-  --x-color-secondary-action-text-pressed: hsl(0, 0%, 100%);
+  --x-color-secondary-action-border: hsl(204, 79%, 32%);
+  --x-color-secondary-action-disabled: hsl(204, 0%, 41%);
 
   /* color tertiary */
   --x-color-tertiary-action: hsl(0, 0%, 92%);
@@ -74,10 +74,8 @@
   /* color interactive */
   --x-color-interactive: transparent;
   --x-color-interactive-hovered: transparent;
-  --x-color-interactive-pressed: transparent;
   --x-color-interactive-text: hsl(204, 77%, 41%);
   --x-color-interactive-text-hovered: hsl(204, 76%, 50%);
-  --x-color-interactive-text-pressed: hsl(204, 76%, 50%);
   --x-color-interactive-icon: hsl(0, 0%, 100%);
 
   /* color info */
@@ -148,6 +146,7 @@
   --x-typography-size-extra-extra-large: rem(28px);
 
   /* spacing - ratio of 1:1.225 */
+  --x-spacing-ratio: 1.225;
   --x-spacing-tight4x: rem(5px);
   --x-spacing-tight3x: rem(6px);
   --x-spacing-tight2x: rem(7px);
@@ -190,11 +189,14 @@
   --x-border-radius-none: 0;
   --x-border-radius-tight: em(2px);
   --x-border-radius-base: em(5px);
+  --x-border-radius-loose: em(8px);
   --x-border-radius-fully-rounded: em(23px);
 
   /* border width */
-  --x-border-width-base: 1px;
-  --x-border-width-thick: em(2px);
+  --x-border-width-base: rem(1px);
+  --x-border-width-medium: rem(2px);
+  --x-border-width-thick: rem(5px);
+  --x-border-width-extra-thick: rem(10px);
 
   /* defaults */
   --x-default-color-accent: hsl(204, 77%, 41%);
@@ -219,7 +221,7 @@
 
   /* money lines */
   --x-money-lines-block-spacing: var(--x-spacing-tight);
-  --x-money-lines-separator-block-spacing: var(--x-spacing-loose1x);
+  --x-money-lines-divider-block-spacing: var(--x-spacing-loose1x);
   --x-money-lines-block-padding: 0;
   --x-money-lines-inline-padding: 0;
   --x-money-summary-block-padding: 0;
@@ -229,10 +231,24 @@
   --x-buyer-journey-inline-spacing: var(--x-spacing-tight1x);
 
   /* buttons */
-  --x-primary-button-block-padding: var(--x-spacing-loose1x);
-  --x-primary-button-inline-padding: var(--x-spacing-loose2x);
-  --x-secondary-button-block-padding: var(--x-spacing-loose1x);
-  --x-secondary-button-inline-padding: var(--x-spacing-loose2x);
+  --x-button-large-multiplier: calc(
+    var(--x-spacing-ratio) * var(--x-spacing-ratio)
+  );
+  --x-button-extra-large-multiplier: calc(
+    var(--x-spacing-ratio) * var(--x-spacing-ratio) * var(--x-spacing-ratio)
+  );
+
+  /* button primary */
+  --x-primary-button-block-padding: var(--x-spacing-base);
+  --x-primary-button-inline-padding: var(--x-spacing-loose);
+  --x-primary-button-border-width: var(--x-border-width-base);
+
+  /* button secondary */
+  --x-secondary-button-block-padding: var(--x-spacing-base);
+  --x-secondary-button-inline-padding: var(--x-spacing-loose);
+  --x-secondary-button-border-width: var(--x-border-width-base);
+
+  /* button tertiary */
   --x-tertiary-button-block-padding: var(--x-spacing-tight4x);
   --x-tertiary-button-inline-padding: var(--x-spacing-tight3x);
 
@@ -255,11 +271,16 @@
   /* thumbnail */
   --x-thumbnail-aspect-ratio: 1;
 
+  /* opacity */
+  --x-opacity-disabled: 0.5;
+  --x-opacity-readonly: 0.7;
+
   /* link */
   --x-link-transition-duration: var(--x-duration-base);
 
-  /* opacity */
-  --x-opacity-disabled: 0.7;
+  /* modal */
+  --x-modal-max-width: rem(840px);
+  --x-modal-iframe-default-height: rem(400px);
 }
 
 /* Global
@@ -393,12 +414,10 @@ button,
   appearance: button;
   cursor: pointer;
 
-  /* Bring back when we design focus states
   &::-moz-focus-inner {
     border: none;
     padding: 0;
   }
-  */
 }
 
 [type='checkbox'],

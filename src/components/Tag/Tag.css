@@ -13,18 +13,28 @@
   --x-default-color-text-subdued: var(--x-color-tertiary-action-text-subdued);
   --x-default-color-text-emphasized: var(--x-color-tertiary-action-text);
   color: var(--x-color-tertiary-action-text);
-  padding: var(--x-spacing-tight) 0 var(--x-spacing-tight)
-    var(--x-spacing-tight);
+  padding: var(--x-spacing-tight2x) var(--x-spacing-tight1x);
   max-width: rem(240px);
+  display: flex;
+  align-items: center;
 }
 
 .Button {
   display: block;
-  padding: var(--x-spacing-tight) var(--x-spacing-base);
+  padding: var(--x-spacing-tight1x) var(--x-spacing-tight1x);
   color: var(--x-color-tertiary-action-text-subdued);
 
   &:hover,
   &:active {
     color: var(--x-color-tertiary-action-text);
   }
+}
+
+.Icon {
+  margin: 0;
+  margin-inline-end: var(--x-spacing-tight1x);
+}
+
+.removable {
+  padding-inline-end: 0;
 }

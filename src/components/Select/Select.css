@@ -288,10 +288,10 @@
 }
 
 .Select-isReadOnly {
-  opacity: var(--x-opacity-disabled);
+  opacity: var(--x-opacity-readonly);
 
   & + .Selector {
-    opacity: var(--x-opacity-disabled);
+    opacity: var(--x-opacity-readonly);
   }
 
   &.Select-backgroundSurfacePrimary {

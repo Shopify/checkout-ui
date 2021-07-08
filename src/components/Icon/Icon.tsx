@@ -1,5 +1,6 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
+import {IconProps} from '@shopify/checkout-ui-extensions';
 
 import {
   utilityDefaultColorAccent,
@@ -33,7 +34,9 @@ import {
   lock,
   map,
   marker,
+  minus,
   mobile,
+  plus,
   questionFill,
   reorder,
   spinner,
@@ -78,7 +81,9 @@ const BUNDLED_ICONS = {
   lock,
   map,
   marker,
+  minus,
   mobile,
+  plus,
   questionFill,
   reorder,
   spinner,
@@ -93,23 +98,12 @@ const BUNDLED_ICONS = {
   external,
 };
 
-export type IconSource = keyof typeof BUNDLED_ICONS;
-
-export interface Props {
-  source: 'placeholder' | IconSource;
-  appearance?:
-    | 'accent'
-    | 'interactive'
-    | 'subdued'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'critical';
-  size?: 'small' | 'default' | 'large';
-  accessibilityLabel?: string;
-}
-
-export function Icon({source, appearance, size, accessibilityLabel}: Props) {
+export function Icon({
+  source,
+  appearance,
+  size,
+  accessibilityLabel,
+}: IconProps) {
   const className = classNames(
     styles.Icon,
     appearance && styles[variationName('appearance', appearance)],
@@ -118,20 +112,15 @@ export function Icon({source, appearance, size, accessibilityLabel}: Props) {
     size && styles[variationName('size', size)],
   );
 
-  let contentMarkup: React.ReactNode;
-  if (source === 'placeholder') {
-    contentMarkup = <div className={styles.Placeholder} />;
-  } else {
-    const SourceComponent = BUNDLED_ICONS[source];
-    contentMarkup = (
-      <SourceComponent
-        className={styles.Svg}
-        focusable="false"
-        aria-hidden="true"
-        role="presentation"
-      />
-    );
-  }
+  const SourceComponent = BUNDLED_ICONS[source];
+  const contentMarkup: React.ReactNode = (
+    <SourceComponent
+      className={styles.Svg}
+      focusable="false"
+      aria-hidden="true"
+      role="presentation"
+    />
+  );
 
   return (
     <span className={className} aria-label={accessibilityLabel}>

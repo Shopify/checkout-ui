@@ -8,8 +8,9 @@ import React, {
   useRef,
 } from 'react';
 import {classNames} from '@shopify/css-utilities';
+import {IconProps} from '@shopify/checkout-ui-extensions';
 
-import {Icon, Props as IconProps} from '../Icon';
+import {Icon} from '../Icon';
 import {InlineStack} from '../InlineStack';
 import {createIdCreator, useId} from '../../utilities/id';
 

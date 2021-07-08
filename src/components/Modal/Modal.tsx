@@ -1,5 +1,5 @@
 import React, {
-  ReactNode,
+  PropsWithChildren,
   useState,
   useCallback,
   useEffect,
@@ -7,133 +7,142 @@ import React, {
 } from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
 
+import {useResponsiveValue} from '../../utilities/responsiveValue';
 import {useTranslate} from '../AppContext';
+import {FocusTrap} from '../FocusTrap';
 import {Portal} from '../Portal';
 import {Heading} from '../Heading';
 import {Icon} from '../Icon';
+import {pixelOrPercent} from '../../utilities/units';
 import {useTransition} from '../../utilities/transition';
-import {useFocusTrap} from '../../utilities/focusTrap';
 import {createIdCreator, useId} from '../../utilities/id';
 
 import styles from './Modal.css';
 
-const DEFAULT_IFRAME_CONTENT_HEIGHT = 400;
 const createId = createIdCreator('ModalHeading');
 
-interface CommonProps {
+const IFRAME_HEIGHT_NOT_ACCESSIBLE = -1;
+
+export type Props = PropsWithChildren<{
   /**
    * Whether the modal is closable or not. This will prevent closing
    * the modal by pressing `ESC` and hide the "close" button. This
    * can be used in flows where the user feedback is mandatory.
    */
-  blocking?: boolean;
-  /**
-   * Stretches the modal on the y-axis to make it cover 90% of
-   * the screen's height. This also cancels the automatic resizing
-   * of the iframe when it's loaded.
-   */
-  long?: boolean;
-  onClose?: () => void;
-  open?: boolean;
-  title?: string;
+  maxInlineSize?: number | 'fill';
+  blockSize?: 'fill';
+  open: boolean;
+  title: string;
   titleHidden?: boolean;
+  source?: string;
+  /**
+   * Do not animate modal on mount. Changing `open` props still triggers animation.
+   */
+  noMountTransition?: boolean;
+}> &
+  (BlockingProps | NonBlockingProps);
+
+interface BlockingProps {
+  blocking: true;
 }
 
-interface IFrameProps {
-  iFrameName?: string;
-  iFrameTitle?: string;
-  src?: string;
+interface NonBlockingProps {
+  blocking?: false;
+  onClose: () => void;
 }
-
-interface ChildrenProps {
-  children?: ReactNode;
-}
-
-function isIFrameProps(
-  props: IFrameProps | ChildrenProps,
-): props is IFrameProps {
-  return (props as IFrameProps).src !== undefined;
-}
-
-export type Props = CommonProps & (IFrameProps | ChildrenProps);
 
 export function Modal({
-  blocking = false,
-  long = false,
-  onClose,
-  open: openProp = false,
+  maxInlineSize,
+  blockSize,
+  open,
   title,
   titleHidden,
-  ...props
+  source,
+  noMountTransition = false,
+  children,
+  ...rest
 }: Props) {
+  const blocking = rest.blocking;
+  const onClose = rest.blocking ? undefined : rest.onClose;
+
   const translate = useTranslate();
-  const [open, setOpen] = useState(openProp);
   const [iframeHeight, setIframeHeight] = useState<number>();
-  const titleBarRef = useRef<HTMLElement>(null);
   const activatorRef = useRef<Element | null>(null);
-  const modalRef = useFocusTrap({preventScroll: true});
+  const modalRef = useRef<HTMLDivElement>(null);
   const modalHeadingId = useId(undefined, createId);
 
-  const transition = useTransition(open, {enter: 'fast'});
+  const transition = useTransition(open, 'fast', !noMountTransition);
   const transitionClassName = styles[variationName('transition', transition)];
 
-  const closeModal = useCallback(() => {
-    setOpen(false);
-    if (activatorRef?.current instanceof HTMLElement)
-      activatorRef.current.focus();
-    if (onClose) onClose();
-    document.body.style.overflow = 'auto';
-    setIframeHeight(undefined);
-  }, [onClose]);
-
-  const handleKeyDown = useCallback(
-    (event) => {
-      if ((event.key === 'Escape' || event.key === 'Esc') && !blocking) {
-        closeModal();
-      }
-    },
-    [blocking, closeModal],
-  );
+  const isMobile = useResponsiveValue({
+    base: true,
+    medium: false,
+  });
 
   useEffect(() => {
-    if (openProp) {
+    if (transition === 'enter') {
       document.body.style.overflow = 'hidden';
       activatorRef.current = document.activeElement;
-      setOpen(true);
-    } else {
-      closeModal();
     }
-  }, [openProp, closeModal]);
+
+    if (transition === 'exited') {
+      document.body.style.overflow = 'auto';
+
+      if (activatorRef?.current instanceof HTMLElement)
+        activatorRef.current.focus();
+      setIframeHeight(undefined);
+    }
+  }, [transition]);
+
+  const handleDialogFocus = () => {
+    // workaround for browsers that don't support `preventScroll` for `focus`
+    setTimeout(() => {
+      const modal = modalRef.current;
+      modal && modal.scrollTo(0, 0);
+    }, 0);
+  };
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.key === 'Escape' || event.key === 'Esc') && !blocking) {
+        onClose && onClose();
+      }
+    };
+
     document.addEventListener('keydown', handleKeyDown, false);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown, false);
     };
-  }, [handleKeyDown]);
+  }, [blocking, onClose]);
 
   const handleIFrameLoad = useCallback(
     (evt: React.SyntheticEvent<HTMLIFrameElement>) => {
       const iframe = evt.target as HTMLIFrameElement;
+
       if (iframe && iframe.contentWindow) {
         try {
           setIframeHeight(iframe.contentWindow.document.body.scrollHeight);
         } catch {
-          setIframeHeight(DEFAULT_IFRAME_CONTENT_HEIGHT);
+          setIframeHeight(IFRAME_HEIGHT_NOT_ACCESSIBLE);
         }
       }
     },
     [],
   );
 
-  if (!open) return null;
+  function handleBackdropClick() {
+    onClose && onClose();
+  }
+
+  if (transition === 'exited') return null;
 
   const ariaLabelOrLabelledby = titleHidden
     ? {'aria-label': title}
     : {'aria-labelledby': modalHeadingId};
 
   const titleMarkup = titleHidden ? (
+    // `null` breaks close button's right alignment
     <span />
   ) : (
     <Heading level={1} id={modalHeadingId}>
@@ -141,52 +150,68 @@ export function Modal({
     </Heading>
   );
 
+  const header = (!titleHidden || !blocking) && (
+    <header className={styles.Header}>
+      {titleMarkup}
+      {!blocking && (
+        <button
+          type="button"
+          className={styles.CloseButton}
+          onClick={onClose}
+          aria-label={translate('close') || 'Close'}
+        >
+          <Icon source="close" size="large" />
+        </button>
+      )}
+    </header>
+  );
+
+  const content = source ? (
+    <iframe
+      src={source}
+      title={title}
+      className={styles.IFrame}
+      {...(iframeHeight && iframeHeight > 0 && {style: {height: iframeHeight}})}
+      {...(!blockSize && {onLoad: handleIFrameLoad})}
+    />
+  ) : (
+    <div
+      className={styles.Content}
+      {...((blockSize || isMobile) && {tabIndex: 0})}
+    >
+      {children}
+    </div>
+  );
+
   return (
     <Portal>
-      <div className={styles.Modal}>
-        {/* TODO: <ScrollLock />, <Scrollable /> */}
-        <div className={classNames(styles.Backdrop, transitionClassName)}>
+      <div className={styles.Modal} ref={modalRef}>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+        <div
+          className={classNames(styles.Backdrop, transitionClassName)}
+          onClick={handleBackdropClick}
+        />
+        <FocusTrap onContainerFocus={handleDialogFocus}>
           <div
-            className={classNames(styles.Content, transitionClassName, {
-              [styles['Content-isLong']]: long,
+            className={classNames(styles.Dialog, transitionClassName, {
+              [styles['Dialog-blockSizeFill']]:
+                blockSize === 'fill' || iframeHeight === -1,
             })}
             role="dialog"
             aria-modal
-            /** @see https://dequeuniversity.com/rules/axe/4.1/scrollable-region-focusable?application=axeAPI */
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-            ref={modalRef}
+            style={{
+              ...(maxInlineSize && {
+                maxWidth: pixelOrPercent(
+                  maxInlineSize === 'fill' ? 1 : maxInlineSize,
+                ),
+              }),
+            }}
             {...ariaLabelOrLabelledby}
           >
-            {(!titleHidden || !blocking) && (
-              <header className={styles.Header} ref={titleBarRef}>
-                {titleMarkup}
-                {!blocking && (
-                  <button
-                    type="button"
-                    className={styles.Button}
-                    onClick={() => closeModal()}
-                    aria-label={translate('close') || 'Close'}
-                  >
-                    <Icon source="close" size="large" />
-                  </button>
-                )}
-              </header>
-            )}
-            {isIFrameProps(props) ? (
-              <iframe
-                src={props.src}
-                name={props.iFrameName}
-                title={props.iFrameTitle || 'body markup'}
-                className={styles.IFrame}
-                {...(iframeHeight && {style: {height: `${iframeHeight}px`}})}
-                {...(!long && {onLoad: handleIFrameLoad})}
-              />
-            ) : (
-              <div className={styles.Body}>{props.children}</div>
-            )}
+            {header}
+            {content}
           </div>
-        </div>
+        </FocusTrap>
       </div>
     </Portal>
   );

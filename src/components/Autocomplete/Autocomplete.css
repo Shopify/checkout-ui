@@ -9,6 +9,8 @@
 }
 
 .backgroundSurfacePrimary {
+  --x-default-color: var(--x-color-surface-primary);
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
   --x-default-color-border: var(--x-color-surface-primary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-primary-border-emphasized
@@ -28,6 +30,8 @@
 }
 
 .backgroundSurfaceSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
   --x-default-color-border: var(--x-color-surface-secondary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-secondary-border-emphasized
@@ -47,6 +51,8 @@
 }
 
 .backgroundSurfaceTertiary {
+  --x-default-color: var(--x-color-surface-tertiary);
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
   --x-default-color-border: var(--x-color-surface-tertiary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-tertiary-border-emphasized

@@ -1,6 +1,6 @@
 import React, {CSSProperties, PropsWithChildren} from 'react';
 import {variationName, classNames} from '@shopify/css-utilities';
-import {TilesProps} from '@shopify/argo-checkout';
+import {TilesProps} from '@shopify/checkout-ui-extensions';
 
 import {View} from '../View';
 import {rem} from '../../utilities/units';

@@ -5,26 +5,33 @@ import {usePrefersReducedMotion} from './media-query';
 // Following implementation from React Transition Group
 // @see http://reactcommunity.org/react-transition-group/transition
 
-type state = 'enter' | 'entering' | 'entered' | 'exit' | 'exiting' | 'exited';
+export type state =
+  | 'enter'
+  | 'entering'
+  | 'entered'
+  | 'exit'
+  | 'exiting'
+  | 'exited';
 
 type duration = 'none' | 'fast' | 'base' | 'slow' | 'slower' | 'slowest';
 
 export const durations = new Map<duration, number>([
   ['none', 0],
-  ['fast', 100],
+  ['fast', 133.333],
   ['base', 200],
   ['slow', 300],
-  ['slower', 400],
-  ['slowest', 500],
+  ['slower', 450],
+  ['slowest', 675],
 ]);
 
 export function useTransition(
   transitionIn: boolean,
   duration: duration | {enter?: duration; exit?: duration} = 'slow',
+  transitionOnMount = false,
 ): state {
-  const [state, setState] = useState(transitionIn);
+  const [state, setState] = useState(transitionOnMount ? false : transitionIn);
   const [transitioning, setTransitioning] = useState(false);
-  const transitionInRef = useRef(transitionIn);
+  const transitionInRef = useRef(transitionOnMount ? false : transitionIn);
 
   const endTransitionRef = useRef(() => {
     setTransitioning(false);

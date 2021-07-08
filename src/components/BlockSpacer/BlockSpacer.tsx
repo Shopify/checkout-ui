@@ -1,6 +1,6 @@
 import React from 'react';
 import {variationName} from '@shopify/css-utilities';
-import {BlockSpacerProps} from '@shopify/argo-checkout';
+import {BlockSpacerProps} from '@shopify/checkout-ui-extensions';
 
 import styles from './BlockSpacer.css';
 

@@ -1,37 +1,49 @@
 import React, {PropsWithChildren} from 'react';
+import {TagProps, IconProps} from '@shopify/checkout-ui-extensions';
+import {classNames} from '@shopify/css-utilities';
 
 import {Icon} from '../Icon';
 import {Truncate} from '../Truncate';
 
 import styles from './Tag.css';
 
-export interface Props {
-  /** Callback when pressed */
-  onPress?(): void;
-  accessibilityLabel?: string;
+export interface Props extends PropsWithChildren<TagProps> {
+  /** Icon source */
+  icon?: IconProps['source'];
 }
 
-/**
- * Tag is used to display a removable tag.
- */
 export function Tag({
   children,
-  onPress,
-  accessibilityLabel,
-}: PropsWithChildren<Props>) {
+  icon,
+  onRemove,
+  removeControlAccessibilityLabel,
+}: Props) {
+  const tagClassNames = classNames(styles.Tag);
+  const labelClassNames = classNames(
+    styles.Label,
+    Boolean(onRemove) && styles.removable,
+  );
+  const iconClassNames = classNames(styles.Icon);
   return (
-    <div className={styles.Tag}>
-      <span className={styles.Label}>
+    <div className={tagClassNames}>
+      <span className={labelClassNames}>
+        {icon && (
+          <span className={iconClassNames}>
+            <Icon source={icon} size="large" />
+          </span>
+        )}
         <Truncate>{children}</Truncate>
       </span>
-      <button
-        type="button"
-        className={styles.Button}
-        onClick={onPress}
-        aria-label={accessibilityLabel}
-      >
-        <Icon source="close" size="default" />
-      </button>
+      {Boolean(onRemove) && (
+        <button
+          type="button"
+          className={styles.Button}
+          onClick={onRemove}
+          aria-label={removeControlAccessibilityLabel}
+        >
+          <Icon source="close" size="base" />
+        </button>
+      )}
     </div>
   );
 }

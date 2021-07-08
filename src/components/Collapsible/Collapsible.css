@@ -1,0 +1,14 @@
+.Collapsible {
+  position: relative;
+  overflow: hidden;
+  will-change: height;
+  transition: height var(--x-duration-slow) var(--x-timing-spring);
+}
+
+.fade {
+  mask-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) rem(10px)
+  );
+}

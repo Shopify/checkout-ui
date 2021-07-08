@@ -34,6 +34,8 @@
 
 .headerPositionInline {
   & .SectionInner {
+    padding-block-start: 0;
+
     @media all and (min-width: 1000px) {
       padding-block-start: 4em;
     }
@@ -219,6 +221,7 @@
 }
 
 .Section-backgroundSurfacePrimary {
+  --x-default-color: var(--x-color-surface-primary);
   --x-default-color-subdued: var(--x-color-surface-primary-subdued);
   --x-default-color-border: var(--x-color-surface-primary-border);
   --x-default-color-border-emphasized: var(
@@ -240,6 +243,7 @@
 }
 
 .Section-backgroundSurfaceSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
   --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
   --x-default-color-border: var(--x-color-surface-secondary-border);
   --x-default-color-border-emphasized: var(
@@ -261,6 +265,7 @@
 }
 
 .Section-backgroundSurfaceTertiary {
+  --x-default-color: var(--x-color-surface-tertiary);
   --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
   --x-default-color-border: var(--x-color-surface-tertiary-border);
   --x-default-color-border-emphasized: var(
@@ -350,6 +355,8 @@
 }
 
 .Disclosure-backgroundSurfacePrimary {
+  --x-default-color: var(--x-color-surface-primary);
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
   --x-default-color-border: var(--x-color-surface-primary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-primary-border-emphasized
@@ -365,6 +372,8 @@
 }
 
 .Disclosure-backgroundSurfaceSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
   --x-default-color-border: var(--x-color-surface-secondary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-secondary-border-emphasized
@@ -380,6 +389,8 @@
 }
 
 .Disclosure-backgroundSurfaceTertiary {
+  --x-default-color: var(--x-color-surface-tertiary);
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
   --x-default-color-border: var(--x-color-surface-tertiary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-tertiary-border-emphasized
@@ -416,11 +427,6 @@
     padding-inline-start: 0;
     padding-inline-end: 0;
   }
-}
-
-.DisclosureContent {
-  overflow: hidden;
-  transition: height var(--x-duration-slow) var(--x-timing-spring);
 }
 
 .DisclosureContentInner {

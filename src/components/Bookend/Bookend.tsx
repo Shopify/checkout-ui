@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {BookendProps} from '@shopify/argo-checkout';
+import {BookendProps} from '@shopify/checkout-ui-extensions';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import styles from './Bookend.css';

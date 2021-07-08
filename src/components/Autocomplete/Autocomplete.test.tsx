@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
 import {Field} from '../TextField';
@@ -122,6 +123,24 @@ describe('<Autocomplete />', () => {
 
       expect(onChangeSpy.mock.calls).toMatchObject([['address']]);
       expect(onChangeSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls the onChange callback when the enter key is pressed and AutocompleteOptions is closed', () => {
+      const onChangeSpy = jest.fn();
+      const autocomplete = mountWithContext<Props>(
+        <Autocomplete {...defaultProps} onChange={onChangeSpy} />,
+      );
+
+      const value = faker.random.alphaNumeric();
+      autocomplete
+        .find('input' as any)!
+        .trigger('oninput', {currentTarget: {value}});
+      autocomplete.find('input')!.trigger('onKeyDown', {key: 'Escape'});
+      autocomplete
+        .find('input')!
+        .trigger('onKeyDown', {key: 'Enter', currentTarget: {value}});
+
+      expect(onChangeSpy).toHaveBeenCalledWith(value);
     });
   });
 

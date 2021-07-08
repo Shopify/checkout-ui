@@ -1,4 +1,5 @@
 .Canvas {
+  --x-default-color: var(--x-color-canvas);
   --x-default-color-subdued: var(--x-color-canvas-subdued);
   --x-default-color-text: var(--x-color-canvas-text);
   --x-default-color-text-subdued: var(--x-color-canvas-text-subdued);

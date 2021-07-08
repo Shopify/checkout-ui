@@ -1,63 +1,64 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {ImageProps} from '@shopify/argo-checkout';
+import {Breakpoint, ImageProps} from '@shopify/checkout-ui-extensions';
 
 import {View} from '../View';
+import {BREAKPOINTS, createMediaQueries} from '../../utilities/breakpoint';
 
 import styles from './Image.css';
 
-interface SourceProps {
-  media?: string;
-  srcSet: string;
-}
-
-type ViewportSize = Required<
-  Required<ImageProps>['sources'][0]
->['viewportSize'];
-
-export const MEDIA_MAP: Map<ViewportSize, string> = new Map([
-  ['small', '(max-width: 600px)'],
-  ['medium', '(max-width: 1200px)'],
-  ['large', '(min-width: 1201px)'],
-]);
+export const MEDIA_MAP: Map<Breakpoint, string> = new Map(
+  createMediaQueries({addMaxWidth: false}).map(({breakpoint, query}) => [
+    breakpoint,
+    query,
+  ]),
+);
 
 export function Image({
   source,
   sources,
   description = '',
   fit,
-  bordered,
   loading,
   aspectRatio,
   decorative,
 }: ImageProps) {
-  const initialValue: SourceProps[] = [];
-
   const sourcesMarkup =
     sources &&
-    sources
-      .reduce((sourcesProps, {source, viewportSize, resolution}) => {
-        const media = viewportSize && MEDIA_MAP.get(viewportSize);
-        const maybeSourceProps = sourcesProps.find(
-          ({media: mediaValue}) => media === mediaValue,
-        );
-        const srcSet = [source, resolution && `${resolution}x`]
-          .join(' ')
-          .trim();
-
-        if (maybeSourceProps) {
-          maybeSourceProps.srcSet += `, ${srcSet}`;
-          return sourcesProps;
-        } else {
-          return [...sourcesProps, {media, srcSet}];
+    Object.entries(sources)
+      .sort(([firstBreakpoint], [secondBreakpoint]) => {
+        const firstWidth = BREAKPOINTS[firstBreakpoint as Breakpoint];
+        const secondWidth = BREAKPOINTS[secondBreakpoint as Breakpoint];
+        if (firstWidth != null && secondWidth != null) {
+          return secondWidth - firstWidth;
         }
-      }, initialValue)
-      // eslint-disable-next-line react/jsx-key
-      .map((props) => <source {...props} />);
+        return 0;
+      })
+      .map(([viewportSize, sizeSources]) => {
+        if (typeof sizeSources === 'string') {
+          return [viewportSize, [{source: sizeSources}]];
+        }
+
+        if (!Array.isArray(sizeSources) && sizeSources !== undefined) {
+          return [viewportSize, [sizeSources]];
+        }
+
+        return [viewportSize, sizeSources];
+      })
+      .map(([viewportSize, sizeSources]) => {
+        const media = MEDIA_MAP.get(viewportSize as Breakpoint);
+        if (media !== undefined && Array.isArray(sizeSources)) {
+          const srcSet = sizeSources
+            .map(({source, resolution}) =>
+              [source, resolution && `${resolution}x`].join(' ').trim(),
+            )
+            .join(', ');
+          return <source key={media} media={media} srcSet={srcSet} />;
+        }
+      });
 
   const className = classNames(
     styles.Image,
-    bordered && styles.bordered,
     fit && styles[variationName('fit', fit)],
   );
 

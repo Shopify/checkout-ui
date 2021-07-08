@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.displayInline {
+  display: inline;
+}
+
 .visibilityHidden {
   /* Need to make sure we override any existing styles. */
   /* stylelint-disable declaration-no-important */
@@ -14,6 +18,33 @@
   padding: 0 !important;
   border: 0 !important;
   /* stylelint-enable declaration-no-important */
+}
+
+.backgroundPositionBottom {
+  background-position: bottom;
+}
+.backgroundPositionCenter {
+  background-position: center;
+}
+.backgroundPositionLeft {
+  background-position: left;
+}
+.backgroundPositionRight {
+  background-position: right;
+}
+.backgroundPositionTop {
+  background-position: top;
+}
+
+.backgroundRepeatFalse {
+  background-repeat: no-repeat;
+}
+
+.backgroundFitContain {
+  background-size: contain;
+}
+.backgroundFitCover {
+  background-size: cover;
 }
 
 .paddingInlineStartExtraTight {
@@ -77,6 +108,7 @@
   padding-block-end: var(--x-spacing-loose4x);
 }
 .backgroundSurfacePrimary {
+  --x-default-color: var(--x-color-surface-primary);
   --x-default-color-subdued: var(--x-color-surface-primary-subdued);
   --x-default-color-text: var(--x-color-surface-primary-text);
   --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
@@ -92,6 +124,7 @@
   color: var(--x-default-color-text);
 }
 .backgroundSurfaceSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
   --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
   --x-default-color-text: var(--x-color-surface-secondary-text);
   --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
@@ -107,6 +140,7 @@
   color: var(--x-default-color-text);
 }
 .backgroundSurfaceTertiary {
+  --x-default-color: var(--x-color-surface-tertiary);
   --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
   --x-default-color-text: var(--x-color-surface-tertiary-text);
   --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
@@ -156,26 +190,26 @@
 .borderWidthInlineStartBase {
   border-inline-start-width: var(--x-border-width-base);
 }
-.borderWidthInlineStartThick {
-  border-inline-start-width: var(--x-border-width-thick);
+.borderWidthInlineStartMedium {
+  border-inline-start-width: var(--x-border-width-medium);
 }
 .borderWidthInlineEndBase {
   border-inline-end-width: var(--x-border-width-base);
 }
-.borderWidthInlineEndThick {
-  border-inline-end-width: var(--x-border-width-thick);
+.borderWidthInlineEndMedium {
+  border-inline-end-width: var(--x-border-width-medium);
 }
 .borderWidthBlockStartBase {
   border-block-start-width: var(--x-border-width-base);
 }
-.borderWidthBlockStartThick {
-  border-block-start-width: var(--x-border-width-thick);
+.borderWidthBlockStartMedium {
+  border-block-start-width: var(--x-border-width-medium);
 }
 .borderWidthBlockEndBase {
   border-block-end-width: var(--x-border-width-base);
 }
-.borderWidthBlockEndThick {
-  border-block-end-width: var(--x-border-width-thick);
+.borderWidthBlockEndMedium {
+  border-block-end-width: var(--x-border-width-medium);
 }
 .borderColorInlineStartBase {
   border-inline-start-color: var(--x-default-color-border);
@@ -204,11 +238,23 @@
 .borderRadiusBlockStartTight {
   border-start-start-radius: var(--x-border-radius-tight);
 }
+.borderRadiusBlockStartLoose {
+  border-start-start-radius: var(--x-border-radius-loose);
+}
+.borderRadiusBlockStartFullyRounded {
+  border-start-start-radius: var(--x-border-radius-fully-rounded);
+}
 .borderRadiusBlockStartBase {
   border-start-start-radius: var(--x-border-radius-base);
 }
 .borderRadiusInlineStartTight {
   border-end-start-radius: var(--x-border-radius-tight);
+}
+.borderRadiusInlineStartLoose {
+  border-end-start-radius: var(--x-border-radius-loose);
+}
+.borderRadiusInlineStartFullyRounded {
+  border-end-start-radius: var(--x-border-radius-fully-rounded);
 }
 .borderRadiusInlineStartBase {
   border-end-start-radius: var(--x-border-radius-base);
@@ -216,11 +262,23 @@
 .borderRadiusInlineEndTight {
   border-start-end-radius: var(--x-border-radius-tight);
 }
+.borderRadiusInlineEndLoose {
+  border-start-end-radius: var(--x-border-radius-loose);
+}
+.borderRadiusInlineEndFullyRounded {
+  border-start-end-radius: var(--x-border-radius-fully-rounded);
+}
 .borderRadiusInlineEndBase {
   border-start-end-radius: var(--x-border-radius-base);
 }
 .borderRadiusBlockEndTight {
   border-end-end-radius: var(--x-border-radius-tight);
+}
+.borderRadiusBlockEndLoose {
+  border-end-end-radius: var(--x-border-radius-loose);
+}
+.borderRadiusBlockEndFullyRounded {
+  border-end-end-radius: var(--x-border-radius-fully-rounded);
 }
 .borderRadiusBlockEndBase {
   border-end-end-radius: var(--x-border-radius-base);
@@ -300,6 +358,7 @@
     padding-block-end: 0;
   }
   .smallBackgroundSurfacePrimary {
+    --x-default-color: var(--x-color-surface-primary);
     --x-default-color-subdued: var(--x-color-surface-primary-subdued);
     --x-default-color-text: var(--x-color-surface-primary-text);
     --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
@@ -315,6 +374,7 @@
     color: var(--x-default-color-text);
   }
   .smallBackgroundSurfaceSecondary {
+    --x-default-color: var(--x-color-surface-secondary);
     --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
     --x-default-color-text: var(--x-color-surface-secondary-text);
     --x-default-color-text-subdued: var(
@@ -332,6 +392,7 @@
     color: var(--x-default-color-text);
   }
   .smallBackgroundSurfaceTertiary {
+    --x-default-color: var(--x-color-surface-tertiary);
     --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
     --x-default-color-text: var(--x-color-surface-tertiary-text);
     --x-default-color-text-subdued: var(
@@ -398,26 +459,26 @@
   .smallBorderWidthInlineStartBase {
     border-inline-start-width: var(--x-border-width-base);
   }
-  .smallBorderWidthInlineStartThick {
-    border-inline-start-width: var(--x-border-width-thick);
+  .smallBorderWidthInlineStartMedium {
+    border-inline-start-width: var(--x-border-width-medium);
   }
   .smallBorderWidthInlineEndBase {
     border-inline-end-width: var(--x-border-width-base);
   }
-  .smallBorderWidthInlineEndThick {
-    border-inline-end-width: var(--x-border-width-thick);
+  .smallBorderWidthInlineEndMedium {
+    border-inline-end-width: var(--x-border-width-medium);
   }
   .smallBorderWidthBlockStartBase {
     border-block-start-width: var(--x-border-width-base);
   }
-  .smallBorderWidthBlockStartThick {
-    border-block-start-width: var(--x-border-width-thick);
+  .smallBorderWidthBlockStartMedium {
+    border-block-start-width: var(--x-border-width-medium);
   }
   .smallBorderWidthBlockEndBase {
     border-block-end-width: var(--x-border-width-base);
   }
-  .smallBorderWidthBlockEndThick {
-    border-block-end-width: var(--x-border-width-thick);
+  .smallBorderWidthBlockEndMedium {
+    border-block-end-width: var(--x-border-width-medium);
   }
   .smallBorderColorInlineStartBase {
     border-inline-start-color: var(--x-default-color-border);
@@ -446,6 +507,12 @@
   .smallBorderRadiusBlockStartTight {
     border-start-start-radius: var(--x-border-radius-tight);
   }
+  .smallBorderRadiusBlockStartLoose {
+    border-start-start-radius: var(--x-border-radius-loose);
+  }
+  .smallBorderRadiusBlockStartFullyRounded {
+    border-start-start-radius: var(--x-border-radius-fully-rounded);
+  }
   .smallBorderRadiusBlockStartBase {
     border-start-start-radius: var(--x-border-radius-base);
   }
@@ -454,6 +521,12 @@
   }
   .smallBorderRadiusInlineStartTight {
     border-end-start-radius: var(--x-border-radius-tight);
+  }
+  .smallBorderRadiusInlineStartLoose {
+    border-end-start-radius: var(--x-border-radius-loose);
+  }
+  .smallBorderRadiusInlineStartFullyRounded {
+    border-end-start-radius: var(--x-border-radius-fully-rounded);
   }
   .smallBorderRadiusInlineStartBase {
     border-end-start-radius: var(--x-border-radius-base);
@@ -464,6 +537,12 @@
   .smallBorderRadiusInlineEndTight {
     border-start-end-radius: var(--x-border-radius-tight);
   }
+  .smallBorderRadiusInlineEndLoose {
+    border-start-end-radius: var(--x-border-radius-loose);
+  }
+  .smallBorderRadiusInlineEndFullyRounded {
+    border-start-end-radius: var(--x-border-radius-fully-rounded);
+  }
   .smallBorderRadiusInlineEndBase {
     border-start-end-radius: var(--x-border-radius-base);
   }
@@ -472,6 +551,12 @@
   }
   .smallBorderRadiusBlockEndTight {
     border-end-end-radius: var(--x-border-radius-tight);
+  }
+  .smallBorderRadiusBlockEndLoose {
+    border-end-end-radius: var(--x-border-radius-loose);
+  }
+  .smallBorderRadiusBlockEndFullyRounded {
+    border-end-end-radius: var(--x-border-radius-fully-rounded);
   }
   .smallBorderRadiusBlockEndBase {
     border-end-end-radius: var(--x-border-radius-base);
@@ -555,6 +640,7 @@
     padding-block-end: 0;
   }
   .mediumBackgroundSurfacePrimary {
+    --x-default-color: var(--x-color-surface-primary);
     --x-default-color-subdued: var(--x-color-surface-primary-subdued);
     --x-default-color-text: var(--x-color-surface-primary-text);
     --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
@@ -570,6 +656,7 @@
     color: var(--x-default-color-text);
   }
   .mediumBackgroundSurfaceSecondary {
+    --x-default-color: var(--x-color-surface-secondary);
     --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
     --x-default-color-text: var(--x-color-surface-secondary-text);
     --x-default-color-text-subdued: var(
@@ -587,6 +674,7 @@
     color: var(--x-default-color-text);
   }
   .mediumBackgroundSurfaceTertiary {
+    --x-default-color: var(--x-color-surface-tertiary);
     --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
     --x-default-color-text: var(--x-color-surface-tertiary-text);
     --x-default-color-text-subdued: var(
@@ -653,26 +741,26 @@
   .mediumBorderWidthInlineStartBase {
     border-inline-start-width: var(--x-border-width-base);
   }
-  .mediumBorderWidthInlineStartThick {
-    border-inline-start-width: var(--x-border-width-thick);
+  .mediumBorderWidthInlineStartMedium {
+    border-inline-start-width: var(--x-border-width-medium);
   }
   .mediumBorderWidthInlineEndBase {
     border-inline-end-width: var(--x-border-width-base);
   }
-  .mediumBorderWidthInlineEndThick {
-    border-inline-end-width: var(--x-border-width-thick);
+  .mediumBorderWidthInlineEndMedium {
+    border-inline-end-width: var(--x-border-width-medium);
   }
   .mediumBorderWidthBlockStartBase {
     border-block-start-width: var(--x-border-width-base);
   }
-  .mediumBorderWidthBlockStartThick {
-    border-block-start-width: var(--x-border-width-thick);
+  .mediumBorderWidthBlockStartMedium {
+    border-block-start-width: var(--x-border-width-medium);
   }
   .mediumBorderWidthBlockEndBase {
     border-block-end-width: var(--x-border-width-base);
   }
-  .mediumBorderWidthBlockEndThick {
-    border-block-end-width: var(--x-border-width-thick);
+  .mediumBorderWidthBlockEndMedium {
+    border-block-end-width: var(--x-border-width-medium);
   }
   .mediumBorderColorInlineStartBase {
     border-inline-start-color: var(--x-default-color-border);
@@ -701,6 +789,12 @@
   .mediumBorderRadiusBlockStartTight {
     border-start-start-radius: var(--x-border-radius-tight);
   }
+  .mediumBorderRadiusBlockStartLoose {
+    border-start-start-radius: var(--x-border-radius-loose);
+  }
+  .mediumBorderRadiusBlockStartFullyRounded {
+    border-start-start-radius: var(--x-border-radius-fully-rounded);
+  }
   .mediumBorderRadiusBlockStartBase {
     border-start-start-radius: var(--x-border-radius-base);
   }
@@ -709,6 +803,12 @@
   }
   .mediumBorderRadiusInlineStartTight {
     border-end-start-radius: var(--x-border-radius-tight);
+  }
+  .mediumBorderRadiusInlineStartLoose {
+    border-end-start-radius: var(--x-border-radius-loose);
+  }
+  .mediumBorderRadiusInlineStartFullyRounded {
+    border-end-start-radius: var(--x-border-radius-fully-rounded);
   }
   .mediumBorderRadiusInlineStartBase {
     border-end-start-radius: var(--x-border-radius-base);
@@ -719,6 +819,12 @@
   .mediumBorderRadiusInlineEndTight {
     border-start-end-radius: var(--x-border-radius-tight);
   }
+  .mediumBorderRadiusInlineEndLoose {
+    border-start-end-radius: var(--x-border-radius-loose);
+  }
+  .mediumBorderRadiusInlineEndFullyRounded {
+    border-start-end-radius: var(--x-border-radius-fully-rounded);
+  }
   .mediumBorderRadiusInlineEndBase {
     border-start-end-radius: var(--x-border-radius-base);
   }
@@ -727,6 +833,12 @@
   }
   .mediumBorderRadiusBlockEndTight {
     border-end-end-radius: var(--x-border-radius-tight);
+  }
+  .mediumBorderRadiusBlockEndLoose {
+    border-end-end-radius: var(--x-border-radius-loose);
+  }
+  .mediumBorderRadiusBlockEndFullyRounded {
+    border-end-end-radius: var(--x-border-radius-fully-rounded);
   }
   .mediumBorderRadiusBlockEndBase {
     border-end-end-radius: var(--x-border-radius-base);
@@ -810,6 +922,7 @@
     padding-block-end: 0;
   }
   .largeBackgroundSurfacePrimary {
+    --x-default-color: var(--x-color-surface-primary);
     --x-default-color-subdued: var(--x-color-surface-primary-subdued);
     --x-default-color-text: var(--x-color-surface-primary-text);
     --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
@@ -825,6 +938,7 @@
     color: var(--x-default-color-text);
   }
   .largeBackgroundSurfaceSecondary {
+    --x-default-color: var(--x-color-surface-secondary);
     --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
     --x-default-color-text: var(--x-color-surface-secondary-text);
     --x-default-color-text-subdued: var(
@@ -842,6 +956,7 @@
     color: var(--x-default-color-text);
   }
   .largeBackgroundSurfaceTertiary {
+    --x-default-color: var(--x-color-surface-tertiary);
     --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
     --x-default-color-text: var(--x-color-surface-tertiary-text);
     --x-default-color-text-subdued: var(
@@ -908,26 +1023,26 @@
   .largeBorderWidthInlineStartBase {
     border-inline-start-width: var(--x-border-width-base);
   }
-  .largeBorderWidthInlineStartThick {
-    border-inline-start-width: var(--x-border-width-thick);
+  .largeBorderWidthInlineStartMedium {
+    border-inline-start-width: var(--x-border-width-medium);
   }
   .largeBorderWidthInlineEndBase {
     border-inline-end-width: var(--x-border-width-base);
   }
-  .largeBorderWidthInlineEndThick {
-    border-inline-end-width: var(--x-border-width-thick);
+  .largeBorderWidthInlineEndMedium {
+    border-inline-end-width: var(--x-border-width-medium);
   }
   .largeBorderWidthBlockStartBase {
     border-block-start-width: var(--x-border-width-base);
   }
-  .largeBorderWidthBlockStartThick {
-    border-block-start-width: var(--x-border-width-thick);
+  .largeBorderWidthBlockStartMedium {
+    border-block-start-width: var(--x-border-width-medium);
   }
   .largeBorderWidthBlockEndBase {
     border-block-end-width: var(--x-border-width-base);
   }
-  .largeBorderWidthBlockEndThick {
-    border-block-end-width: var(--x-border-width-thick);
+  .largeBorderWidthBlockEndMedium {
+    border-block-end-width: var(--x-border-width-medium);
   }
   .largeBorderColorInlineStartBase {
     border-inline-start-color: var(--x-default-color-border);
@@ -956,6 +1071,12 @@
   .largeBorderRadiusBlockStartTight {
     border-start-start-radius: var(--x-border-radius-tight);
   }
+  .largeBorderRadiusBlockStartLoose {
+    border-start-start-radius: var(--x-border-radius-loose);
+  }
+  .largeBorderRadiusBlockStartFullyRounded {
+    border-start-start-radius: var(--x-border-radius-fully-rounded);
+  }
   .largeBorderRadiusBlockStartBase {
     border-start-start-radius: var(--x-border-radius-base);
   }
@@ -964,6 +1085,12 @@
   }
   .largeBorderRadiusInlineStartTight {
     border-end-start-radius: var(--x-border-radius-tight);
+  }
+  .largeBorderRadiusInlineStartLoose {
+    border-end-start-radius: var(--x-border-radius-loose);
+  }
+  .largeBorderRadiusInlineStartFullyRounded {
+    border-end-start-radius: var(--x-border-radius-fully-rounded);
   }
   .largeBorderRadiusInlineStartBase {
     border-end-start-radius: var(--x-border-radius-base);
@@ -974,6 +1101,12 @@
   .largeBorderRadiusInlineEndTight {
     border-start-end-radius: var(--x-border-radius-tight);
   }
+  .largeBorderRadiusInlineEndLoose {
+    border-start-end-radius: var(--x-border-radius-loose);
+  }
+  .largeBorderRadiusInlineEndFullyRounded {
+    border-start-end-radius: var(--x-border-radius-fully-rounded);
+  }
   .largeBorderRadiusInlineEndBase {
     border-start-end-radius: var(--x-border-radius-base);
   }
@@ -982,6 +1115,12 @@
   }
   .largeBorderRadiusBlockEndTight {
     border-end-end-radius: var(--x-border-radius-tight);
+  }
+  .largeBorderRadiusBlockEndLoose {
+    border-end-end-radius: var(--x-border-radius-loose);
+  }
+  .largeBorderRadiusBlockEndFullyRounded {
+    border-end-end-radius: var(--x-border-radius-fully-rounded);
   }
   .largeBorderRadiusBlockEndBase {
     border-end-end-radius: var(--x-border-radius-base);

@@ -1,9 +1,11 @@
-import React, {ReactNode, useState, useRef} from 'react';
+import React, {ReactNode, useState} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
+import {IconProps} from '@shopify/checkout-ui-extensions';
 
+import {Collapsible} from '../Collapsible';
 import {InlineStack} from '../InlineStack';
 import {HeadingGroup} from '../HeadingGroup';
-import {Icon, Props as IconProps} from '../Icon';
+import {Icon} from '../Icon';
 import {Text} from '../Text';
 import {
   colorSurfacePrimary,
@@ -11,7 +13,6 @@ import {
   colorSurfaceTertiary,
   utilityDefaultBorderColor,
 } from '../../utilities/legacy';
-import {useTransition} from '../../utilities/transition';
 
 import styles from './Shell.css';
 
@@ -82,6 +83,8 @@ export function ShellSubheader({children, alignment}: ShellSubheaderProps) {
     </div>
   );
 }
+
+export type ShellActionsDisplay = 'inline' | 'block';
 
 export type ShellSectionBackground =
   | 'surfacePrimary'
@@ -187,17 +190,6 @@ export function ShellDisclosure({
   background,
 }: ShellDisclosureProps) {
   const [open, setOpen] = useState(false);
-  const disclosureRef = useRef<HTMLDivElement | null>(null);
-
-  const transition = useTransition(open, 'slow');
-
-  const transitionStyles = {
-    enter: () => ({height: 0}),
-    entering: () => ({height: disclosureRef?.current?.clientHeight}),
-    entered: () => ({height: 'auto'}),
-    exit: () => ({height: disclosureRef?.current?.clientHeight}),
-    exiting: () => ({height: 0}),
-  };
 
   const {text, icon: disclosureIcon} = open
     ? {
@@ -243,20 +235,16 @@ export function ShellDisclosure({
           {detail}
         </span>
       </button>
-      {transition !== 'exited' && (
+      <Collapsible open={open} id={contentId}>
         <div
           className={classNames(
             styles.DisclosureContent,
             utilityDefaultBorderColor,
           )}
-          style={{...transitionStyles[transition]()}}
-          id={contentId}
         >
-          <div className={styles.DisclosureContentInner} ref={disclosureRef}>
-            {children}
-          </div>
+          <div className={styles.DisclosureContentInner}>{children}</div>
         </div>
-      )}
+      </Collapsible>
     </aside>
   );
 }

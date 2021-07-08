@@ -6,6 +6,7 @@ import ambank from './ambank.svg';
 import americanExpress from './american_express.svg';
 import amex from './amex.svg';
 import applePay from './apple_pay.svg';
+import arhaus from './arhaus.svg';
 import arvato from './arvato.svg';
 import atmbersama from './atmbersama.svg';
 import bancnet from './bancnet.svg';
@@ -102,13 +103,16 @@ import pivo from './pivo.svg';
 import prepaysolutions from './prepaysolutions.svg';
 import przelew24 from './przelew24.svg';
 import publicbank from './publicbank.svg';
+import qrph from './qrph.svg';
+import ratepay from './ratepay.svg';
 import rhbbank from './rhbbank.svg';
 import rupay from './rupay.svg';
 import santander from './santander.svg';
+import satispay from './satispay.svg';
 import seb from './seb.svg';
 import seveneleven from './seveneleven.svg';
 import sezzle from './sezzle.svg';
-import shopifyPay from './shopify_pay.svg';
+import shopPay from './shop_pay.svg';
 import siamcommercial from './siamcommercial.svg';
 import sofort from './sofort.svg';
 import spraypay from './spraypay.svg';
@@ -117,6 +121,7 @@ import swedbank from './swedbank.svg';
 import swish from './swish.svg';
 import trustly from './trustly.svg';
 import twint from './twint.svg';
+import ubp from './ubp.svg';
 import unionpay from './unionpay.svg';
 import unipay from './unipay.svg';
 import uob from './uob.svg';
@@ -128,6 +133,10 @@ import vipps from './vipps.svg';
 import visa from './visa.svg';
 import visaelectron from './visaelectron.svg';
 import wechatpay from './wechatpay.svg';
+import ymobile from './ymobile.svg';
+import qris from './qris.svg';
+import sam from './sam.svg';
+import axs from './axs.svg';
 
 export const CARD_IMAGE_BY_BRAND = new Map([
   ['afterpay', afterpay],
@@ -138,6 +147,7 @@ export const CARD_IMAGE_BY_BRAND = new Map([
   ['american_express', americanExpress],
   ['amex', amex],
   ['apple_pay', applePay],
+  ['arhaus', arhaus],
   ['arvato', arvato],
   ['atmbersama', atmbersama],
   ['bancnet', bancnet],
@@ -234,13 +244,16 @@ export const CARD_IMAGE_BY_BRAND = new Map([
   ['prepaysolutions', prepaysolutions],
   ['przelew24', przelew24],
   ['publicbank', publicbank],
+  ['qrph', qrph],
+  ['ratepay', ratepay],
   ['rhbbank', rhbbank],
   ['rupay', rupay],
   ['santander', santander],
+  ['satispay', satispay],
   ['seb', seb],
   ['seveneleven', seveneleven],
   ['sezzle', sezzle],
-  ['shopify_pay', shopifyPay],
+  ['shop_pay', shopPay],
   ['siamcommercial', siamcommercial],
   ['sofort', sofort],
   ['spraypay', spraypay],
@@ -249,6 +262,7 @@ export const CARD_IMAGE_BY_BRAND = new Map([
   ['swish', swish],
   ['trustly', trustly],
   ['twint', twint],
+  ['ubp', ubp],
   ['unionpay', unionpay],
   ['unipay', unipay],
   ['uob', uob],
@@ -260,4 +274,8 @@ export const CARD_IMAGE_BY_BRAND = new Map([
   ['visa', visa],
   ['visaelectron', visaelectron],
   ['wechatpay', wechatpay],
+  ['ymobile', ymobile],
+  ['qris', qris],
+  ['sam', sam],
+  ['axs', axs],
 ]);

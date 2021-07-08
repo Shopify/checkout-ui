@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {ListItemProps, ListProps} from '@shopify/argo-checkout';
+import {ListItemProps, ListProps} from '@shopify/checkout-ui-extensions';
 
 import styles from './List.css';
 

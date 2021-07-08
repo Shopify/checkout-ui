@@ -1,9 +1,9 @@
 import React, {PropsWithChildren, createContext, useContext} from 'react';
 import {classNames} from '@shopify/css-utilities';
 import {
-  ChoiceListProps as ArgoChoiceListProps,
-  ChoiceProps as ArgoChoiceProps,
-} from '@shopify/argo-checkout';
+  ChoiceListProps as CheckoutChoiceListProps,
+  ChoiceProps as CheckoutChoiceProps,
+} from '@shopify/checkout-ui-extensions';
 
 import {CheckboxControl} from '../Checkbox';
 import {RadioControl} from '../RadioControl';
@@ -28,9 +28,9 @@ function useChoiceList() {
   return context;
 }
 export interface ChoiceListProps<T extends string | string[]>
-  extends PropsWithChildren<ArgoChoiceListProps<T>> {}
+  extends PropsWithChildren<CheckoutChoiceListProps<T>> {}
 
-export interface ChoiceProps extends PropsWithChildren<ArgoChoiceProps> {}
+export interface ChoiceProps extends PropsWithChildren<CheckoutChoiceProps> {}
 
 // TODO: consider adding error prop
 

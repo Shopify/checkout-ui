@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import type {PropsWithChildren, ReactNode, FormEventHandler} from 'react';
-import {FormProps} from '@shopify/argo-checkout';
+import {FormProps} from '@shopify/checkout-ui-extensions';
 
 import {View} from '../View';
 import {createIdCreator, useId} from '../../utilities/id';

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef, PropsWithChildren} from 'react';
-import {BannerProps} from '@shopify/argo-checkout';
+import {BannerProps} from '@shopify/checkout-ui-extensions';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {createIdCreator, useId} from '../../utilities/id';

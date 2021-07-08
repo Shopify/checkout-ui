@@ -1,5 +1,8 @@
 import React, {PropsWithChildren} from 'react';
-import {FormLayoutProps, FormLayoutGroupProps} from '@shopify/argo-checkout';
+import {
+  FormLayoutProps,
+  FormLayoutGroupProps,
+} from '@shopify/checkout-ui-extensions';
 
 import {BlockStack} from '../BlockStack';
 import {Layout} from '../Layout';

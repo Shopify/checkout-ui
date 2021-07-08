@@ -8,6 +8,8 @@
 }
 
 .backgroundSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
   --x-default-color-border: var(--x-color-surface-secondary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-secondary-border-emphasized

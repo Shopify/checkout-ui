@@ -1,37 +1,61 @@
 .Link {
+  --this-typography-decoration: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
-  text-decoration: none;
+  text-decoration: var(--this-typography-decoration);
   color: inherit;
+  position: relative;
+
+  /* Used for the focus ring */
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    display: block;
+    border-radius: var(--x-global-border-radius);
+    pointer-events: none;
+    box-shadow: 0 0 0 0 transparent;
+    transition: inherit;
+    inset: rem(-2px) rem(-3px) rem(-3px);
+  }
+
+  &:focus {
+    outline: none;
+
+    &::after {
+      box-shadow: 0 0 0 rem(2px) var(--x-color-interactive-text-hovered);
+    }
+
+    /* stylelint-disable-next-line selector-max-specificity */
+    &:not(:focus-visible)::after {
+      box-shadow: none;
+    }
+  }
+
+  &:focus-visible::after {
+    box-shadow: 0 0 0 rem(2px) var(--x-color-interactive-text-hovered);
+  }
 }
 
 .appearanceDefault {
   background-color: var(--x-color-interactive);
   color: var(--x-color-interactive-text);
   transition: color var(--x-link-transition-duration) var(--x-timing-base),
-    background-color var(--x-link-transition-duration) var(--x-timing-base);
+    background-color var(--x-link-transition-duration) var(--x-timing-base),
+    box-shadow var(--x-link-transition-duration) var(--x-timing-base);
 
-  &:hover {
+  &:hover,
+  &:focus {
     --this-background-color: var(--x-color-interactive-hovered);
     --this-color: var(--x-color-interactive-text-hovered);
     background-color: var(--this-background-color);
     color: var(--this-color);
   }
-
-  &:active {
-    --this-background-color: var(--x-color-interactive-pressed);
-    --this-color: var(--x-color-interactive-text-pressed);
-    background-color: var(--this-background-color);
-    color: var(--this-color);
-  }
 }
 
-.underline {
-  text-decoration: underline;
-}
-
-.appearanceInheritColor:hover {
-  text-decoration: none;
+.appearanceMonochrome {
+  /* stylelint-disable-next-line declaration-no-important */
+  text-decoration: underline !important;
 }
 
 .colorHoveredColor1:hover {
@@ -40,17 +64,6 @@
 }
 
 .colorHoveredColor2:hover {
-  background-color: var(--x-color2, var(--this-background-color));
-  color: var(--x-color2-text, var(--this-color));
-}
-
-/* Order does matter. :active pseudo-selector need to come after :hover */
-.colorPressedColor1:active {
-  background-color: var(--x-color1, var(--this-background-color));
-  color: var(--x-color1-text, var(--this-color));
-}
-
-.colorPressedColor2:active {
   background-color: var(--x-color2, var(--this-background-color));
   color: var(--x-color2-text, var(--this-color));
 }

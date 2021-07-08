@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {TextBlockProps} from '@shopify/argo-checkout';
+import {TextBlockProps} from '@shopify/checkout-ui-extensions';
 
 import {ThemeTypographyStyle} from '../Theme';
 import {

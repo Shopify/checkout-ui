@@ -65,8 +65,18 @@ describe('<UnstyledLink />', () => {
       });
     });
 
-    it('does not renders with aria-busy when not set', () => {
+    it('renders an anchor without aria-busy when not set', () => {
       const unstyledLink = mountWithContext(<UnstyledLink {...defaultProps} />);
+
+      expect(unstyledLink).toContainReactComponent('a', {
+        'aria-busy': undefined,
+      });
+    });
+
+    it('renders an anchor without aria-busy when false', () => {
+      const unstyledLink = mountWithContext(
+        <UnstyledLink {...defaultProps} ariaBusy={false} />,
+      );
 
       expect(unstyledLink).toContainReactComponent('a', {
         'aria-busy': undefined,

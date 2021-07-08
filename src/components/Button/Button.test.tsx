@@ -131,6 +131,14 @@ describe('<Button />', () => {
       });
     });
 
+    it('does not indicate that the button is getting updated when not set', () => {
+      const button = mountWithContext(<Button {...defaultProps} />);
+
+      expect(button).toContainReactComponent('button', {
+        'aria-busy': undefined,
+      });
+    });
+
     it('sets the right priority of announcement for screen readers', () => {
       const button = mountWithContext(<Button {...defaultProps} loading />);
       expect(button).toContainReactComponent('button', {

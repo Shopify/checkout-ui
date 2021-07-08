@@ -1,21 +1,24 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {LinkProps} from '@shopify/argo-checkout';
+import {LinkProps} from '@shopify/checkout-ui-extensions';
 
 import {Button} from '../Button';
-import {useThemeConfiguration} from '../Theme';
+import {useThemeConfiguration, ThemeTypographyStyle} from '../Theme';
+import typographyStyles from '../../utilities/typography-styles.css';
 
 import {UnstyledLink} from './components';
 import styles from './Link.css';
 
 export interface Props extends LinkProps {
-  /** Adds an underline to the link */
-  underline?: boolean;
   /**
    * Specify the color of the link.
-   * `inheritColor` will take the color of its parent.
+   * `monochrome` will take the color of its parent.
    */
-  appearance?: 'inheritColor';
+  appearance?: 'monochrome';
+  /**
+   * Changes the text based on the Theme styles
+   */
+  style?: ThemeTypographyStyle;
 }
 
 /**
@@ -26,24 +29,17 @@ export function Link({
   to,
   language,
   onPress,
-  underline,
   appearance,
   accessibilityLabel,
   ...rest
 }: PropsWithChildren<Props>) {
   const {
-    link: {colorHovered, colorPressed},
+    link: {colorHovered, typographyStyle},
   } = useThemeConfiguration();
 
   if (!to) {
     return (
-      <Button
-        onPress={onPress}
-        plain
-        underline={underline}
-        appearance={appearance}
-        {...rest}
-      >
+      <Button onPress={onPress} kind="plain" appearance={appearance} {...rest}>
         {children}
       </Button>
     );
@@ -53,12 +49,11 @@ export function Link({
     <UnstyledLink
       className={classNames(
         styles.Link,
-        (underline || appearance === 'inheritColor') && styles.underline,
-        appearance && appearance === 'inheritColor'
-          ? styles.appearanceInheritColor
+        appearance && appearance === 'monochrome'
+          ? styles.appearanceMonochrome
           : styles.appearanceDefault,
         colorHovered && styles[variationName('colorHovered', colorHovered)],
-        colorPressed && styles[variationName('colorPressed', colorPressed)],
+        typographyStyle && typographyStyles[typographyStyle],
       )}
       to={to}
       onPress={onPress}

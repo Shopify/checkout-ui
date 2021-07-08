@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Separator} from '../Separator';
+import {Divider} from '../Divider';
 import {TextContainer} from '../TextContainer';
 import {TextBlock} from '../TextBlock';
 import {Text} from '../Text';
@@ -53,7 +53,7 @@ export const aboveBelowCombined = () => (
         Select the address that matches your card or payment method.
       </TextBlock>
     </Hidden>
-    <Separator />
+    <Divider />
     <TextBlock>
       The next sentence is{' '}
       <Text emphasized>hidden below medium and above medium</Text> breakpoints.

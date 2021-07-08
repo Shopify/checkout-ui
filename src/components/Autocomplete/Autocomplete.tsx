@@ -143,6 +143,8 @@ export function Autocomplete({
           if (onSelectOption) {
             onSelectOption(options[selected]);
           }
+        } else {
+          onChange?.(event.currentTarget.value);
         }
         break;
       case 'Escape':
@@ -299,7 +301,7 @@ export function Autocomplete({
                 ref={closeButtonRef}
               >
                 <Icon
-                  size="default"
+                  size="base"
                   source="close"
                   appearance="subdued"
                   accessibilityLabel={ariaLabel}

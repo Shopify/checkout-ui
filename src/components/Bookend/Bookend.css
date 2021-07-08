@@ -46,12 +46,12 @@
   margin-inline-start: var(--x-spacing-loose4x);
 }
 
-.trailing > *:last-child {
+.trailing > *:last-child:not(:only-child) {
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-.leading > *:first-child {
+.leading > *:first-child:not(:only-child) {
   flex-grow: 0;
   flex-shrink: 0;
 }

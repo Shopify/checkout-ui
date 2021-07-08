@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {Responsive} from '@shopify/argo-checkout';
+import {Responsive} from '@shopify/checkout-ui-extensions';
 
 import {useResponsive} from '../../utilities/responsive';
 

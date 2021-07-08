@@ -72,7 +72,6 @@ export function DatePicker<T extends ISODate[] | ISODate | Range>({
 
   const weekStartDay = useMemo(
     () => getWeekStartDay(geolocation?.countryCode),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [geolocation],
   );
 
@@ -146,7 +145,7 @@ export function DatePicker<T extends ISODate[] | ISODate | Range>({
             className={styles.ControlsPrevious}
             aria-label={showPreviousMonthLabel}
           >
-            <Icon source="arrowLeft" size="default" />
+            <Icon source="arrowLeft" size="base" />
           </button>
           <button
             type="button"
@@ -154,7 +153,7 @@ export function DatePicker<T extends ISODate[] | ISODate | Range>({
             className={styles.ControlsNext}
             aria-label={showNextMonthLabel}
           >
-            <Icon source="arrowRight" size="default" />
+            <Icon source="arrowRight" size="base" />
           </button>
         </div>
       )}

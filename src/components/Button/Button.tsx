@@ -1,5 +1,5 @@
 import React, {forwardRef, PropsWithChildren, useCallback} from 'react';
-import {ButtonProps} from '@shopify/argo-checkout';
+import {ButtonProps} from '@shopify/checkout-ui-extensions';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {useContainingForm} from '../../utilities/forms';
@@ -7,47 +7,40 @@ import {useTranslate} from '../AppContext';
 import {useTransition} from '../../utilities/transition';
 import {Spinner} from '../Spinner';
 import {UnstyledLink} from '../Link';
-import {button as legacyButtonClassName} from '../../utilities/legacy';
+import {
+  button as legacyButtonClassName,
+  buttonPrimary as legacyButtonPrimaryClassName,
+  buttonSecondary as legacyButtonSecondaryClassName,
+  buttonCritical as legacyButtonCriticalClassName,
+  colorCriticalAccent as legacyColorCriticalAccent,
+} from '../../utilities/legacy';
 import {usePrefersReducedMotion} from '../../utilities/media-query';
 import {useConnected} from '../Connected';
 import {useThemeConfiguration} from '../Theme';
+import {useResponsive} from '../../utilities/responsive';
 import typographyStyles from '../../utilities/typography-styles.css';
 
 import styles from './Button.css';
 
 export interface Props extends PropsWithChildren<ButtonProps> {
-  /** Renders a button that is visually styled with secondary colors */
-  secondary?: boolean;
-  /** Renders a button that is visually styled with tertiary colors and padding */
-  tertiary?: boolean;
-  /** Adds an underline to the text when rendered as a plain button */
-  underline?: boolean;
-  /**
-   * Specify the color of the Button when `plain`.
-   * `inheritColor` will take the color of its parent.
-   */
-  appearance?: 'inheritColor';
   onMouseEnter?(): void;
 }
 
 export const Button = forwardRef(function Button(
   {
     children,
+    kind = 'primary',
     submit = false,
     disabled,
     onPress,
     to,
-    subdued,
-    plain,
-    secondary,
-    tertiary,
     loading = false,
-    fill = false,
     loadingLabel,
     accessibilityLabel,
-    underline,
+    fill = false,
     appearance,
     onMouseEnter,
+    size = 'base',
   }: Props,
   ref,
 ) {
@@ -71,63 +64,76 @@ export const Button = forwardRef(function Button(
   });
 
   const connected = useConnected();
+
+  const responsiveSizes = useResponsive({size});
+
   const {
     primaryButton: {
-      typographyStyle: primaryStyle,
+      style: primaryStyle = 'fill',
+      border: primaryBorder = 'none',
+      typographyStyle: primaryTypographyStyle,
       loadingStyle: primaryLoading = 'spinner',
     },
     secondaryButton: {
-      typographyStyle: secondaryStyle,
+      style: secondaryStyle = 'inverse',
+      border: secondaryBorder = 'full',
+      typographyStyle: secondaryTypographyStyle,
       loadingStyle: secondaryLoading = 'spinner',
     },
-    link: {colorHovered, colorPressed},
+    link: {
+      colorHovered: plainColorHovered,
+      typographyStyle: linkTypographyStyle,
+    },
   } = useThemeConfiguration();
 
   const form = useContainingForm();
 
-  const loadingStyle = secondary ? secondaryLoading : primaryLoading;
+  const isSecondary = kind === 'secondary';
+
+  const style = isSecondary ? secondaryStyle : primaryStyle;
+  const border = isSecondary ? secondaryBorder : primaryBorder;
+  const typographyStyle = isSecondary
+    ? secondaryTypographyStyle
+    : primaryTypographyStyle;
+  const loadingStyle = isSecondary ? secondaryLoading : primaryLoading;
+
+  const isPlain = kind === 'plain' || style === 'plain';
 
   const classes = classNames(
     styles.Button,
-    legacyButtonClassName,
-    subdued && !plain && styles.subdued,
-    plain && styles.plain,
-    plain &&
-      (appearance === 'inheritColor'
-        ? styles.appearanceInheritColor
-        : styles.appearanceDefault),
-    plain &&
-      colorHovered &&
-      styles[variationName('colorHovered', colorHovered)],
-    plain &&
-      colorPressed &&
-      styles[variationName('colorPressed', colorPressed)],
-    plain && underline && styles.underline,
-    plain && appearance === 'inheritColor' && styles.underline,
-    disabled && styles.disabled,
-    loading && loadingStyle === 'spinner' && styles.loading,
+    kind && !isPlain && styles[variationName('kind', kind)],
+    responsiveSizes &&
+      !isPlain &&
+      responsiveSizes.map((className) => styles[className]),
+    border && !isPlain && styles[variationName('border', border)],
+    style && !isPlain && styles[variationName('style', style)],
+    appearance && styles[variationName('appearance', appearance)],
+    isPlain && styles.stylePlain,
+    isPlain &&
+      plainColorHovered &&
+      styles[variationName('stylePlainColorHovered', plainColorHovered)],
     fill && styles.fill,
+    disabled && styles.disabled,
+    loading && styles[variationName('loading', loadingStyle)],
     loading &&
       loadingStyle === 'spinner' &&
       styles[variationName('loading-transition', transition)],
+    !isPlain && typographyStyle && typographyStyles[typographyStyle],
+    isPlain && linkTypographyStyle && typographyStyles[linkTypographyStyle],
     connected && styles.connected,
-    secondary && styles.secondary,
-    tertiary && styles.tertiary,
-    loading && loadingStyle === 'progressBar' && styles[loadingStyle],
+    /* Basic theming for older browsers that do not support CSS Custom Properties: */
+    legacyButtonClassName,
+    kind === 'primary' && legacyButtonPrimaryClassName,
+    kind === 'secondary' && legacyButtonSecondaryClassName,
+    appearance === 'critical' && legacyButtonCriticalClassName,
+    kind === 'plain' && appearance === 'critical' && legacyColorCriticalAccent,
   );
 
   const normalizedLoadingLabel = loadingLabel
     ? loadingLabel
     : translate('processing');
 
-  const contentTypography = secondary
-    ? secondaryStyle && typographyStyles[secondaryStyle]
-    : primaryStyle && typographyStyles[primaryStyle];
-
-  const contentClassNames = classNames(
-    styles.Content,
-    !plain && contentTypography,
-  );
+  const contentClassNames = classNames(styles.Content);
   const content = (
     <span className={contentClassNames}>
       {loading && loadingStyle === 'progressBar' && prefersReducedMotion
@@ -138,20 +144,23 @@ export const Button = forwardRef(function Button(
 
   const type = submit ? 'submit' : 'button';
 
-  const loadingMarkup = (
-    <span
-      className={classNames(
-        styles.LoadingContent,
-        !prefersReducedMotion && styles.Spinner,
-      )}
-    >
-      <Spinner
-        size="small"
-        color="inherit"
-        accessibilityLabel={normalizedLoadingLabel}
-      />
-    </span>
-  );
+  const loadingMarkup =
+    loadingStyle === 'spinner' ? (
+      <span
+        className={classNames(
+          styles.LoadingContent,
+          !prefersReducedMotion && styles.Spinner,
+        )}
+      >
+        <Spinner
+          size="small"
+          color="inherit"
+          accessibilityLabel={normalizedLoadingLabel}
+        />
+      </span>
+    ) : (
+      <span className={styles.ProgressBar} />
+    );
 
   if (href) {
     return (
@@ -164,7 +173,7 @@ export const Button = forwardRef(function Button(
         ariaLabel={accessibilityLabel}
       >
         {content}
-        {loading && loadingStyle === 'spinner' && loadingMarkup}
+        {loading && loadingMarkup}
       </UnstyledLink>
     );
   }
@@ -176,14 +185,14 @@ export const Button = forwardRef(function Button(
       className={classes}
       disabled={disabled || loading}
       onClick={onClick}
-      aria-busy={loading}
+      aria-busy={loading || undefined}
       aria-live={loading ? 'assertive' : undefined}
       aria-label={accessibilityLabel}
       ref={refsSetter}
       onMouseEnter={onMouseEnter}
     >
       {content}
-      {loading && loadingStyle === 'spinner' && loadingMarkup}
+      {loading && loadingMarkup}
     </button>
   );
 });
