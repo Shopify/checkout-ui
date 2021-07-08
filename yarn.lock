@@ -2373,11 +2373,6 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
   integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
 
-"@quilted/react-auto-headings@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@quilted/react-auto-headings/-/react-auto-headings-0.1.0.tgz#fcf9e653a7726964319d747de7264a9f9c1ef15f"
-  integrity sha512-rRvGa6hjzmB0HJIgPhBkb1P/z5AxHChetxnk9tfEYTamWcSk+CV3L0dJm9gEY6VBIfF/Ii4HuazqwDymAjdEIQ==
-
 "@quilted/react-testing@^0.1.4":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@quilted/react-testing/-/react-testing-0.1.5.tgz#b0d66e0ea6fa9017a6c7f05550978003823919c3"
@@ -2852,11 +2847,6 @@
     lolex "^2.7.5"
     promise "^8.0.3"
     tslib "^1.9.3"
-
-"@shopify/react-hooks@1.9.1":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@shopify/react-hooks/-/react-hooks-1.9.1.tgz#c64e410246b3de4b19d34fc66bb0fc77e8d2c15a"
-  integrity sha512-u4sPY9pZMq1hEmc3/A66DjvrhEUUB5zCPGYVsXur8WAq7HPiShuq9Bq8JQn1uQCKZ8xLLix2ZFDHgblCzjcfZQ==
 
 "@shopify/webpack-ignore-typescript-export-warnings-plugin@^1.0.4":
   version "1.0.4"

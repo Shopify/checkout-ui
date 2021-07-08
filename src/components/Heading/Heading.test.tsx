@@ -1,6 +1,6 @@
 import React from 'react';
-import {AutoHeadingGroup} from '@quilted/react-auto-headings';
 
+import {AutoHeadingGroup} from '../../utilities/auto-headings';
 import {mountWithContext} from '../../test-utilities';
 
 import {Heading} from './Heading';
