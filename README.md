@@ -2,9 +2,9 @@
 
 This library provides reference implementations of the UI components available in Checkout. These components are copied from a private Shopify repo periodically to serve primarily as a reference implementation.
 
-This library is intended to be used to help produce WYSIWYG editors for Shopify checkout extensions that will use [Argo](https://github.com/Shopify/argo-checkout) at runtime. Since Argo components do not actually render to the DOM, these components help demonstrate the necessary styles and event handling for the UI components that Argo maps to. These are the exact same components used at Shopify to render an Argo extension.
+This library is intended to be used to help produce WYSIWYG editors for Shopify checkout extensions that will use [Checkout UI Extensions](https://github.com/Shopify/ui-extensions/tree/main/packages/checkout-ui-extensions) at runtime. Since Checkout UI Extensions components do not actually render to the DOM, these components help demonstrate the necessary styles and event handling for the UI components that Checkout UI Extensions maps to. These are the exact same components used at Shopify to render a Checkout UI extension.
 
-More components are available in this package than are provided by Argo. The set of components we provide with Argo will grow over time (and if you see anything in this library you would love to have in Argo, please [raise an issue in the argo-checkout repo](https://github.com/Shopify/argo-checkout/issues/new)), but this library includes all of the UI components we use throughout checkout as a convenience for us at Shopify in generating this package. Any components, properties, or other functionality that you see in this package that does not match the [component APIs provided by Argo](https://github.com/Shopify/argo-checkout/blob/main/packages/argo-checkout/documentation/components.md) is considered unstable, and may be removed or changed at any time without notice. Additionally, components in this library have no documentation; refer to the Argo component documentation for details on the usage of the many components and props provided by this library.
+More components are available in this package than are provided by Checkout UI Extensions. The set of components we provide will grow over time (and if you see anything in this library you would love to add, please [raise an issue in the UI Extensions repo](https://github.com/Shopify/ui-extensions/issues/new)), but this library includes all of the UI components we use throughout checkout as a convenience for us at Shopify in generating this package. Any components, properties, or other functionality that you see in this package that does not match the [component APIs provided by Checkout UI Extensions](https://github.com/Shopify/ui-extensions/blob/main/packages/checkout-ui-extensions/documentation/components.md) is considered unstable, and may be removed or changed at any time without notice. Additionally, components in this library have no documentation; refer to the Checkout UI Extensions component documentation for details on the usage of the many components and props provided by this library.
 
 ## Installation
 
@@ -18,13 +18,13 @@ npm install @shopify/checkout-ui-react
 
 ## Technical details
 
-This library is authored with [React](https://reactjs.org). However, the Argo host that Shopify provides aliases all React APIs to [Preact](https://preactjs.com), a lightweight alternative to React. If you are using these components directly, we recommend you do the same (see the [webpack section below](#webpack) for details).
+This library is authored with [React](https://reactjs.org). However, the Checkout UI Extensions host that Shopify provides aliases all React APIs to [Preact](https://preactjs.com), a lightweight alternative to React. If you are using these components directly, we recommend you do the same (see the [webpack section below](#webpack) for details).
 
-The UI components in this library require a few pieces of [React context](https://reactjs.org/docs/context.html), and some [global styles](https://github.com/Shopify/checkout-ui/blob/main/src/style.css). To make this easier for you, we’ve included a single `Context` component you can wrap around your React application that will provide all of these global requirements. You can import this component from `@shopify/checkout-ui-react/argo`:
+The UI components in this library require a few pieces of [React context](https://reactjs.org/docs/context.html), and some [global styles](https://github.com/Shopify/checkout-ui/blob/main/src/style.css). To make this easier for you, we’ve included a single `Context` component you can wrap around your React application that will provide all of these global requirements. You can import this component from `@shopify/checkout-ui-react/ui-extensions`:
 
 ```tsx
 import React from 'react';
-import {Context} from '@shopify/checkout-ui-react/argo';
+import {Context} from '@shopify/checkout-ui-react/ui-extensions';
 import {Text} from '@shopify/checkout-ui-react';
 
 export default function App() {
