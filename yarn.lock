@@ -2778,10 +2778,10 @@
   resolved "https://registry.yarnpkg.com/@shopify/async/-/async-2.1.5.tgz#c55abfdb40b19435f65f9a7fe61f91117af0b9af"
   integrity sha512-GfyNJvTKRL3MmcCgcpfi2QTjAv25pgqDrXkRma/UC3qH0wVUoM3cyC+QP4Sogbv513j8XRk45yerRpwAjsDGUA==
 
-"@shopify/checkout-ui-extensions@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@shopify/checkout-ui-extensions/-/checkout-ui-extensions-0.11.1.tgz#e4cc991917fcff75ae6dfc1b4261f19b2d5d4161"
-  integrity sha512-Os454tpmNqJCkROBhEtevBzkX/y5ahmoX3n91oLTZyMFqsIgypJtQpBrO5cU0mx0qVTu2gWhYacrYbIy6AQDsw==
+"@shopify/checkout-ui-extensions@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@shopify/checkout-ui-extensions/-/checkout-ui-extensions-0.12.0.tgz#24953b75d7a3a6a0271c31026275d4e243e922de"
+  integrity sha512-o30zsIsijMTdSavTvjq7aWdiLiISrUOWyJdJWX8mqP2xdKeyUemDRMcpvFvRKmvXMZH/RPgmVIvYxlFLCCmfkg==
   dependencies:
     "@remote-ui/core" "^2.1.3"
 
