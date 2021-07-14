@@ -72,7 +72,7 @@ export function DatePicker<T extends ISODate[] | ISODate | Range>({
 
   const weekStartDay = useMemo(
     () => getWeekStartDay(geolocation?.countryCode),
-    [geolocation],
+    [geolocation?.countryCode],
   );
 
   const now = new Date();

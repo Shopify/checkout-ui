@@ -58,7 +58,7 @@ export function Popover({
   const setActivatorAccessibilityAttributes = useCallback(() => {
     activator?.setAttribute('aria-controls', id);
     activator?.setAttribute('aria-expanded', String(open));
-  }, [activator, id, open]);
+  }, [activator?.setAttribute, id, open]);
 
   const handleClose = useCallback(() => {
     onClose?.();
@@ -74,7 +74,7 @@ export function Popover({
         handleClose();
       }
     },
-    [handleClose, activator, open],
+    [activator?.contains, open, handleClose],
   );
 
   const handleKeyDown = useCallback(
@@ -112,7 +112,7 @@ export function Popover({
         }
       }
     },
-    [handleClose, activator, open],
+    [open, activator, handleClose, activator?.focus],
   );
 
   useEffect(() => {

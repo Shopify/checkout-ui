@@ -101,13 +101,13 @@
   &.Input-hasError:not(:checked) {
     box-shadow: 0 0 0 em(2px) var(--x-color-critical-accent) inset;
 
-    /* stylelint-disable selector-max-class, selector-max-specificity */
+    /* stylelint-disable selector-max-specificity */
     &:focus::before,
     &:active::before {
       box-shadow: 0 0 0 em(1px) var(--x-color-critical-accent) inset,
         0 0 0 em(3px) var(--x-color-critical-accent);
     }
-    /* stylelint-enable selector-max-class, selector-max-specificity */
+    /* stylelint-enable selector-max-specificity */
   }
 }
 
