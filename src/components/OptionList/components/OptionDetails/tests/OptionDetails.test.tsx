@@ -31,7 +31,7 @@ describe('<OptionDetails />', () => {
     expect(accordion.find(OptionDetails)).toContainReactComponent(Children);
   });
 
-  it('does not render children if not selected', () => {
+  it('children are hidden if not selected', () => {
     function Children() {
       return <div>Children</div>;
     }
@@ -44,6 +44,8 @@ describe('<OptionDetails />', () => {
       </OptionList>,
     );
 
-    expect(accordion.find(OptionDetails)).not.toContainReactComponent(Children);
+    expect(accordion.find('div', {hidden: true})).toContainReactComponent(
+      Children,
+    );
   });
 });

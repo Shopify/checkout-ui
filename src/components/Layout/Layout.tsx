@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {Breakpoint, LayoutProps} from '@shopify/argo-checkout';
+import {Breakpoint, LayoutProps} from '@shopify/checkout-ui-extensions';
 
 import {useResponsive} from '../../utilities/responsive';
 import {pixelOrPercent} from '../../utilities/units';
@@ -149,7 +149,7 @@ function generateMaxInlineSizeStyles(
 
       const inlineStyles =
         breakpoint === 'base'
-          ? maxInlineSizeStyles
+          ? [maxInlineSizeStyles]
           : [
               MEDIAQUERY_MAP.get(breakpoint as Breakpoint),
               '{',

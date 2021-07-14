@@ -1,0 +1,211 @@
+.Divider {
+  &::before {
+    content: '';
+    display: block;
+    border-style: solid;
+    border-color: var(--x-default-color-border);
+    border-width: 0;
+  }
+}
+
+.directionHorizontal {
+  height: 0;
+  width: 100%;
+  &::before {
+    border-block-start: none;
+    border-inline: none;
+  }
+}
+
+.directionVertical {
+  height: 100%;
+  width: 0;
+  &::before {
+    height: 100%;
+    border-block: none;
+    border-inline-start: none;
+  }
+}
+
+.alignmentCenter,
+.alignmentStart,
+.alignmentEnd {
+  display: flex;
+  flex: auto;
+  align-items: center;
+  align-content: center;
+
+  &.directionHorizontal {
+    &::before,
+    &::after {
+      border-block-start: none;
+      border-inline: none;
+    }
+  }
+
+  &.directionVertical {
+    flex-direction: column;
+    &::before,
+    &::after {
+      border-block: none;
+      border-inline-start: none;
+    }
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    flex-grow: 1;
+    width: unset;
+    height: unset;
+    border-style: solid;
+    border-color: var(--x-default-color-border);
+    border-width: 0;
+  }
+}
+
+.alignmentStart {
+  &::before {
+    content: unset;
+    flex-grow: unset;
+    border: unset;
+  }
+
+  &.directionVertical {
+    flex-direction: column;
+  }
+}
+
+.alignmentEnd {
+  &::after {
+    content: unset;
+    flex-grow: unset;
+    border: unset;
+  }
+  &.directionVertical {
+    flex-direction: column;
+  }
+}
+
+.borderWidthThin {
+  &.directionHorizontal {
+    height: var(--x-border-width-base);
+  }
+  &.directionVertical {
+    width: var(--x-border-width-base);
+  }
+  &::before,
+  &::after {
+    border-width: var(--x-border-width-base);
+  }
+}
+.borderWidthMedium {
+  &.directionHorizontal {
+    height: var(--x-border-width-medium);
+  }
+  &.directionVertical {
+    width: var(--x-border-width-medium);
+  }
+  &::before,
+  &::after {
+    border-width: var(--x-border-width-medium);
+  }
+}
+.borderWidthThick {
+  &.directionHorizontal {
+    height: var(--x-border-width-thick);
+  }
+  &.directionVertical {
+    width: var(--x-border-width-thick);
+  }
+  &::before,
+  &::after {
+    border-width: var(--x-border-width-thick);
+  }
+}
+.borderWidthExtraThick {
+  &.directionHorizontal {
+    height: var(--x-border-width-extra-thick);
+  }
+  &.directionVertical {
+    width: var(--x-border-width-extra-thick);
+  }
+  &::before,
+  &::after {
+    border-width: var(--x-border-width-extra-thick);
+  }
+}
+
+/*
+ * This is necessary to override existing margins. see MoneyLines
+ * -JK
+ */
+.spacingNone {
+  margin: 0;
+}
+.spacingExtraTight {
+  &.directionHorizontal {
+    margin: var(--x-spacing-tight4x) 0;
+  }
+  &.directionVertical {
+    margin: 0 var(--x-spacing-tight4x);
+  }
+}
+.spacingTight {
+  &.directionHorizontal {
+    margin: var(--x-spacing-tight1x) 0;
+  }
+  &.directionVertical {
+    margin: 0 var(--x-spacing-tight1x);
+  }
+}
+.spacingBase {
+  &.directionHorizontal {
+    margin: var(--x-spacing-base) 0;
+  }
+  &.directionVertical {
+    margin: 0 var(--x-spacing-base);
+  }
+}
+.spacingLoose {
+  &.directionHorizontal {
+    margin: var(--x-spacing-loose1x) 0;
+  }
+  &.directionVertical {
+    margin: 0 var(--x-spacing-loose1x);
+  }
+}
+.spacingExtraLoose {
+  &.directionHorizontal {
+    margin: var(--x-spacing-loose4x) 0;
+  }
+  &.directionVertical {
+    margin: 0 var(--x-spacing-loose4x);
+  }
+}
+
+.DividerContent {
+  margin: 0 var(--x-spacing-base);
+}
+.contentDirectionVertical {
+  margin: var(--x-spacing-base) 0;
+}
+
+.contentAlignmentStart {
+  margin-inline-start: 0;
+  margin-inline-end: var(--x-spacing-base);
+  &.contentDirectionVertical {
+    margin-inline: 0;
+    margin-block-start: 0;
+    margin-block-end: var(--x-spacing-base);
+  }
+}
+.contentAlignmentEnd {
+  margin-inline-start: var(--x-spacing-base);
+  margin-inline-end: 0;
+  &.contentDirectionVertical {
+    margin-inline: 0;
+    margin-block-start: var(--x-spacing-base);
+    margin-block-end: 0;
+  }
+}

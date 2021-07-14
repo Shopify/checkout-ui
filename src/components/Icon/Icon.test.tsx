@@ -6,12 +6,6 @@ import {chevronDown} from '../../icons';
 import {Icon} from './Icon';
 
 describe('<Icon />', () => {
-  it('renders a placeholder in a <div>', () => {
-    const icon = mount(<Icon source="placeholder" />);
-
-    expect(icon).toContainReactComponent('div');
-  });
-
   it('renders an actual icon', () => {
     const icon = mount(<Icon source="chevronDown" />);
 
@@ -20,7 +14,7 @@ describe('<Icon />', () => {
 
   it('renders a <span> with a aria-label attribute', () => {
     const icon = mount(
-      <Icon source="placeholder" accessibilityLabel="Some icon" />,
+      <Icon source="discount" accessibilityLabel="Some icon" />,
     );
 
     expect(icon).toContainReactComponent('span', {'aria-label': 'Some icon'});

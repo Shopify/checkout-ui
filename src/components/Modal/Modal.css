@@ -1,18 +1,36 @@
+.Backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: hsla(0, 0%, 0%, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.Backdrop,
+.Dialog {
+  opacity: 0;
+  transition: opacity var(--x-duration-slow) var(--x-timing-base);
+
+  &.transitionEntered {
+    opacity: 1;
+  }
+}
+
 .Modal {
   position: fixed;
   inset: 0;
   z-index: 1001;
-}
-
-.Backdrop {
-  position: fixed;
+  display: flex;
   overflow: auto;
-  width: 100%;
-  height: 100%;
-  background-color: hsla(0, 0%, 0%, 0.6);
+  padding: var(--x-spacing-loose4x);
+
+  @media screen and (max-width: 1000px) {
+    padding: 0;
+  }
 }
 
-.Content {
+.Dialog {
+  --x-default-color: var(--x-color-surface-primary);
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
   --x-default-color-border: var(--x-color-surface-primary-border);
   --x-default-color-border-emphasized: var(
     --x-color-surface-primary-border-emphasized
@@ -23,8 +41,12 @@
     --x-color-surface-primary-text-emphasized
   );
   --x-default-color-accent: var(--x-color-surface-primary-accent);
-  margin: 4em auto 5%;
-  max-width: rem(840px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--x-modal-max-width);
+  margin: auto;
   border-radius: var(--x-border-radius-base);
   overflow: hidden;
   box-shadow: 0 5px 30px hsla(0, 0%, 0%, 0.2);
@@ -32,45 +54,32 @@
   color: var(--x-color-surface-primary-text);
 
   @media screen and (max-width: 1000px) {
-    margin: 0;
-    width: 100%;
-    min-height: 100%;
-    max-width: none;
-    max-height: none;
-    border-radius: 0;
-  }
-}
-
-.Content-isLong {
-  height: 90%;
-  max-height: none;
-
-  @media screen and (max-width: 1000px) {
-    width: 100%;
+    max-width: 100% !important; /* stylelint-disable-line declaration-no-important */
     height: 100%;
+    border-radius: 0;
+
+    & .Content {
+      flex: 1;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }
 
-.Backdrop,
-.Content {
-  opacity: 0;
-  transition: opacity var(--x-duration-slow) var(--x-timing-base);
+.Dialog-blockSizeFill {
+  height: 100%;
 
-  &.transitionEntered {
-    opacity: 1;
+  & .IFrame {
+    flex: 1;
   }
 }
 
 .IFrame {
   display: block;
   border: none;
-  width: calc(100% - var(--x-spacing-base) * 2);
-  height: calc(100% - var(--x-spacing-base) * 2);
   margin: var(--x-spacing-base);
 
   @media screen and (max-width: 1000px) {
     margin: var(--x-spacing-base) var(--x-spacing-loose2x);
-    width: calc(100% - var(--x-spacing-loose2x) * 2);
   }
 }
 
@@ -86,15 +95,16 @@
   }
 }
 
-.Body {
+.Content {
   padding: var(--x-spacing-base);
+  overflow: auto;
 
   @media screen and (max-width: 1000px) {
     padding: var(--x-spacing-loose2x);
   }
 }
 
-.Button {
+.CloseButton {
   display: block;
   padding: var(--x-spacing-tight1x);
   margin: calc(var(--x-spacing-tight1x) * -1);

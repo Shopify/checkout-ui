@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {LinkProps} from '@shopify/argo-checkout';
+import {LinkProps} from '@shopify/checkout-ui-extensions';
 
 import {useLinkComponent} from '../../../AppContext';
 
@@ -43,7 +43,7 @@ export function UnstyledLink({
         className={className}
         lang={language}
         aria-label={ariaLabel}
-        aria-busy={ariaBusy}
+        aria-busy={ariaBusy || undefined}
         aria-live={ariaLive}
       >
         {children}
@@ -64,7 +64,7 @@ export function UnstyledLink({
       className={className}
       lang={language}
       aria-label={ariaLabel}
-      aria-busy={ariaBusy}
+      aria-busy={ariaBusy || undefined}
       aria-live={ariaLive}
     >
       {children}

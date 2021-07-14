@@ -1,5 +1,6 @@
 export {
   Shell,
+  ShellActionsDisplay,
   ShellDisclosure,
   ShellDisclosureProps,
   ShellFooter,

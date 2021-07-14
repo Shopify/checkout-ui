@@ -1,5 +1,5 @@
 import {variationName} from '@shopify/css-utilities';
-import {Breakpoint} from '@shopify/argo-checkout';
+import {Breakpoint} from '@shopify/checkout-ui-extensions';
 
 const classNamesMap = {
   padding: [
@@ -58,6 +58,7 @@ const classNamesMap = {
   borderRadiusBlockStart: 'borderRadiusBlockStart',
   borderRadiusBlockEnd: 'borderRadiusBlockEnd',
   spacing: 'spacing',
+  size: 'size',
   stack: 'stack',
 };
 

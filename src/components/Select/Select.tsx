@@ -1,6 +1,6 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {SelectProps} from '@shopify/argo-checkout';
+import {SelectProps} from '@shopify/checkout-ui-extensions';
 
 import {InlineError} from '../InlineError';
 import {Text} from '../Text';
@@ -135,9 +135,10 @@ export function Select({
                 {placeholder === label ? <>&nbsp;</> : placeholder}
               </option>
             )}
-          {options.map((option) => (
+          {options.map((option, index) => (
             <option
-              key={option.value}
+              /* eslint-disable-next-line react/no-array-index-key */
+              key={`${option.value}${index}`}
               value={option.value}
               disabled={option.disabled || readonly}
             >
@@ -160,7 +161,7 @@ export function Select({
   );
 
   return (
-    <BlockStack spacing="tight">
+    <BlockStack spacing="extraTight">
       {view}
       {errorMarkup}
     </BlockStack>

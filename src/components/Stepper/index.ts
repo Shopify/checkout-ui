@@ -1,1 +1,1 @@
-export {Stepper, Props} from './Stepper';
+export {Stepper} from './Stepper';

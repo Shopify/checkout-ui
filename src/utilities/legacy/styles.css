@@ -3,6 +3,18 @@
 .Button {
 }
 
+.ButtonPrimary {
+}
+
+.ButtonSecondary {
+}
+
+.ButtonPrimary.ButtonCritical {
+}
+
+.ButtonSecondary.ButtonCritical {
+}
+
 .Surface-colorCanvas {
 }
 
@@ -13,6 +25,9 @@
 }
 
 .Surface-colorSurfaceTertiary {
+}
+
+.ColorCriticalAccent {
 }
 
 .Utility-defaultBorderColor {

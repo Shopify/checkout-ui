@@ -1,7 +1,8 @@
 import React from 'react';
 import {classNames} from '@shopify/css-utilities';
+import {IconProps} from '@shopify/checkout-ui-extensions';
 
-import {Icon, Props as IconProps} from '../../../Icon';
+import {Icon} from '../../../Icon';
 import {TextBlock} from '../../../TextBlock';
 import {View} from '../../../View';
 import {useProgressTracker} from '../../hooks';

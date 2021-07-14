@@ -11,7 +11,7 @@ export interface Props {
  * FormattedText replaces new line characters with HTML line breaks (`<br />`).
  * Use this component when you want to render text created by an editor or a `<textarea>`.
  * For more complex use cases involving basic HTML tags, format the content as a React component
- * and pass it in as a child. The component will recieve customized styling based on the supported tags (currently only <strong>).
+ * and pass it in as a child. The component will recieve customized styling based on the supported tags.
  */
 export function FormattedText({children}: Props) {
   if (typeof children === 'string') {

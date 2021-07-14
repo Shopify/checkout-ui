@@ -1,5 +1,5 @@
 import React from 'react';
-import {BlockStackProps as Props} from '@shopify/argo-checkout';
+import {BlockStackProps as Props} from '@shopify/checkout-ui-extensions';
 
 import {BlockStack as BlockStackComponent} from './BlockStack';
 

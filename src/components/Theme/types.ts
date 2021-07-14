@@ -20,12 +20,12 @@ export interface ThemeConfiguration {
   readonly controls: ThemeControls;
   readonly label: ThemeLabel;
   readonly textFields: ThemeTextFields;
+  readonly stepper: ThemeStepper;
   readonly select: ThemeSelect;
   readonly checkbox: ThemeCheckbox;
   readonly radio: ThemeRadio;
   readonly optionList: ThemeOptionList;
   readonly reviewBlock: ThemeReviewBlock;
-  readonly actions: ThemeActions;
   readonly lineItems: ThemeLineItems;
   readonly stockProblemsLineItems: ThemeLineItems;
   readonly throttleLineItems: ThemeLineItems;
@@ -86,6 +86,7 @@ export interface ThemeTypographyStyleCustomizations {
   weight?: ThemeTypographyWeight;
   lineSize?: ThemeTypographyLineSize;
   kerning?: ThemeTypographyKerning;
+  decoration?: ThemeTypographyDecoration;
 }
 
 export interface DurationScale {
@@ -141,11 +142,15 @@ export type ThemeMoneyLineInlineAlignment =
   | 'start'
   | 'end';
 
+export type ThemeGiftCardStyle = 'masked' | 'hidden';
+
 export type ThemeBackground =
   | 'surfacePrimary'
   | 'surfaceSecondary'
   | 'surfaceTertiary'
   | 'transparent';
+
+export type ThemeButtonStyle = 'fill' | 'inverse' | 'plain';
 
 export interface ThemeControls {
   background?: ThemeBackground;
@@ -164,6 +169,10 @@ export interface ThemeTextFields {
   typographyStyle?: ThemeTypographyStyle;
   errorIndentation?: ThemeErrorIndentation;
   errorTypographyStyle?: ThemeTypographyStyle;
+}
+
+export interface ThemeStepper {
+  separator?: boolean;
 }
 
 export type ThemeResourceListBorder = ThemeSimpleBorder | 'inner' | 'outer';
@@ -260,11 +269,14 @@ export interface ThemeLineItems {
 }
 
 export interface ThemeMoneyLines {
-  spacing?: ThemeSpacing;
   background?: ThemeBackground;
   blockPadding?: ThemeSpacing;
+  divided?: boolean;
+  dividerSpacing?: ThemeSpacing;
+  giftCardStyle?: ThemeGiftCardStyle;
   inlinePadding?: ThemeSpacing;
   inlineAlignment?: ThemeMoneyLineInlineAlignment;
+  spacing?: ThemeSpacing;
   labelTypographyStyle?: ThemeTypographyStyle;
   valueTypographyStyle?: ThemeTypographyStyle;
 }
@@ -273,22 +285,18 @@ export interface ThemeMoneySummary {
   background?: ThemeBackground;
   blockPadding?: ThemeSpacing;
   inlinePadding?: ThemeSpacing;
-  separator?: boolean;
   currencyCode?: boolean;
   labelTypographyStyle?: ThemeTypographyStyle;
   currencyTypographyStyle?: ThemeTypographyStyle;
   valueTypographyStyle?: ThemeTypographyStyle;
 }
 
-export type ThemeActionsDisplay = 'inline' | 'block';
-
-export interface ThemeActions {
-  display?: ThemeActionsDisplay;
-}
-
 export type ThemeLoadingStyle = 'spinner' | 'progressBar';
 
 export interface ThemeButton {
+  style?: ThemeButtonStyle;
+  border?: ThemeBorder;
+  borderRadius?: ThemeBorderRadius;
   blockPadding?: ThemeSpacing;
   inlinePadding?: ThemeSpacing;
   typographyStyle?: ThemeTypographyStyle;
@@ -405,6 +413,7 @@ export type ThemeTypographySize =
 export type ThemeTypographyLetterCase = 'none' | 'title' | 'upper' | 'lower';
 export type ThemeTypographyFonts = 'primary' | 'secondary';
 export type ThemeTypographyWeight = 'base' | 'bold';
+export type ThemeTypographyDecoration = 'none' | 'underline';
 export type ThemeTypographyStyle =
   | 'style1'
   | 'style2'
@@ -425,7 +434,7 @@ export type ThemeColorStyle = 'color1' | 'color2';
 export interface ThemeLink {
   transitionDuration?: ThemeDuration;
   colorHovered?: ThemeColorStyle;
-  colorPressed?: ThemeColorStyle;
+  typographyStyle?: ThemeTypographyStyle;
 }
 
 export type RoleColorOverrides = {
@@ -494,17 +503,17 @@ export interface CustomPropertyMap {
 
   colorPrimaryAction: RgbColorString;
   colorPrimaryActionHovered: RgbColorString;
-  colorPrimaryActionPressed: RgbColorString;
   colorPrimaryActionText: RgbColorString;
   colorPrimaryActionTextHovered: RgbColorString;
-  colorPrimaryActionTextPressed: RgbColorString;
+  colorPrimaryActionBorder: RgbColorString;
+  colorPrimaryActionDisabled: RgbColorString;
 
   colorSecondaryAction: RgbColorString;
   colorSecondaryActionHovered: RgbColorString;
-  colorSecondaryActionPressed: RgbColorString;
   colorSecondaryActionText: RgbColorString;
   colorSecondaryActionTextHovered: RgbColorString;
-  colorSecondaryActionTextPressed: RgbColorString;
+  colorSecondaryActionBorder: RgbColorString;
+  colorSecondaryActionDisabled: RgbColorString;
 
   colorTertiaryAction: RgbColorString;
   colorTertiaryActionText: RgbColorString;
@@ -614,12 +623,10 @@ export interface CustomPropertyMap {
   checkboxBorder?: string;
   reviewBlockBorder?: string;
 
-  controlTransitionDuration?: string;
-
   optionListBlockSpacing?: string;
   reviewBlockBlockSpacing?: string;
   moneyLinesBlockSpacing?: string;
-  moneyLinesSeparatorBlockSpacing?: string;
+  moneyLinesDividerBlockSpacing?: string;
 
   buyerJourneyInlineSpacing?: string;
 
@@ -629,6 +636,7 @@ export interface CustomPropertyMap {
   style1TypographyWeight?: string;
   style1TypographyLineSize?: string;
   style1TypographyKerning?: string;
+  style1TypographyDecoration?: string;
 
   style2TypographySize?: string;
   style2TypographyCase?: string;
@@ -636,6 +644,7 @@ export interface CustomPropertyMap {
   style2TypographyWeight?: string;
   style2TypographyLineSize?: string;
   style2TypographyKerning?: string;
+  style2TypographyDecoration?: string;
 
   style3TypographySize?: string;
   style3TypographyCase?: string;
@@ -643,6 +652,7 @@ export interface CustomPropertyMap {
   style3TypographyWeight?: string;
   style3TypographyLineSize?: string;
   style3TypographyKerning?: string;
+  style3TypographyDecoration?: string;
 
   style4TypographySize?: string;
   style4TypographyCase?: string;
@@ -650,6 +660,7 @@ export interface CustomPropertyMap {
   style4TypographyWeight?: string;
   style4TypographyLineSize?: string;
   style4TypographyKerning?: string;
+  style4TypographyDecoration?: string;
 
   style5TypographySize?: string;
   style5TypographyCase?: string;
@@ -657,6 +668,7 @@ export interface CustomPropertyMap {
   style5TypographyWeight?: string;
   style5TypographyLineSize?: string;
   style5TypographyKerning?: string;
+  style5TypographyDecoration?: string;
 
   style6TypographySize?: string;
   style6TypographyCase?: string;
@@ -664,6 +676,7 @@ export interface CustomPropertyMap {
   style6TypographyWeight?: string;
   style6TypographyLineSize?: string;
   style6TypographyKerning?: string;
+  style6TypographyDecoration?: string;
 
   style7TypographySize?: string;
   style7TypographyCase?: string;
@@ -671,6 +684,7 @@ export interface CustomPropertyMap {
   style7TypographyWeight?: string;
   style7TypographyLineSize?: string;
   style7TypographyKerning?: string;
+  style7TypographyDecoration?: string;
 
   style8TypographySize?: string;
   style8TypographyCase?: string;
@@ -678,6 +692,7 @@ export interface CustomPropertyMap {
   style8TypographyWeight?: string;
   style8TypographyLineSize?: string;
   style8TypographyKerning?: string;
+  style8TypographyDecoration?: string;
 
   style9TypographySize?: string;
   style9TypographyCase?: string;
@@ -685,11 +700,14 @@ export interface CustomPropertyMap {
   style9TypographyWeight?: string;
   style9TypographyLineSize?: string;
   style9TypographyKerning?: string;
+  style9TypographyDecoration?: string;
 
   primaryButtonBlockPadding?: string;
   primaryButtonInlinePadding?: string;
+  primaryButtonBorderRadius?: string;
   secondaryButtonBlockPadding?: string;
   secondaryButtonInlinePadding?: string;
+  secondaryButtonBorderRadius?: string;
 
   moneyLinesBlockPadding?: string;
   moneyLinesInlinePadding?: string;

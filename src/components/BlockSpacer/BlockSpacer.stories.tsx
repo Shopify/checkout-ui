@@ -1,5 +1,5 @@
 import React from 'react';
-import {BlockSpacerProps as Props} from '@shopify/argo-checkout';
+import {BlockSpacerProps as Props} from '@shopify/checkout-ui-extensions';
 
 import {BlockSpacer as BlockSpacerComponent} from './BlockSpacer';
 

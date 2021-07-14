@@ -1,0 +1,83 @@
+.MoneySummary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: var(--x-spacing-base);
+  grid-template-areas: 'header content';
+  align-items: center;
+  padding: var(--x-money-summary-block-padding)
+    var(--x-money-summary-inline-padding);
+}
+
+.Header {
+  grid-area: header;
+}
+
+.Content {
+  grid-area: content;
+}
+
+.inlineAlignmentEnd {
+  grid-template-columns: 1fr 1fr;
+  justify-items: end;
+
+  & .Header {
+    text-align: right;
+  }
+}
+
+.inlineAlignmentStart {
+  grid-template-columns: 1fr 1fr;
+  justify-items: start;
+}
+
+.inlineAlignmentToAxis {
+  grid-template-columns: 1fr 1fr;
+
+  & .Header {
+    text-align: right;
+    justify-self: end;
+  }
+
+  & .Content {
+    justify-self: start;
+  }
+}
+
+.backgroundSurfacePrimary {
+  --x-default-color: var(--x-color-surface-primary);
+  --x-default-color-subdued: var(--x-color-surface-primary-subdued);
+  --x-default-color-text: var(--x-color-surface-primary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-primary-text-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-primary-accent);
+  background-color: var(--x-color-surface-primary);
+  color: var(--x-default-color-text);
+}
+
+.backgroundSurfaceSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
+  --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
+  --x-default-color-text: var(--x-color-surface-secondary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-secondary-text-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-secondary-accent);
+  background-color: var(--x-color-surface-secondary);
+  color: var(--x-default-color-text);
+}
+
+.backgroundSurfaceTertiary {
+  --x-default-color: var(--x-color-surface-tertiary);
+  --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
+  --x-default-color-text: var(--x-color-surface-tertiary-text);
+  --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);
+  --x-default-color-text-emphasized: var(
+    --x-color-surface-tertiary-text-emphasized
+  );
+  --x-default-color-accent: var(--x-color-surface-tertiary-accent);
+  background-color: var(--x-color-surface-tertiary);
+  color: var(--x-default-color-text);
+}

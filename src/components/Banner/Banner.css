@@ -13,6 +13,8 @@
 }
 
 .statusInfo {
+  --x-default-color: var(--x-color-info);
+  --x-default-color-subdued: var(--x-color-info-subdued);
   --x-default-color-border: var(--x-color-info-border);
   --x-default-color-border-emphasized: var(--x-color-info-border-emphasized);
   --x-default-color-text: var(--x-color-info-text);
@@ -28,6 +30,8 @@
 }
 
 .statusSuccess {
+  --x-default-color: var(--x-color-success);
+  --x-default-color-subdued: var(--x-color-success-subdued);
   --x-default-color-border: var(--x-color-success-border);
   --x-default-color-border-emphasized: var(--x-color-success-border-emphasized);
   --x-default-color-text: var(--x-color-success-text);
@@ -43,6 +47,8 @@
 }
 
 .statusWarning {
+  --x-default-color: var(--x-color-warning);
+  --x-default-color-subdued: var(--x-color-warning-subdued);
   --x-default-color-border: var(--x-color-warning-border);
   --x-default-color-border-emphasized: var(--x-color-warning-border-emphasized);
   --x-default-color-text: var(--x-color-warning-text);
@@ -58,6 +64,8 @@
 }
 
 .statusCritical {
+  --x-default-color: var(--x-color-critical);
+  --x-default-color-subdued: var(--x-color-critical-subdued);
   --x-default-color-border: var(--x-color-critical-border);
   --x-default-color-border-emphasized: var(
     --x-color-critical-border-emphasized

@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {CheckboxProps} from '@shopify/argo-checkout';
+import {CheckboxProps} from '@shopify/checkout-ui-extensions';
 
 import {Icon} from '../Icon';
 import {InlineError} from '../InlineError';

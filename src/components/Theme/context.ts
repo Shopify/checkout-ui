@@ -50,12 +50,12 @@ export function createTheme(
     controls = {},
     label = {},
     textFields = {},
+    stepper = {},
     select = {},
     checkbox = {},
     radio = {},
     optionList = {},
     reviewBlock = {},
-    actions = {},
     lineItems = {},
     stockProblemsLineItems = {},
     throttleLineItems = {},
@@ -97,12 +97,12 @@ export function createTheme(
       controls,
       label,
       textFields,
+      stepper,
       select,
       checkbox,
       radio,
       optionList,
       reviewBlock,
-      actions,
       lineItems,
       stockProblemsLineItems,
       throttleLineItems,
@@ -252,33 +252,31 @@ export function colorText(colorGroup?: ColorGroup, legacy?: boolean) {
 
 export function colorTextEmphasized(colorGroup?: ColorGroup, legacy?: boolean) {
   return colorGroup?.foreground
-    ? colorGroup?.foreground?.adjust({
+    ? colorGroup.foreground?.adjust({
         l: (l) =>
-          isLight(colorGroup?.foreground, legacy)
+          isLight(colorGroup.foreground, legacy)
             ? Math.min(l + 15, 100)
             : l - 10,
       })
     : colorGroup?.background?.adjust({
         s: (s) => (s > 50 ? s : Math.min(s + 15, 100)),
         l: (l) =>
-          isLight(colorGroup?.background, legacy)
-            ? Math.max(l - 77.5, 0)
-            : 98.3,
+          isLight(colorGroup.background, legacy) ? Math.max(l - 77.5, 0) : 98.3,
       });
 }
 
 export function colorTextSubdued(colorGroup?: ColorGroup, legacy?: boolean) {
   return colorGroup?.foreground
-    ? colorGroup?.foreground?.adjust({
+    ? colorGroup.foreground?.adjust({
         l: (l) =>
-          isLight(colorGroup?.foreground, legacy)
-            ? Math.max(l - 35, 0)
-            : l + 43.2,
+          isLight(colorGroup.foreground, legacy)
+            ? Math.max(l - 18.8, 0)
+            : l + 12.7,
       })
     : colorGroup?.background?.adjust({
         s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
         l: (l) =>
-          isLight(colorGroup?.background, legacy)
+          isLight(colorGroup.background, legacy)
             ? Math.max(l - 49.9, 10)
             : Math.min(l + 63.2, 90),
       });
@@ -290,18 +288,24 @@ function colorActionHovered(colorGroup?: ColorGroup) {
   });
 }
 
-function colorActionPressed(colorGroup?: ColorGroup) {
+function colorActionBorder(colorGroup?: ColorGroup) {
   return colorGroup?.background?.adjust({
     l: (l) => l - 10,
   });
 }
 
-/* Currently used for default / hover / pressed states. */
+function colorActionDisabled(colorGroup?: ColorGroup) {
+  return colorGroup?.background?.adjust({
+    s: () => 0,
+  });
+}
+
+/* Currently used for default / hover */
 function colorActionText(colorGroup?: ColorGroup, legacy?: boolean) {
   return (
     colorGroup?.foreground ??
     colorGroup?.background?.adjust({
-      l: () => (isLight(colorGroup?.background, legacy) ? 4 : 100),
+      l: () => (isLight(colorGroup.background, legacy) ? 4 : 100),
     })
   );
 }
@@ -354,11 +358,8 @@ function overrideColorGroup(
 
 function colorBorder(colorGroup?: ColorGroup, legacy?: boolean) {
   return colorGroup?.background?.adjust({
-    s: (s) => (s > 50 ? Math.max(s - 15, 0) : s),
-    l: (l) =>
-      isLight(colorGroup?.background, legacy)
-        ? Math.max(l - 8.8, 0)
-        : Math.min(l + 11.3, 90),
+    s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
+    l: (l) => (isLight(colorGroup.background, legacy) ? l - 13.3 : l + 21.2),
   });
 }
 
@@ -367,9 +368,8 @@ export function colorBorderEmphasized(
   legacy?: boolean,
 ) {
   return colorGroup?.background?.adjust({
-    s: (s) => (s > 50 ? s : Math.min(s + 15, 100)),
-    l: (l) =>
-      isLight(colorGroup?.background, legacy) ? Math.max(l - 77.5, 0) : 98.3,
+    s: (s) => (s > 50 ? Math.max(s - 55, 0) : s),
+    l: (l) => (isLight(colorGroup.background, legacy) ? l - 38.7 : l + 63.2),
   });
 }
 
@@ -495,27 +495,27 @@ const COLOR_MAP: {
   colorPrimaryAction: ({primaryAction}) => primaryAction?.background,
   colorPrimaryActionHovered: ({primaryAction}) =>
     colorActionHovered(primaryAction),
-  colorPrimaryActionPressed: ({primaryAction}) =>
-    colorActionPressed(primaryAction),
   colorPrimaryActionText: ({primaryAction}, legacy) =>
     colorActionText(primaryAction, legacy),
   colorPrimaryActionTextHovered: ({primaryAction}, legacy) =>
     colorActionText(primaryAction, legacy),
-  colorPrimaryActionTextPressed: ({primaryAction}, legacy) =>
-    colorActionText(primaryAction, legacy),
+  colorPrimaryActionBorder: ({primaryAction}) =>
+    colorActionBorder(primaryAction),
+  colorPrimaryActionDisabled: ({primaryAction}) =>
+    colorActionDisabled(primaryAction),
 
   /* COLOR SECONDARY ACTION */
   colorSecondaryAction: ({secondaryAction}) => secondaryAction?.background,
   colorSecondaryActionHovered: ({secondaryAction}) =>
     colorActionHovered(secondaryAction),
-  colorSecondaryActionPressed: ({secondaryAction}) =>
-    colorActionPressed(secondaryAction),
   colorSecondaryActionText: ({secondaryAction}, legacy) =>
     colorActionText(secondaryAction, legacy),
   colorSecondaryActionTextHovered: ({secondaryAction}, legacy) =>
     colorActionText(secondaryAction, legacy),
-  colorSecondaryActionTextPressed: ({secondaryAction}, legacy) =>
-    colorActionText(secondaryAction, legacy),
+  colorSecondaryActionBorder: ({secondaryAction}) =>
+    colorActionBorder(secondaryAction),
+  colorSecondaryActionDisabled: ({secondaryAction}) =>
+    colorActionDisabled(secondaryAction),
 
   /* COLOR TERTIARY ACTION */
   colorTertiaryAction: ({tertiaryAction}) => tertiaryAction?.background,
@@ -657,6 +657,11 @@ const TYPOGRAPHY_KERNING_MAP = {
   base: 'normal',
   loose: '0.125em',
   xloose: '0.16em',
+};
+
+const TYPOGRAPHY_DECORATION_MAP = {
+  none: 'none',
+  underline: 'underline',
 };
 
 const TYPOGRAPHY_LINE_SIZE_MAP = {
@@ -858,8 +863,8 @@ function customPropertiesFromThemeConfiguration(
   const moneyLinesBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
     moneyLines.spacing,
   );
-  const moneyLinesSeparatorBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
-    moneyLines.spacing,
+  const moneyLinesDividerBlockSpacing = maybeInMap(SPACING_VAR_MAP)(
+    moneyLines.dividerSpacing,
   );
   const buyerJourneyInlineSpacing = maybeInMap(SPACING_VAR_MAP)(
     buyerJourney.spacing,
@@ -882,54 +887,63 @@ function customPropertiesFromThemeConfiguration(
     style1TypographyWeight,
     style1TypographyLineSize,
     style1TypographyKerning,
+    style1TypographyDecoration,
     style2TypographySize,
     style2TypographyCase,
     style2TypographyFonts,
     style2TypographyWeight,
     style2TypographyLineSize,
     style2TypographyKerning,
+    style2TypographyDecoration,
     style3TypographySize,
     style3TypographyCase,
     style3TypographyFonts,
     style3TypographyWeight,
     style3TypographyLineSize,
     style3TypographyKerning,
+    style3TypographyDecoration,
     style4TypographySize,
     style4TypographyCase,
     style4TypographyFonts,
     style4TypographyWeight,
     style4TypographyLineSize,
     style4TypographyKerning,
+    style4TypographyDecoration,
     style5TypographySize,
     style5TypographyCase,
     style5TypographyFonts,
     style5TypographyWeight,
     style5TypographyLineSize,
     style5TypographyKerning,
+    style5TypographyDecoration,
     style6TypographySize,
     style6TypographyCase,
     style6TypographyFonts,
     style6TypographyWeight,
     style6TypographyLineSize,
     style6TypographyKerning,
+    style6TypographyDecoration,
     style7TypographySize,
     style7TypographyCase,
     style7TypographyFonts,
     style7TypographyWeight,
     style7TypographyLineSize,
     style7TypographyKerning,
+    style7TypographyDecoration,
     style8TypographySize,
     style8TypographyCase,
     style8TypographyFonts,
     style8TypographyWeight,
     style8TypographyLineSize,
     style8TypographyKerning,
+    style8TypographyDecoration,
     style9TypographySize,
     style9TypographyCase,
     style9TypographyFonts,
     style9TypographyWeight,
     style9TypographyLineSize,
     style9TypographyKerning,
+    style9TypographyDecoration,
   ] = [
     typographyStyle1,
     typographyStyle2,
@@ -953,6 +967,7 @@ function customPropertiesFromThemeConfiguration(
         : undefined,
       maybeInMap(TYPOGRAPHY_LINE_SIZE_MAP)(style.lineSize),
       maybeInMap(TYPOGRAPHY_KERNING_MAP)(style.kerning),
+      maybeInMap(TYPOGRAPHY_DECORATION_MAP)(style.decoration),
     ])
     .reduce((accumulator, array) => [...accumulator, ...array], []);
 
@@ -962,11 +977,18 @@ function customPropertiesFromThemeConfiguration(
   const primaryButtonInlinePadding = maybeInMap(SPACING_VAR_MAP)(
     primaryButton.inlinePadding,
   );
+  const primaryButtonBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(
+    primaryButton.borderRadius,
+  );
+
   const secondaryButtonBlockPadding = maybeInMap(SPACING_VAR_MAP)(
     secondaryButton.blockPadding,
   );
   const secondaryButtonInlinePadding = maybeInMap(SPACING_VAR_MAP)(
     secondaryButton.inlinePadding,
+  );
+  const secondaryButtonBorderRadius = maybeInMap(BORDER_RADIUS_MAP)(
+    secondaryButton.borderRadius,
   );
 
   const moneyLinesBlockPadding = maybeInMap(SPACING_VAR_MAP)(
@@ -1077,7 +1099,7 @@ function customPropertiesFromThemeConfiguration(
     reviewBlockBlockPadding,
     reviewBlockInlinePadding,
     moneyLinesBlockSpacing,
-    moneyLinesSeparatorBlockSpacing,
+    moneyLinesDividerBlockSpacing,
     buyerJourneyInlineSpacing,
     style1TypographySize,
     style1TypographyCase,
@@ -1085,58 +1107,69 @@ function customPropertiesFromThemeConfiguration(
     style1TypographyWeight,
     style1TypographyLineSize,
     style1TypographyKerning,
+    style1TypographyDecoration,
     style2TypographySize,
     style2TypographyCase,
     style2TypographyFonts,
     style2TypographyWeight,
     style2TypographyLineSize,
     style2TypographyKerning,
+    style2TypographyDecoration,
     style3TypographySize,
     style3TypographyCase,
     style3TypographyFonts,
     style3TypographyWeight,
     style3TypographyLineSize,
     style3TypographyKerning,
+    style3TypographyDecoration,
     style4TypographySize,
     style4TypographyCase,
     style4TypographyFonts,
     style4TypographyWeight,
     style4TypographyLineSize,
     style4TypographyKerning,
+    style4TypographyDecoration,
     style5TypographySize,
     style5TypographyCase,
     style5TypographyFonts,
     style5TypographyWeight,
     style5TypographyLineSize,
     style5TypographyKerning,
+    style5TypographyDecoration,
     style6TypographySize,
     style6TypographyCase,
     style6TypographyFonts,
     style6TypographyWeight,
     style6TypographyLineSize,
     style6TypographyKerning,
+    style6TypographyDecoration,
     style7TypographySize,
     style7TypographyCase,
     style7TypographyFonts,
     style7TypographyWeight,
     style7TypographyLineSize,
     style7TypographyKerning,
+    style7TypographyDecoration,
     style8TypographySize,
     style8TypographyCase,
     style8TypographyFonts,
     style8TypographyWeight,
     style8TypographyLineSize,
     style8TypographyKerning,
+    style8TypographyDecoration,
     style9TypographySize,
     style9TypographyCase,
     style9TypographyFonts,
     style9TypographyWeight,
     style9TypographyLineSize,
     style9TypographyKerning,
+    style9TypographyDecoration,
     primaryButtonBlockPadding,
     primaryButtonInlinePadding,
+    primaryButtonBorderRadius,
     secondaryButtonBlockPadding,
     secondaryButtonInlinePadding,
+    secondaryButtonBorderRadius,
     moneyLinesBlockPadding,
     moneyLinesInlinePadding,
     moneySummaryBlockPadding,

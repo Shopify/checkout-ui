@@ -2,5 +2,5 @@ build
 node_modules
 .sewing-kit
 /index.*
-/argo.*
+/ui-extensions.*
 /webpack.*

@@ -25,18 +25,16 @@ export const color = () => (
   </InlineStack>
 );
 
-export const placeholder = () => <Icon source="placeholder" />;
-
 export const allSizes = () => (
   <InlineStack>
     <Icon source="cart" size="small" />
-    <Icon source="cart" size="default" />
+    <Icon source="cart" size="base" />
     <Icon source="cart" size="large" />
   </InlineStack>
 );
 
 export const allIcons = () => (
-  <InlineStack>
+  <InlineStack wrap>
     <Icon source="arrowLeft" size="large" />
     <Icon source="arrowRight" size="large" />
     <Icon source="camera" size="large" />
@@ -62,9 +60,11 @@ export const allIcons = () => (
     <Icon source="list" size="large" />
     <Icon source="locateMe" size="large" />
     <Icon source="lock" size="large" />
-    <Icon source="mobile" size="large" />
     <Icon source="map" size="large" />
     <Icon source="marker" size="large" />
+    <Icon source="minus" size="large" />
+    <Icon source="mobile" size="large" />
+    <Icon source="plus" size="large" />
     <Icon source="questionFill" size="large" />
     <Icon source="spinner" size="large" />
     <Icon source="store" size="large" />

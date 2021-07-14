@@ -1,4 +1,4 @@
-import {TextFieldProps} from '@shopify/argo-checkout';
+import {TextFieldProps} from '@shopify/checkout-ui-extensions';
 
 type GetObject<T> = T extends object ? T : never;
 

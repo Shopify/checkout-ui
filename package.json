@@ -26,10 +26,10 @@
       "esnext": "./index.esnext"
     },
     "./": "./",
-    "./argo": {
-      "import": "./argo.mjs",
-      "require": "./argo.js",
-      "esnext": "./argo.esnext"
+    "./ui-extensions": {
+      "import": "./ui-extensions.mjs",
+      "require": "./ui-extensions.js",
+      "esnext": "./ui-extensions.esnext"
     },
     "./webpack": {
       "import": "./webpack.mjs",
@@ -43,7 +43,7 @@
     "README.md",
     "package.json",
     "/index.*",
-    "/argo.*",
+    "/ui-extensions.*",
     "/webpack.*"
   ],
   "scripts": {
@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.0.0",
-    "@shopify/argo-checkout": "^0.10.1",
+    "@shopify/checkout-ui-extensions": "^0.12.0",
     "@shopify/css-utilities": "1.0.5",
     "@shopify/webpack-ignore-typescript-export-warnings-plugin": "^1.0.4",
     "@svgr/webpack": "^5.1.0",

@@ -22,6 +22,8 @@ export type TranslationKey =
   | 'submit'
   | 'processing'
   | 'dismissNotification'
+  | 'increment'
+  | 'decrement'
   | 'january'
   | 'february'
   | 'march'

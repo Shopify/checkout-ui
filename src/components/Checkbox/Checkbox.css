@@ -11,28 +11,28 @@
     https://github.com/csstools/postcss-preset-env/issues/180
     we will be able to use the gap property as expected.
   */
-  grid-template: 'control gap label' auto / auto var(--x-spacing-tight1x) auto;
+  grid-template: 'control gap label' auto / auto var(--x-spacing-tight) auto;
 }
 
 .hasError {
   grid-template:
     'control gap label' auto
-    'row-gap row-gap row-gap' var(--x-spacing-tight1x)
+    'row-gap row-gap row-gap' var(--x-spacing-tight4x)
     'error error error' auto /
-    auto var(--x-spacing-tight1x) auto;
+    auto var(--x-spacing-tight) auto;
 
   &.errorIndentationToText {
     grid-template:
       'control gap label' auto
       'row-gap row-gap row-gap' var(--x-spacing-tight1x)
       'error-gap error-gap error' auto /
-      auto var(--x-spacing-tight1x) auto;
+      auto var(--x-spacing-tight) auto;
   }
 }
 
 .Checkbox {
   position: relative;
-  margin-top: -1px;
+  margin-top: rem(1px);
   grid-area: control;
   width: var(--x-checkbox-size);
   height: var(--x-checkbox-size);
@@ -53,9 +53,8 @@
   width: 100%;
   height: 100%;
   box-shadow: 0 0 0 1px var(--input-border-color) inset;
-  transition: box-shadow var(--x-control-transition-duration)
-    var(--x-timing-ease-out);
-  outline: none;
+  transition: box-shadow var(--x-duration-fast) var(--x-timing-ease-out),
+    border var(--x-duration-fast) var(--x-timing-ease-out);
 
   &::before {
     content: '';
@@ -67,18 +66,28 @@
     box-shadow: 0 0 0 0 var(--x-color-interactive-text) inset,
       0 0 0 0 var(--x-color-interactive-text);
     opacity: 0.3;
-    transition: box-shadow var(--x-control-transition-duration)
-      var(--x-timing-ease-out);
+    transition: box-shadow var(--x-duration-fast) var(--x-timing-ease-out);
   }
 
   &:focus,
   &:active {
-    box-shadow: 0 0 0 1px var(--x-color-interactive-text) inset;
+    box-shadow: 0 0 0 rem(1px) var(--x-color-interactive-text) inset;
+    outline: none;
 
     &::before {
-      box-shadow: 0 0 0 em(1px) var(--x-color-interactive-text) inset,
-        0 0 0 em(3px) var(--x-color-interactive-text);
+      box-shadow: 0 0 0 rem(1px) var(--x-color-interactive-text) inset,
+        0 0 0 rem(3px) var(--x-color-interactive-text);
     }
+
+    /* stylelint-disable-next-line selector-max-specificity */
+    &:not(:focus-visible)::before {
+      box-shadow: none;
+    }
+  }
+
+  &:focus-visible::before {
+    box-shadow: 0 0 0 rem(1px) var(--x-color-interactive-text) inset,
+      0 0 0 rem(3px) var(--x-color-interactive-text);
   }
 
   &:checked {
@@ -92,13 +101,13 @@
   &.Input-hasError:not(:checked) {
     box-shadow: 0 0 0 em(2px) var(--x-color-critical-accent) inset;
 
-    /* stylelint-disable selector-max-class, selector-max-specificity */
+    /* stylelint-disable selector-max-specificity */
     &:focus::before,
     &:active::before {
       box-shadow: 0 0 0 em(1px) var(--x-color-critical-accent) inset,
         0 0 0 em(3px) var(--x-color-critical-accent);
     }
-    /* stylelint-enable selector-max-class, selector-max-specificity */
+    /* stylelint-enable selector-max-specificity */
   }
 }
 
@@ -170,6 +179,5 @@
   position: absolute;
   top: calc(50% + 1px);
   left: calc(50% + 1px);
-  transition: all var(--x-control-transition-duration) var(--x-timing-base)
-    100ms;
+  transition: all var(--x-duration-fast) var(--x-timing-base) 100ms;
 }

@@ -1,5 +1,5 @@
 import {classNames, variationName} from '@shopify/css-utilities';
-import React, {ReactNode, useCallback, useEffect, useState} from 'react';
+import React, {ReactNode, useCallback, useEffect, useRef} from 'react';
 
 import {createIdCreator, useId} from '../../utilities/id';
 import {
@@ -48,23 +48,17 @@ export function Popover({
   backdrop = 'none',
   onClose,
 }: Props) {
-  const [popoverRef, setPopoverRef] = useState<HTMLElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const {
     popover: {connector = 'arrow', depth = 'far'},
   } = useThemeConfiguration();
 
   const id = useId(undefined, createId);
-  const nextFocusableNode = activator && findNextFocusableNode(activator);
-  const firstFocusableNode = popoverRef && findFirstFocusableNode(popoverRef);
-  const lastFocusableNode = popoverRef && findLastFocusableNode(popoverRef);
 
-  const setActivatorAccessibilityAttributes = useCallback(
-    () => {
-      activator?.setAttribute('aria-controls', id);
-      activator?.setAttribute('aria-expanded', String(open));
-    }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activator, id, open],
-  );
+  const setActivatorAccessibilityAttributes = useCallback(() => {
+    activator?.setAttribute('aria-controls', id);
+    activator?.setAttribute('aria-expanded', String(open));
+  }, [activator?.setAttribute, id, open]);
 
   const handleClose = useCallback(() => {
     onClose?.();
@@ -75,17 +69,24 @@ export function Popover({
       if (
         event.target instanceof Node &&
         !activator?.contains(event.target) &&
-        !popoverRef?.contains(event.target)
+        open
       ) {
         handleClose();
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [handleClose, activator, popoverRef],
+    [activator?.contains, open, handleClose],
   );
 
   const handleKeyDown = useCallback(
     (event) => {
+      if (!open) return;
+
+      const nextFocusableNode = activator && findNextFocusableNode(activator);
+      const firstFocusableNode =
+        popoverRef.current && findFirstFocusableNode(popoverRef.current);
+      const lastFocusableNode =
+        popoverRef.current && findLastFocusableNode(popoverRef.current);
+
       switch (event.key) {
         case 'Escape':
         case 'Esc':
@@ -111,14 +112,7 @@ export function Popover({
         }
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      handleClose,
-      activator,
-      nextFocusableNode,
-      firstFocusableNode,
-      lastFocusableNode,
-    ],
+    [open, activator, handleClose, activator?.focus],
   );
 
   useEffect(() => {
@@ -164,8 +158,13 @@ export function Popover({
 
   return open ? (
     <>
-      <Popper activator={activator} placement={placement} offset={offset}>
-        <div className={popoverClassName} id={id} ref={setPopoverRef}>
+      <Popper
+        activator={activator}
+        placement={placement}
+        offset={offset}
+        preventOverflow
+      >
+        <div className={popoverClassName} id={id} ref={popoverRef}>
           <div className={contentClassName}>{children}</div>
         </div>
       </Popper>

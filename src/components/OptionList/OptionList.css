@@ -12,6 +12,7 @@
 }
 
 .OptionList-backgroundSurfacePrimary {
+  --x-default-color: var(--x-color-surface-primary);
   --x-default-color-subdued: var(--x-color-surface-primary-subdued);
   --x-default-color-text: var(--x-color-surface-primary-text);
   --x-default-color-text-subdued: var(--x-color-surface-primary-text-subdued);
@@ -25,6 +26,7 @@
 }
 
 .OptionList-backgroundSurfaceSecondary {
+  --x-default-color: var(--x-color-surface-secondary);
   --x-default-color-subdued: var(--x-color-surface-secondary-subdued);
   --x-default-color-text: var(--x-color-surface-secondary-text);
   --x-default-color-text-subdued: var(--x-color-surface-secondary-text-subdued);
@@ -38,6 +40,7 @@
 }
 
 .OptionList-backgroundSurfaceTertiary {
+  --x-default-color: var(--x-color-surface-tertiary);
   --x-default-color-subdued: var(--x-color-surface-tertiary-subdued);
   --x-default-color-text: var(--x-color-surface-tertiary-text);
   --x-default-color-text-subdued: var(--x-color-surface-tertiary-text-subdued);

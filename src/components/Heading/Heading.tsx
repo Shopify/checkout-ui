@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, ReactHTML} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {HeadingProps} from '@shopify/argo-checkout';
+import {HeadingProps} from '@shopify/checkout-ui-extensions';
 
 import {useThemeConfiguration} from '../Theme';
 import {useAutoHeadingLevel} from '../../utilities/auto-headings';

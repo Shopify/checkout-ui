@@ -15,7 +15,7 @@
 }
 
 .Wrapper-readonly {
-  opacity: var(--x-opacity-disabled);
+  opacity: var(--x-opacity-readonly);
 }
 
 .Wrapper-backgroundTransparent {
@@ -323,5 +323,14 @@
     display: block;
     white-space: pre-wrap;
     visibility: hidden;
+  }
+}
+
+.typeNumber {
+  appearance: textfield;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
   }
 }

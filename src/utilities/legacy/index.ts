@@ -8,6 +8,9 @@ import styles from './styles.css';
 // .btn:hover/:focus (for outline)
 // .sp-modal-toggle__phone-wrapper::after
 export const button = styles.Button;
+export const buttonPrimary = styles.ButtonPrimary;
+export const buttonSecondary = styles.ButtonSecondary;
+export const buttonCritical = styles.ButtonCritical;
 
 export const colorCanvas = styles['Surface-colorCanvas'];
 
@@ -34,6 +37,8 @@ export const colorSurfacePrimary = styles['Surface-colorSurfacePrimary'];
 // .order-summary__scroll-indicator
 export const colorSurfaceSecondary = styles['Surface-colorSurfaceSecondary'];
 export const colorSurfaceTertiary = styles['Surface-colorSurfaceTertiary'];
+
+export const colorCriticalAccent = styles.ColorCriticalAccent;
 
 export const utilityDefaultBorderColor = styles['Utility-defaultBorderColor'];
 export const utilityDefaultTextColorSubdued =

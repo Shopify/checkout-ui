@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {HeadingGroupProps} from '@shopify/argo-checkout';
+import {HeadingGroupProps} from '@shopify/checkout-ui-extensions';
 
 import {AutoHeadingGroup} from '../../utilities/auto-headings';
 

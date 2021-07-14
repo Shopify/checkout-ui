@@ -11,7 +11,6 @@
   box-sizing: border-box;
   cursor: pointer;
   display: block;
-  outline: none;
   transition: all var(--x-duration-fast) var(--x-timing-ease-out);
 
   &::before {
@@ -30,10 +29,20 @@
   &:focus,
   &:active {
     border-color: var(--input-checked-color);
+    outline: none;
 
     &::before {
-      box-shadow: 0 0 0 em(3px) var(--input-checked-color);
+      box-shadow: 0 0 0 rem(3px) var(--input-checked-color);
     }
+
+    /* stylelint-disable-next-line selector-max-specificity */
+    &:not(:focus-visible)::before {
+      box-shadow: none;
+    }
+  }
+
+  &:focus-visible::before {
+    box-shadow: 0 0 0 rem(3px) var(--input-checked-color);
   }
 }
 

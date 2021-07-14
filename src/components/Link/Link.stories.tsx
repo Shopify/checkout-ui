@@ -31,7 +31,7 @@ LinkComponent.argTypes = {
   appearance: {
     control: {
       type: 'select',
-      options: [undefined, 'inheritColor'],
+      options: [undefined, 'monochrome'],
     },
   },
 };
@@ -46,18 +46,14 @@ export const all = () => (
       External link
     </Link>
     <br />
-    <Link to="https://shopify.com" underline>
-      Underline link
-    </Link>
-    <br />
     <Link to={undefined}>Link without `to` (rendered as a Button)</Link>
     <br />
     <TextBlock>
       Learn more about our{' '}
-      <Link to="https://shopify.com" appearance="inheritColor">
+      <Link to="https://shopify.com" appearance="monochrome">
         shipping policies
       </Link>{' '}
-      (`inheritColor`)
+      (`monochrome`)
     </TextBlock>
     <br />
     <Link to="https://shopify.com" accessibilityLabel="Visit shopify.com">

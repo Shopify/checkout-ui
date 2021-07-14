@@ -2,7 +2,6 @@ import React, {ComponentProps} from 'react';
 import faker from 'faker';
 
 import {mountWithContext} from '../../test-utilities';
-import {Button} from '../Button';
 import {InlineError} from '../InlineError';
 import {Field} from '../TextField';
 
@@ -13,12 +12,18 @@ const defaultProps: ComponentProps<typeof Stepper> = {
 };
 
 describe('<Stepper />', () => {
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+  afterAll(() => {
+    jest.clearAllTimers();
+  });
   it('renders a number input field with basic props', () => {
     const id = faker.random.alphaNumeric();
     const name = faker.random.word();
     const label = faker.random.word();
     const stepper = mountWithContext(
-      <Stepper id={id} name={name} label={label} />,
+      <Stepper {...defaultProps} id={id} name={name} label={label} />,
     );
     expect(stepper).toContainReactComponent(Field, {id, name, label});
   });
@@ -42,8 +47,13 @@ describe('<Stepper />', () => {
       <Stepper {...defaultProps} step={step} max={max} />,
     );
 
-    const [, increaseButton] = stepper.findAll(Button);
-    increaseButton!.trigger('onPress');
+    const [, increaseButton] = stepper.findAll('button');
+    increaseButton!.trigger('onMouseDown', {button: 0});
+    jest.advanceTimersByTime(200);
+    stepper.act(() => {
+      const event = new MouseEvent('mouseup');
+      document.dispatchEvent(event);
+    });
 
     expect(stepper).toContainReactComponent(Field, {
       value: `${max}`,
@@ -57,8 +67,13 @@ describe('<Stepper />', () => {
       <Stepper {...defaultProps} step={step} min={min} />,
     );
 
-    const [decreaseButton] = stepper.findAll(Button);
-    decreaseButton!.trigger('onPress');
+    const [decreaseButton] = stepper.findAll('button');
+    decreaseButton!.trigger('onMouseDown', {button: 0});
+    jest.advanceTimersByTime(0);
+    stepper.act(() => {
+      const event = new MouseEvent('mouseup');
+      document.dispatchEvent(event);
+    });
 
     expect(stepper).toContainReactComponent(Field, {
       value: `${min}`,
@@ -74,10 +89,11 @@ describe('<Stepper />', () => {
       );
       stepper
         .find('input' as any)!
-        .trigger('oninput', {currentTarget: {value: `${value}`}});
+        .trigger('oninput', {currentTarget: {value: `${value + 1}`}});
+      const input = stepper.find('input');
 
       expect(onChange).not.toHaveBeenCalled();
-      expect(stepper).toContainReactComponent(Field, {value: `${value}`});
+      expect(input).toHaveReactProps({value: `${value + 1}`});
     });
 
     it('does not call onChange when the value changes and is committed, but matches the current prop value', () => {
@@ -90,6 +106,11 @@ describe('<Stepper />', () => {
       stepper
         .find('input' as any)!
         .trigger('oninput', {currentTarget: {value: `${value}`}});
+
+      stepper
+        .find('input')!
+        .trigger('onBlur', {currentTarget: {value: `${value}`}});
+
       expect(onChange).not.toHaveBeenCalled();
     });
 
@@ -118,8 +139,13 @@ describe('<Stepper />', () => {
         <Stepper {...defaultProps} value={value} max={10} />,
       );
 
-      const [, increaseButton] = stepper.findAll(Button);
-      increaseButton!.trigger('onPress');
+      const [, increaseButton] = stepper.findAll('button');
+      increaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(500);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
 
       expect(stepper).toContainReactComponent(Field, {value: `${value}`});
     });
@@ -132,8 +158,13 @@ describe('<Stepper />', () => {
           <Stepper {...defaultProps} value={value} max={max} />,
         );
 
-        const [, increaseButton] = stepper.findAll(Button);
-        increaseButton!.trigger('onPress');
+        const [, increaseButton] = stepper.findAll('button');
+        increaseButton!.trigger('onMouseDown', {button: 0});
+        jest.advanceTimersByTime(200);
+        stepper.act(() => {
+          const event = new MouseEvent('mouseup');
+          document.dispatchEvent(event);
+        });
 
         expect(stepper).toContainReactComponent(Field, {value: `${max}`});
       });
@@ -145,9 +176,14 @@ describe('<Stepper />', () => {
           <Stepper {...defaultProps} value={value} max={max} />,
         );
 
-        const [decreaseButton] = stepper.findAll(Button);
-        decreaseButton!.trigger('onPress');
+        const [decreaseButton] = stepper.findAll('button');
+        decreaseButton!.trigger('onMouseDown', {button: 0});
 
+        jest.advanceTimersByTime(0);
+        stepper.act(() => {
+          const event = new MouseEvent('mouseup');
+          document.dispatchEvent(event);
+        });
         expect(stepper).toContainReactComponent(Field, {value: `${max}`});
       });
     });
@@ -157,9 +193,14 @@ describe('<Stepper />', () => {
       const min = 0;
       const stepper = mountWithContext(<Stepper {...defaultProps} min={min} />);
 
-      const [decreaseButton] = stepper.findAll(Button);
-      decreaseButton!.trigger('onPress');
+      const [decreaseButton] = stepper.findAll('button');
+      decreaseButton!.trigger('onMouseDown', {button: 0});
 
+      jest.advanceTimersByTime(200);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
       expect(stepper).toContainReactComponent(Field, {value: `${min}`});
     });
 
@@ -171,9 +212,14 @@ describe('<Stepper />', () => {
           <Stepper {...defaultProps} value={value} min={min} />,
         );
 
-        const [, increaseButton] = stepper.findAll(Button);
-        increaseButton!.trigger('onPress');
+        const [, increaseButton] = stepper.findAll('button');
+        increaseButton!.trigger('onMouseDown', {button: 0});
 
+        jest.advanceTimersByTime(0);
+        stepper.act(() => {
+          const event = new MouseEvent('mouseup');
+          document.dispatchEvent(event);
+        });
         expect(stepper).toContainReactComponent(Field, {value: `${min}`});
       });
 
@@ -184,8 +230,13 @@ describe('<Stepper />', () => {
           <Stepper {...defaultProps} value={value} min={min} />,
         );
 
-        const [decreaseButton] = stepper.findAll(Button);
-        decreaseButton!.trigger('onPress');
+        const [decreaseButton] = stepper.findAll('button');
+        decreaseButton!.trigger('onMouseDown', {button: 0});
+        jest.advanceTimersByTime(0);
+        stepper.act(() => {
+          const event = new MouseEvent('mouseup');
+          document.dispatchEvent(event);
+        });
 
         expect(stepper).toContainReactComponent(Field, {value: `${min}`});
       });
@@ -196,8 +247,13 @@ describe('<Stepper />', () => {
     it('increases when the increase button is clicked on', () => {
       const stepper = mountWithContext(<Stepper {...defaultProps} />);
 
-      const [, increaseButton] = stepper.findAll(Button);
-      increaseButton!.trigger('onPress');
+      const [, increaseButton] = stepper.findAll('button');
+      increaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(0);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
 
       expect(stepper).toContainReactComponent(Field, {value: `${1}`});
     });
@@ -208,9 +264,14 @@ describe('<Stepper />', () => {
         <Stepper {...defaultProps} value={value} />,
       );
 
-      const [decreaseButton] = stepper.findAll(Button);
-      decreaseButton!.trigger('onPress');
+      const [decreaseButton] = stepper.findAll('button');
+      decreaseButton!.trigger('onMouseDown', {button: 0});
 
+      jest.advanceTimersByTime(0);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
       expect(stepper).toContainReactComponent(Field, {
         value: `${value - 1}`,
       });
@@ -224,8 +285,13 @@ describe('<Stepper />', () => {
         <Stepper {...defaultProps} value={value} />,
       );
 
-      const [decreaseButton] = stepper.findAll(Button);
-      decreaseButton!.trigger('onPress');
+      const [decreaseButton] = stepper.findAll('button');
+      decreaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(0);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
 
       expect(stepper).toContainReactComponent(Field, {
         value: `${value - 1}`,
@@ -238,9 +304,14 @@ describe('<Stepper />', () => {
         <Stepper {...defaultProps} value={value} />,
       );
 
-      const [, increaseButton] = stepper.findAll(Button);
-      increaseButton!.trigger('onPress');
+      const [, increaseButton] = stepper.findAll('button');
+      increaseButton!.trigger('onMouseDown', {button: 0});
 
+      jest.advanceTimersByTime(0);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
       expect(stepper).toContainReactComponent(Field, {
         value: `${value + 1}`,
       });
@@ -254,8 +325,13 @@ describe('<Stepper />', () => {
         <Stepper {...defaultProps} step={step} value={value} />,
       );
 
-      const [decreaseButton] = stepper.findAll(Button);
-      decreaseButton!.trigger('onPress');
+      const [decreaseButton] = stepper.findAll('button');
+      decreaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(0);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
 
       expect(stepper).toContainReactComponent(Field, {
         value: `${value - step}`,
@@ -267,10 +343,193 @@ describe('<Stepper />', () => {
       const stepper = mountWithContext(
         <Stepper {...defaultProps} step={step} />,
       );
-      const [, increaseButton] = stepper.findAll(Button);
-      increaseButton!.trigger('onPress');
+      const [, increaseButton] = stepper.findAll('button');
+      increaseButton!.trigger('onMouseDown', {button: 0});
 
+      jest.advanceTimersByTime(0);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
       expect(stepper).toContainReactComponent(Field, {value: `${step}`});
+    });
+  });
+  describe('press and hold', () => {
+    it('continues to decrease with long press', () => {
+      const value = 5;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} value={value} />,
+      );
+
+      const [decreaseButton] = stepper.findAll('button');
+      decreaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(300);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
+
+      expect(stepper).toContainReactComponent(Field, {
+        value: `${value - 2}`,
+      });
+    });
+    it('continues to increase with long press', () => {
+      const value = 1;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} value={value} />,
+      );
+
+      const [, increaseButton] = stepper.findAll('button');
+      increaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(300);
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
+
+      expect(stepper).toContainReactComponent(Field, {
+        value: `${value + 2}`,
+      });
+    });
+    it('does not call onChange for decrease until mouseup', () => {
+      const value = 10;
+      const onChange = jest.fn();
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} value={value} onChange={onChange} />,
+      );
+
+      const [decreaseButton] = stepper.findAll('button');
+      decreaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(390);
+      expect(onChange).not.toHaveBeenCalled();
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
+      expect(onChange).toHaveBeenCalledWith(`${value - 3}`);
+    });
+    it('does not call onChange for increase until mouseup', () => {
+      const value = 1;
+      const onChange = jest.fn();
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} value={value} onChange={onChange} />,
+      );
+
+      const [, increaseButton] = stepper.findAll('button');
+      increaseButton!.trigger('onMouseDown', {button: 0});
+      jest.advanceTimersByTime(390);
+      expect(onChange).not.toHaveBeenCalled();
+      stepper.act(() => {
+        const event = new MouseEvent('mouseup');
+        document.dispatchEvent(event);
+      });
+      expect(onChange).toHaveBeenCalledWith(`${value + 3}`);
+    });
+  });
+  describe('tap on mobile', () => {
+    it('decreases by 1 with onTouchStart', () => {
+      const value = 5;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} value={value} />,
+      );
+
+      const [decreaseButton] = stepper.findAll('button');
+      (decreaseButton as any)!.trigger('ontouchstart');
+      jest.advanceTimersByTime(300);
+      stepper.act(() => {
+        const event = new TouchEvent('touchend');
+        document.dispatchEvent(event);
+      });
+
+      expect(stepper).toContainReactComponent(Field, {
+        value: `${value - 1}`,
+      });
+    });
+    it('increases by 1 with onTouchStart', () => {
+      const value = 10;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} value={value} />,
+      );
+
+      const [, increaseButton] = stepper.findAll('button');
+      (increaseButton as any)!.trigger('ontouchstart');
+      jest.advanceTimersByTime(300);
+      stepper.act(() => {
+        const event = new TouchEvent('touchend');
+        document.dispatchEvent(event);
+      });
+
+      expect(stepper).toContainReactComponent(Field, {
+        value: `${value + 1}`,
+      });
+    });
+  });
+  describe('disables buttons when min or max reached', () => {
+    it('disables decrease button if value is equal to min', () => {
+      const value = 1;
+      const min = 1;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} min={min} value={value} />,
+      );
+      const [decreaseButton, increaseButton] = stepper.findAll('button');
+      expect(decreaseButton).toHaveReactProps({disabled: true});
+      expect(increaseButton).toHaveReactProps({disabled: false});
+    });
+    it('disables decrease button if value is less than min', () => {
+      const value = 0;
+      const min = 1;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} min={min} value={value} />,
+      );
+      const [decreaseButton, increaseButton] = stepper.findAll('button');
+      expect(decreaseButton).toHaveReactProps({disabled: true});
+      expect(increaseButton).toHaveReactProps({disabled: false});
+    });
+    it('disables increase button if value is equal to max', () => {
+      const value = 10;
+      const max = 10;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} max={max} value={value} />,
+      );
+      const [decreaseButton, increaseButton] = stepper.findAll('button');
+      expect(decreaseButton).toHaveReactProps({disabled: false});
+      expect(increaseButton).toHaveReactProps({disabled: true});
+    });
+    it('disables increase button if value is greater than max', () => {
+      const value = 20;
+      const max = 10;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} max={max} value={value} />,
+      );
+      const [decreaseButton, increaseButton] = stepper.findAll('button');
+      expect(decreaseButton).toHaveReactProps({disabled: false});
+      expect(increaseButton).toHaveReactProps({disabled: true});
+    });
+    it('disables decrease button if input value is less than or equal to min', () => {
+      const value = 11;
+      const min = 10;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} min={min} value={value} />,
+      );
+      stepper
+        .find('input' as any)!
+        .trigger('oninput', {currentTarget: {value: '0'}});
+      const [decreaseButton, increaseButton] = stepper.findAll('button');
+      expect(decreaseButton).toHaveReactProps({disabled: true});
+      expect(increaseButton).toHaveReactProps({disabled: false});
+    });
+    it('disables increase button if input value is greater than or equal to max', () => {
+      const value = 0;
+      const max = 10;
+      const stepper = mountWithContext(
+        <Stepper {...defaultProps} max={max} value={value} />,
+      );
+      stepper
+        .find('input' as any)!
+        .trigger('oninput', {currentTarget: {value: '10.1'}});
+      const [decreaseButton, increaseButton] = stepper.findAll('button');
+      expect(decreaseButton).toHaveReactProps({disabled: false});
+      expect(increaseButton).toHaveReactProps({disabled: true});
     });
   });
 });

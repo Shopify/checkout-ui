@@ -1,0 +1,5 @@
+.Bumper {
+  position: fixed;
+  pointer-events: none;
+  opacity: 0;
+}

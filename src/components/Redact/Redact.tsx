@@ -1,6 +1,6 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {TextProps} from '@shopify/argo-checkout';
+import {TextProps} from '@shopify/checkout-ui-extensions';
 
 import styles from './Redact.css';
 

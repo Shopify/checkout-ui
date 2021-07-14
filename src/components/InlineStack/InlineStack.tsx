@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {InlineStackProps} from '@shopify/argo-checkout';
+import {InlineStackProps} from '@shopify/checkout-ui-extensions';
 
 import styles from './InlineStack.css';
 

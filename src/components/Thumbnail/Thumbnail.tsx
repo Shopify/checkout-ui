@@ -1,5 +1,6 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
+import {ImageProps} from '@shopify/checkout-ui-extensions';
 
 import {useThemeConfiguration} from '../Theme';
 import {Icon} from '../Icon';
@@ -7,16 +8,16 @@ import {Icon} from '../Icon';
 import styles from './Thumbnail.css';
 
 type Size = 'small' | 'base';
+type Source = Exclude<
+  Required<Required<ImageProps>['sources']>['base'],
+  string | any[]
+>;
 
 export interface Props {
   badge?: string | number;
   description: string;
   source?: string;
-  /**
-   * A list of source sizes for responsive images, used in [srcset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/srcset).
-   * e.g., ["https://example.org/foo_100x100.jpg", "https://example.org/foo_200x200.jpg 2x"]
-   */
-  sources?: string[];
+  sources?: Source[];
   size?: Size;
 }
 
@@ -55,7 +56,7 @@ export function Thumbnail({
       {source ? (
         <img
           className={styles.Image}
-          srcSet={sources?.join(', ')}
+          srcSet={toSrcSet(sources)}
           src={source}
           alt={description}
         />
@@ -68,4 +69,20 @@ export function Thumbnail({
       )}
     </div>
   );
+}
+
+function toSrcSet(sources?: Source[]) {
+  if (!sources) {
+    return '';
+  }
+
+  return sources
+    .map(({source, resolution}) => {
+      if (resolution) {
+        return `${source} ${resolution}x`;
+      }
+
+      return source;
+    })
+    .join(', ');
 }

@@ -6,7 +6,6 @@ import {Text} from '../../../Text';
 import {Heading} from '../../../Heading';
 import {RadioControl} from '../../../RadioControl';
 import {CheckboxControl} from '../../../Checkbox';
-import {View} from '../../../View';
 import {useThemeConfiguration} from '../../../Theme';
 import {useOptionList} from '../../hooks';
 import styles from '../../OptionList.css';
@@ -14,11 +13,18 @@ import styles from '../../OptionList.css';
 export interface Props {
   id: string;
   label: string;
+  accessibilityLabel?: string;
   details?: React.ReactNode;
   children?: React.ReactNode;
 }
 
-export function Option({id, label, details, children}: Props) {
+export function Option({
+  id,
+  label,
+  accessibilityLabel,
+  details,
+  children,
+}: Props) {
   const {
     id: optionListId,
     selectedItems,
@@ -49,18 +55,11 @@ export function Option({id, label, details, children}: Props) {
     return [...selectedItems, id];
   }
 
-  const hideChildrenForAccessibility = Boolean(label && children);
-
   return controlHidden ? (
     <div className={className}>
       <div className={styles.OptionLabel}>
-        {hideChildrenForAccessibility ? (
-          <>
-            <View visibility="hidden">{label}</View>
-            <div aria-hidden="true">
-              <Bookend trailing>{children}</Bookend>
-            </div>
-          </>
+        {children ? (
+          <Bookend trailing>{children}</Bookend>
         ) : (
           <Heading>
             <Text emphasized={typographyStyle == null} style={typographyStyle}>
@@ -79,6 +78,11 @@ export function Option({id, label, details, children}: Props) {
           styles.OptionLabel,
           styles['OptionLabel-cursorPointer'],
         )}
+        aria-label={accessibilityLabel}
+        {...(details && {
+          'aria-controls': `${optionListId}-${id}-collapsible`,
+          'aria-expanded': checked,
+        })}
       >
         <Bookend leading>
           <Control
@@ -89,13 +93,8 @@ export function Option({id, label, details, children}: Props) {
               onChange(getNewSelections());
             }}
           />
-          {hideChildrenForAccessibility ? (
-            <>
-              <View visibility="hidden">{label}</View>
-              <div aria-hidden="true">
-                <Bookend trailing>{children}</Bookend>
-              </div>
-            </>
+          {children ? (
+            <Bookend trailing>{children}</Bookend>
           ) : (
             <Text emphasized={typographyStyle == null} style={typographyStyle}>
               {label}

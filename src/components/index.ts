@@ -29,6 +29,7 @@ export {CalloutHeader, Props as CalloutHeaderProps} from './CalloutHeader';
 export {ChoiceList, Choice} from './ChoiceList';
 export {Checkbox} from './Checkbox';
 export {Connected, Props as ConnectedProps} from './Connected';
+export {Collapsible} from './Collapsible';
 export {DatePicker, Props as DatePickerProps} from './DatePicker';
 export {FlagIcon, Props as FlagIconProps} from './FlagIcon';
 export {FormLayout, FormLayoutGroup} from './FormLayout';
@@ -37,7 +38,7 @@ export {Heading} from './Heading';
 export {HeadingGroup} from './HeadingGroup';
 export {Hidden, Props as HiddenProps} from './Hidden';
 export {Form} from './Form';
-export {Icon, Props as IconProps} from './Icon';
+export {Icon} from './Icon';
 export {Image} from './Image';
 export {InlineError, Props as InlineErrorProps} from './InlineError';
 export {InlineSpacer} from './InlineSpacer';
@@ -48,14 +49,19 @@ export {Link, Props as LinkProps} from './Link';
 export {List, ListItem} from './List';
 export {LiveRegion} from './LiveRegion';
 export {UnstyledLink, Props as UnstyledLinkProps} from './Link';
-export {Modal} from './Modal';
+export {Modal, Props as ModalProps} from './Modal';
 export {
   MoneyLine,
-  MoneyLineSeparator,
+  MoneyLineContent,
+  MoneyLineHeader,
   Props as MoneyLineProps,
-} from './MoneyLine';
-export {MoneyLines, Props as MoneyLinesProps} from './MoneyLines';
-export {MoneySummary, Props as MoneySummaryProps} from './MoneySummary';
+  MoneyLines,
+  Props as MoneyLinesProps,
+  MoneySummary,
+  MoneySummaryContent,
+  MoneySummaryHeader,
+  Props as MoneySummaryProps,
+} from './MoneyLines';
 export {
   OptionList,
   Props as OptionListProps,
@@ -85,10 +91,12 @@ export {
   ResourceListHeaderContentProps,
 } from './ResourceList';
 export {ReviewItem, ReviewBlock, Props as ReviewItemProps} from './ReviewItem';
+export {Section} from './Section';
 export {Select} from './Select';
-export {Separator} from './Separator';
+export {Divider} from './Divider';
 export {
   Shell,
+  ShellActionsDisplay,
   ShellDisclosure,
   ShellDisclosureProps,
   ShellFooter,
@@ -117,27 +125,6 @@ export {
   Props as SkeletonThumbnailProps,
 } from './SkeletonThumbnail';
 export {Spinner} from './Spinner';
-export {
-  Step,
-  Props as StepProps,
-  StepContent,
-  StepContentProps,
-  StepSection,
-  StepSectionProps,
-  StepSectionContent,
-  StepSectionContentProps,
-  StepSectionHeader,
-  StepSectionHeaderProps,
-  StepSectionShowcase,
-  StepSectionShowcaseProps,
-  StepActions,
-  StepActionsProps,
-  StepSecondaryAction,
-  StepSecondaryActionProps,
-  StepPrimaryAction,
-  StepPrimaryActionProps,
-  STEP_SECTION_PRIMARY_HEADER_ID,
-} from './Step';
 export {
   ProgressTracker,
   Props as ProgressTrackerProps,
@@ -172,22 +159,24 @@ export {
   ThemeBorderStyle,
   ThemeLabelPosition,
   ThemeBackground,
+  ThemeButtonStyle,
   ThemeSelectDisclosureIcon,
   createTheme,
-  ThemeTypographySize,
-  ThemeTypographyLetterCase,
-  ThemeTypographyFonts,
-  ThemeTypographyWeight,
   ThemeThumbnailBadgeBackground,
-  ThemeActionsDisplay,
   ThemeAppearance,
   ThemeOptionsFormat,
+  ThemeGiftCardStyle,
   ThemeMoneyLineInlineAlignment,
   ThemeBuyerJourney,
   ThemeBuyerJourneyNumberStyle,
   ThemeTypographyStyle,
+  ThemeTypographySize,
+  ThemeTypographyLetterCase,
+  ThemeTypographyFonts,
+  ThemeTypographyWeight,
   ThemeTypographyLineSize,
   ThemeTypographyKerning,
+  ThemeTypographyDecoration,
   colorTextEmphasized,
   colorTextSubdued,
   ThemeSpacing,

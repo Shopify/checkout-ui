@@ -1,5 +1,5 @@
 import React from 'react';
-import {InlineSpacerProps as Props} from '@shopify/argo-checkout';
+import {InlineSpacerProps as Props} from '@shopify/checkout-ui-extensions';
 
 import {InlineSpacer as InlineSpacerComponent} from './InlineSpacer';
 

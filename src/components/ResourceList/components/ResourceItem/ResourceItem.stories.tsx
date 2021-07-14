@@ -61,7 +61,7 @@ export const multipleContent = () => {
         </TextBlock>
         <TextBlock appearance="success">
           <InlineStack alignment="center" spacing="extraTight">
-            <Icon source="checkmark" size="default" />
+            <Icon source="checkmark" size="base" />
             <Text size="small">Available</Text>
           </InlineStack>
         </TextBlock>

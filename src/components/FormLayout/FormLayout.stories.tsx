@@ -10,7 +10,10 @@ import {FormLayout, FormLayoutGroup} from './FormLayout';
 const meta = {
   title: 'checkout-web-ui/FormLayout',
   component: FormLayout,
-  decorators: [withKnobs, themeWithKnobs('formLayout', 'textFields', 'select')],
+  decorators: [
+    withKnobs,
+    themeWithKnobs('formLayout', 'textFields', 'select', 'stepper'),
+  ],
 };
 
 export default meta;

@@ -16,7 +16,6 @@ enum Group {
   TextField = 'Text field',
   Select = 'Select',
   Breadcrumb = 'Breadcrumb',
-  Actions = 'Actions',
   HeadingLevel1 = 'Heading level 1',
   HeadingLevel2 = 'Heading level 2',
   HeadingLevel3 = 'Heading level 3',
@@ -41,19 +40,15 @@ enum Label {
   BorderRadius = 'Border radius',
   LabelPosition = 'Label position',
   Style = 'Style',
+  TypographyStyle = 'Typography style',
   ErrorIndentation = 'Error indentation',
   BlockPadding = 'Block padding',
   InlinePadding = 'Inline padding',
   LoadingStyle = 'Loading style',
   BadgeColor = 'Badge color',
   ColorHovered = 'Color hovered',
-  ColorPressed = 'Color pressed',
   TransitionDuration = 'Transition duration',
   Spacing = 'Spacing',
-}
-
-enum Action {
-  Display = 'Display',
 }
 
 enum Breadcrumb {
@@ -71,12 +66,12 @@ const BORDER_RADIUS_OPTIONS = optionify([
 const SIMPLE_BORDER_OPTIONS = optionify(['full', 'none']);
 const BORDER_OPTIONS = optionify(['full', 'blockEnd', 'none']);
 const LABEL_POSITION_OPTIONS = optionify(['inside', 'outside']);
-const ACTIONS_DISPLAY_OPTIONS = optionify(['inline', 'block']);
 const NUMBER_STYLE_OPTIONS = optionify([
   'none',
   'decimal',
   'decimalLeadingZero',
 ]);
+const BUTTON_STYLE_OPTIONS = optionify(['fill', 'inverse', 'plain']);
 const STYLE_OPTIONS = optionify(['style1']);
 const SIZE_OPTIONS = optionify([
   'base',
@@ -92,6 +87,7 @@ const FONT_OPTIONS = optionify(['primary', 'secondary']);
 const WEIGHT_OPTIONS = optionify(['base', 'bold']);
 const LINE_SIZE_OPTIONS = optionify(['base', 'small']);
 const KERNING_OPTIONS = optionify(['base', 'loose', 'xloose']);
+const DECORATION_OPTIONS = optionify(['none', 'underline']);
 const SPACING_OPTIONS = optionify([
   'none',
   'extraTight',
@@ -140,12 +136,15 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     labelPosition: undefined,
     errorIndentation: undefined,
   };
+  const stepper = {
+    separator: true,
+  };
   const selects = {
     border: undefined,
     labelPosition: undefined,
     errorIndentation: undefined,
+    disclosureIconSeparator: true,
   };
-  const actions = {display: undefined};
   const buyerJourney = {
     spacing: undefined,
     chevronIconSeparator: true,
@@ -161,12 +160,18 @@ function ThemeWithKnobs({pick = [], children}: Props) {
     errorIndentation: undefined,
   };
   const primaryButton = {
+    style: undefined,
+    border: undefined,
+    borderRadius: undefined,
     blockPadding: undefined,
     inlinePadding: undefined,
     typographyStyle: undefined,
     loadingStyle: undefined,
   };
   const secondaryButton = {
+    style: undefined,
+    border: undefined,
+    borderRadius: undefined,
     blockPadding: undefined,
     inlinePadding: undefined,
     typographyStyle: undefined,
@@ -214,7 +219,7 @@ function ThemeWithKnobs({pick = [], children}: Props) {
   const link = {
     transitionDuration: undefined,
     colorHovered: undefined,
-    colorPressed: undefined,
+    typographyStyle: undefined,
   };
 
   if (pick.includes('textFields')) {
@@ -237,7 +242,9 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       Group.TextField,
     );
   }
-
+  if (pick.includes('stepper')) {
+    stepper.separator = boolean('Separator', stepper.separator, 'Stepper');
+  }
   if (pick.includes('select')) {
     selects.border = select(
       Label.Border,
@@ -257,14 +264,10 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       selects.errorIndentation,
       Group.Select,
     );
-  }
-
-  if (pick.includes('actions')) {
-    actions.display = select(
-      Action.Display,
-      ACTIONS_DISPLAY_OPTIONS,
-      actions.display,
-      Group.Actions,
+    selects.disclosureIconSeparator = boolean(
+      'Separator',
+      selects.disclosureIconSeparator,
+      Group.Select,
     );
   }
 
@@ -457,10 +460,22 @@ function ThemeWithKnobs({pick = [], children}: Props) {
   }
 
   if (pick.includes('primaryButton')) {
-    primaryButton.typographyStyle = select(
+    primaryButton.style = select(
       Label.Style,
-      STYLE_OPTIONS,
-      primaryButton.typographyStyle,
+      BUTTON_STYLE_OPTIONS,
+      primaryButton.style,
+      Group.PrimaryButton,
+    );
+    primaryButton.style = select(
+      Label.Border,
+      BORDER_OPTIONS,
+      primaryButton.border,
+      Group.PrimaryButton,
+    );
+    primaryButton.style = select(
+      Label.BorderRadius,
+      BORDER_RADIUS_OPTIONS,
+      primaryButton.borderRadius,
       Group.PrimaryButton,
     );
     primaryButton.blockPadding = select(
@@ -475,6 +490,12 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       primaryButton.inlinePadding,
       Group.PrimaryButton,
     );
+    primaryButton.typographyStyle = select(
+      Label.TypographyStyle,
+      STYLE_OPTIONS,
+      primaryButton.typographyStyle,
+      Group.PrimaryButton,
+    );
     primaryButton.loadingStyle = select(
       Label.LoadingStyle,
       LOADING_STYLE_OPTIONS,
@@ -484,10 +505,22 @@ function ThemeWithKnobs({pick = [], children}: Props) {
   }
 
   if (pick.includes('secondaryButton')) {
-    secondaryButton.typographyStyle = select(
+    secondaryButton.style = select(
       Label.Style,
-      STYLE_OPTIONS,
-      secondaryButton.typographyStyle,
+      BUTTON_STYLE_OPTIONS,
+      secondaryButton.style,
+      Group.SecondaryButton,
+    );
+    secondaryButton.style = select(
+      Label.Border,
+      BORDER_OPTIONS,
+      secondaryButton.border,
+      Group.SecondaryButton,
+    );
+    secondaryButton.style = select(
+      Label.BorderRadius,
+      BORDER_RADIUS_OPTIONS,
+      secondaryButton.borderRadius,
       Group.SecondaryButton,
     );
     secondaryButton.blockPadding = select(
@@ -500,6 +533,12 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       Label.InlinePadding,
       SPACING_OPTIONS,
       secondaryButton.inlinePadding,
+      Group.SecondaryButton,
+    );
+    secondaryButton.typographyStyle = select(
+      Label.TypographyStyle,
+      STYLE_OPTIONS,
+      secondaryButton.typographyStyle,
       Group.SecondaryButton,
     );
     secondaryButton.loadingStyle = select(
@@ -562,18 +601,12 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       link.colorHovered,
       Group.Link,
     );
-    link.colorPressed = select(
-      Label.ColorPressed,
-      COLOR_STYLE_OPTIONS,
-      link.colorPressed,
-      Group.Link,
-    );
   }
 
   const theme = createTheme({
     textFields,
+    stepper,
     select: selects,
-    actions,
     buyerJourney,
     headingLevel1,
     headingLevel2,
@@ -601,6 +634,12 @@ function ThemeWithKnobs({pick = [], children}: Props) {
       weight: select(`Weight`, WEIGHT_OPTIONS, undefined, Group.Style),
       lineSize: select(`Line size`, LINE_SIZE_OPTIONS, undefined, Group.Style),
       kerning: select(`Kerning`, KERNING_OPTIONS, undefined, Group.Style),
+      decoration: select(
+        `Decoration`,
+        DECORATION_OPTIONS,
+        undefined,
+        Group.Style,
+      ),
     },
     typographyScale: {
       base: number('Base size', 14, {}, Group.Typography),

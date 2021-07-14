@@ -1,0 +1,24 @@
+.SpinButtonGroup {
+  display: flex;
+  align-items: center;
+
+  /* dimension is to match Select caret position */
+  margin-inline-end: calc(var(--x-spacing-tight1x) * -1);
+}
+
+.SpinButton {
+  /* dimension is to match Select separator position */
+  padding: var(--x-spacing-tight);
+  color: var(--x-default-color-text-subdued);
+  &:disabled {
+    opacity: var(--x-opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.SpinButtonSeparator {
+  border-inline-end: var(--x-border-width-base) solid
+    var(--x-default-color-border);
+  height: calc(100% - var(--x-spacing-loose1x));
+}

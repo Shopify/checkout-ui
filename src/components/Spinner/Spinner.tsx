@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {SpinnerProps} from '@shopify/argo-checkout';
+import {SpinnerProps} from '@shopify/checkout-ui-extensions';
 import {classNames, variationName} from '@shopify/css-utilities';
 
 import {usePrefersReducedMotion} from '../../utilities/media-query';

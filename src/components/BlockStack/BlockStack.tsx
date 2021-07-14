@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {BlockStackProps} from '@shopify/argo-checkout';
+import {BlockStackProps} from '@shopify/checkout-ui-extensions';
 
 import styles from './BlockStack.css';
 

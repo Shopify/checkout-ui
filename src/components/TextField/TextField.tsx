@@ -9,11 +9,11 @@ import React, {
   PropsWithChildren,
 } from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {TextFieldProps} from '@shopify/argo-checkout';
+import {TextFieldProps} from '@shopify/checkout-ui-extensions';
 
 import {View} from '../View';
 import {useLabelled, Labelled} from '../Labelled';
-import {Icon, IconSource} from '../Icon';
+import {Icon} from '../Icon';
 import {InlineError} from '../InlineError';
 import {BlockStack} from '../BlockStack';
 import {useThemeConfiguration} from '../Theme';
@@ -32,10 +32,6 @@ export interface Props extends PropsWithChildren<TextFieldProps> {
   /* Automatically focus on this element on first render. */
   autofocus?: boolean;
   maxLength?: number;
-  /**
-   * An icon to render at the start of the field.
-   */
-  icon?: IconSource;
 }
 
 /**
@@ -102,7 +98,7 @@ export const TextFieldInternal = forwardRef((props: InternalProps, ref) => {
     };
 
     const fields = wrapperRef.current.querySelectorAll(
-      'input, textarea, select',
+      'input, textarea, select, button',
     );
 
     for (const field of fields) {
@@ -163,7 +159,7 @@ export const TextFieldInternal = forwardRef((props: InternalProps, ref) => {
   }
 
   return (
-    <BlockStack spacing="tight">
+    <BlockStack spacing="extraTight">
       <Labelled
         label={label}
         htmlFor={id}
@@ -193,7 +189,19 @@ export const TextFieldInternal = forwardRef((props: InternalProps, ref) => {
             ariaDescribedBy={descriptionId}
             localValue={localValue}
             onInput={handleInput}
-            onKeyDown={handleKeyDown}
+            onKeyDown={props.onKeyDown ?? handleKeyDown}
+            onBlur={() => {
+              /**
+               * This is a workaround for `Stepper`
+               * Not sure of exact root cause, but with Stepper if you focused on the input, typed a new number, blurred (by tabbing or clicking outside) the input would remain visually focused
+               * Stepper's spinbuttons get passed in as children and have a lot of state changes that I think cause `useLayoutEffect` to fire
+               * and the work in `useLayoutEffect` is constantly adding and removing the blur event listeners
+               */
+              if (focus) {
+                setFocus(false);
+              }
+              props?.onBlur?.();
+            }}
           />
         </div>
       </Labelled>
@@ -327,6 +335,7 @@ export const Field = forwardRef(function Field(
     style && typographyStyles[style],
     placeholderStyle &&
       typographyStyles[variationName('placeholder', placeholderStyle)],
+    type && styles[variationName('type', type)],
   );
 
   const backdropClassName = classNames(
@@ -359,6 +368,7 @@ export const Field = forwardRef(function Field(
     type: normalizeType(multiline ? undefined : type),
     disabled,
     readOnly: readonly,
+    inputmode: type === 'number' ? 'decimal' : undefined,
     'aria-activedescendant': ariaActiveDescendant,
     'aria-autocomplete': ariaAutocomplete,
     'aria-controls': ariaControls,
@@ -372,7 +382,6 @@ export const Field = forwardRef(function Field(
     onBlur: ({currentTarget: {value}}) => {
       const currentValue = explicitValue;
       if (value !== currentValue) onChange?.(value);
-
       onBlur?.();
       labelled.onBlur();
     },

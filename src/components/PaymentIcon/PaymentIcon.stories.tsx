@@ -49,6 +49,7 @@ export const allBrands = () => (
     <WrappedPaymentIcon paymentBrand="american_express" />
     <WrappedPaymentIcon paymentBrand="amex" />
     <WrappedPaymentIcon paymentBrand="apple_pay" />
+    <WrappedPaymentIcon paymentBrand="arhaus" />
     <WrappedPaymentIcon paymentBrand="arvato" />
     <WrappedPaymentIcon paymentBrand="atmbersama" />
     <WrappedPaymentIcon paymentBrand="bancnet" />
@@ -145,13 +146,16 @@ export const allBrands = () => (
     <WrappedPaymentIcon paymentBrand="prepaysolutions" />
     <WrappedPaymentIcon paymentBrand="przelew24" />
     <WrappedPaymentIcon paymentBrand="publicbank" />
+    <WrappedPaymentIcon paymentBrand="qrph" />
+    <WrappedPaymentIcon paymentBrand="ratepay" />
     <WrappedPaymentIcon paymentBrand="rhbbank" />
     <WrappedPaymentIcon paymentBrand="rupay" />
     <WrappedPaymentIcon paymentBrand="santander" />
+    <WrappedPaymentIcon paymentBrand="satispay" />
     <WrappedPaymentIcon paymentBrand="seb" />
     <WrappedPaymentIcon paymentBrand="seveneleven" />
     <WrappedPaymentIcon paymentBrand="sezzle" />
-    <WrappedPaymentIcon paymentBrand="shopify_pay" />
+    <WrappedPaymentIcon paymentBrand="shop_pay" />
     <WrappedPaymentIcon paymentBrand="siamcommercial" />
     <WrappedPaymentIcon paymentBrand="sofort" />
     <WrappedPaymentIcon paymentBrand="spraypay" />
@@ -160,6 +164,7 @@ export const allBrands = () => (
     <WrappedPaymentIcon paymentBrand="swish" />
     <WrappedPaymentIcon paymentBrand="trustly" />
     <WrappedPaymentIcon paymentBrand="twint" />
+    <WrappedPaymentIcon paymentBrand="ubp" />
     <WrappedPaymentIcon paymentBrand="unionpay" />
     <WrappedPaymentIcon paymentBrand="unipay" />
     <WrappedPaymentIcon paymentBrand="uob" />
@@ -171,6 +176,10 @@ export const allBrands = () => (
     <WrappedPaymentIcon paymentBrand="visa" />
     <WrappedPaymentIcon paymentBrand="visaelectron" />
     <WrappedPaymentIcon paymentBrand="wechatpay" />
+    <WrappedPaymentIcon paymentBrand="ymobile" />
+    <WrappedPaymentIcon paymentBrand="qris" />
+    <WrappedPaymentIcon paymentBrand="sam" />
+    <WrappedPaymentIcon paymentBrand="axs" />
   </>
 );
 

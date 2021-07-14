@@ -1,27 +1,34 @@
 import {useEffect, useMemo, useCallback, useState} from 'react';
-import {Breakpoint} from '@shopify/argo-checkout';
+import {Breakpoint} from '@shopify/checkout-ui-extensions';
 
-interface Media {
+export interface Media {
   breakpoint: Breakpoint;
   query: string;
 }
 
-export const BREAKPOINTS = {
+export type BreakpointsWidths = {
+  [key in Breakpoint]: number;
+};
+
+export const BREAKPOINTS: BreakpointsWidths = {
   base: 0,
   small: 750,
   medium: 1000,
   large: 1200,
 };
 
-export function createMediaQueries(): Media[] {
+export function createMediaQueries(
+  {addMaxWidth} = {addMaxWidth: true},
+): Media[] {
   return Object.entries(BREAKPOINTS).map(
     ([breakpoint, minWidth], index, breakpoints) => {
       const nextBreakpoint = breakpoints[index + 1];
       const [, maxWidth] = nextBreakpoint ? nextBreakpoint : [];
 
-      const query = maxWidth
-        ? `(min-width: ${minWidth}px) and (max-width: ${maxWidth - 1}px)`
-        : `(min-width: ${minWidth}px)`;
+      const query =
+        maxWidth && addMaxWidth
+          ? `(min-width: ${minWidth}px) and (max-width: ${maxWidth - 1}px)`
+          : `(min-width: ${minWidth}px)`;
 
       return {
         breakpoint: breakpoint as Breakpoint,

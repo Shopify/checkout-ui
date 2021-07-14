@@ -1,6 +1,6 @@
 import React from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {InlineSpacerProps} from '@shopify/argo-checkout';
+import {InlineSpacerProps} from '@shopify/checkout-ui-extensions';
 
 import styles from './InlineSpacer.css';
 

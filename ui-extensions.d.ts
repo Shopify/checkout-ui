@@ -1,0 +1,1 @@
+./build/ts/ui-extensions/index.d.ts

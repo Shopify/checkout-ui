@@ -61,17 +61,19 @@ describe('<Thumbnail />', () => {
   describe('sources', () => {
     it('renders a <img /> with srcset when provided with sources', () => {
       const source = faker.internet.url();
-      const sources = [
-        `${faker.internet.url()} 1x`,
-        `${faker.internet.url()} 2x`,
-        `${faker.internet.url()} 3x`,
+      const sources: Props['sources'] = [
+        {source: faker.internet.url(), resolution: 1},
+        {source: faker.internet.url(), resolution: 2},
+        {source: faker.internet.url(), resolution: 3},
       ];
       const thumbnail = mountWithContext(
         <Thumbnail {...defaultProps} source={source} sources={sources} />,
       );
 
       expect(thumbnail).toContainReactComponent('img', {
-        srcSet: sources.join(', '),
+        srcSet: sources
+          .map(({source, resolution}) => `${source} ${resolution}x`)
+          .join(', '),
       });
     });
 

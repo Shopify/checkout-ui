@@ -3,30 +3,302 @@
   -webkit-touch-callout: none;
   position: relative;
   cursor: pointer;
-  background-color: var(--x-color-primary-action);
-  border-radius: var(--x-control-border-radius, var(--x-global-border-radius));
-  color: var(--x-color-primary-action-text);
   display: inline-block;
-  font-weight: var(--x-typography-primary-weight-bold);
-  padding: var(--x-primary-button-block-padding)
-    var(--x-primary-button-inline-padding);
   text-align: center;
   text-decoration: none;
   text-transform: var(--x-global-typography-letter-case);
+  border: 1px transparent solid;
   transition: background-color var(--x-duration-base) var(--x-timing-base),
-    color var(--x-duration-base) var(--x-timing-base);
+    color var(--x-duration-base) var(--x-timing-base),
+    box-shadow var(--x-duration-base) var(--x-timing-base);
+  background-color: var(--x-button-color);
+  color: var(--x-button-color-text);
+  border-radius: var(
+    --x-button-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  padding: calc(var(--x-button-block-padding) * var(--this-multiplier))
+    calc(var(--x-button-inline-padding) * var(--this-multiplier));
 
-  &:hover {
-    background-color: var(--x-color-primary-action-hovered);
+  &:hover,
+  &:focus {
+    background-color: var(--x-button-color-hovered);
+    color: var(--x-button-color-text-hovered);
   }
 
-  &:active {
-    background-color: var(--x-color-primary-action-pressed);
+  &::after,
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    display: block;
+    pointer-events: none;
+    box-shadow: 0 0 0 0 transparent;
+    transition: inherit;
+  }
+
+  /* Used for the focus ring */
+  &::after {
+    border-radius: calc(var(--x-button-border-radius) + rem(1px));
+    inset: rem(-2px);
+  }
+
+  /*
+  Used for the inner border
+  -1px is because we have a 1px transparent border for
+  High Contrast Mode systems.
+  */
+  &::before {
+    border-radius: inherit;
+    inset: rem(-1px);
+  }
+
+  &:focus {
     outline: none;
+
+    &::after {
+      box-shadow: 0 0 0 rem(2px) var(--x-button-color-focus-ring);
+    }
+
+    /* stylelint-disable-next-line selector-max-specificity */
+    &:not(:focus-visible)::after {
+      box-shadow: none;
+    }
   }
 
-  @media (-ms-high-contrast: active) {
-    border: 1px solid transparent;
+  &:focus-visible::after {
+    box-shadow: 0 0 0 rem(2px) var(--x-button-color-focus-ring);
+  }
+}
+
+.kindPrimary,
+.kindSecondary {
+  font-weight: var(--x-typography-primary-weight-bold);
+}
+
+.kindPrimary {
+  --x-button-color: var(--x-color-primary-action);
+  --x-button-color-hovered: var(--x-color-primary-action-hovered);
+  --x-button-color-text: var(--x-color-primary-action-text);
+  --x-button-color-text-hovered: var(--x-color-primary-action-text-hovered);
+  --x-button-color-focus-ring: var(--x-color-primary-action);
+  --x-button-color-border: var(--x-color-primary-action-border);
+  --x-button-color-border-hovered: var(--x-color-primary-action-border-hovered);
+  --x-button-color-disabled: var(--x-color-primary-action-disabled);
+  --x-button-border-width: var(--x-primary-button-border-width);
+  --x-button-border-radius: var(
+    --x-primary-button-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  --x-button-block-padding: var(--x-primary-button-block-padding);
+  --x-button-inline-padding: var(--x-primary-button-inline-padding);
+
+  &.styleInverse {
+    --x-button-color: transparent;
+    --x-button-color-hovered: transparent;
+    --x-button-color-text: var(--x-color-primary-action);
+    --x-button-color-text-hovered: var(--x-color-primary-action-hovered);
+    --x-button-color-focus-ring: var(--x-color-primary-action);
+    --x-button-color-border: var(--x-color-primary-action);
+    --x-button-color-border-hovered: var(--x-color-primary-action-hovered);
+  }
+}
+
+.kindSecondary {
+  --x-button-color: var(--x-color-secondary-action);
+  --x-button-color-hovered: var(--x-color-secondary-action-hovered);
+  --x-button-color-text: var(--x-color-secondary-action-text);
+  --x-button-color-text-hovered: var(--x-color-secondary-action-text-hovered);
+  --x-button-color-focus-ring: var(--x-color-secondary-action);
+  --x-button-color-border: var(--x-color-secondary-action-border);
+  --x-button-color-border-hovered: var(
+    --x-color-secondary-action-border-hovered
+  );
+  --x-button-color-disabled: var(--x-color-secondary-action-disabled);
+  --x-button-border-width: var(--x-secondary-button-border-width);
+  --x-button-border-radius: var(
+    --x-secondary-button-border-radius,
+    var(--x-control-border-radius, var(--x-global-border-radius))
+  );
+  --x-button-block-padding: var(--x-secondary-button-block-padding);
+  --x-button-inline-padding: var(--x-secondary-button-inline-padding);
+
+  &.styleInverse {
+    --x-button-color: transparent;
+    --x-button-color-hovered: transparent;
+    --x-button-color-text: var(--x-color-secondary-action);
+    --x-button-color-text-hovered: var(--x-color-secondary-action-hovered);
+    --x-button-color-focus-ring: var(--x-color-secondary-action);
+    --x-button-color-border: var(--x-color-secondary-action);
+    --x-button-color-border-hovered: var(--x-color-secondary-action-hovered);
+  }
+}
+
+.sizeBase {
+  --this-multiplier: 1;
+}
+
+.sizeLarge {
+  --this-multiplier: var(--x-button-large-multiplier);
+}
+
+.sizeExtraLarge {
+  --this-multiplier: var(--x-button-extra-large-multiplier);
+}
+
+@media screen and (min-width: 750px) {
+  .smallSizeBase {
+    --this-multiplier: 1;
+  }
+
+  .smallSizeLarge {
+    --this-multiplier: var(--x-button-large-multiplier);
+  }
+
+  .smallSizeExtraLarge {
+    --this-multiplier: var(--x-button-extra-large-multiplier);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .mediumSizeBase {
+    --this-multiplier: 1;
+  }
+
+  .mediumSizeLarge {
+    --this-multiplier: var(--x-button-large-multiplier);
+  }
+
+  .mediumSizeExtraLarge {
+    --this-multiplier: var(--x-button-extra-large-multiplier);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .largeSizeBase {
+    --this-multiplier: 1;
+  }
+
+  .largeSizeLarge {
+    --this-multiplier: var(--x-button-large-multiplier);
+  }
+
+  .largeSizeExtraLarge {
+    --this-multiplier: var(--x-button-extra-large-multiplier);
+  }
+}
+
+.borderFull {
+  &::before {
+    box-shadow: inset 0 0 0 var(--x-button-border-width)
+      var(--x-button-color-border);
+  }
+
+  &:hover::before,
+  &:focus::before {
+    box-shadow: inset 0 0 0 var(--x-button-border-width)
+      var(--x-button-color-border-hovered);
+  }
+}
+
+.borderBlockEnd {
+  &::before {
+    box-shadow: inset 0 calc(var(--x-button-border-width) * -1) 0 0
+      var(--x-button-color-border);
+  }
+
+  &:hover::before,
+  &:focus::before {
+    box-shadow: inset 0 calc(var(--x-button-border-width) * -1) 0 0
+      var(--x-button-color-border-hovered);
+  }
+}
+
+.stylePlain {
+  --x-button-color: var(--x-color-interactive);
+  --x-button-color-hovered: var(--x-color-interactive-hovered);
+  --x-button-color-text: var(--x-color-interactive-text);
+  --x-button-color-text-hovered: var(--x-color-interactive-text-hovered);
+  --x-button-color-focus-ring: var(--x-color-interactive-text-hovered);
+  --x-button-color-border: none;
+  --x-button-border-width: 0;
+  --x-button-border-radius: none;
+  --x-button-block-padding: 0;
+  --x-button-inline-padding: 0;
+  text-decoration: none;
+  transition: color var(--x-link-transition-duration) var(--x-timing-base),
+    background-color var(--x-link-transition-duration) var(--x-timing-base),
+    box-shadow var(--x-duration-base) var(--x-timing-base);
+
+  &::after {
+    border-radius: var(--x-global-border-radius);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    pointer-events: unset;
+    inset: em(-10px);
+    z-index: 0;
+
+    @media (any-hover: none) {
+      inset: em(-20px) em(-24px);
+    }
+  }
+}
+
+.appearanceCritical {
+  &.styleFill {
+    --x-button-color: var(--x-color-critical-accent);
+    --x-button-color-hovered: var(--x-color-critical-accent);
+    --x-button-color-focus-ring: var(--x-color-critical-accent);
+    --x-button-color-border: var(--x-color-critical-accent);
+    --x-button-color-border-hovered: var(--x-color-critical-accent);
+  }
+
+  &.styleInverse {
+    --x-button-color-text: var(--x-color-critical-accent);
+    --x-button-color-text-hovered: var(--x-color-critical-accent);
+    --x-button-color-focus-ring: var(--x-color-critical-accent);
+    --x-button-color-border: var(--x-color-critical-accent);
+    --x-button-color-border-hovered: var(--x-color-critical-accent);
+  }
+
+  &.stylePlain {
+    --x-button-color: transparent;
+    --x-button-color-hovered: transparent;
+    --x-button-color-text: var(--x-color-critical-accent);
+    --x-button-color-text-hovered: var(--x-color-critical-accent);
+    --x-button-color-focus-ring: var(--x-color-critical-accent);
+  }
+}
+
+.appearanceMonochrome {
+  &.styleFill {
+    --x-button-color: var(--x-default-color-text);
+    --x-button-color-hovered: var(--x-default-color-text-emphasized);
+    --x-button-color-text: var(--x-default-color);
+    --x-button-color-text-hovered: var(--x-default-color-subdued);
+    --x-button-color-focus-ring: var(--x-default-color-text);
+    --x-button-color-border: var(--x-default-color-text-emphasized);
+    --x-button-color-border-hovered: var(--x-default-color-text-emphasized);
+  }
+
+  &.styleInverse {
+    --x-button-color-text: var(--x-default-color-text);
+    --x-button-color-text-hovered: var(--x-default-color-text-emphasized);
+    --x-button-color-focus-ring: var(--x-default-color-text);
+    --x-button-color-border: var(--x-default-color-border);
+    --x-button-color-border-hovered: var(--x-default-color-border-emphasized);
+  }
+
+  &.stylePlain {
+    --x-button-color: transparent;
+    --x-button-color-hovered: transparent;
+    --x-button-color-text: var(--x-default-color-text);
+    --x-button-color-text-hovered: var(--x-default-color-text-emphasized);
+    --x-button-color-focus-ring: var(--x-default-color-text);
+    text-decoration: underline;
   }
 }
 
@@ -48,105 +320,52 @@
   transform: translate(-50%, -50%);
 }
 
-.subdued,
-.plain {
-  background-color: transparent;
-
-  &:hover {
-    background-color: transparent;
-  }
-
-  &:active {
-    background-color: transparent;
-  }
+.stylePlainColorHoveredColor1:hover:not([class*='appearance']) {
+  background-color: var(--x-color1, var(--this-background-color));
+  color: var(--x-color1-text, var(--this-color));
 }
 
-.subdued {
-  box-shadow: inset 0 0 0 1px var(--x-default-color-border);
-  color: var(--x-color-primary-action);
-
-  &:hover {
-    color: var(--x-color-primary-action-hovered);
-  }
-
-  &:active {
-    color: var(--x-color-primary-action-pressed);
-  }
-}
-
-.plain {
-  font-weight: var(--x-typography-primary-weight-base);
-  padding: 0;
-  border-radius: var(--x-border-radius-none);
-  color: inherit;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: em(-5px);
-    z-index: 0;
-
-    @media (any-hover: none) {
-      inset: em(-20px) em(-24px);
-    }
-  }
-
-  & .Content {
-    z-index: 1;
-    position: relative;
-  }
-}
-
-.appearanceDefault {
-  background-color: var(--x-color-interactive);
-  color: var(--x-color-interactive-text);
-  transition: background-color var(--x-duration-base) var(--x-timing-base),
-    color var(--x-duration-base) var(--x-timing-base);
-
-  &:hover {
-    --this-background-color: var(--x-color-interactive-hovered);
-    --this-color: var(--x-color-interactive-text-hovered);
-    background-color: var(--this-background-color);
-    color: var(--this-color);
-  }
-
-  &:active {
-    --this-background-color: var(--x-color-interactive-pressed);
-    --this-color: var(--x-color-interactive-text-pressed);
-    background-color: var(--this-background-color);
-    color: var(--this-color);
-  }
-}
-
-.appearanceInheritColor:hover {
-  text-decoration: none;
-}
-
-.underline {
-  text-decoration: underline;
+.stylePlainColorHoveredColor2:hover:not([class*='appearance']) {
+  background-color: var(--x-color2, var(--this-background-color));
+  color: var(--x-color2-text, var(--this-color));
 }
 
 .fill {
   display: flex;
   justify-content: center;
   min-width: 100%;
-
-  &.plain {
-    margin: 0;
-    padding: 0;
-  }
-}
-
-.disabled,
-.loading {
-  pointer-events: none;
-  cursor: default;
 }
 
 .disabled {
-  /* TODO */
-  background-color: hsl(0, 0%, 85%);
-  color: hsl(0, 0%, 100%);
+  cursor: not-allowed;
+  pointer-events: none;
+
+  &:not(.loadingSpinner):not(.loadingProgressBar) {
+    opacity: var(--x-opacity-disabled);
+
+    /* stylelint-disable selector-max-specificity */
+    &.styleFill {
+      --x-button-color: var(--x-button-color-disabled);
+    }
+
+    &.styleInverse {
+      --x-button-color-text: var(--x-button-color-disabled);
+      --x-button-color-border: var(--x-button-color-disabled);
+    }
+    /* stylelint-enable selector-max-specificity */
+  }
+}
+
+.connected {
+  padding-block-end: 0;
+  padding-block-start: 0;
+  height: em(46px);
+}
+
+.loadingSpinner,
+.loadingProgressBar {
+  pointer-events: none;
+  cursor: default;
 }
 
 .loading-transitionEnter {
@@ -176,56 +395,42 @@
   }
 }
 
-.secondary {
-  background-color: var(--x-color-secondary-action);
-  color: var(--x-color-secondary-action-text);
-  padding: var(--x-secondary-button-block-padding)
-    var(--x-secondary-button-inline-padding);
-
-  &:hover {
-    background-color: var(--x-color-secondary-action-hovered);
-  }
-
-  &:active {
-    background-color: var(--x-color-secondary-action-pressed);
-    outline: none;
-  }
-}
-
-.tertiary {
-  background-color: var(--x-color-tertiary-action);
-  color: var(--x-color-tertiary-action-text);
-  padding: var(--x-tertiary-button-block-padding)
-    var(--x-tertiary-button-inline-padding);
-}
-
-.connected {
-  padding-block-end: 0;
-  padding-block-start: 0;
-  height: em(46px);
-}
-
-.progressBar {
+.loadingProgressBar {
   pointer-events: none;
   cursor: default;
-  background-color: var(--x-color-primary-action-pressed);
-  position: relative;
-  overflow: hidden;
 
   & .Content {
     position: relative;
     z-index: 1;
   }
 
+  /* stylelint-disable selector-max-class, selector-max-specificity */
+  &.styleFill .ProgressBar::before {
+    background-color: var(--x-button-color-hovered);
+  }
+
+  &.styleInverse .ProgressBar {
+    z-index: 1;
+
+    &::before {
+      background-color: var(--x-button-color-text-hovered);
+      top: calc(100% - rem(2px));
+    }
+  }
+  /* stylelint-enable selector-max-class, selector-max-specificity */
+}
+
+.ProgressBar {
+  position: absolute;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  inset: rem(-1px);
+
   &::before {
     content: '';
     position: absolute;
-    background-color: var(--x-color-primary-action);
-    z-index: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 100%;
+    inset: 0;
     transform: scaleX(0);
     transform-origin: left;
     animation-name: progressbar;
@@ -233,36 +438,7 @@
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(0, 1, 0.5, 1);
     animation-delay: var(--x-duration-base);
-  }
-
-  &.secondary {
-    background-color: var(--x-color-secondary-action-pressed);
-
-    &::before {
-      background-color: var(--x-color-secondary-action);
-    }
-  }
-
-  &.disabled {
-    background-color: hsl(0, 0%, 85%);
-
-    &::before {
-      background-color: hsl(0, 0%, 75%);
-    }
-  }
-
-  &.subdued,
-  &.plain {
-    background-color: transparent;
-
-    &::before {
-      background-color: var(--x-color-primary-action);
-      top: calc(100% - rem(2px));
-    }
-  }
-
-  @media screen and (prefers-reduced-motion: reduce) {
-    &::before {
+    @media screen and (prefers-reduced-motion: reduce) {
       animation: none;
     }
   }
@@ -332,25 +508,4 @@
   100% {
     transform: scaleX(1);
   }
-}
-
-.colorHoveredColor1:hover {
-  background-color: var(--x-color1, var(--this-background-color));
-  color: var(--x-color1-text, var(--this-color));
-}
-
-.colorHoveredColor2:hover {
-  background-color: var(--x-color2, var(--this-background-color));
-  color: var(--x-color2-text, var(--this-color));
-}
-
-/* Order does matter. :active pseudo-selector need to come after :hover */
-.colorPressedColor1:active {
-  background-color: var(--x-color1, var(--this-background-color));
-  color: var(--x-color1-text, var(--this-color));
-}
-
-.colorPressedColor2:active {
-  background-color: var(--x-color2, var(--this-background-color));
-  color: var(--x-color2-text, var(--this-color));
 }

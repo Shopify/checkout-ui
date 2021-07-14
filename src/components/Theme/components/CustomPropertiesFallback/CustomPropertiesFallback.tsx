@@ -3,6 +3,7 @@ import React, {memo, useMemo, useState, useEffect} from 'react';
 import {UiTheme} from '../../context';
 import {useTheme} from '../../hooks';
 import * as legacyStyles from '../../../../utilities/legacy';
+import {ThemeDefault} from '../../../../utilities/style';
 
 export const CustomPropertiesFallback = memo(
   function CustomPropertiesFallback() {
@@ -25,15 +26,52 @@ export const CustomPropertiesFallback = memo(
 
 function toCss(customProperties: UiTheme['customProperties']) {
   return cssFromObject({
-    [`.${legacyStyles.button}`]: {
-      color: customProperties.colorPrimaryActionText,
-      background: customProperties.colorPrimaryAction,
+    [`.${legacyStyles.button}::before, .${legacyStyles.button}::after`]: {
+      display: 'none',
     },
-    [`.${legacyStyles.button}:hover`]: {
-      background: customProperties.colorPrimaryActionHovered,
+    [`.${legacyStyles.buttonPrimary}`]: {
+      color:
+        customProperties.colorPrimaryActionText ??
+        ThemeDefault.ColorPrimaryActionText,
+      background:
+        customProperties.colorPrimaryAction ?? ThemeDefault.ColorPrimaryAction,
+      padding:
+        customProperties.primaryButtonBlockPadding ??
+        ThemeDefault.ButtonPadding,
+      'border-radius':
+        customProperties.primaryButtonBorderRadius ??
+        ThemeDefault.ButtonBorderRadius,
     },
-    [`.${legacyStyles.button}:active`]: {
-      background: customProperties.colorPrimaryActionPressed,
+    [`.${legacyStyles.buttonSecondary}`]: {
+      color:
+        customProperties.colorSecondaryAction ??
+        ThemeDefault.ColorSecondaryAction,
+      background: 'transparent',
+      'border-color':
+        customProperties.colorSecondaryAction ??
+        ThemeDefault.ColorSecondaryAction,
+      padding:
+        customProperties.secondaryButtonBlockPadding ??
+        ThemeDefault.ButtonPadding,
+      'border-radius':
+        customProperties.primaryButtonBorderRadius ??
+        ThemeDefault.ButtonBorderRadius,
+    },
+    [`.${legacyStyles.buttonPrimary}.${legacyStyles.buttonCritical}`]: {
+      color:
+        customProperties.colorCriticalText ?? ThemeDefault.ColorCriticalText,
+      background:
+        customProperties.colorCriticalAccent ??
+        ThemeDefault.ColorCriticalAccent,
+    },
+    [`.${legacyStyles.buttonSecondary}.${legacyStyles.buttonCritical}`]: {
+      color:
+        customProperties.colorCriticalAccent ??
+        ThemeDefault.ColorCriticalAccent,
+      background: 'transparent',
+      'border-color':
+        customProperties.colorCriticalAccent ??
+        ThemeDefault.ColorCriticalAccent,
     },
     [`.${legacyStyles.colorCanvas}`]: {
       color: customProperties.colorCanvasText,
@@ -99,6 +137,11 @@ function toCss(customProperties: UiTheme['customProperties']) {
     },
     [`.${legacyStyles.colorSurfaceTertiary} .${legacyStyles.utilityDefaultColorAccent}`]: {
       color: customProperties.colorSurfaceTertiaryAccent,
+    },
+    [`.${legacyStyles.colorCriticalAccent}`]: {
+      color:
+        customProperties.colorCriticalAccent ??
+        ThemeDefault.ColorCriticalAccent,
     },
   });
 }

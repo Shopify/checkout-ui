@@ -1,11 +1,13 @@
 .Icon {
   display: block;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   max-width: 100%;
+  max-height: 100%;
   fill: currentColor;
 }
 
-.sizeDefault {
+.sizeBase {
   min-width: var(--x-icon-size-default);
   min-height: var(--x-icon-size-default);
   width: var(--x-icon-size-default);
@@ -57,15 +59,9 @@
   color: var(--x-color-warning-accent);
 }
 
-.Svg,
-.Img {
-  position: relative;
+.Svg {
   display: block;
   width: 100%;
   max-width: 100%;
   max-height: 100%;
-}
-
-.Placeholder {
-  padding-bottom: 100%;
 }

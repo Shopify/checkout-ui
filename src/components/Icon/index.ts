@@ -1,1 +1,1 @@
-export {Icon, Props, IconSource, AVAILABLE_ICONS} from './Icon';
+export {Icon, AVAILABLE_ICONS} from './Icon';

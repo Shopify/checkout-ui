@@ -9,6 +9,10 @@
     --x-style1-typography-kerning,
     var(--this-letter-spacing)
   );
+  text-decoration: var(
+    --x-style1-typography-decoration,
+    var(--this-typography-decoration)
+  );
 }
 
 [class].style2,
@@ -21,6 +25,10 @@
   letter-spacing: var(
     --x-style2-typography-kerning,
     var(--this-letter-spacing)
+  );
+  text-decoration: var(
+    --x-style2-typography-decoration,
+    var(--this-typography-decoration)
   );
 }
 
@@ -35,6 +43,10 @@
     --x-style3-typography-kerning,
     var(--this-letter-spacing)
   );
+  text-decoration: var(
+    --x-style3-typography-decoration,
+    var(--this-typography-decoration)
+  );
 }
 
 [class].style4,
@@ -47,6 +59,10 @@
   letter-spacing: var(
     --x-style4-typography-kerning,
     var(--this-letter-spacing)
+  );
+  text-decoration: var(
+    --x-style4-typography-decoration,
+    var(--this-typography-decoration)
   );
 }
 
@@ -61,6 +77,10 @@
     --x-style5-typography-kerning,
     var(--this-letter-spacing)
   );
+  text-decoration: var(
+    --x-style5-typography-decoration,
+    var(--this-typography-decoration)
+  );
 }
 
 [class].style6,
@@ -73,6 +93,10 @@
   letter-spacing: var(
     --x-style6-typography-kerning,
     var(--this-letter-spacing)
+  );
+  text-decoration: var(
+    --x-style6-typography-decoration,
+    var(--this-typography-decoration)
   );
 }
 
@@ -87,6 +111,10 @@
     --x-style7-typography-kerning,
     var(--this-letter-spacing)
   );
+  text-decoration: var(
+    --x-style7-typography-decoration,
+    var(--this-typography-decoration)
+  );
 }
 
 [class].style8,
@@ -100,6 +128,10 @@
     --x-style8-typography-kerning,
     var(--this-letter-spacing)
   );
+  text-decoration: var(
+    --x-style8-typography-decoration,
+    var(--this-typography-decoration)
+  );
 }
 
 [class].style9,
@@ -112,5 +144,9 @@
   letter-spacing: var(
     --x-style9-typography-kerning,
     var(--this-letter-spacing)
+  );
+  text-decoration: var(
+    --x-style9-typography-decoration,
+    var(--this-typography-decoration)
   );
 }

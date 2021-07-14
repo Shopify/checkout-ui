@@ -15,7 +15,7 @@ describe('<Image />', () => {
       const image = mount(
         <Image
           source={source}
-          sources={[{source}]}
+          sources={{base: source}}
           description={description}
           loading="lazy"
         />,
@@ -32,14 +32,16 @@ describe('<Image />', () => {
       });
     });
 
-    it('reduces multiple sources with the same viewportSize into a single srcSet', () => {
+    it('reduces multiple sources with the same breakpoint into a single srcSet', () => {
       const image = mount(
         <Image
           source={source}
-          sources={[
-            {source, viewportSize: 'small', resolution: 1},
-            {source, viewportSize: 'small', resolution: 2},
-          ]}
+          sources={{
+            small: [
+              {source, resolution: 1},
+              {source, resolution: 2},
+            ],
+          }}
           loading="lazy"
         />,
       );
@@ -57,6 +59,54 @@ describe('<Image />', () => {
       expect(image).not.toContainReactComponent('source');
       expect(image).toContainReactComponent('img', {
         src: source,
+      });
+    });
+
+    it('renders sources in descending breakpoint width order', () => {
+      const image = mount(
+        <Image
+          source={source}
+          sources={{
+            small: [{source}, {source, resolution: 2}],
+            large: [{source}, {source, resolution: 2}],
+            medium: source,
+          }}
+        />,
+      );
+
+      const [largeSource, mediumSource, smallSource] = image.findAll('source');
+      expect(largeSource.prop('media')).toBe(MEDIA_MAP.get('large'));
+      expect(mediumSource.prop('media')).toBe(MEDIA_MAP.get('medium'));
+      expect(smallSource.prop('media')).toBe(MEDIA_MAP.get('small'));
+    });
+
+    it('accepts different types of sources', () => {
+      const sourceArray = faker.image.imageUrl();
+      const sourceString = faker.image.imageUrl();
+      const sourceObject = faker.image.imageUrl();
+
+      const image = mount(
+        <Image
+          source={source}
+          sources={{
+            base: [{source: sourceArray, resolution: 1}],
+            small: sourceString,
+            medium: {source: sourceObject},
+          }}
+        />,
+      );
+
+      expect(image).toContainReactComponent('source', {
+        srcSet: `${sourceArray} 1x`,
+        media: MEDIA_MAP.get('base'),
+      });
+      expect(image).toContainReactComponent('source', {
+        srcSet: sourceString,
+        media: MEDIA_MAP.get('small'),
+      });
+      expect(image).toContainReactComponent('source', {
+        srcSet: sourceObject,
+        media: MEDIA_MAP.get('medium'),
       });
     });
   });

@@ -6,4 +6,66 @@
       var(--x-default-color-text, inherit)
     );
   }
+
+  & b {
+    font-weight: var(--x-typography-primary-weight-bold);
+  }
+
+  & em {
+    font-style: italic;
+    color: var(
+      --x-default-color-text-emphasized,
+      var(--x-default-color-text, inherit)
+    );
+  }
+
+  & i {
+    font-style: italic;
+  }
+
+  & address {
+    font-style: italic;
+  }
+
+  & h1 {
+    --this-font-size: var(--x-typography-size-extra-extra-large);
+    --this-font-weight: var(--x-typography-secondary-weight-base);
+    font-size: var(--this-font-size);
+    font-weight: var(--this-font-weight);
+  }
+
+  & h2 {
+    --this-font-size: var(--x-typography-size-large);
+    --this-font-weight: var(--x-typography-secondary-weight-base);
+    font-size: var(--this-font-size);
+    font-weight: var(--this-font-weight);
+    color: var(
+      --x-default-color-text-emphasized,
+      var(--x-default-color-text, inherit)
+    );
+  }
+
+  & h3 {
+    --this-font-size: var(--x-typography-size-default);
+    --this-font-weight: var(--x-typography-secondary-weight-bold);
+    font-size: var(--this-font-size);
+    font-weight: var(--this-font-weight);
+    color: var(
+      --x-default-color-text-emphasized,
+      var(--x-default-color-text, inherit)
+    );
+  }
+
+  & h4,
+  h5,
+  h6 {
+    --this-font-size: var(--x-typography-size-default);
+    --this-font-weight: var(--x-typography-secondary-weight-base);
+    font-size: var(--this-font-size);
+    font-weight: var(--this-font-weight);
+    color: var(
+      --x-default-color-text-emphasized,
+      var(--x-default-color-text, inherit)
+    );
+  }
 }

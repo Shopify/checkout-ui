@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {classNames, variationName} from '@shopify/css-utilities';
-import {CalloutBannerProps} from '@shopify/argo-checkout';
+import {CalloutBannerProps} from '@shopify/checkout-ui-extensions';
 
 import {Heading} from '../Heading';
 import {HeadingGroup} from '../HeadingGroup';
