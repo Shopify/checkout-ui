@@ -1,5 +1,9 @@
 # `@shopify/checkout-ui-react`
 
+This package has been deprecated, and is no longer being maintained.
+
+---
+
 This library provides reference implementations of the UI components available in Checkout. These components are copied from a private Shopify repo periodically to serve primarily as a reference implementation.
 
 This library is intended to be used to help produce WYSIWYG editors for Shopify checkout extensions that will use [Checkout UI Extensions](https://github.com/Shopify/ui-extensions/tree/main/packages/checkout-ui-extensions) at runtime. Since Checkout UI Extensions components do not actually render to the DOM, these components help demonstrate the necessary styles and event handling for the UI components that Checkout UI Extensions maps to. These are the exact same components used at Shopify to render a Checkout UI extension.
